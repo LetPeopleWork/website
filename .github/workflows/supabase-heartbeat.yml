@@ -1,0 +1,46 @@
+name: Supabase Heartbeat
+
+on:
+  schedule:
+    # Run daily at 12:00 UTC to keep the Supabase function alive
+    - cron: '0 12 * * *'
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Send heartbeat to Supabase function
+      run: |
+        # Replace with your actual Supabase function URL
+        SUPABASE_URL="${{ secrets.SUPABASE_FUNCTION_URL }}"
+        
+        if [ -z "$SUPABASE_URL" ]; then
+          echo "SUPABASE_FUNCTION_URL secret not set. Please add your Supabase function URL as a repository secret."
+          echo "The URL should be in the format: https://your-project-id.supabase.co/functions/v1/stripe-webhook"
+          exit 1
+        fi
+        
+        echo "Sending heartbeat to Supabase function..."
+        
+        # Send heartbeat request with query parameter
+        RESPONSE=$(curl -s -w "%{http_code}" -o response_body.txt \
+          -X GET \
+          "${SUPABASE_URL}?heartbeat=true" \
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
+          -H "x-heartbeat: true")
+        
+        HTTP_CODE="${RESPONSE}"
+        RESPONSE_BODY=$(cat response_body.txt)
+        
+        echo "HTTP Status Code: $HTTP_CODE"
+        echo "Response Body: $RESPONSE_BODY"
+        
+        if [ "$HTTP_CODE" -eq 200 ]; then
+          echo "✅ Heartbeat successful - Supabase function is alive!"
+        else
+          echo "❌ Heartbeat failed with status code: $HTTP_CODE"
+          echo "Response: $RESPONSE_BODY"
+          exit 1
+        fi

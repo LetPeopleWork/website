@@ -11,6 +11,23 @@ serve(async (req)=>{
       headers: corsHeaders
     });
   }
+
+  // Handle heartbeat requests to keep the function alive
+  const url = new URL(req.url);
+  if (url.searchParams.get('heartbeat') === 'true' || req.headers.get('x-heartbeat') === 'true') {
+    console.log("Heartbeat request received - keeping function alive");
+    return new Response(JSON.stringify({
+      status: 'alive',
+      timestamp: new Date().toISOString()
+    }), {
+      headers: {
+        ...corsHeaders,
+        "Content-Type": "application/json"
+      },
+      status: 200
+    });
+  }
+
   try {
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
       apiVersion: "2023-10-16"
