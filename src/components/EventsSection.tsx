@@ -14,7 +14,7 @@ const EventsSection = () => {
       displayDate: "Aug 22, 2025",
       time: "14:00 - 16:00 CEST",
       location: "Online, Zoom",
-      price: "200$",
+      price: "100$",
       description: `What's MCS and how does it work? How is it different from "traditional estimation"? What are the prerequisites and how to get started?
 
 Why this session?
@@ -35,20 +35,6 @@ We will explain how MCS works, how you gather the data, how you apply it and wha
       description: "This will be an interactive unconference—you bring the topics you care about, and we’ll explore them together. Whether you're into forecasting with your data, understanding what makes systems predictable, or just want to nerd out on metrics, this is your playground. We can talk about the theory, or dive in hands-on (yes - you can also bring your data if you want!).",
       ctaText: "Register",
       ctaLink: "https://forms.gle/6CEWzjvSkr4TWF5z8"
-    },
-    {
-      type: "Workshop",
-      title: "Service Level Expectations & Right Sizing",
-      date: new Date("2025-09-05"),
-      displayDate: "Sep 5, 2025",
-      time: "14:00 - 16:00 CEST",
-      location: "Online, Zoom",
-      price: "200$",
-      description: `What's an SLE and what can we use it for? What's Right-Sizing? How to use SLE's for "estimation".
-
-When work arrives unpredictably, teams struggle to promise when something will be done and how big it should be. In this session you’ll learn two complementary levers—Service Level Expectations (SLEs) and Right-Sizing—that turn fuzzy commitments into clear, data-driven conversations.`,
-      ctaText: "Register Now",
-      ctaLink: "https://www.tickettailor.com/events/letpeoplework/1724397"
     },
     {
       type: ["Talk", "Workshop"],
