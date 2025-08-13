@@ -21,7 +21,7 @@ const testimonials: Testimonial[] = [
         companyUrl: ""
     },
     {
-        quote: "",
+        quote: "Lighthouse transformed how our Agile Release Train operates: moving us from guesstimations and overcommitment to data-driven PI Planning. It streamlined progress tracking across teams, making delivery more transparent and predictable. With continuous forecasting, we're now better equipped to anticipate risks, align expectations, and deliver value with confidence.",
         author: "Agnieszka Reginek",
         role: "Professional Kanban Trainer | Scrum Master",
         company: "",
