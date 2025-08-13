@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
 export interface Testimonial {
@@ -13,7 +13,15 @@ export interface Testimonial {
 
 const testimonials: Testimonial[] = [
     {
-        quote: "Lighthouse transformed how we understand and optimize our team's workflow. The insights are invaluable.",
+        quote: "The ability of Lighthouse to continuous forecast is a game changer. It transforms something complex and time consuming in a continuous activity which enlightens both your project planning and tracking.",
+        author: "Lorenzo Santoro",
+        role: "Project Manager",
+        company: "",
+        authorUrl: "https://www.linkedin.com/in/lorenzo-santoro-57172626/",
+        companyUrl: ""
+    },
+    {
+        quote: "",
         author: "Agnieszka Reginek",
         role: "Professional Kanban Trainer | Scrum Master",
         company: "",
@@ -21,32 +29,32 @@ const testimonials: Testimonial[] = [
         companyUrl: ""
     },
     {
-        quote: "The real-time flow metrics helped us identify bottlenecks we never knew existed. Productivity up 40%.",
-        author: "Michael Chen",
-        role: "Product Director",
-        company: "InnovateLab",
-        authorUrl: "https://linkedin.com/in/michael-chen",
-        companyUrl: "https://innovatelab.com"
-    },
-    {
-        quote: "Finally, data-driven decisions instead of gut feelings. Our forecasting accuracy improved dramatically.",
-        author: "Emma Rodriguez",
+        quote: "Lighthouse has transformed how we approach delivery. By prompting the right questions earlier and using the default feature size function to quickly forecast “how much?”, it provides a lean, cost‑effective way to surface risk and enable better decisions.",
+        author: "Chris Graves",
         role: "Agile Coach",
-        company: "FlowTech Solutions",
-        authorUrl: "https://linkedin.com/in/emma-rodriguez"
+        company: "Focusrite",
+        authorUrl: "https://www.linkedin.com/in/chris-graves-23455ab8/",
+        companyUrl: "https://focusrite.com/"
     },
     {
-        quote: "The Swiss quality and privacy standards give us confidence in using Lighthouse for sensitive projects.",
-        author: "Hans Mueller",
-        role: "CTO",
-        company: "SecureFlow AG",
-        companyUrl: "https://secureflow.ch"
+        quote: "Lighthouse helped us be more on to it. We’re now more predictable, efficient, and responsive when it comes to delivering value and serving our customers. It’s made planning sessions run smoother and helped set clearer expectations with our stakeholders. The insights we get from the data really sharpen our conversations and keep us focused on what matters.",
+        author: "Gonzalo Mendez",
+        role: "Scrum Master",
+        authorUrl: "https://www.linkedin.com/in/gonzalo-mendez-nz/",
+        company: "Mitre 10 (New Zealand) Ltd.",
+        companyUrl: "https://www.mitre10.co.nz/"
     },
     {
-        quote: "Open source core with premium enterprise features - exactly what we needed for our scaling organization.",
-        author: "Lisa Wang",
+        quote: "",
+        author: "Gábor Bittera",
         role: "VP Engineering",
-        authorUrl: "https://linkedin.com/in/lisa-wang"
+        authorUrl: "https://www.linkedin.com/in/gaborbittera/"
+    },
+    {
+        quote: "",
+        author: "Hendra Gunawan",
+        role: "VP Engineering",
+        authorUrl: "https://www.linkedin.com/in/hendragunawan823/"
     }
 ];
 
@@ -134,14 +142,27 @@ const NavigationButton = ({
 );
 
 const LighthouseTestimonials = () => {
+    // Filter out testimonials with empty quotes and shuffle on every component load
+    const shuffledTestimonials = useMemo(() => {
+        const validTestimonials = testimonials.filter(testimonial => 
+            testimonial.quote && testimonial.quote.trim() !== ''
+        );
+        const shuffled = [...validTestimonials];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    }, []);
+
     const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
     const nextTestimonial = () => {
-        setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+        setCurrentTestimonial((prev) => (prev + 1) % shuffledTestimonials.length);
     };
 
     const prevTestimonial = () => {
-        setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+        setCurrentTestimonial((prev) => (prev - 1 + shuffledTestimonials.length) % shuffledTestimonials.length);
     };
 
     const title = "See What Lighthouse Users Are Saying";
@@ -155,7 +176,7 @@ const LighthouseTestimonials = () => {
             </div>
 
             <div className="relative max-w-4xl mx-auto">
-                <TestimonialCard testimonial={testimonials[currentTestimonial]} />
+                <TestimonialCard testimonial={shuffledTestimonials[currentTestimonial]} />
 
                 <NavigationButton
                     onClick={prevTestimonial}
@@ -168,7 +189,7 @@ const LighthouseTestimonials = () => {
 
                 {/* Dots indicator */}
                 <div className="flex justify-center space-x-2 mt-6">
-                    {testimonials.map((testimonial, testimonialIndex) => (
+                    {shuffledTestimonials.map((testimonial, testimonialIndex) => (
                         <button
                             key={`dot-${testimonial.author}`}
                             onClick={() => setCurrentTestimonial(testimonialIndex)}

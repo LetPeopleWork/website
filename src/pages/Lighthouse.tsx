@@ -496,13 +496,12 @@ const Lighthouse = () => {
         </div>
       </section>
 
-      {/* Testimonials Section DONT FORGET TO ENABLE THE NAVIGATION LINK AGAIN
+      {/* Testimonials Section */}
       <section id="lighthouse-testimonials" className="py-20 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <LighthouseTestimonials />
         </div>
       </section>
-      */}
 
       {/* Why Premium Section */}
       <section id="lighthouse-premium" className="py-20 bg-gradient-subtle">
