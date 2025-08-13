@@ -520,16 +520,6 @@ const Lighthouse = () => {
             </p>
           </div>
 
-          {/* Warning about constraints */}
-          <div className="mb-8 p-4 bg-amber-50 border border-amber-200 rounded-lg">
-            <div className="flex items-center justify-center space-x-2">
-              <Info className="h-5 w-5 text-amber-600" />
-              <p className="text-sm text-amber-800 text-center">
-                <span className="font-semibold">Important:</span> Constraints on the free version become effective after Lighthouse v25.7.27.1729
-              </p>
-            </div>
-          </div>
-
           {/* Comparison Table */}
           <div className="bg-background rounded-2xl p-8 shadow-soft border border-border">
             <h3 className="text-2xl font-bold text-foreground mb-8 text-center">
@@ -762,16 +752,6 @@ const Lighthouse = () => {
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Purchase your Lighthouse Premium license and unlock the full potential of your organization.
             </p>
-          </div>
-
-          {/* Warning about constraints */}
-          <div className="mb-8 p-4 bg-amber-50 border border-amber-200 rounded-lg">
-            <div className="flex items-center justify-center space-x-2">
-              <Info className="h-5 w-5 text-amber-600" />
-              <p className="text-sm text-amber-800 text-center">
-                <span className="font-semibold">Premium License is supported in Versions newer than Lighthouse v25.7.27.1729. In previous versions, a license will not have any effect.</span>
-              </p>
-            </div>
           </div>
 
           <Card className="border-0 shadow-medium hover:shadow-glow transition-all duration-300">
