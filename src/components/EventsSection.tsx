@@ -9,23 +9,6 @@ const EventsSection = () => {
   const allEvents = [
     {
       type: "Workshop",
-      title: "Introduction to Probabilistic Forecasting",
-      date: new Date("2025-08-22"),
-      displayDate: "Aug 22, 2025",
-      time: "14:00 - 16:00 CEST",
-      location: "Online, Zoom",
-      price: "100$",
-      description: `What's MCS and how does it work? How is it different from "traditional estimation"? What are the prerequisites and how to get started?
-
-Why this session?
-When plans collide with reality, single-point ("most likely") estimates rarely hold up. Probabilistic forecasting gives you a fuller picture—showing the range of outcomes and their likelihood—so you can make calmer, evidence-based decisions about budgets, timelines, capacity and risk.
-
-We will explain how MCS works, how you gather the data, how you apply it and what data you need to run a MCS in your context.`,
-      ctaText: "Register Now",
-      ctaLink: "https://www.tickettailor.com/events/letpeoplework/1724396"
-    },
-    {
-      type: "Workshop",
       title: "The Flow Show",
       date: new Date("2025-08-26"),
       displayDate: "Aug 26, 2025",
