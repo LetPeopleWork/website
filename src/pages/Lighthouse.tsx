@@ -622,6 +622,11 @@ const Lighthouse = () => {
                       <Check className="h-5 w-5 text-green-600 mx-auto" />
                     </td>
                   </tr>
+                  <tr>
+                    <td className="py-3 px-4 text-muted-foreground">CSV Support</td>
+                    <td className="py-3 px-4 text-center text-muted-foreground">Max 1 Team</td>
+                    <td className="py-3 px-4 text-center text-foreground font-semibold bg-gradient-primary bg-clip-text text-transparent">Unlimited Teams and Projects</td>
+                  </tr>
 
                   {/* Premium Features */}
                   <tr>
