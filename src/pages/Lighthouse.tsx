@@ -637,6 +637,29 @@ const Lighthouse = () => {
                   <tr>
                     <td className="py-3 px-4 text-muted-foreground">
                       <div className="flex items-center space-x-2">
+                        <span>Item Inflow Forecasting</span>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <Info className="h-4 w-4 text-blue-500" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p className="text-sm">Forecast how many new items will enter your backlog based on your historical data</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </div>
+                    </td>
+                    <td className="py-3 px-4 text-center">
+                      <XCircle className="h-5 w-5 text-red-500 mx-auto" />
+                    </td>
+                    <td className="py-3 px-4 text-center">
+                      <Check className="h-5 w-5 text-green-600 mx-auto" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-4 text-muted-foreground">
+                      <div className="flex items-center space-x-2">
                         <span>Flow Consultant</span>
                         <TooltipProvider>
                           <Tooltip>
