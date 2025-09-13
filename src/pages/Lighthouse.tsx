@@ -627,6 +627,11 @@ const Lighthouse = () => {
                     <td className="py-3 px-4 text-center text-muted-foreground">Max 1 Team</td>
                     <td className="py-3 px-4 text-center text-foreground font-semibold bg-gradient-primary bg-clip-text text-transparent">Unlimited Teams and Projects</td>
                   </tr>
+                  <tr>
+                    <td className="py-3 px-4 text-muted-foreground">Demo Data</td>
+                    <td className="py-3 px-4 text-center text-muted-foreground">Basic Scenarios</td>
+                    <td className="py-3 px-4 text-center text-foreground font-semibold bg-gradient-primary bg-clip-text text-transparent">Advanced Scenarios</td>
+                  </tr>
 
                   {/* Premium Features */}
                   <tr>
