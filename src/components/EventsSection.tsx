@@ -8,18 +8,6 @@ import { Badge } from "@/components/ui/badge";
 const EventsSection = () => {
   const allEvents = [
     {
-      type: "Workshop",
-      title: "The Flow Show",
-      date: new Date("2025-08-26"),
-      displayDate: "Aug 26, 2025",
-      time: "16:00 – 20:00 CEST",
-      location: "Munich, Germany",
-      price: "Free for the first 5 registrations, then 100$",
-      description: "This will be an interactive unconference—you bring the topics you care about, and we’ll explore them together. Whether you're into forecasting with your data, understanding what makes systems predictable, or just want to nerd out on metrics, this is your playground. We can talk about the theory, or dive in hands-on (yes - you can also bring your data if you want!).",
-      ctaText: "Register",
-      ctaLink: "https://forms.gle/6CEWzjvSkr4TWF5z8"
-    },
-    {
       type: ["Talk", "Workshop"],
       title: "AgileByExample 2025",
       date: new Date("2025-10-08"),
@@ -31,6 +19,20 @@ const EventsSection = () => {
       We're looking forward to sharing insights, but also to connecting with you in person!`,
       ctaText: "Get Tickets",
       ctaLink: "https://agilebyexample.com/"
+    },
+    {
+      type: ["Training"],
+      title: "🎯 Applying Scaled Portfolio Kanban (ASPK)",
+      date: new Date("2025-11-25"),
+      displayDate: "Nov 25 - 27, 2025",
+      time: "1:00 PM - 5:00 PM CET",
+      location: "Online (Zoom)",
+      price: "See Event Page",
+      description: `A hands-on workshop designed for delivery managers, department heads, agile coaches, and anyone driving delivery and strategic alignment across teams. Learn how to scale flow across your organization to improve visibility, efficiency, and predictability, while ensuring that execution stays tightly aligned with strategic goals.
+      
+      The workshop includes 3 months of Lighthouse Premium License, 1-hour consulting session, and 2 assessment attempts for the Scaled Portfolio Kanban (SPK) certification by ProKanban.org.`,
+      ctaText: "Buy Tickets",
+      ctaLink: "https://www.tickettailor.com/events/letpeoplework/1871010"
     }
   ];
 
