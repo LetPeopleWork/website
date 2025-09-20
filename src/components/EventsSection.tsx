@@ -19,8 +19,8 @@ const EventsSection = () => {
       We're looking forward to sharing insights, but also to connecting with you in person!`,
       ctaText: "Get Tickets",
       ctaLink: "https://agilebyexample.com/"
-    },
-    {
+    }
+    /*{
       type: ["Training"],
       title: "🎯 Applying Scaled Portfolio Kanban (ASPK)",
       date: new Date("2025-11-25"),
@@ -33,7 +33,7 @@ const EventsSection = () => {
       The workshop includes 3 months of Lighthouse Premium License, 1-hour consulting session, and 2 assessment attempts for the Scaled Portfolio Kanban (SPK) certification by ProKanban.org.`,
       ctaText: "Buy Tickets",
       ctaLink: "https://www.tickettailor.com/events/letpeoplework/1871010"
-    }
+    }*/
   ];
 
   // Filter out past events
