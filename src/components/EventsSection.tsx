@@ -19,21 +19,21 @@ const EventsSection = () => {
       We're looking forward to sharing insights, but also to connecting with you in person!`,
       ctaText: "Get Tickets",
       ctaLink: "https://agilebyexample.com/"
-    }
-    /*{
+    },
+    {
       type: ["Training"],
       title: "🎯 Applying Scaled Portfolio Kanban (ASPK)",
-      date: new Date("2025-11-25"),
-      displayDate: "Nov 25 - 27, 2025",
+      date: new Date("2026-01-13"),
+      displayDate: "Jan 13 - 15, 2026",
       time: "1:00 PM - 5:00 PM CET",
       location: "Online (Zoom)",
-      price: "See Event Page",
+      price: "890$ (Early Bird), 990$ (Regular)",
       description: `A hands-on workshop designed for delivery managers, department heads, agile coaches, and anyone driving delivery and strategic alignment across teams. Learn how to scale flow across your organization to improve visibility, efficiency, and predictability, while ensuring that execution stays tightly aligned with strategic goals.
       
       The workshop includes 3 months of Lighthouse Premium License, 1-hour consulting session, and 2 assessment attempts for the Scaled Portfolio Kanban (SPK) certification by ProKanban.org.`,
       ctaText: "Buy Tickets",
       ctaLink: "https://www.tickettailor.com/events/letpeoplework/1871010"
-    }*/
+    }
   ];
 
   // Filter out past events
