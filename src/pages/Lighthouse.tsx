@@ -665,14 +665,14 @@ const Lighthouse = () => {
                   <tr>
                     <td className="py-3 px-4 text-muted-foreground">
                       <div className="flex items-center space-x-2">
-                        <span>Flow Consultant</span>
+                        <span>Extended AI/LLM Support</span>
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger>
                               <Info className="h-4 w-4 text-blue-500" />
                             </TooltipTrigger>
                             <TooltipContent>
-                              <p className="text-sm">Get actionable tips to improve your flow based on your data</p>
+                              <p className="text-sm">Connect Lighthouse to your AI Chat of choice and interact with the data and forecasts through this interface</p>
                             </TooltipContent>
                           </Tooltip>
                         </TooltipProvider>
@@ -682,29 +682,20 @@ const Lighthouse = () => {
                       <XCircle className="h-5 w-5 text-red-500 mx-auto" />
                     </td>
                     <td className="py-3 px-4 text-center">
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger>
-                            <Hammer className="h-5 w-5 text-blue-500 mx-auto" />
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p className="text-sm">Work in Progress</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
+                      <Check className="h-5 w-5 text-green-600 mx-auto" />
                     </td>
                   </tr>
                   <tr>
                     <td className="py-3 px-4 text-muted-foreground">
                       <div className="flex items-center space-x-2">
-                        <span>Extended AI/LLM Support</span>
+                        <span>Flow Consultant</span>
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger>
                               <Info className="h-4 w-4 text-blue-500" />
                             </TooltipTrigger>
                             <TooltipContent>
-                              <p className="text-sm">Connect Lighthouse to your AI Chat of choice and interact with the data and forecasts through this interface</p>
+                              <p className="text-sm">Get actionable tips to improve your flow based on your data</p>
                             </TooltipContent>
                           </Tooltip>
                         </TooltipProvider>
