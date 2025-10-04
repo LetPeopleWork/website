@@ -8,6 +8,20 @@ import { Badge } from "@/components/ui/badge";
 const EventsSection = () => {
   const allEvents = [
     {
+      type: ["Workshop"],
+      title: "🚀 Probabilistic Forecasting at Scale",
+      date: new Date("2025-11-18"),
+      displayDate: "Nov 18, 2025",
+      time: "1:00 PM - 5:00 PM CET",
+      location: "Online (Zoom)",
+      price: "150€ (Early Bird), 200€ (Regular)",
+      description: `A hands-on workshop introducing a practical, data-driven approach to forecasting delivery using Monte Carlo simulations at the portfolio level. Learn to right-size Features and Epics to make them forecastable, run forecasts across multiple teams, and understand how dependencies influence predictability and risk.
+      
+      The workshop includes 1 month of Lighthouse Premium License, 1-hour consulting session with an expert trainer, and a 10% discount if you join our Applying Scaled Portfolio Kanban (ASPK) training.`,
+      ctaText: "Buy Tickets",
+      ctaLink: "https://www.tickettailor.com/events/letpeoplework/1891877"
+    },
+    {
       type: ["Talk", "Workshop"],
       title: "AgileByExample 2025",
       date: new Date("2025-10-08"),
