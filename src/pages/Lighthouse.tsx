@@ -13,6 +13,7 @@ import Navigation from "@/components/Navigation";
 import SimpleFooter from "@/components/SimpleFooter";
 import MediaCarousel from "@/components/MediaCarousel";
 import LegalInfoDialog from "@/components/LegalInfoDialog";
+import SEO from "@/components/SEO";
 import lighthouseLogo from "@/assets/LighthouseLogo.png";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
@@ -360,8 +361,83 @@ const Lighthouse = () => {
     }
   };
 
+  // Structured data for SEO
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Lighthouse",
+    "applicationCategory": "BusinessApplication",
+    "applicationSubCategory": "Project Management",
+    "operatingSystem": "Windows, macOS, Linux, Docker",
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Community Version",
+        "price": "0",
+        "priceCurrency": "CHF",
+        "description": "Free forever community version with core features"
+      },
+      {
+        "@type": "Offer",
+        "name": "Premium License",
+        "price": "999",
+        "priceCurrency": "CHF",
+        "description": "Annual premium license with unlimited teams and advanced features"
+      }
+    ],
+    "description": "Open-source flow metrics and forecasting tool for agile teams. Visualize flow metrics, forecast delivery dates using Monte Carlo simulations, and integrate with Jira and Azure DevOps.",
+    "featureList": [
+      "Flow Metrics Visualization",
+      "Monte Carlo Forecasting",
+      "Jira Integration",
+      "Azure DevOps Integration",
+      "Team and Portfolio Level Analytics",
+      "Throughput Analysis",
+      "Cycle Time Tracking",
+      "Lead Time Metrics",
+      "Work In Progress Limits"
+    ],
+    "screenshot": "https://letpeople.work/forecasts-project.png",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5",
+      "ratingCount": "1",
+      "bestRating": "5"
+    },
+    "review": {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Gonzalo Mendez",
+        "jobTitle": "Scrum Master"
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "reviewBody": "Lighthouse helped us be more on to it. We're now more predictable, efficient, and responsive when it comes to delivering value and serving our customers."
+    },
+    "softwareVersion": latestVersion,
+    "downloadUrl": "https://github.com/LetPeopleWork/Lighthouse/releases",
+    "publisher": {
+      "@type": "Organization",
+      "name": "LetPeopleWork GmbH",
+      "url": "https://letpeople.work"
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Lighthouse - Flow Metrics & Forecasting Tool for Agile Teams"
+        description="Lighthouse is an open-source tool for visualizing flow metrics and forecasting delivery dates using Monte Carlo simulations. Connect to Jira & Azure DevOps for data-driven agile insights. Free community version available."
+        keywords="lighthouse flow metrics, agile forecasting tool, Monte Carlo simulation, delivery forecasting, when will it be done, how much can we do, Jira flow metrics, Azure DevOps metrics, throughput, cycle time, lead time, WIP, work in progress, team velocity, sprint forecasting, agile metrics dashboard, kanban metrics, scrum metrics, project forecasting, portfolio forecasting, open source agile, predictability, agile analytics"
+        ogImage="https://letpeople.work/forecasts-project.png"
+        ogType="website"
+        canonicalUrl="https://letpeople.work/lighthouse"
+        structuredData={structuredData}
+      />
       <Navigation />
 
       {/* Hero Section */}
