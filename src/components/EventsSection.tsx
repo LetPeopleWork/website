@@ -22,19 +22,6 @@ const EventsSection = () => {
       ctaLink: "https://www.tickettailor.com/events/letpeoplework/1891877"
     },
     {
-      type: ["Talk", "Workshop"],
-      title: "AgileByExample 2025",
-      date: new Date("2025-10-08"),
-      displayDate: "Oct 6 - 8, 2025",
-      location: "Warsaw, Poland",
-      price: "See Conference Website",
-      description: `Join us at AgileByExample 2025, where we will be hosting our signature workshop "Flowbeya - How visualizing Flow Metrics on an Obeya can guide your Team" as well as presenting a brand new talk "How it's all connected: From Flow Metrics to Product KPIs".
-      
-      We're looking forward to sharing insights, but also to connecting with you in person!`,
-      ctaText: "Get Tickets",
-      ctaLink: "https://agilebyexample.com/"
-    },
-    {
       type: ["Training"],
       title: "🎯 Applying Scaled Portfolio Kanban (ASPK)",
       date: new Date("2026-01-13"),

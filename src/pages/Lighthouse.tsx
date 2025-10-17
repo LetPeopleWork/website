@@ -314,7 +314,7 @@ const Lighthouse = () => {
       description: "No need to send your data to some cloud provider in a foreign country - Lighthouse is 100% Open-Source, runs fully on your infrastructure and will not send anything to the cloud",
       extendedDescription: `We don't want our data to go uncontrolled in the Cloud. We assume you are the same. This is why there is no third-party cloud provider involved. Don't trust us? Check out the code yourself, Lighthouse is 100% Open-Source.
       
-      It's 100% made in Switzerland, where we have many banks that have tight security constraints when it comes to Software. This is why we put effort into making it possible for everyone to be able to run it. All of this applies to the free and the premium version.`,
+      It's 100% made in Switzerland, where we have many banks that have tight security constraints when it comes to Software. This is why we put effort into making it possible for everyone to be able to run it. All of this applies to the Community and the premium version.`,
       callToAction: "Struggle to get it approved in your company? Let us know and we will support you!",
       mediaItems: [{
         type: "image" as const,
@@ -391,7 +391,7 @@ const Lighthouse = () => {
                 <DropdownMenuTrigger asChild>
                   <Button variant="hero" size="lg" className="group">
                     <Download className="mr-2 h-4 w-4" />
-                    Download Free Version
+                    Download Community Version
                     <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -441,7 +441,7 @@ const Lighthouse = () => {
                 </a>
               </Button>
             </div>
-            <p className="text-xs text-muted-foreground">No credit card required • Base Version Free forever</p>
+            <p className="text-xs text-muted-foreground">No credit card required • Community Version Free forever</p>
           </div>
         </div>
       </section>
@@ -514,7 +514,7 @@ const Lighthouse = () => {
               </span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-12">
-              While our free version provides all the features you need to analyze the flow and forecast delivery dates, Premium unlocks enterprise-grade
+              While our Community Version provides all the features you need to analyze the flow and forecast delivery dates, Premium unlocks enterprise-grade
               capabilities that help you scale the usage and adoption within your organization and thus lead to a scaled learning.
             </p>
           </div>
@@ -522,7 +522,7 @@ const Lighthouse = () => {
           {/* Comparison Table */}
           <div className="bg-background rounded-2xl p-8 shadow-soft border border-border">
             <h3 className="text-2xl font-bold text-foreground mb-8 text-center">
-              Free vs Premium Comparison
+              Community vs Premium Comparison
             </h3>
 
             <div className="overflow-x-auto">
@@ -530,7 +530,7 @@ const Lighthouse = () => {
                 <thead>
                   <tr className="border-b border-border">
                     <th className="text-left py-4 px-4 font-semibold text-foreground">Feature</th>
-                    <th className="text-center py-4 px-4 font-semibold text-foreground">Free Version</th>
+                    <th className="text-center py-4 px-4 font-semibold text-foreground">Community Version</th>
                     <th className="text-center py-4 px-4 font-semibold text-foreground bg-gradient-primary bg-clip-text text-transparent">Premium Version</th>
                   </tr>
                 </thead>
@@ -596,7 +596,7 @@ const Lighthouse = () => {
                     </td>
                   </tr>
 
-                  {/* Constraints in Free Version */}
+                  {/* Constraints in Community Version */}
                   <tr>
                     <td colSpan={3} className="py-4 px-4 font-semibold text-foreground bg-accent/30">
                       Usage Limits
@@ -755,7 +755,7 @@ const Lighthouse = () => {
 
             <div className="mt-6 p-4 bg-accent/20 rounded-lg">
               <p className="text-sm text-muted-foreground">
-                <span className="font-semibold text-foreground">Note:</span> New premium features may be introduced as premium-only for the first few months before being made available to the free version, ensuring premium users get early access to cutting-edge capabilities.
+                <span className="font-semibold text-foreground">Note:</span> New premium features may be introduced as premium-only for the first few months before being made available to the Community Version, ensuring premium users get early access to cutting-edge capabilities.
               </p>
             </div>
           </div>

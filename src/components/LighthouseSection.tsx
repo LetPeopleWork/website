@@ -191,7 +191,7 @@ const LighthouseSection = () => {
         {/* CTA Section */}
         <div className="text-center bg-gradient-subtle rounded-2xl p-12 border border-border mb-16">
           <h3 className="text-2xl font-bold text-foreground mb-4">
-            Try the Free Lighthouse Version Today
+            Try the Community Versiion of Lighthouse Today
           </h3>
           <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
             No credit card. No account. No hassle.
@@ -251,7 +251,7 @@ const LighthouseSection = () => {
               </a>
             </Button>
           </div>
-          <p className="text-xs text-muted-foreground mt-4">Base Version Free forever • All Code is Open Source • Everything runs on your Infrstructure - No Third-Party Cloud Services involved</p>
+          <p className="text-xs text-muted-foreground mt-4">Community Version Free forever • All Code is Open Source • Everything runs on your Infrstructure - No Third-Party Cloud Services involved</p>
         </div>
 
         {/* Testimonials Slider */} 
