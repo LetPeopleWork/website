@@ -89,5 +89,29 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
+  }
+
+  /* Ensure proper rendering on mobile browsers */
+  html {
+    overflow-x: hidden;
+    position: relative;
+  }
+}
+
+/* Utility classes for safe areas and mobile fixes */
+@layer utilities {
+  .safe-top {
+    top: env(safe-area-inset-top, 0);
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  /* Prevent content from being cut off on mobile */
+  .min-h-screen-mobile {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
   }
 }

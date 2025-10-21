@@ -441,7 +441,7 @@ const Lighthouse = () => {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="pt-24 pb-20 bg-gradient-subtle">
+      <section className="pt-32 pb-20 bg-gradient-subtle">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="flex justify-center mb-8">
