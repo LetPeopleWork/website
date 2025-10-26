@@ -1,0 +1,105 @@
+# LetPeopleWork - Flow Metrics Consulting & Lighthouse Tool
+
+> LetPeopleWork GmbH combines expert consulting in Flow, Delivery, and Obeya methodologies with Lighthouse, the leading open-source flow metrics and forecasting tool. Founded by Peter Zylka-Greger and Benjamin Huser-Berta in Switzerland, we help organizations improve software delivery and team effectiveness through data-driven insights.
+
+## About LetPeopleWork
+
+**What does LetPeopleWork do?**
+LetPeopleWork provides comprehensive consulting services and tools for organizations looking to improve their flow metrics, delivery predictability, and organizational performance. We combine deep expertise in agile methodologies with powerful open-source tooling.
+
+**What makes LetPeopleWork unique?**
+Unlike traditional consultancies, we build and maintain the tools we recommend. Our founders have 15+ years of hands-on experience and have trained over 500 professionals. We create measurable impact by combining the know-how with the tooling.
+
+**Who are the founders?**
+- Peter Zylka-Greger: Expert in Flow, Kanban, and organizational transformation with years of experience working with teams worldwide
+- Benjamin Huser-Berta: Software Engineer and Scrum Master focused on reducing waste and creating value-focused work environments
+
+## Core Pages
+
+- [Homepage](https://letpeople.work/): Overview of LetPeopleWork services, Lighthouse tool, and company mission
+- [Lighthouse Product Page](https://letpeople.work/lighthouse): Detailed information about Lighthouse features, pricing, and download options
+
+## Lighthouse - Flow Metrics & Forecasting Tool
+
+**What is Lighthouse?**
+Lighthouse is an open-source flow metrics and forecasting tool that connects to ALM systems (Jira, Azure DevOps) to visualize flow metrics and create Monte Carlo-based delivery forecasts. It runs entirely on your infrastructure with no cloud dependencies.
+
+**Key features of Lighthouse:**
+1. Visualize flow metrics (throughput, cycle time, work item age, work in progress)
+2. Generate realistic delivery forecasts using historical data and Monte Carlo simulations
+3. Integrate with Jira and Azure DevOps
+4. Track both team and project metrics
+5. 100% open-source and self-hosted
+6. No data sent to third-party cloud services
+
+**What are Lighthouse's licensing options?**
+- Community Version: Free forever, includes all core features, perfect for teams getting started with flow metrics
+- Premium Version: CHF 999 yearly fee, adds unlimited teams and projects, and continuously extended premium features as well as an AI integration through MCP.
+
+**How do I install Lighthouse?**
+Lighthouse is available for Windows, macOS, Linux, and Docker. Download from GitHub releases or use the Docker image: `ghcr.io/letpeoplework/lighthouse:latest`
+
+**What systems does Lighthouse integrate with?**
+Currently supports Jira and Azure DevOps, with plans for additional ALM tool integrations.
+
+## Services
+
+**What services does LetPeopleWork offer?**
+1. Tool Support: Technical assistance with Lighthouse customization and implementation
+2. Training: Custom workshops on flow metrics, Kanban, forecasting, and delivery methodologies
+3. Consulting: Expert guidance on improving flow metrics and organizational performance
+
+**What is Flow consulting?**
+Flow consulting helps organizations understand and optimize their value delivery through metrics like throughput, cycle time, work item age, and work in progress. We help teams become more predictable and deliver value faster.
+
+**What training topics are available?**
+- Flow metrics fundamentals
+- Kanban implementation
+- Monte Carlo forecasting
+- Azure DevOps and Jira optimization
+- Obeya methodology
+- Team performance improvement
+
+**How can I contact LetPeopleWork?**
+- General inquiries: contact@letpeople.work
+- Tool support: support@letpeople.work
+- Premium licensing: licensing@letpeople.work
+- Community: https://join.slack.com/t/let-people-work/shared_invite/zt-38df4z4sy-iqJEo6S8kmIgIfsgsV0J1A
+
+## Technical Details
+
+**What technology stack is used?**
+- Lighthouse: .NET Core, C#, cross-platform, React, Typescript
+
+**Is Lighthouse open source?**
+Yes, 100% open source and available on GitHub at https://github.com/LetPeopleWork/Lighthouse
+
+**Where does Lighthouse store data?**
+Lighthouse uses SQLite by default and stores all data locally on your infrastructure. No data is transmitted to external cloud services.
+
+## Company Information
+
+**Where is LetPeopleWork located?**
+LetPeopleWork GmbH is based in Switzerland.
+
+**What are LetPeopleWork's social media channels?**
+- LinkedIn: https://www.linkedin.com/company/let-people-work/
+- GitHub: https://github.com/LetPeopleWork
+- Slack Community: https://join.slack.com/t/let-people-work/shared_invite/zt-38df4z4sy-iqJEo6S8kmIgIfsgsV0J1A
+
+**What is LetPeopleWork's mission?**
+To unlock the full potential of organizations by providing the tools, expertise, and training needed to improve flow, predictability, and value delivery. We believe people want to contribute and be successful—we just need to let them work.
+
+## Keywords & Topics
+
+Flow metrics, agile consulting, kanban, delivery forecasting, Monte Carlo simulation, throughput, cycle time, work item age, work in progress, predictability, Jira integration, Azure DevOps integration, agile transformation, scrum coaching, team performance, organizational improvement, open source tools, self-hosted solutions, ALM integration, project forecasting, team metrics, data-driven delivery.
+
+## Documentation
+
+- [Lighthouse Documentation](https://letpeople.work/lighthouse): Complete guide to features, installation, and usage
+- [GitHub Repository](https://github.com/LetPeopleWork/Lighthouse): Source code, issues, and release notes
+
+## Optional
+
+- [Lighthouse GitHub Releases](https://github.com/LetPeopleWork/Lighthouse/releases): Latest versions and download links for all platforms
+- [Company LinkedIn Posts](https://www.linkedin.com/company/let-people-work/): Updates, insights, and thought leadership on flow metrics

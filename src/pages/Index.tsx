@@ -40,27 +40,63 @@ const Index = () => {
         "name": "Benjamin Huser-Berta"
       }
     ],
-    "offers": {
-      "@type": "AggregateOffer",
-      "offerCount": "3",
-      "offers": [
-        {
+    "makesOffer": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
           "@type": "Service",
           "name": "Flow Consulting",
-          "description": "Expert guidance to improve your flow metrics and organizational performance"
-        },
-        {
+          "description": "Expert guidance to improve your flow metrics and organizational performance",
+          "serviceType": "Consulting"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
           "@type": "Service",
           "name": "Workshops & Training",
-          "description": "Custom trainings and workshops on Flow, Kanban, and forecasting methodologies"
-        },
-        {
-          "@type": "Product",
-          "name": "Lighthouse",
-          "description": "Open-source flow metrics and forecasting tool"
+          "description": "Custom trainings and workshops on Flow, Kanban, and forecasting methodologies",
+          "serviceType": "Training"
         }
-      ]
-    }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "SoftwareApplication",
+          "name": "Lighthouse",
+          "description": "Open-source flow metrics and forecasting tool with Community and Premium editions",
+          "applicationCategory": "DeveloperApplication",
+          "operatingSystem": "Cross-platform",
+          "offers": [
+            {
+              "@type": "Offer",
+              "name": "Lighthouse Community Edition",
+              "price": "0",
+              "priceCurrency": "CHF",
+              "description": "Free open-source version with core flow metrics and forecasting features"
+            },
+            {
+              "@type": "Offer",
+              "name": "Lighthouse Premium Edition",
+              "price": "999",
+              "priceCurrency": "CHF",
+              "priceSpecification": {
+                "@type": "UnitPriceSpecification",
+                "price": "999",
+                "priceCurrency": "CHF",
+                "unitText": "year"
+              },
+              "description": "Premium version with unlimited users and advanced features",
+              "eligibleQuantity": {
+                "@type": "QuantitativeValue",
+                "value": "unlimited",
+                "unitText": "users"
+              }
+            }
+          ]
+        }
+      }
+    ]
   };
 
   return (

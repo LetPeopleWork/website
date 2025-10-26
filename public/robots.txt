@@ -10,6 +10,25 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+# AI Crawlers - Explicitly allowed for LLM training and indexing
+User-agent: GPTBot
+Allow: /
+
+User-agent: Anthropic-AI
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 User-agent: *
 Allow: /
 
