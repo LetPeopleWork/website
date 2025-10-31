@@ -19,6 +19,9 @@ const Index = () => {
     "description": "Expert consulting and training in Flow, Delivery, and Obeya methodologies. Creators of Lighthouse - the leading open-source flow metrics and forecasting tool.",
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": "Mühlackerstrasse 108",
+      "addressLocality": "Zürich",
+      "postalCode": "8046",
       "addressCountry": "CH"
     },
     "sameAs": [
