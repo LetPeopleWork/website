@@ -136,8 +136,11 @@ const LighthouseSection = () => {
           <div className="flex justify-center mb-8">
             <img 
               src={lighthouseLogo} 
-              alt="Lighthouse Logo" 
+              alt="Lighthouse Flow Metrics and Forecasting Tool Logo" 
               className="h-16 w-auto"
+              width="64"
+              height="64"
+              loading="lazy"
             />
           </div>
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6">

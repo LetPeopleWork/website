@@ -26,8 +26,11 @@ const SimpleFooter = () => {
             {/* Logo - Center */}
             <div className="flex-shrink-0">
               <img src={logo}
-                alt="LetPeopleWork" 
+                alt="LetPeopleWork Logo" 
                 className="h-10 w-auto"
+                width="180"
+                height="40"
+                loading="lazy"
               />
             </div>
 
@@ -60,8 +63,11 @@ const SimpleFooter = () => {
             <div className="flex justify-center">
               <img 
                 src="/src/assets/LPW_Banner_White.png" 
-                alt="LetPeopleWork" 
+                alt="LetPeopleWork Logo" 
                 className="h-10 w-auto"
+                width="180"
+                height="40"
+                loading="lazy"
               />
             </div>
 

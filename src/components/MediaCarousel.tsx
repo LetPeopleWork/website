@@ -68,6 +68,9 @@ const MediaCarousel = ({
             src={currentItem.src} 
             alt={currentItem.alt}
             className="max-w-full max-h-full object-contain rounded-lg"
+            loading="lazy"
+            width="800"
+            height="600"
           />
           <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black/20 rounded-lg">
             <div className="bg-white/90 rounded-full px-3 py-1">
@@ -84,6 +87,9 @@ const MediaCarousel = ({
           src={currentItem.src} 
           alt={currentItem.alt}
           className="max-w-full max-h-full object-contain rounded-lg"
+          loading="lazy"
+          width="800"
+          height="600"
         />
       </div>
     );
@@ -109,6 +115,8 @@ const MediaCarousel = ({
               controls
               preload="metadata"
               poster={posterImage}
+              width="800"
+              height="600"
             >
               <track kind="captions" srcLang="en" label="English captions" />
               Your browser does not support the video tag.

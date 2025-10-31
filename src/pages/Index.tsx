@@ -106,6 +106,9 @@ const Index = () => {
         description="Transform your organization with expert Flow consulting and Lighthouse, the leading open-source flow metrics tool. Get data-driven insights, improve predictability, and deliver value faster with Monte Carlo forecasting."
         keywords="flow metrics consulting, agile consulting, kanban consulting, delivery forecasting, lighthouse tool, flow metrics tool, agile coaching, scrum coaching, Monte Carlo forecasting, predictability, throughput, cycle time, lead time, agile transformation, organizational improvement"
         structuredData={structuredData}
+        breadcrumbs={[
+          { name: "Home", url: "/" }
+        ]}
       />
       <Navigation />
       <Hero />

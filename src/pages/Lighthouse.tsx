@@ -424,7 +424,45 @@ const Lighthouse = () => {
       "@type": "Organization",
       "name": "LetPeopleWork GmbH",
       "url": "https://letpeople.work"
-    }
+    },
+    "video": [
+      {
+        "@type": "VideoObject",
+        "name": "Lighthouse Team Metrics Visualization",
+        "description": "Visualize how well work flows through your system at the team level with Lighthouse flow metrics",
+        "thumbnailUrl": "https://letpeople.work/forecasts-project.png",
+        "uploadDate": "2024-10-01T00:00:00Z",
+        "contentUrl": metricsTeamVideo,
+        "embedUrl": metricsTeamVideo
+      },
+      {
+        "@type": "VideoObject",
+        "name": "Lighthouse Project Metrics Visualization",
+        "description": "Optimize your end-to-end value delivery by analyzing higher flight levels with Lighthouse",
+        "thumbnailUrl": "https://letpeople.work/forecasts-project.png",
+        "uploadDate": "2024-10-01T00:00:00Z",
+        "contentUrl": metricsProjectVideo,
+        "embedUrl": metricsProjectVideo
+      },
+      {
+        "@type": "VideoObject",
+        "name": "Lighthouse Team Forecasting",
+        "description": "Run forecasts for your team and get answers to when work will be done within seconds",
+        "thumbnailUrl": "https://letpeople.work/forecasts-project.png",
+        "uploadDate": "2024-10-01T00:00:00Z",
+        "contentUrl": forecastsTeamVideo,
+        "embedUrl": forecastsTeamVideo
+      },
+      {
+        "@type": "VideoObject",
+        "name": "Lighthouse Project Delivery Timeline Forecasting",
+        "description": "Create realistic delivery timelines using Monte Carlo Simulations based on historical data",
+        "thumbnailUrl": "https://letpeople.work/forecasts-project.png",
+        "uploadDate": "2024-10-01T00:00:00Z",
+        "contentUrl": forecastsProjectVideo,
+        "embedUrl": forecastsProjectVideo
+      }
+    ]
   };
 
   return (
@@ -437,6 +475,10 @@ const Lighthouse = () => {
         ogType="website"
         canonicalUrl="https://letpeople.work/lighthouse"
         structuredData={structuredData}
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Lighthouse", url: "/lighthouse" }
+        ]}
       />
       <Navigation />
 
@@ -447,8 +489,12 @@ const Lighthouse = () => {
             <div className="flex justify-center mb-8">
               <img
                 src={lighthouseLogo}
-                alt="Lighthouse Logo"
+                alt="Lighthouse Flow Metrics Tool Logo"
                 className="h-20 w-auto"
+                width="80"
+                height="80"
+                loading="eager"
+                fetchPriority="high"
               />
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">

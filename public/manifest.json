@@ -1,0 +1,25 @@
+{
+  "name": "LetPeopleWork - Flow Metrics & Forecasting",
+  "short_name": "LetPeopleWork",
+  "description": "Transform your organization with Lighthouse - the leading open-source flow metrics and forecasting tool.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1a1a1a",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity"]
+}

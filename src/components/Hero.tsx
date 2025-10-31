@@ -23,8 +23,12 @@ const Hero = () => {
       <div className="absolute inset-0 z-0">
         <img 
           src={heroFlow} 
-          alt="Flow visualization"
+          alt="Flow visualization background showing agile workflow"
           className="w-full h-full object-cover opacity-10"
+          width="1920"
+          height="1080"
+          loading="eager"
+          fetchPriority="high"
         />
         <div className="absolute inset-0 bg-gradient-to-br from-background/80 to-background/60" />
       </div>

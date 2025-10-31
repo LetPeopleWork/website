@@ -17,8 +17,11 @@ const ExpertiseSection = () => {
                 <h3 className="text-xl font-semibold text-primary mb-3">Peter Zylka-Greger</h3>
                 <img 
                   src={PeterImage} 
-                  alt="Peter Zylka-Greger" 
+                  alt="Peter Zylka-Greger - Flow and Kanban Expert" 
                   className="w-20 h-20 rounded-full object-cover border-2 border-primary/20 mx-auto"
+                  width="80"
+                  height="80"
+                  loading="lazy"
                 />
               </div>
               <p className="text-muted-foreground">
@@ -39,8 +42,11 @@ const ExpertiseSection = () => {
                 <h3 className="text-xl font-semibold text-primary mb-3">Benjamin Huser-Berta</h3>
                 <img 
                   src={BenjiImage} 
-                  alt="Benjamin Huser-Berta" 
+                  alt="Benjamin Huser-Berta - Software Engineer and Scrum Master" 
                   className="w-20 h-20 rounded-full object-cover border-2 border-primary/20 mx-auto"
+                  width="80"
+                  height="80"
+                  loading="lazy"
                 />
               </div>
               <p className="text-muted-foreground">

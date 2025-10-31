@@ -98,7 +98,15 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0">
             <a href="/" className="flex items-center">
-              <img src={logo} alt="#LetPeople.work" className="h-8" />
+              <img 
+                src={logo} 
+                alt="LetPeopleWork Logo" 
+                className="h-8" 
+                width="180" 
+                height="32"
+                loading="eager"
+                fetchPriority="high"
+              />
             </a>
           </div>
 
