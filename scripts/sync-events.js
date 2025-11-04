@@ -127,7 +127,7 @@ async function main() {
   });
 
   const output = { events: allEvents };
-  fs.writeFileSync('events-data.json', JSON.stringify(output, null, 2));
+  fs.writeFileSync('public/events-data.json', JSON.stringify(output, null, 2));
 
   console.log(`\n✨ Successfully synced ${allEvents.length} total events`);
   console.log(`   - Meetup: ${meetupEvents.length}`);
