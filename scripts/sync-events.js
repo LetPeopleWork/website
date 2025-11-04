@@ -71,8 +71,15 @@ async function fetchTicketTailorEvents() {
         const minPrice = prices.length > 0 ? Math.min(...prices) : null;
         const maxPrice = prices.length > 0 ? Math.max(...prices) : null;
 
+        // Map currency codes to symbols
+        const currencySymbol = {
+          'eur': '€',
+          'usd': '$',
+          'chf': 'CHF'
+        }[event.currency?.toLowerCase()] || '$';
+
         let priceDisplay = 'Free';
-        if (minPrice && maxPrice) priceDisplay = minPrice === maxPrice ? `${event.currency}${minPrice}` : `${event.currency}${minPrice} - ${event.currency}${maxPrice}`;
+        if (minPrice && maxPrice) priceDisplay = minPrice === maxPrice ? `${currencySymbol}${minPrice}` : `${currencySymbol}${minPrice} - ${currencySymbol}${maxPrice}`;
 
         return {
           type: determineEventType(event.description),
