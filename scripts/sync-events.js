@@ -126,7 +126,7 @@ async function main() {
     return new Date(a.date) - new Date(b.date);
   });
 
-  const output = { lastUpdated: new Date().toISOString(), events: allEvents };
+  const output = { events: allEvents };
   fs.writeFileSync('events-data.json', JSON.stringify(output, null, 2));
 
   console.log(`\n✨ Successfully synced ${allEvents.length} total events`);

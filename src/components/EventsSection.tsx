@@ -9,7 +9,6 @@ const EventsSection = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [lastUpdated, setLastUpdated] = useState(null);
 
   // Manual events - these will always be included
   const manualEvents = [
@@ -68,7 +67,6 @@ const EventsSection = () => {
         .sort((a, b) => a.date - b.date);
 
       setEvents(upcomingEvents);
-      setLastUpdated(new Date(externalData.lastUpdated));
       setError(null);
     } catch (err) {
       console.error('Error fetching events:', err);
@@ -111,12 +109,6 @@ const EventsSection = () => {
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Join our public workshops, trainings, or meet us at conferences.
           </p>
-          {lastUpdated && (
-            <p className="text-sm text-muted-foreground mt-4 flex items-center justify-center gap-2">
-              <RefreshCw className="h-3 w-3" />
-              Events updated: {lastUpdated.toLocaleString()}
-            </p>
-          )}
         </div>
 
         {/* Error Alert */}
