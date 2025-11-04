@@ -13,6 +13,8 @@ on:
 
 jobs:
   sync-events:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     
     steps:
