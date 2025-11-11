@@ -69,10 +69,12 @@ serve(async (req)=>{
         organization,
         valid_from
       });
-      // Calculate expiry date (1 year from now)
-      const computedExpiry = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]; // Format: YYYY-MM-DD
       // Use valid_from from metadata or default to today
       const computedValidFrom = valid_from || new Date().toISOString().split('T')[0];
+      // Calculate expiry date (1 year from valid_from date)
+      const validFromDate = new Date(computedValidFrom);
+      const expiryDate = new Date(validFromDate.getTime() + 365 * 24 * 60 * 60 * 1000);
+      const computedExpiry = expiryDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
       // Trigger GitHub Action
       const githubToken = Deno.env.get("GITHUB_TOKEN");
       const repo = 'LetPeopleWork/Lighthouse';
