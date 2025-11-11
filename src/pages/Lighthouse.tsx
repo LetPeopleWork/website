@@ -59,6 +59,24 @@ const Lighthouse = () => {
   const [showLegalDialog, setShowLegalDialog] = useState(false);
   const { toast } = useToast();
 
+  // Pre-fill form from URL parameters on mount
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const name = urlParams.get('name');
+    const email = urlParams.get('email');
+    const organization = urlParams.get('organization');
+    const validFrom = urlParams.get('validFrom');
+
+    if (name || email || organization || validFrom) {
+      setPurchaseForm(prev => ({
+        name: name || prev.name,
+        email: email || prev.email,
+        organization: organization || prev.organization,
+        validFrom: validFrom ? new Date(validFrom) : prev.validFrom
+      }));
+    }
+  }, []);
+
   // Fetch latest version from GitHub releases
   useEffect(() => {
     const fetchLatestVersion = async () => {
