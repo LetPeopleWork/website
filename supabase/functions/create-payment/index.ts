@@ -10,7 +10,7 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const { name, email, organization } = await req.json();
+    const { name, email, organization, validFrom } = await req.json();
     if (!name || !email) throw new Error("Name and email are required");
 
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", { apiVersion: "2023-10-16" });
@@ -27,7 +27,8 @@ serve(async (req) => {
       metadata: {
         customer_name: name,
         customer_email: email,
-        organization: organization || ""
+        organization: organization || "",
+        valid_from: validFrom || new Date().toISOString().split('T')[0] // Default to today if not provided
       },
       success_url: `${req.headers.get("origin")}/lighthouse?payment=success`,
       cancel_url: `${req.headers.get("origin")}/lighthouse?payment=canceled`

@@ -56,7 +56,7 @@ serve(async (req)=>{
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
       // Extract customer information from metadata
-      const { customer_name, customer_email, organization, license_type } = session.metadata || {};
+      const { customer_name, customer_email, organization, license_type, valid_from } = session.metadata || {};
       if (!customer_name || !customer_email) {
         console.error("Missing required customer information in metadata");
         return new Response("Missing customer information", {
@@ -66,10 +66,13 @@ serve(async (req)=>{
       console.log("Processing successful payment for:", {
         customer_name,
         customer_email,
-        organization
+        organization,
+        valid_from
       });
       // Calculate expiry date (1 year from now)
       const computedExpiry = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]; // Format: YYYY-MM-DD
+      // Use valid_from from metadata or default to today
+      const computedValidFrom = valid_from || new Date().toISOString().split('T')[0];
       // Trigger GitHub Action
       const githubToken = Deno.env.get("GITHUB_TOKEN");
       const repo = 'LetPeopleWork/Lighthouse';
@@ -94,7 +97,8 @@ serve(async (req)=>{
             name: customer_name,
             email: customer_email,
             organization: organization || '',
-            expiry: computedExpiry
+            expiry: computedExpiry,
+            valid_from: computedValidFrom
           }
         })
       });

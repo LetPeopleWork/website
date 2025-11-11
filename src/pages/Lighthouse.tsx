@@ -1,4 +1,4 @@
-import { ArrowRight, Target, FileText, Download, Monitor, Smartphone, Container, Copy, Check, Shield, ChevronDown, ChevronUp, User, Mail, Building, CheckCircle, XCircle, Info, Hammer, Calendar, BarChart3 } from "lucide-react";
+import { ArrowRight, Target, FileText, Download, Monitor, Smartphone, Container, Copy, Check, Shield, ChevronDown, ChevronUp, User, Mail, Building, CheckCircle, XCircle, Info, Hammer, Calendar as CalendarIcon, BarChart3 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,6 +9,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
 import Navigation from "@/components/Navigation";
 import SimpleFooter from "@/components/SimpleFooter";
 import MediaCarousel from "@/components/MediaCarousel";
@@ -18,6 +20,7 @@ import lighthouseLogo from "@/assets/LighthouseLogo.png";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 import LighthouseTestimonials from "@/components/LighthouseTestimonials";
+import { format } from "date-fns";
 import metricsTeam1 from "@/assets/screenshots/Metrics_Team_1.png";
 import metricsProject1 from "@/assets/screenshots/Metrics_Project_1.png";
 import forecastsTeamManual from "@/assets/screenshots/Forecasts_Team_Manual.png";
@@ -38,7 +41,8 @@ const Lighthouse = () => {
   const [purchaseForm, setPurchaseForm] = useState({
     name: '',
     email: '',
-    organization: ''
+    organization: '',
+    validFrom: new Date() // Default to today
   });
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [paymentResult, setPaymentResult] = useState<{
@@ -343,6 +347,7 @@ const Lighthouse = () => {
           name: purchaseForm.name,
           email: purchaseForm.email,
           organization: purchaseForm.organization,
+          validFrom: format(purchaseForm.validFrom, 'yyyy-MM-dd'), // Format as YYYY-MM-DD
         },
       });
 
@@ -1013,6 +1018,37 @@ const Lighthouse = () => {
                         value={purchaseForm.organization}
                         onChange={(e) => setPurchaseForm({ ...purchaseForm, organization: e.target.value })}
                       />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="validFrom" className="flex items-center space-x-2">
+                        <CalendarIcon className="h-4 w-4" />
+                        <span>License Valid From</span>
+                      </Label>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            id="validFrom"
+                            variant="outline"
+                            className="w-full justify-start text-left font-normal"
+                          >
+                            <CalendarIcon className="mr-2 h-4 w-4" />
+                            {purchaseForm.validFrom ? format(purchaseForm.validFrom, "PPP") : <span>Pick a date</span>}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0">
+                          <Calendar
+                            mode="single"
+                            selected={purchaseForm.validFrom}
+                            onSelect={(date) => date && setPurchaseForm({ ...purchaseForm, validFrom: date })}
+                            disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      <p className="text-xs text-muted-foreground">
+                        Choose when you want your license to start being valid. Defaults to today.
+                      </p>
                     </div>
                   </div>
 
