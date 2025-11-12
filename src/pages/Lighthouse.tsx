@@ -833,14 +833,14 @@ const Lighthouse = () => {
                   <tr>
                     <td className="py-3 px-4 text-muted-foreground">
                       <div className="flex items-center space-x-2">
-                        <span>Flow Consultant</span>
+                        <span>Data Export & Sharing</span>
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger>
                               <Info className="h-4 w-4 text-blue-500" />
                             </TooltipTrigger>
                             <TooltipContent>
-                              <p className="text-sm">Get actionable tips to improve your flow based on your data</p>
+                              <p className="text-sm">Export flow metrics data to CSV or clipboard for sharing via email or custom analysis</p>
                             </TooltipContent>
                           </Tooltip>
                         </TooltipProvider>
@@ -850,16 +850,7 @@ const Lighthouse = () => {
                       <XCircle className="h-5 w-5 text-red-500 mx-auto" />
                     </td>
                     <td className="py-3 px-4 text-center">
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger>
-                            <Hammer className="h-5 w-5 text-blue-500 mx-auto" />
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p className="text-sm">Work in Progress</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
+                      <Check className="h-5 w-5 text-green-600 mx-auto" />
                     </td>
                   </tr>
                   <tr>
@@ -880,15 +871,18 @@ const Lighthouse = () => {
                     </td>
                     <td className="py-3 px-4 text-center">
                       <XCircle className="h-5 w-5 text-red-500 mx-auto" />
+                    </td>                    
+                    <td className="py-3 px-4 text-center">
+                      <XCircle className="h-5 w-5 text-red-500 mx-auto" />
                     </td>
                     <td className="py-3 px-4 text-center">
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger>
-                            <Calendar className="h-5 w-5 text-orange-500 mx-auto" />
+                            <Hammer className="h-5 w-5 text-blue-500 mx-auto" />
                           </TooltipTrigger>
                           <TooltipContent>
-                            <p className="text-sm">On the Roadmap</p>
+                            <p className="text-sm">Work in Progress</p>
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
