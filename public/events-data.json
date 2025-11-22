@@ -1,24 +1,9 @@
 {
   "events": [
     {
-      "type": [
-        "Workshop"
-      ],
-      "title": "Probabilistic Forecasting at Scale",
-      "date": "2025-11-18",
-      "displayDate": "Nov 18, 2025",
-      "time": "1:00 AM - 1:00 AM +01:00",
-      "location": "Zoom",
-      "price": "eur150 - eur200",
-      "description": "🚀 Probabilistic Forecasting at Scale – A Hands-On Workshop ⏱ Duration: 4 hours Traditional planning often struggles when scaling across teams, portfolios, and complex initiatives. This workshop introduces a practical, data-driven approach to forecasting delivery using Monte Carlo simulations at the...",
-      "ctaText": "Buy Tickets",
-      "ctaLink": "https://www.tickettailor.com/events/letpeoplework/1891877",
-      "source": "tickettailor"
-    },
-    {
       "type": "Meetup",
       "title": "Flow Metrics: From Knowledge to Practice",
-      "date": "2025-12-08T23:00:00.000Z",
+      "date": "2025-12-09T00:00:00.000Z",
       "displayDate": "Dec 9, 2025",
       "time": "",
       "location": "Online",
@@ -35,9 +20,9 @@
       "title": "🎯 Applying Scaled Portfolio Kanban (ASPK)",
       "date": "2026-01-13",
       "displayDate": "Jan 13, 2026",
-      "time": "1:00 AM - 1:00 AM +01:00",
+      "time": "12:00 AM - 12:00 AM +01:00",
       "location": "Zoom",
-      "price": "usd890 - usd990",
+      "price": "$890 - $990",
       "description": "🎯 Applying Scaled Portfolio Kanban (ASPK) Are you a leader asking, “What are our teams working on?”, “How well does our execution match our strategy?”, or “When will the new release be ready?” If so, this course is for you. Applying Scaled Portfolio Kanban (ASPK) is a hands-on workshop designed for...",
       "ctaText": "Buy Tickets",
       "ctaLink": "https://www.tickettailor.com/events/letpeoplework/1871010",

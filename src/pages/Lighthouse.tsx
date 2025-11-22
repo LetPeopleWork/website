@@ -1,4 +1,4 @@
-import { ArrowRight, Target, FileText, Download, Monitor, Smartphone, Container, Copy, Check, Shield, ChevronDown, ChevronUp, User, Mail, Building, CheckCircle, XCircle, Info, Hammer, Calendar, BarChart3 } from "lucide-react";
+import { ArrowRight, Target, FileText, Download, Monitor, Smartphone, Container, Copy, Check, Shield, ChevronDown, ChevronUp, User, Mail, Building, CheckCircle, XCircle, Info, Hammer, Calendar as CalendarIcon, BarChart3 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,6 +9,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
 import Navigation from "@/components/Navigation";
 import SimpleFooter from "@/components/SimpleFooter";
 import MediaCarousel from "@/components/MediaCarousel";
@@ -18,6 +20,7 @@ import lighthouseLogo from "@/assets/LighthouseLogo.png";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 import LighthouseTestimonials from "@/components/LighthouseTestimonials";
+import { format } from "date-fns";
 import metricsTeam1 from "@/assets/screenshots/Metrics_Team_1.png";
 import metricsProject1 from "@/assets/screenshots/Metrics_Project_1.png";
 import forecastsTeamManual from "@/assets/screenshots/Forecasts_Team_Manual.png";
@@ -38,7 +41,8 @@ const Lighthouse = () => {
   const [purchaseForm, setPurchaseForm] = useState({
     name: '',
     email: '',
-    organization: ''
+    organization: '',
+    validFrom: new Date() // Default to today
   });
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [paymentResult, setPaymentResult] = useState<{
@@ -54,6 +58,24 @@ const Lighthouse = () => {
   });
   const [showLegalDialog, setShowLegalDialog] = useState(false);
   const { toast } = useToast();
+
+  // Pre-fill form from URL parameters on mount
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const name = urlParams.get('name');
+    const email = urlParams.get('email');
+    const organization = urlParams.get('organization');
+    const validFrom = urlParams.get('validFrom');
+
+    if (name || email || organization || validFrom) {
+      setPurchaseForm(prev => ({
+        name: name || prev.name,
+        email: email || prev.email,
+        organization: organization || prev.organization,
+        validFrom: validFrom ? new Date(validFrom) : prev.validFrom
+      }));
+    }
+  }, []);
 
   // Fetch latest version from GitHub releases
   useEffect(() => {
@@ -343,6 +365,7 @@ const Lighthouse = () => {
           name: purchaseForm.name,
           email: purchaseForm.email,
           organization: purchaseForm.organization,
+          validFrom: format(purchaseForm.validFrom, 'yyyy-MM-dd'), // Format as YYYY-MM-DD
         },
       });
 
@@ -810,14 +833,14 @@ const Lighthouse = () => {
                   <tr>
                     <td className="py-3 px-4 text-muted-foreground">
                       <div className="flex items-center space-x-2">
-                        <span>Flow Consultant</span>
+                        <span>Data Export & Sharing</span>
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger>
                               <Info className="h-4 w-4 text-blue-500" />
                             </TooltipTrigger>
                             <TooltipContent>
-                              <p className="text-sm">Get actionable tips to improve your flow based on your data</p>
+                              <p className="text-sm">Export flow metrics data to CSV or clipboard for sharing via email or custom analysis</p>
                             </TooltipContent>
                           </Tooltip>
                         </TooltipProvider>
@@ -827,16 +850,7 @@ const Lighthouse = () => {
                       <XCircle className="h-5 w-5 text-red-500 mx-auto" />
                     </td>
                     <td className="py-3 px-4 text-center">
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger>
-                            <Hammer className="h-5 w-5 text-blue-500 mx-auto" />
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p className="text-sm">Work in Progress</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
+                      <Check className="h-5 w-5 text-green-600 mx-auto" />
                     </td>
                   </tr>
                   <tr>
@@ -857,15 +871,18 @@ const Lighthouse = () => {
                     </td>
                     <td className="py-3 px-4 text-center">
                       <XCircle className="h-5 w-5 text-red-500 mx-auto" />
+                    </td>                    
+                    <td className="py-3 px-4 text-center">
+                      <XCircle className="h-5 w-5 text-red-500 mx-auto" />
                     </td>
                     <td className="py-3 px-4 text-center">
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger>
-                            <Calendar className="h-5 w-5 text-orange-500 mx-auto" />
+                            <Hammer className="h-5 w-5 text-blue-500 mx-auto" />
                           </TooltipTrigger>
                           <TooltipContent>
-                            <p className="text-sm">On the Roadmap</p>
+                            <p className="text-sm">Work in Progress</p>
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
@@ -1013,6 +1030,37 @@ const Lighthouse = () => {
                         value={purchaseForm.organization}
                         onChange={(e) => setPurchaseForm({ ...purchaseForm, organization: e.target.value })}
                       />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="validFrom" className="flex items-center space-x-2">
+                        <CalendarIcon className="h-4 w-4" />
+                        <span>License Valid From</span>
+                      </Label>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            id="validFrom"
+                            variant="outline"
+                            className="w-full justify-start text-left font-normal"
+                          >
+                            <CalendarIcon className="mr-2 h-4 w-4" />
+                            {purchaseForm.validFrom ? format(purchaseForm.validFrom, "PPP") : <span>Pick a date</span>}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0">
+                          <Calendar
+                            mode="single"
+                            selected={purchaseForm.validFrom}
+                            onSelect={(date) => date && setPurchaseForm({ ...purchaseForm, validFrom: date })}
+                            disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      <p className="text-xs text-muted-foreground">
+                        Choose when you want your license to start being valid. Defaults to today.
+                      </p>
                     </div>
                   </div>
 
