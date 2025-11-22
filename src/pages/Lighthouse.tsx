@@ -1036,6 +1036,31 @@ const Lighthouse = () => {
         </div>
       </section>
 
+      {/* Small 'Convince Stakeholders' section - added to provide a downloadable pitch deck */}
+      <section id="lighthouse-convince" className="py-12 bg-gradient-card">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-6">
+            <h3 className="text-2xl font-semibold text-foreground">
+              Need something to convince people in your company?
+            </h3>
+            <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
+              If you need a short, professional deck to share with stakeholders and decision-makers, download our pitch deck and use it in your next meeting.
+            </p>
+            <div className="mt-4">
+              <a
+                href="/Lighthouse_Pitch_Deck.pdf"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-white hover:opacity-90 transition-opacity"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Download className="h-4 w-4" />
+                Pitch Deck (PDF)
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Detailed Features Section */}
       <section id="lighthouse-features" className="py-20 bg-gradient-subtle">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
