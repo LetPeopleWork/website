@@ -11,6 +11,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
+import { EFFECTIVE_DATE } from "@/lib/legal";
 
 interface LegalInfoDialogProps {
   open: boolean;
@@ -165,7 +166,7 @@ const LegalInfoDialog: React.FC<LegalInfoDialogProps> = ({
                 <div>
                   <h2 className="text-lg font-semibold mb-2 text-foreground">9. Changes to This Policy</h2>
                   <p>We may update this document if services change. The version in force is the one published on our website, with the effective date noted.</p>
-                  <p className="mt-2 font-semibold">Effective Date: August 4, 2025</p>
+                  <p className="mt-2 font-semibold">Effective Date: {EFFECTIVE_DATE}</p>
                 </div>
               </div>
             </div>
@@ -341,13 +342,14 @@ const LegalInfoDialog: React.FC<LegalInfoDialogProps> = ({
                     <li>VfL Bochum</li>
                     <li>FC Barcelona</li>
                     <li>Dagenham & Redbridge FC</li>
+                    <li>Wycombe Wanderers F.C.</li>
                     <li>Philadelphia Eagles</li>
                     <li>Cleveland Browns</li>
                   </ul>
                   <p className="mt-2">
                     This clause is strictly non-binding, has no legal consequences, and does not affect your rights, licenses, or obligations in any way. However, failure to show appropriate enthusiasm for these teams may result in harmless banter or unsolicited memes in future correspondence.
                   </p>
-                  <p className="mt-4 font-semibold">Effective Date: August 4, 2025</p>
+                  <p className="mt-4 font-semibold">Effective Date: {EFFECTIVE_DATE}</p>
                 </div>
               </div>
             </div>
