@@ -27,6 +27,36 @@
       "ctaText": "Buy Tickets",
       "ctaLink": "https://www.tickettailor.com/events/letpeoplework/1871010",
       "source": "tickettailor"
+    },
+    {
+      "type": [
+        "Workshop"
+      ],
+      "title": "Probabilistic Forecasting at Scale",
+      "date": "2026-02-24",
+      "displayDate": "Feb 24, 2026",
+      "time": "12:00 AM - 12:00 AM +01:00",
+      "location": "Zoom",
+      "price": "€150 - €200",
+      "description": "🚀 Probabilistic Forecasting at Scale – A Hands-On Workshop ⏱ Duration: 4 hours Traditional planning often struggles when scaling across teams, portfolios, and complex initiatives. This workshop introduces a practical, data-driven approach to forecasting delivery using Monte Carlo simulations at the...",
+      "ctaText": "Buy Tickets",
+      "ctaLink": "https://www.tickettailor.com/events/letpeoplework/1972325",
+      "source": "tickettailor"
+    },
+    {
+      "type": [
+        "Workshop"
+      ],
+      "title": "Probabilistic Forecasting at Scale",
+      "date": "2026-04-21",
+      "displayDate": "Apr 21, 2026",
+      "time": "12:00 AM - 12:00 AM +02:00",
+      "location": "Zoom",
+      "price": "€150 - €200",
+      "description": "🚀 Probabilistic Forecasting at Scale – A Hands-On Workshop ⏱ Duration: 4 hours Traditional planning often struggles when scaling across teams, portfolios, and complex initiatives. This workshop introduces a practical, data-driven approach to forecasting delivery using Monte Carlo simulations at the...",
+      "ctaText": "Buy Tickets",
+      "ctaLink": "https://www.tickettailor.com/events/letpeoplework/1972327",
+      "source": "tickettailor"
     }
   ]
 }
