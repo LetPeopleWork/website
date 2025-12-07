@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Calendar, Clock, MapPin, ExternalLink, GraduationCap, Wrench, Mic, Building, DollarSign, Star, MessageCircle, AlertCircle, RefreshCw } from "lucide-react";
+import { Calendar, MapPin, ExternalLink, GraduationCap, Wrench, Mic, Building, DollarSign, Star, MessageCircle, AlertCircle, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -167,12 +167,7 @@ const EventsSection = () => {
                       {event.displayDate}
                     </div>
 
-                    {event.time && (
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <Clock className="h-4 w-4 mr-3 text-primary" />
-                        {event.time}
-                      </div>
-                    )}
+                    {/* time intentionally omitted: show only date */}
 
                     <div className="flex items-center text-sm text-muted-foreground">
                       <MapPin className="h-4 w-4 mr-3 text-primary" />
