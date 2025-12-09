@@ -1,19 +1,6 @@
 {
   "events": [
     {
-      "type": "Meetup",
-      "title": "Flow Metrics: From Knowledge to Practice",
-      "date": "2025-12-09T00:00:00.000Z",
-      "displayDate": "Dec 9, 2025",
-      "time": "",
-      "location": "Online",
-      "price": "Free",
-      "description": "Lighthouse Live on 09.12.2025 focuses on **Flow Metrics: From Knowledge to Practice**:\nDiscover how teams and organizations use flow metrics to simplify planning, improve predictability, and improve their flow.\n\nJoin us to learn and exchange ideas....",
-      "ctaText": "RSVP on Meetup",
-      "ctaLink": "https://www.meetup.com/let-people-work-online-meetup-group/events/311794531/",
-      "source": "meetup"
-    },
-    {
       "type": [
         "Workshop"
       ],
