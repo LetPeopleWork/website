@@ -418,7 +418,8 @@ const Lighthouse = () => {
       "Throughput Analysis",
       "Cycle Time Tracking",
       "Lead Time Metrics",
-      "Work In Progress Limits"
+      "Work In Progress Limits",
+      "Deliveries"
     ],
     "screenshot": "https://letpeople.work/forecasts-project.png",
     "aggregateRating": {
@@ -777,6 +778,11 @@ const Lighthouse = () => {
                     <td className="py-3 px-4 text-center text-muted-foreground">Basic Scenarios</td>
                     <td className="py-3 px-4 text-center text-foreground font-semibold bg-gradient-primary bg-clip-text text-transparent">Advanced Scenarios</td>
                   </tr>
+                  <tr>
+                    <td className="py-3 px-4 text-muted-foreground">Deliveries</td>
+                    <td className="py-3 px-4 text-center text-muted-foreground">1 Delivery</td>
+                    <td className="py-3 px-4 text-center text-foreground font-semibold bg-gradient-primary bg-clip-text text-transparent">Unlimited</td>
+                  </tr>
 
                   {/* Premium Features */}
                   <tr>
@@ -851,41 +857,6 @@ const Lighthouse = () => {
                     </td>
                     <td className="py-3 px-4 text-center">
                       <Check className="h-5 w-5 text-green-600 mx-auto" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="py-3 px-4 text-muted-foreground">
-                      <div className="flex items-center space-x-2">
-                        <span>Improved Milestones</span>
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger>
-                              <Info className="h-4 w-4 text-blue-500" />
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p className="text-sm">Define which Features are relevant for which milestone</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4 text-center">
-                      <XCircle className="h-5 w-5 text-red-500 mx-auto" />
-                    </td>                    
-                    <td className="py-3 px-4 text-center">
-                      <XCircle className="h-5 w-5 text-red-500 mx-auto" />
-                    </td>
-                    <td className="py-3 px-4 text-center">
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger>
-                            <Hammer className="h-5 w-5 text-blue-500 mx-auto" />
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p className="text-sm">Work in Progress</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
                     </td>
                   </tr>
                 </tbody>
