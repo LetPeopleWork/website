@@ -37,7 +37,7 @@ Lighthouse is an open-source flow metrics and forecasting tool that connects to 
 - Premium Version: CHF 999 yearly fee, adds unlimited teams and projects, and continuously extended premium features as well as an AI integration through MCP.
 
 **How do I install Lighthouse?**
-Lighthouse is available for Windows, macOS, Linux, and Docker. Download from GitHub releases or use the Docker image: `ghcr.io/letpeoplework/lighthouse:latest`
+Lighthouse is available for Windows (Binaries), macOS (Installer (dmg) and App Bundle (.app)), Linux (Binaries), and Container (Docker). Download artifacts from GitHub releases (macOS: `Lighthouse-osx.dmg` and `Lighthouse-osx.app.zip`) or use the Container image: `ghcr.io/letpeoplework/lighthouse:latest`
 
 **What systems does Lighthouse integrate with?**
 Currently supports Jira and Azure DevOps, with plans for additional ALM tool integrations.

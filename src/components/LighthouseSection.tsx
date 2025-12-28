@@ -39,8 +39,10 @@ const LighthouseSection = () => {
     switch (platform) {
       case 'windows':
         return `${baseUrl}/Lighthouse-win-x64.zip`;
-      case 'macos':
-        return `${baseUrl}/Lighthouse-osx-x64.zip`;
+      case 'macos-dmg':
+        return `${baseUrl}/Lighthouse-osx.dmg`;
+      case 'macos-app':
+        return `${baseUrl}/Lighthouse-osx.app.zip`;
       case 'linux':
         return `${baseUrl}/Lighthouse-linux-x64.zip`;
       default:
@@ -68,10 +70,16 @@ const LighthouseSection = () => {
       action: () => window.open(getPlatformDownloadUrl('windows'), '_blank')
     },
     {
-      id: 'macos',
-      name: 'macOS',
-      icon: <Smartphone className="h-4 w-4" />,
-      action: () => window.open(getPlatformDownloadUrl('macos'), '_blank')
+      id: 'macos-dmg',
+      name: 'macOS Installer',
+      icon: <Download className="h-4 w-4" />,
+      action: () => window.open(getPlatformDownloadUrl('macos-dmg'), '_blank')
+    },
+    {
+      id: 'macos-app',
+      name: 'macOS App',
+      icon: <Monitor className="h-4 w-4" />,
+      action: () => window.open(getPlatformDownloadUrl('macos-app'), '_blank')
     },
     {
       id: 'linux',
@@ -81,7 +89,7 @@ const LighthouseSection = () => {
     },
     {
       id: 'docker',
-      name: 'Docker',
+      name: 'Container',
       icon: <Container className="h-4 w-4" />,
       action: () => copyToClipboard(dockerCommand)
     }
@@ -213,19 +221,20 @@ const LighthouseSection = () => {
                   <DropdownMenuItem
                     key={platform.id}
                     onClick={platform.action}
+                    aria-label={platform.id === 'docker' ? `Copy ${platform.name} command` : `Download ${platform.name}`}
                     className="flex items-center space-x-3 p-3 cursor-pointer"
                   >
                     {platform.icon}
                     <div className="flex-1">
                       <div className="font-medium">{platform.name}</div>
                       {platform.id === 'docker' ? (
-                        <div className="text-xs text-muted-foreground">
-                          {copiedCommand ? 'Copied!' : 'Copy command'}
-                        </div>
+                        <div className="text-xs text-muted-foreground">Copy command</div>
+                      ) : platform.id === 'macos-dmg' ? (
+                        <div className="text-xs text-muted-foreground">Download dmg</div>
+                      ) : platform.id === 'macos-app' ? (
+                        <div className="text-xs text-muted-foreground">Download App Bundle</div>
                       ) : (
-                        <div className="text-xs text-muted-foreground">
-                          {isLoadingVersion ? 'Loading...' : `Version ${latestVersion}`}
-                        </div>
+                        <div className="text-xs text-muted-foreground">Download Binaries</div>
                       )}
                     </div>
                     {platform.id === 'docker' && copiedCommand && (
