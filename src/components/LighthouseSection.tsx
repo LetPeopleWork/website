@@ -202,7 +202,7 @@ const LighthouseSection = () => {
         {/* CTA Section */}
         <div className="text-center bg-gradient-subtle rounded-2xl p-12 border border-border mb-16">
           <h3 className="text-2xl font-bold text-foreground mb-4">
-            Try the Community Versiion of Lighthouse Today
+            Try the Community Version of Lighthouse Today
           </h3>
           <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
             No credit card. No account. No hassle.
