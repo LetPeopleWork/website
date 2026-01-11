@@ -1,9 +1,31 @@
-import { useState, useEffect } from 'react';
-import { Calendar, MapPin, ExternalLink, GraduationCap, Wrench, Mic, Building, DollarSign, Star, MessageCircle, AlertCircle, RefreshCw } from "lucide-react";
+import { useState, useEffect, useCallback } from 'react';
+import { Calendar, MapPin, ExternalLink, GraduationCap, Wrench, Mic, Building, DollarSign, Star, MessageCircle, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+
+const manualEvents = [
+  {
+    type: ["Talk"],
+    title: "Agile Breakfast Aarau – Die Planungsillusion besiegen",
+    date: new Date("2026-02-27"),
+    displayDate: "Feb 27, 2026",
+    time: "8:30 AM - 10:30 AM CET",
+    location: "Aarau, AKB Lab, Bahnhofpl. 1, 5001 Aarau",
+    price: "Free",
+    description: `Nimm an diesem Meetup teil, in welchem wir aufhören, gegen unsere Biologie anzukämpfen, und anfangen, sie zu nutzen. Mit Liberating Structures erforschen wir gemeinsam, wie dein Team von System 1 (Intuition/Rauschen) zu System 2 (Statistik/Genauigkeit) bewegen kann.
+    
+    Was wir lernen werden:
+    • Die versteckten Kosten von Rauschen: Warum Ihre „Confidence Votes" und „Story Points" möglicherweise Ihre Vorhersagbarkeit untergraben.
+    • Die Kraft der „Aussenperspektive": Wie Sie die historischen Daten Ihres Teams nutzen, um Prognosen zu erstellen, die tatsächlich Bestand haben.
+    • Tools und praktiken für Entscheidungshygiene: Ein praktischer Einblick, wie Sie Monte Carlo Simulationen nutzen um ein „Ich denke" in „Die Daten zeigen" verwandeln.
+    • Szenarioplanung: Wie Sie „Best-Case/Worst-Case"-Roadmaps für Stakeholder präsentieren, die Vertrauen aufbauen statt falsche Hoffnungen zu wecken.`,
+    ctaText: "Register",
+    ctaLink: "https://events.valuetalks.ch/events/agile-breakfast-aarau-die-planungsillusion-besiegen-27-02-2026",
+    source: "manual"
+  },
+];
 
 const EventsSection = () => {
   const [events, setEvents] = useState([]);
@@ -11,29 +33,9 @@ const EventsSection = () => {
   const [error, setError] = useState(null);
 
   // Manual events - these will always be included
-  const manualEvents = [
-    /*{
-      type: ["Workshop"],
-      title: "🚀 Probabilistic Forecasting at Scale",
-      date: new Date("2025-11-18"),
-      displayDate: "Nov 18, 2025",
-      time: "1:00 PM - 5:00 PM CET",
-      location: "Online (Zoom)",
-      price: "150€ (Early Bird), 200€ (Regular)",
-      description: `A hands-on workshop introducing a practical, data-driven approach to forecasting delivery using Monte Carlo simulations at the portfolio level. Learn to right-size Features and Epics to make them forecastable, run forecasts across multiple teams, and understand how dependencies influence predictability and risk.
-      
-      The workshop includes 1 month of Lighthouse Premium License, 1-hour consulting session with an expert trainer, and a 10% discount if you join our Applying Scaled Portfolio Kanban (ASPK) training.`,
-      ctaText: "Buy Tickets",
-      ctaLink: "https://www.tickettailor.com/events/letpeoplework/1891877",
-      source: "manual"
-    },*/
-  ];
+  // const manualEvents = [
 
-  useEffect(() => {
-    fetchEvents();
-  }, []);
-
-  const fetchEvents = async () => {
+  const fetchEvents = useCallback(async () => {
     try {
       setLoading(true);
       
@@ -78,7 +80,11 @@ const EventsSection = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchEvents();
+  }, [fetchEvents]);
 
   const getTypeIcon = (type) => {
     switch (type) {
@@ -120,16 +126,20 @@ const EventsSection = () => {
         )}
 
         {/* Loading State */}
-        {loading ? (
+        {loading && (
           <div className="text-center py-12">
             <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent"></div>
             <p className="mt-4 text-muted-foreground">Loading events...</p>
           </div>
-        ) : events.length === 0 ? (
+        )}
+
+        {!loading && events.length === 0 && (
           <div className="text-center py-12">
             <p className="text-muted-foreground">No upcoming events at the moment. Check back soon!</p>
           </div>
-        ) : (
+        )}
+
+        {!loading && events.length > 0 && (
           /* Events Grid */
           <div className="grid lg:grid-cols-3 gap-8 mb-16">
             {events.map((event, index) => (
