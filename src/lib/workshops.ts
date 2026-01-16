@@ -65,7 +65,7 @@ export const workshops: Workshop[] = [
     ],
     pricing: {
       onSite: "CHF 4,500",
-      remote: "CHF 3,000",
+      remote: "CHF 3,500",
       includes: "1 Annual Enterprise License for Lighthouse Premium",
     },
   },

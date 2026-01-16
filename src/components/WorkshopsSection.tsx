@@ -130,8 +130,10 @@ const WorkshopsSection = () => {
                     )}
                   </div>
 
-                  <Button className="w-full" size="lg" variant="default">
-                    Schedule Workshop
+                  <Button className="w-full" size="lg" variant="default" asChild>
+                    <a href={`mailto:contact@letpeople.work?subject=Request for ${encodeURIComponent(workshop.title)}`}>
+                      Schedule Workshop
+                    </a>
                   </Button>
                 </div>
               </CardContent>
