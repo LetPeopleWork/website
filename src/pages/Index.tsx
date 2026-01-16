@@ -2,6 +2,7 @@ import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import LighthouseSection from "@/components/LighthouseSection";
 import ServicesSection from "@/components/ServicesSection";
+import WorkshopsSection from "@/components/WorkshopsSection";
 import ExpertiseSection from "@/components/ExpertiseSection";
 import EventsSection from "@/components/EventsSection";
 import StayConnected from "@/components/StayConnected";
@@ -117,6 +118,7 @@ const Index = () => {
       <Hero />
       <LighthouseSection />
       <ServicesSection />
+      <WorkshopsSection />
       <ExpertiseSection />
       <EventsSection />
       <StayConnected />

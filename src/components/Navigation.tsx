@@ -13,7 +13,8 @@ const Navigation = () => {
   const navItems = [
     { name: "Home", href: "#home", isHash: true },
     { name: "Services", href: "#services", isHash: true },
-    { name: "Trainings & Workshops", href: "#events", isHash: true },
+    { name: "Enterprise Offerings", href: "#workshops", isHash: true },
+    { name: "Trainings & Events", href: "#events", isHash: true },
     { name: "Connect", href: "#stay-connected", isHash: true },
   ];
 
