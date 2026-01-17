@@ -29,6 +29,19 @@
       "ctaText": "Buy Tickets",
       "ctaLink": "https://www.tickettailor.com/events/letpeoplework/1972327",
       "source": "tickettailor"
+    },
+    {
+      "type": "Meetup",
+      "title": "Planung die wahrscheinlich funktioniert",
+      "date": null,
+      "displayDate": "TBD",
+      "time": "",
+      "location": "Online",
+      "price": "Free",
+      "description": "**Planung die Wahrscheinlich Funktioniert**\n*Wie man mit Hilfe von Monte Carlo Forecasts Roadmaps erstellt und PI Plannings verbessert*\n\nSchluss mit unrealistischen Commitments und gescheiterten Plänen! In diesem Meetup lernst du, wie du mit Monte Carlo Simulationen zu datenbasierten, probabilistisc...",
+      "ctaText": "RSVP on Meetup",
+      "ctaLink": "https://www.meetup.com/let-people-work-online-meetup-group/events/312928333/",
+      "source": "meetup"
     }
   ]
 }
