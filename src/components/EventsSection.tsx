@@ -7,6 +7,23 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const manualEvents = [
   {
+    type: ["Conference"],
+    title: "Kanban Community Meetup in Prague",
+    date: new Date("2026-03-06"),
+    displayDate: "Mar 6, 2026",
+    time: "9:00 AM - 5:00 PM CET",
+    location: "Prague, Rowing Club Slavia Prague",
+    price: "€40 early bird (until Jan 23), €50 regular",
+    description: `Join us for an exciting day of learning, sharing, and connecting with the Kanban community in Prague! Whether you're completely new to Kanban or an experienced practitioner, this meetup is designed for you!
+
+    This is an OpenSpace event, meaning you shape the agenda! Bring your questions, challenges, ideas, and topics, and we'll explore them together. With many experienced ProKanban Trainers on site, you'll have access to world-class expertise in an informal, collaborative setting.
+
+    In between the participant-led discussions, you'll hear lightning talks from a few selected speakers.`,
+    ctaText: "Register",
+    ctaLink: "https://www.tickettailor.com/events/pgoetz/1987085",
+    source: "manual"
+  },
+  {
     type: ["Talk"],
     title: "Agile Breakfast Aarau – Die Planungsillusion besiegen",
     date: new Date("2026-02-27"),
