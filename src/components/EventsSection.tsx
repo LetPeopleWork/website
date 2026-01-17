@@ -20,7 +20,7 @@ const manualEvents = [
 
     In between the participant-led discussions, you'll hear lightning talks from a few selected speakers.`,
     ctaText: "Register",
-    ctaLink: "https://www.tickettailor.com/events/pgoetz/1987085",
+    ctaLink: "https://www.prokanban.org/kanban-community-event",
     source: "manual"
   },
   {
