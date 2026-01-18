@@ -31,6 +31,36 @@
       "source": "tickettailor"
     },
     {
+      "type": [
+        "Workshop"
+      ],
+      "title": "Einführung in Flow Metriken – Ein praxisorientierter Workshop",
+      "date": "2026-04-30",
+      "displayDate": "Apr 30, 2026",
+      "time": "12:00 AM - 12:00 AM +02:00",
+      "location": "AKB Lab",
+      "price": "CHF400",
+      "description": "🚀 Einführung in Flow Metriken – Ein praxisorientierter Workshop ⏱ Dauer: 4 Stunden Viele Teams messen Velocity, Story Points oder Burndown-Charts, doch diese Metriken zeigen oft nicht das Wesentliche. Sie basieren auf Schätzungen statt historischen Daten. Velocity verbessern? Einfach das doppelte S...",
+      "ctaText": "Buy Tickets",
+      "ctaLink": "https://www.tickettailor.com/events/letpeoplework/2027560",
+      "source": "tickettailor"
+    },
+    {
+      "type": [
+        "Workshop"
+      ],
+      "title": "Einführung in Probabilistische Vorhersagen mit Monte Carlo Simulationen – Ein praxisorientierter Workshop",
+      "date": "2026-04-30",
+      "displayDate": "Apr 30, 2026",
+      "time": "12:00 AM - 12:00 AM +02:00",
+      "location": "AKB Lab",
+      "price": "CHF400",
+      "description": "🚀 Einführung in Probabilistische Vorhersagen mit Monte Carlo Simulationen – Ein praxisorientierter Workshop ⏱ Dauer: 4 Stunden Traditionelle Planung verlässt sich auf Schätzungen und Best-Case-Szenarien. Meistens führt das zu verpassten Deadlines und gebrochenen Versprechen. Dieser Workshop zeigt d...",
+      "ctaText": "Buy Tickets",
+      "ctaLink": "https://www.tickettailor.com/events/letpeoplework/2027584",
+      "source": "tickettailor"
+    },
+    {
       "type": "Meetup",
       "title": "Planung die wahrscheinlich funktioniert",
       "date": null,
