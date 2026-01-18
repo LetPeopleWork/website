@@ -42,6 +42,31 @@ const manualEvents = [
     ctaLink: "https://events.valuetalks.ch/events/agile-breakfast-aarau-die-planungsillusion-besiegen-27-02-2026",
     source: "manual"
   },
+  {
+    type: ["Meetup"],
+    title: "Planung die wahrscheinlich funktioniert",
+    date: new Date("2026-02-25"),
+    displayDate: "Feb 25, 2026",
+    time: "4:00 PM - 5:30 PM CET",
+    location: "EspaceLab - Swiss Post Innovation, Wankdorfallee 4, Bern",
+    price: "Free",
+    description: `Planung die Wahrscheinlich Funktioniert – Wie man mit Hilfe von Monte Carlo Forecasts Roadmaps erstellt und PI Plannings verbessert
+
+Schluss mit unrealistischen Commitments und gescheiterten Plänen! In diesem Meetup lernst du, wie du mit Monte Carlo Simulationen zu datenbasierten, probabilistischen Prognosen kommst, statt dich auf Bauchgefühl, Wunschdenken, oder Hoffnung zu verlassen.
+
+Das nimmst du mit:
+• Wie Monte Carlo Forecasts funktionieren und warum sie realistischere Planungen ermöglichen
+• Wie dieser Ansatz hilft, den Fokus zu behalten und nicht unnötig Zeit zu verschwenden
+• Praktische Anwendung: Roadmaps erstellen, die verschiedene Szenarien (Best Case, Worst Case, Most Likely) berücksichtigen
+• PI Planning neu gedacht: Risikobereitschaft statt Confidence Vote
+• Was du für all das brauchst (das meiste hast du schon!)
+
+Für wen ist das relevant?
+Product Owner, Scrum Master, Agile Coaches und alle, die genug von Planungen haben, die schon am ersten Tag veraltet sind.`,
+    ctaText: "RSVP on Meetup",
+    ctaLink: "https://www.meetup.com/let-people-work-online-meetup-group/events/312928333/",
+    source: "manual"
+  },
 ];
 
 const EventsSection = () => {
