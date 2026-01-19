@@ -7,7 +7,7 @@ const parser = new Parser();
 async function fetchMeetupEvents() {
   try {
     console.log('📅 Fetching Meetup events via RSS feed...');
-    const feed = await parser.parseURL('https://www.meetup.com/let-people-work-online-meetup-group/events/rss/');
+    const feed = await parser.parseURL('https://www.meetup.com/lighthouselive//events/rss/');
 
     const events = [];
 
