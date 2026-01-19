@@ -64,7 +64,7 @@ Das nimmst du mit:
 Für wen ist das relevant?
 Product Owner, Scrum Master, Agile Coaches und alle, die genug von Planungen haben, die schon am ersten Tag veraltet sind.`,
     ctaText: "RSVP on Meetup",
-    ctaLink: "https://www.meetup.com/let-people-work-online-meetup-group/events/312928333/",
+    ctaLink: "https://www.meetup.com/lighthouselive/events/312954011/?utm_version=v2&member_id=231073472",
     source: "manual"
   },
 ];
