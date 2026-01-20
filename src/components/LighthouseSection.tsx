@@ -7,6 +7,7 @@ import lighthouseLogo from "@/assets/LighthouseLogo.png";
 import metricsTeam1 from "@/assets/screenshots/Metrics_Team_1.png";
 import forecastsTeamManual from "@/assets/screenshots/Forecasts_Team_Manual.png";
 import forecastsProjectVideo from "@/assets/videos/Forecasts_Project.mp4";
+import installationVideo from "@/assets/videos/Installation.mp4";
 import LighthouseTestimonials from "@/components/LighthouseTestimonials";
 
 const LighthouseSection = () => {
@@ -160,8 +161,33 @@ const LighthouseSection = () => {
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             See Your Flow — Predict Your Delivery <br />
             Lighthouse turns your data into flow metrics and date-accurate delivery forecasts <br />
-            Most teams see measurable improvements in the first month <br />
+            Simple to install, simple to use — Most teams see measurable improvements in the first month <br />
           </p>
+        </div>
+
+        {/* Installation Simplicity Section */}
+        <div className="mb-20">
+          <div className="text-center mb-8">
+            <h3 className="text-3xl font-bold text-foreground mb-4">
+              Simple to Install. Simple to Use.
+            </h3>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Get started in minutes, not hours. See how easy it is to install Lighthouse.
+            </p>
+          </div>
+          <div className="max-w-4xl mx-auto">
+            <div className="relative rounded-xl overflow-hidden shadow-2xl border border-border">
+              <video 
+                className="w-full"
+                controls
+                preload="metadata"
+                aria-label="Lighthouse installation demo video"
+              >
+                <source src={installationVideo} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
         </div>
 
         {/* Main Content Grid */}
