@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Calendar, MapPin, ExternalLink, GraduationCap, Wrench, Mic, Building, DollarSign, Star, MessageCircle, AlertCircle } from "lucide-react";
+import { Calendar, MapPin, ExternalLink, GraduationCap, Wrench, Mic, Building, DollarSign, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -249,56 +249,6 @@ const EventsSection = () => {
             ))}
           </div>
         )}
-
-        {/* CTA Section */}
-        <div id="custom-events" className="text-center bg-gradient-subtle rounded-2xl p-12 border border-border">
-          <div className="flex justify-center mb-6">
-            <div className="bg-primary/10 rounded-full p-4">
-              <MessageCircle className="h-8 w-8 text-primary" />
-            </div>
-          </div>
-          
-          <h3 className="text-3xl font-bold text-foreground mb-6">
-            Need Something Tailored to{" "}
-            <span className="bg-gradient-primary bg-clip-text text-transparent">
-              Your Needs?
-            </span>
-          </h3>
-          
-          <p className="text-lg text-muted-foreground mb-8 max-w-3xl mx-auto">
-            We believe in the power of collaboration. This is why all our trainings, workshops, and consulting services are designed together with you to match your needs.
-            Furthermore, we always deliver them in pairs, so you get the best insights and diverse perspectives.
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-10">
-            <div className="bg-background/50 rounded-xl p-6 border border-border/50">
-              <div className="flex items-center justify-center mb-4">
-                <Star className="h-6 w-6 text-primary mr-2" />
-                <h4 className="text-lg font-semibold text-foreground">Custom Training & Private Workshops</h4>
-              </div>
-              <p className="text-muted-foreground text-sm">
-                Didn't find exactly what you're looking for? We create bespoke training programs and private workshops tailored to your team's specific needs and challenges. Get exclusive attention for your team with our expert pairs delivering maximum impact.
-              </p>
-            </div>
-            
-            <div className="bg-background/50 rounded-xl p-6 border border-border/50">
-              <div className="flex items-center justify-center mb-4">
-                <DollarSign className="h-6 w-6 text-primary mr-2" />
-                <h4 className="text-lg font-semibold text-foreground">Pricing</h4>
-              </div>
-              <p className="text-muted-foreground text-sm">
-                Private events start at $1,000 per event (not per attendee). Perfect for teams of up to 30 people looking for focused, collaborative learning experiences.
-              </p>
-            </div>
-          </div>
-
-          <Button variant="hero" size="lg" asChild>
-            <a href="mailto:contact@letpeople.work">
-              <MessageCircle className="mr-2 h-5 w-5" />
-              Reach Out To Talk About How We Can Support
-            </a>
-          </Button>
-        </div>
       </div>
     </section>
   );
