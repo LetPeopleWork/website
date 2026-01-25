@@ -79,7 +79,7 @@ export const workshops: Workshop[] = [
       "Analysis of 3–6 months of historical delivery data",
       "Primary data sources: Jira or Azure DevOps",
       "Additional sources supported (reach out to discuss)",
-      "60-minute debrief (virtual, remote on request)",
+      "60-minute debrief (virtual, on-site on request)",
     ],
     format: {
       duration: "Fixed Scope",
