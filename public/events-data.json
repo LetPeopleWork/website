@@ -72,6 +72,45 @@
       "ctaText": "RSVP on Meetup",
       "ctaLink": "https://www.meetup.com/lighthouselive/events/312954011/",
       "source": "meetup"
+    },
+    {
+      "type": "Meetup",
+      "title": "Creating Roadmaps with Probabilistic Forecasting ",
+      "date": null,
+      "displayDate": "TBD",
+      "time": "",
+      "location": "Online",
+      "price": "Free",
+      "description": "Join our Lighthouse Live Session and learn from real Lighthouse users.\n\n**Creating Roadmaps with Probabilistic Forecasting**\n\nWhat if your roadmap didn't require weeks of estimation, and still held up under pressure?\nIn this practical 1-hour session, Lorenzo Santoro will share a lean approach to roa...",
+      "ctaText": "RSVP on Meetup",
+      "ctaLink": "https://www.meetup.com/lighthouselive/events/313097144/",
+      "source": "meetup"
+    },
+    {
+      "type": "Meetup",
+      "title": "Forecasting Complex Hardware–Software Work: From \"When\" to \"How Much\"",
+      "date": null,
+      "displayDate": "TBD",
+      "time": "",
+      "location": "Online",
+      "price": "Free",
+      "description": "Join us for this Lighthouse live with our Lighthouse user Chris\n\n**Forecasting Complex Hardware–Software Work: From \"When\" to \"How Much\"**\n\nMost teams are familiar with the question “when will it be done?”. There are now well-established techniques for tackling that problem, from flow metrics and Mo...",
+      "ctaText": "RSVP on Meetup",
+      "ctaLink": "https://www.meetup.com/lighthouselive/events/313097168/",
+      "source": "meetup"
+    },
+    {
+      "type": "Meetup",
+      "title": "Managing Delivery Risk with Goal-Based Planning",
+      "date": null,
+      "displayDate": "TBD",
+      "time": "",
+      "location": "Online",
+      "price": "Free",
+      "description": "Hear and learn from our Lighthouse user Anoop.\n\n**Managing Delivery Risk with Goal-Based Planning**\nWhat if you could actually see the risk of missing a deadline...and do something about it?\nIn this Lighthouse Live Session, Anoop Parapurath will share how his team transformed their planning approach...",
+      "ctaText": "RSVP on Meetup",
+      "ctaLink": "https://www.meetup.com/lighthouselive/events/313097190/",
+      "source": "meetup"
     }
   ]
 }
