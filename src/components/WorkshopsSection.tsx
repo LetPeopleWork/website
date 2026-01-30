@@ -340,7 +340,7 @@ const WorkshopsSection = () => {
 							<h4 className="text-lg font-semibold text-foreground">Pricing</h4>
 						</div>
 						<p className="text-muted-foreground text-sm">
-							Private events start at $1,000 per event (not per attendee).
+							Private events start at CHF 1,000 per event (not per attendee).
 							Perfect for teams of up to 30 people looking for focused,
 							collaborative learning experiences.
 						</p>
