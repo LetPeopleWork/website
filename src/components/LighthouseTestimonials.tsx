@@ -45,6 +45,14 @@ const testimonials: Testimonial[] = [
         companyUrl: "https://www.mitre10.co.nz/"
     },
     {
+        quote: "Very few tools out there are able to distill what  is going on in your system to act effectively as your mission control  for all things delivery related. If John Anderton designed a system for  flow, this would be it.",
+        author: "Nicolas Brown",
+        role: "Author of ‘Real World Agility’ | Consultant | Speaker",
+        authorUrl: "https://www.linkedin.com/in/nicolasjmbrown/",
+        company: "Thrivve",
+        companyUrl: "https://thrivve.partners/"
+    },
+    {
         quote: "",
         author: "Gábor Bittera",
         role: "VP Engineering",
