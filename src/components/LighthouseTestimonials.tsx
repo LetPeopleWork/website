@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
 export interface Testimonial {
@@ -150,8 +150,8 @@ const NavigationButton = ({
 );
 
 const LighthouseTestimonials = () => {
-    // Filter out testimonials with empty quotes and shuffle on every component load
-    const shuffledTestimonials = useMemo(() => {
+    // Filter out testimonials with empty quotes and shuffle once on mount
+    const [shuffledTestimonials] = useState(() => {
         const validTestimonials = testimonials.filter(testimonial => 
             testimonial.quote && testimonial.quote.trim() !== ''
         );
@@ -161,7 +161,7 @@ const LighthouseTestimonials = () => {
             [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
         }
         return shuffled;
-    }, []);
+    });
 
     const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
