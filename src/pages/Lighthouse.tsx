@@ -908,7 +908,7 @@ const Lighthouse = () => {
 									</tr>
 									<tr>
 										<td className="py-3 px-4 text-muted-foreground">
-											Number of Projects
+											Number of Portfolios
 										</td>
 										<td className="py-3 px-4 text-center text-muted-foreground">
 											Max 1
@@ -925,7 +925,7 @@ const Lighthouse = () => {
 											Max 1 Team
 										</td>
 										<td className="py-3 px-4 text-center text-foreground font-semibold bg-gradient-primary bg-clip-text text-transparent">
-											Unlimited Teams and Projects
+											Unlimited Teams and Portfolios
 										</td>
 									</tr>
 									<tr>
@@ -951,6 +951,31 @@ const Lighthouse = () => {
 										</td>
 									</tr>
 
+									<tr>
+										<td className="py-3 px-4 text-muted-foreground">
+											<div className="flex items-center space-x-2">
+												<span>Additional Fields</span>
+												<TooltipProvider>
+													<Tooltip>
+														<TooltipTrigger>
+															<Info className="h-4 w-4 text-blue-500" />
+														</TooltipTrigger>
+														<TooltipContent>
+															<p className="text-sm">
+																Add custom fields to capture additional metadata specific to your workflow and requirements.
+															</p>
+														</TooltipContent>
+													</Tooltip>
+												</TooltipProvider>
+											</div>
+										</td>
+										<td className="py-3 px-4 text-center text-muted-foreground">
+											1 Additional Field
+										</td>
+										<td className="py-3 px-4 text-center text-foreground font-semibold bg-gradient-primary bg-clip-text text-transparent">
+											Unlimited
+										</td>
+									</tr>
 									{/* Premium Features */}
 									<tr>
 										<td
