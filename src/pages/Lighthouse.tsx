@@ -1094,6 +1094,32 @@ const Lighthouse = () => {
 											<Check className="h-5 w-5 text-green-600 mx-auto" />
 										</td>
 									</tr>
+									{/* Data Sync Mappings - Premium Only */}
+									<tr>
+										<td className="py-3 px-4 text-muted-foreground">
+											<div className="flex items-center space-x-2">
+												<span>Data Sync Mappings</span>
+												<TooltipProvider>
+													<Tooltip>
+														<TooltipTrigger>
+															<Info className="h-4 w-4 text-blue-500" />
+														</TooltipTrigger>
+														<TooltipContent>
+															<p className="text-sm">
+																Write Metrics and Forecasts back to Jira and Azure DevOps and store them in your system.
+															</p>
+														</TooltipContent>
+													</Tooltip>
+												</TooltipProvider>
+											</div>
+										</td>
+										<td className="py-3 px-4 text-center">
+											<XCircle className="h-5 w-5 text-red-500 mx-auto" />
+										</td>
+										<td className="py-3 px-4 text-center">
+											<Check className="h-5 w-5 text-green-600 mx-auto" />
+										</td>
+									</tr>
 								</tbody>
 							</table>
 						</div>
