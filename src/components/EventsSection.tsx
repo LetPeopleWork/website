@@ -23,50 +23,6 @@ const manualEvents = [
     ctaLink: "https://www.prokanban.org/kanban-community-event",
     source: "manual"
   },
-  {
-    type: ["Talk"],
-    title: "Agile Breakfast Aarau – Die Planungsillusion besiegen",
-    date: new Date("2026-02-27"),
-    displayDate: "Feb 27, 2026",
-    time: "8:30 AM - 10:30 AM CET",
-    location: "Aarau, AKB Lab, Bahnhofpl. 1, 5001 Aarau",
-    price: "Free",
-    description: `Nimm an diesem Meetup teil, in welchem wir aufhören, gegen unsere Biologie anzukämpfen, und anfangen, sie zu nutzen. Mit Liberating Structures erforschen wir gemeinsam, wie dein Team von System 1 (Intuition/Rauschen) zu System 2 (Statistik/Genauigkeit) bewegen kann.
-    
-    Was wir lernen werden:
-    • Die versteckten Kosten von Rauschen: Warum Ihre „Confidence Votes" und „Story Points" möglicherweise Ihre Vorhersagbarkeit untergraben.
-    • Die Kraft der „Aussenperspektive": Wie Sie die historischen Daten Ihres Teams nutzen, um Prognosen zu erstellen, die tatsächlich Bestand haben.
-    • Tools und praktiken für Entscheidungshygiene: Ein praktischer Einblick, wie Sie Monte Carlo Simulationen nutzen um ein „Ich denke" in „Die Daten zeigen" verwandeln.
-    • Szenarioplanung: Wie Sie „Best-Case/Worst-Case"-Roadmaps für Stakeholder präsentieren, die Vertrauen aufbauen statt falsche Hoffnungen zu wecken.`,
-    ctaText: "Register",
-    ctaLink: "https://events.valuetalks.ch/events/agile-breakfast-aarau-die-planungsillusion-besiegen-27-02-2026",
-    source: "manual"
-  },
-  {
-    type: ["Meetup"],
-    title: "Planung die wahrscheinlich funktioniert",
-    date: new Date("2026-02-25"),
-    displayDate: "Feb 25, 2026",
-    time: "4:00 PM - 5:30 PM CET",
-    location: "EspaceLab - Swiss Post Innovation, Wankdorfallee 4, Bern",
-    price: "Free",
-    description: `Planung die Wahrscheinlich Funktioniert – Wie man mit Hilfe von Monte Carlo Forecasts Roadmaps erstellt und PI Plannings verbessert
-
-Schluss mit unrealistischen Commitments und gescheiterten Plänen! In diesem Meetup lernst du, wie du mit Monte Carlo Simulationen zu datenbasierten, probabilistischen Prognosen kommst, statt dich auf Bauchgefühl, Wunschdenken, oder Hoffnung zu verlassen.
-
-Das nimmst du mit:
-• Wie Monte Carlo Forecasts funktionieren und warum sie realistischere Planungen ermöglichen
-• Wie dieser Ansatz hilft, den Fokus zu behalten und nicht unnötig Zeit zu verschwenden
-• Praktische Anwendung: Roadmaps erstellen, die verschiedene Szenarien (Best Case, Worst Case, Most Likely) berücksichtigen
-• PI Planning neu gedacht: Risikobereitschaft statt Confidence Vote
-• Was du für all das brauchst (das meiste hast du schon!)
-
-Für wen ist das relevant?
-Product Owner, Scrum Master, Agile Coaches und alle, die genug von Planungen haben, die schon am ersten Tag veraltet sind.`,
-    ctaText: "RSVP on Meetup",
-    ctaLink: "https://www.meetup.com/lighthouselive/events/312954011/?utm_version=v2&member_id=231073472",
-    source: "manual"
-  },
 ];
 
 const EventsSection = () => {
