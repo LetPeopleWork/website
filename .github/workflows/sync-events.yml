@@ -31,13 +31,16 @@ jobs:
           node-version: '20'
           
       - name: Install dependencies
-        run: npm install axios rss-parser
-        
+        run: |
+          mkdir /tmp/sync-deps
+          cd /tmp/sync-deps
+          npm install axios rss-parser
+
       - name: Fetch and sync events
         env:
           MEETUP_ACCESS_TOKEN: ${{ secrets.MEETUP_ACCESS_TOKEN }}
           TICKET_TAILOR_API_KEY: ${{ secrets.TICKET_TAILOR_API_KEY }}
-        run: node scripts/sync-events.js
+        run: NODE_PATH=/tmp/sync-deps/node_modules node scripts/sync-events.js
         
       - name: Commit and push if changed
         run: |
