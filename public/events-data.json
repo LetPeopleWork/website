@@ -1,9 +1,7 @@
 {
   "events": [
     {
-      "type": [
-        "Workshop"
-      ],
+      "type": ["Workshop"],
       "title": "Probabilistic Forecasting at Scale",
       "date": "2026-04-21",
       "displayDate": "Apr 21, 2026",
@@ -16,70 +14,14 @@
       "source": "tickettailor"
     },
     {
-      "type": [
-        "Workshop"
-      ],
-      "title": "Einführung in Flow Metriken – Ein praxisorientierter Workshop",
-      "date": "2026-04-30",
-      "displayDate": "Apr 30, 2026",
-      "time": "12:00 AM - 12:00 AM +02:00",
-      "location": "AKB Lab",
-      "price": "CHF400",
-      "description": "🚀 Einführung in Flow Metriken – Ein praxisorientierter Workshop ⏱ Dauer: 4 Stunden Viele Teams messen Velocity, Story Points oder Burndown-Charts, doch diese Metriken zeigen oft nicht das Wesentliche. Sie basieren auf Schätzungen statt historischen Daten. Velocity verbessern? Einfach das doppelte S...",
-      "ctaText": "Buy Tickets",
-      "ctaLink": "https://www.tickettailor.com/events/letpeoplework/2027560",
-      "source": "tickettailor"
-    },
-    {
-      "type": [
-        "Workshop"
-      ],
-      "title": "Einführung in Probabilistische Vorhersagen mit Monte Carlo Simulationen – Ein praxisorientierter Workshop",
-      "date": "2026-04-30",
-      "displayDate": "Apr 30, 2026",
-      "time": "12:00 AM - 12:00 AM +02:00",
-      "location": "AKB Lab",
-      "price": "CHF400",
-      "description": "🚀 Einführung in Probabilistische Vorhersagen mit Monte Carlo Simulationen – Ein praxisorientierter Workshop ⏱ Dauer: 4 Stunden Traditionelle Planung verlässt sich auf Schätzungen und Best-Case-Szenarien. Meistens führt das zu verpassten Deadlines und gebrochenen Versprechen. Dieser Workshop zeigt d...",
-      "ctaText": "Buy Tickets",
-      "ctaLink": "https://www.tickettailor.com/events/letpeoplework/2027584",
-      "source": "tickettailor"
-    },
-    {
-      "type": "Meetup",
-      "title": "Planung die wahrscheinlich funktioniert",
-      "date": null,
-      "displayDate": "TBD",
-      "time": "",
-      "location": "Online",
-      "price": "Free",
-      "description": "**Planung die Wahrscheinlich Funktioniert**\n\n*Wie man mit Hilfe von Monte Carlo Forecasts Roadmaps erstellt und PI Plannings verbessert*\n\nSchluss mit unrealistischen Commitments und gescheiterten Plänen! In diesem Meetup lernst du, wie du mit Monte Carlo Simulationen zu datenbasierten, probabilistis...",
-      "ctaText": "RSVP on Meetup",
-      "ctaLink": "https://www.meetup.com/lighthouselive/events/312954011/",
-      "source": "meetup"
-    },
-    {
-      "type": "Meetup",
-      "title": "Creating Roadmaps with Probabilistic Forecasting ",
-      "date": null,
-      "displayDate": "TBD",
-      "time": "",
-      "location": "Online",
-      "price": "Free",
-      "description": "Join our Lighthouse Live Session and learn from real Lighthouse users.\n\n**Creating Roadmaps with Probabilistic Forecasting**\n\nWhat if your roadmap didn't require weeks of estimation, and still held up under pressure?\nIn this practical 1-hour session, Lorenzo Santoro will share a lean approach to roa...",
-      "ctaText": "RSVP on Meetup",
-      "ctaLink": "https://www.meetup.com/lighthouselive/events/313097144/",
-      "source": "meetup"
-    },
-    {
       "type": "Meetup",
       "title": "Forecasting Complex Hardware–Software Work: From \"When\" to \"How Much\"",
-      "date": null,
-      "displayDate": "TBD",
-      "time": "",
+      "date": "2026-04-27",
+      "displayDate": "Apr 27, 2026",
+      "time": "4:00 PM",
       "location": "Online",
       "price": "Free",
-      "description": "Join us for this Lighthouse live with our Lighthouse user Chris\n\n**Forecasting Complex Hardware–Software Work: From \"When\" to \"How Much\"**\n\nMost teams are familiar with the question “when will it be done?”. There are now well-established techniques for tackling that problem, from flow metrics and Mo...",
+      "description": "Join us for this Lighthouse live with our Lighthouse user Chris\n\n**Forecasting Complex Hardware–Software Work: From \"When\" to \"How Much\"**\n\nMost teams are familiar with the question "when will it be done?". There are now well-established techniques for tackling that problem, from flow metrics and Mo...",
       "ctaText": "RSVP on Meetup",
       "ctaLink": "https://www.meetup.com/lighthouselive/events/313097168/",
       "source": "meetup"
@@ -87,9 +29,9 @@
     {
       "type": "Meetup",
       "title": "Managing Delivery Risk with Goal-Based Planning",
-      "date": null,
-      "displayDate": "TBD",
-      "time": "",
+      "date": "2026-05-19",
+      "displayDate": "May 19, 2026",
+      "time": "1:00 PM",
       "location": "Online",
       "price": "Free",
       "description": "Hear and learn from our Lighthouse user Anoop.\n\n**Managing Delivery Risk with Goal-Based Planning**\nWhat if you could actually see the risk of missing a deadline...and do something about it?\nIn this Lighthouse Live Session, Anoop Parapurath will share how his team transformed their planning approach...",
