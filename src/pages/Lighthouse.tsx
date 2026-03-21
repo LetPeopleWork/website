@@ -20,10 +20,15 @@ import {
 	Hammer,
 	Calendar as CalendarIcon,
 	BarChart3,
+	Command,
+	Terminal,
+	Laptop,
+	Server as ServerIcon,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -31,12 +36,6 @@ import {
 	CollapsibleContent,
 	CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
 	Dialog,
 	DialogContent,
@@ -83,10 +82,91 @@ import forecastsProjectVideo from "@/assets/videos/Forecasts_Project.mp4";
 import almConnectionImage from "@/assets/screenshots/ALM_Connection.png";
 import queryConfigurationImage from "@/assets/screenshots/Query_Configuration.png";
 import gitHubImage from "@/assets/screenshots/GitHub.png";
+import {
+	getReleaseAssetUrl,
+	LIGHTHOUSE_DOCKER_COMMAND,
+	LIGHTHOUSE_GITHUB_RELEASES_URL,
+} from "@/lib/lighthouseDownloads";
+import QuickDownloadBar from "@/components/QuickDownloadBar";
+
+const WindowsIcon = ({ className }: { className?: string }) => (
+	<svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
+		<path d="M0 0h11.4v11.4H0ZM12.6 0H24v11.4H12.6ZM0 12.6h11.4V24H0ZM12.6 12.6H24V24H12.6Z" />
+	</svg>
+);
+
+const OsIcon = ({ os, className }: { os: string; className?: string }) => {
+	switch (os) {
+		case "windows": return <WindowsIcon className={className} />;
+		case "macos": return <Command className={className} />;
+		case "linux": return <Terminal className={className} />;
+		case "docker": return <Container className={className} />;
+		default: return <Monitor className={className} />;
+	}
+};
+
+type DownloadEntry = {
+	os: "windows" | "macos" | "linux" | "docker";
+	label: string;
+	tooltip: string;
+	assetName?: string;
+};
+
+const standaloneDownloads: DownloadEntry[] = [
+	{
+		os: "windows",
+		label: "Windows Installer (.exe)",
+		tooltip: "Recommended NSIS installer for Windows. Code signed.",
+		assetName: "Lighthouse-win-standalone-x64.exe",
+	},
+	{
+		os: "windows",
+		label: "Windows Installer (.msi)",
+		tooltip: "MSI installer for Windows — useful for enterprise deployment. Code signed.",
+		assetName: "Lighthouse-win-standalone-x64.msi",
+	},
+	{
+		os: "macos",
+		label: "macOS Disk Image (.dmg)",
+		tooltip: "Standard macOS disk image. Signed and notarized by Apple.",
+		assetName: "Lighthouse-osx.dmg",
+	},
+	{
+		os: "macos",
+		label: "macOS App Bundle (.zip)",
+		tooltip: "The macOS app bundle as a zip archive. Signed and notarized by Apple.",
+		assetName: "Lighthouse-osx.app.zip",
+	},
+	{
+		os: "linux",
+		label: "Linux App (.AppImage)",
+		tooltip: "Portable AppImage — runs on most Linux distributions without installation.",
+		assetName: "Lighthouse-linux-standalone.AppImage",
+	},
+];
+
+const serverDownloads: DownloadEntry[] = [
+	{
+		os: "windows",
+		label: "Windows Binaries (.zip)",
+		tooltip: "Server binaries for Windows (x64). Extract and run as a background service.",
+		assetName: "Lighthouse-win-x64.zip",
+	},
+	{
+		os: "linux",
+		label: "Linux Binaries (.zip)",
+		tooltip: "Server binaries for Linux (x64). Extract and run as a background service.",
+		assetName: "Lighthouse-linux-x64.zip",
+	},
+	{
+		os: "docker",
+		label: "Docker Container",
+		tooltip: "Copies the docker run command to your clipboard. Runs the server edition as a container.",
+	},
+];
 
 const Lighthouse = () => {
 	const [latestVersion, setLatestVersion] = useState<string>("");
-	const [isLoadingVersion, setIsLoadingVersion] = useState(false);
 	const [copiedCommand, setCopiedCommand] = useState(false);
 	const [showLicenseDetails, setShowLicenseDetails] = useState(false);
 	const [purchaseForm, setPurchaseForm] = useState({
@@ -131,7 +211,6 @@ const Lighthouse = () => {
 	// Fetch latest version from GitHub releases
 	useEffect(() => {
 		const fetchLatestVersion = async () => {
-			setIsLoadingVersion(true);
 			try {
 				const response = await fetch(
 					"https://api.github.com/repos/LetPeopleWork/Lighthouse/releases/latest",
@@ -140,10 +219,7 @@ const Lighthouse = () => {
 				setLatestVersion(data.tag_name);
 			} catch (error) {
 				console.error("Failed to fetch latest version:", error);
-				// Fallback version if API fails
 				setLatestVersion("v25.7.27.1729");
-			} finally {
-				setIsLoadingVersion(false);
 			}
 		};
 
@@ -200,24 +276,6 @@ const Lighthouse = () => {
 		}
 	}, []);
 
-	const getPlatformDownloadUrl = (platform: string) => {
-		const baseUrl = `https://github.com/LetPeopleWork/Lighthouse/releases/download/${latestVersion}`;
-		switch (platform) {
-			case "windows":
-				return `${baseUrl}/Lighthouse-win-x64.zip`;
-			case "macos-dmg":
-				return `${baseUrl}/Lighthouse-osx.dmg`;
-			case "macos-app":
-				return `${baseUrl}/Lighthouse-osx.app.zip`;
-			case "linux":
-				return `${baseUrl}/Lighthouse-linux-x64.zip`;
-			default:
-				return "";
-		}
-	};
-
-	const dockerCommand = `docker run -d -p 8081:443 -p 8080:80 -v ".:/app/Data" -v "./logs:/app/logs" -e "Database__ConnectionString=Data Source=/app/Data/LighthouseAppContext.db" ghcr.io/letpeoplework/lighthouse:latest`;
-
 	const copyToClipboard = async (text: string) => {
 		try {
 			// Check if clipboard API is available (requires HTTPS)
@@ -260,39 +318,6 @@ const Lighthouse = () => {
 			});
 		}
 	};
-
-	const platforms = [
-		{
-			id: "windows",
-			name: "Windows",
-			icon: <Monitor className="h-4 w-4" />,
-			action: () => window.open(getPlatformDownloadUrl("windows"), "_blank"),
-		},
-		{
-			id: "macos-dmg",
-			name: "macOS Installer",
-			icon: <Download className="h-4 w-4" />,
-			action: () => window.open(getPlatformDownloadUrl("macos-dmg"), "_blank"),
-		},
-		{
-			id: "macos-app",
-			name: "macOS App",
-			icon: <Monitor className="h-4 w-4" />,
-			action: () => window.open(getPlatformDownloadUrl("macos-app"), "_blank"),
-		},
-		{
-			id: "linux",
-			name: "Linux",
-			icon: <Monitor className="h-4 w-4" />,
-			action: () => window.open(getPlatformDownloadUrl("linux"), "_blank"),
-		},
-		{
-			id: "docker",
-			name: "Container",
-			icon: <Container className="h-4 w-4" />,
-			action: () => copyToClipboard(dockerCommand),
-		},
-	];
 
 	const lighthouseFeatures = [
 		{
@@ -627,87 +652,147 @@ const Lighthouse = () => {
 						</p>
 
 						{/* Download CTA */}
-						<div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-							<DropdownMenu>
-								<DropdownMenuTrigger asChild>
-									<Button variant="hero" size="lg" className="group">
-										<Download className="mr-2 h-4 w-4" />
-										Download Community Version
-										<ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-									</Button>
-								</DropdownMenuTrigger>
-								<DropdownMenuContent align="center" className="w-64">
-									{platforms.map((platform) => (
-										<DropdownMenuItem
-											key={platform.id}
-											onClick={platform.action}
-											aria-label={
-												platform.id === "docker"
-													? `Copy ${platform.name} command`
-													: `Download ${platform.name}`
-											}
-											className="flex items-center space-x-3 p-3 cursor-pointer"
-										>
-											{platform.icon}
-											<div className="flex-1">
-												<div className="font-medium">{platform.name}</div>
-												{platform.id === "docker" ? (
-													<div className="text-xs text-muted-foreground">
-														Copy command
-													</div>
-												) : platform.id === "macos-dmg" ? (
-													<div className="text-xs text-muted-foreground">
-														Download dmg
-													</div>
-												) : platform.id === "macos-app" ? (
-													<div className="text-xs text-muted-foreground">
-														Download App Bundle
-													</div>
-												) : (
-													<div className="text-xs text-muted-foreground">
-														Download Binaries
-													</div>
-												)}
-											</div>
-											{platform.id === "docker" && copiedCommand && (
-												<Check className="h-4 w-4 text-green-500" />
-											)}
-											{platform.id === "docker" && !copiedCommand && (
-												<Copy className="h-4 w-4" />
-											)}
-										</DropdownMenuItem>
-									))}
-									<div className="px-3 py-2 border-t">
-										<Button
-											variant="outline"
-											size="sm"
-											className="w-full text-xs"
-											onClick={() =>
-												window.open(
-													"https://github.com/LetPeopleWork/Lighthouse",
-													"_blank",
-												)
-											}
-										>
-											View on GitHub
-										</Button>
-									</div>
-								</DropdownMenuContent>
-							</DropdownMenu>
-							<Button variant="outline" size="lg" asChild>
-								<a
-									href="https://docs.lighthouse.letpeople.work"
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									View Documentation
-								</a>
-							</Button>
+						<div className="mb-8">
+							<QuickDownloadBar additionalLink={{ name: "View Documentation", url: "https://docs.lighthouse.letpeople.work", external: true }} />
 						</div>
 						<p className="text-xs text-muted-foreground">
 							No credit card required • Community Version Free forever
 						</p>
 					</div>
+				</div>
+			</section>
+
+			{/* Downloads */}
+			<section id="downloads" className="py-20 bg-background">
+				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+					<div className="text-center mb-12">
+						<h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+							Downloads
+						</h2>
+						{latestVersion && (
+							<p className="text-sm font-medium text-primary">Latest: {latestVersion}</p>
+						)}
+					</div>
+
+					<div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+						{/* Standalone card */}
+						<Card>
+							<CardContent className="p-6">
+								<div className="flex items-center gap-3 mb-3">
+									<div className="w-10 h-10 bg-accent rounded-lg flex items-center justify-center text-primary">
+										<Laptop className="h-5 w-5" />
+									</div>
+									<div>
+										<h3 className="text-lg font-semibold text-foreground">Standalone</h3>
+										<p className="text-xs text-muted-foreground">Desktop app with auto-updates</p>
+									</div>
+								</div>
+								<p className="text-sm text-muted-foreground mb-5">
+									Best for personal use and getting started quickly. Runs as a native desktop application.
+								</p>
+								<div className="space-y-0.5">
+									{standaloneDownloads.map((item) => (
+										<TooltipProvider key={`${item.os}-${item.label}`}>
+											<Tooltip>
+												<TooltipTrigger asChild>
+													<button
+														className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent/60 transition-colors text-left group"
+														onClick={() => {
+															const url = latestVersion
+																? getReleaseAssetUrl(latestVersion, item.assetName!)
+																: LIGHTHOUSE_GITHUB_RELEASES_URL;
+															window.open(url, "_blank");
+														}}
+													>
+														<span className="flex-shrink-0 w-5 h-5 flex items-center justify-center text-muted-foreground">
+															<OsIcon os={item.os} className="h-4 w-4" />
+														</span>
+														<span className="flex-1 text-sm">{item.label}</span>
+														<Download className="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+													</button>
+												</TooltipTrigger>
+												<TooltipContent side="right">
+													<p className="max-w-xs text-xs">{item.tooltip}</p>
+												</TooltipContent>
+											</Tooltip>
+										</TooltipProvider>
+									))}
+								</div>
+							</CardContent>
+						</Card>
+
+						{/* Server card */}
+						<Card>
+							<CardContent className="p-6">
+								<div className="flex items-center gap-3 mb-3">
+									<div className="w-10 h-10 bg-accent rounded-lg flex items-center justify-center text-primary">
+										<ServerIcon className="h-5 w-5" />
+									</div>
+									<div>
+										<h3 className="text-lg font-semibold text-foreground">Server</h3>
+										<p className="text-xs text-muted-foreground">Centrally hosted for your team</p>
+									</div>
+								</div>
+								<p className="text-sm text-muted-foreground mb-5">
+									Best for hosting Lighthouse centrally for multiple users. Available for Windows, Linux, and as a Docker container.
+								</p>
+								<div className="space-y-0.5">
+									{serverDownloads.map((item) => {
+										const isDocker = item.os === "docker";
+										return (
+											<TooltipProvider key={`${item.os}-${item.label}`}>
+												<Tooltip>
+													<TooltipTrigger asChild>
+														<button
+															className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent/60 transition-colors text-left group"
+															onClick={() => {
+																if (isDocker) {
+																	copyToClipboard(LIGHTHOUSE_DOCKER_COMMAND);
+																} else {
+																	const url = latestVersion
+																		? getReleaseAssetUrl(latestVersion, item.assetName!)
+																		: LIGHTHOUSE_GITHUB_RELEASES_URL;
+																	window.open(url, "_blank");
+																}
+															}}
+														>
+															<span className="flex-shrink-0 w-5 h-5 flex items-center justify-center text-muted-foreground">
+																<OsIcon os={item.os} className="h-4 w-4" />
+															</span>
+															<span className="flex-1 text-sm">{item.label}</span>
+															{isDocker ? (
+																copiedCommand
+																	? <Check className="h-3.5 w-3.5 text-green-500" />
+																	: <Copy className="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+															) : (
+																<Download className="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+															)}
+														</button>
+													</TooltipTrigger>
+													<TooltipContent side="right">
+														<p className="max-w-xs text-xs">{item.tooltip}</p>
+													</TooltipContent>
+												</Tooltip>
+											</TooltipProvider>
+										);
+									})}
+								</div>
+							</CardContent>
+						</Card>
+					</div>
+
+					{latestVersion && (
+						<p className="text-center text-xs text-muted-foreground mt-8">
+							<a
+								href={LIGHTHOUSE_GITHUB_RELEASES_URL}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="underline underline-offset-4 hover:text-foreground"
+							>
+								View all releases on GitHub
+							</a>
+						</p>
+					)}
 				</div>
 			</section>
 

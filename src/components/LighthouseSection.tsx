@@ -1,7 +1,9 @@
-import { ArrowRight, BarChart3, Target, FileText, Download, Monitor, Smartphone, Container, Copy, Check } from "lucide-react";
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  ArrowRight,
+  BarChart3,
+  Target,
+  FileText,
+} from "lucide-react";
 import MediaCarousel from "@/components/MediaCarousel";
 import lighthouseLogo from "@/assets/LighthouseLogo.png";
 import metricsTeam1 from "@/assets/screenshots/Metrics_Team_1.png";
@@ -9,93 +11,9 @@ import forecastsTeamManual from "@/assets/screenshots/Forecasts_Team_Manual.png"
 import forecastsProjectVideo from "@/assets/videos/Forecasts_Project.mp4";
 import installationVideo from "@/assets/videos/Installation.mp4";
 import LighthouseTestimonials from "@/components/LighthouseTestimonials";
+import QuickDownloadBar from "@/components/QuickDownloadBar";
 
 const LighthouseSection = () => {
-  const [latestVersion, setLatestVersion] = useState<string>("");
-  const [isLoadingVersion, setIsLoadingVersion] = useState(false);
-  const [copiedCommand, setCopiedCommand] = useState(false);
-  
-  // Fetch latest version from GitHub releases
-  useEffect(() => {
-    const fetchLatestVersion = async () => {
-      setIsLoadingVersion(true);
-      try {
-        const response = await fetch('https://api.github.com/repos/LetPeopleWork/Lighthouse/releases/latest');
-        const data = await response.json();
-        setLatestVersion(data.tag_name);
-      } catch (error) {
-        console.error('Failed to fetch latest version:', error);
-        // Fallback version if API fails
-        setLatestVersion('v25.7.27.1729');
-      } finally {
-        setIsLoadingVersion(false);
-      }
-    };
-
-    fetchLatestVersion();
-  }, []);
-
-  const getPlatformDownloadUrl = (platform: string) => {
-    const baseUrl = `https://github.com/LetPeopleWork/Lighthouse/releases/download/${latestVersion}`;
-    switch (platform) {
-      case 'windows':
-        return `${baseUrl}/Lighthouse-win-x64.zip`;
-      case 'macos-dmg':
-        return `${baseUrl}/Lighthouse-osx.dmg`;
-      case 'macos-app':
-        return `${baseUrl}/Lighthouse-osx.app.zip`;
-      case 'linux':
-        return `${baseUrl}/Lighthouse-linux-x64.zip`;
-      default:
-        return '';
-    }
-  };
-
-  const dockerCommand = `docker run -d -p 8081:443 -p 8080:80 -v ".:/app/Data" -v "./logs:/app/logs" -e "Database__ConnectionString=Data Source=/app/Data/LighthouseAppContext.db" ghcr.io/letpeoplework/lighthouse:latest`;
-
-  const copyToClipboard = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopiedCommand(true);
-      setTimeout(() => setCopiedCommand(false), 2000);
-    } catch (error) {
-      console.error('Failed to copy to clipboard:', error);
-    }
-  };
-
-  const platforms = [
-    {
-      id: 'windows',
-      name: 'Windows',
-      icon: <Monitor className="h-4 w-4" />,
-      action: () => window.open(getPlatformDownloadUrl('windows'), '_blank')
-    },
-    {
-      id: 'macos-dmg',
-      name: 'macOS Installer',
-      icon: <Download className="h-4 w-4" />,
-      action: () => window.open(getPlatformDownloadUrl('macos-dmg'), '_blank')
-    },
-    {
-      id: 'macos-app',
-      name: 'macOS App',
-      icon: <Monitor className="h-4 w-4" />,
-      action: () => window.open(getPlatformDownloadUrl('macos-app'), '_blank')
-    },
-    {
-      id: 'linux',
-      name: 'Linux',
-      icon: <Monitor className="h-4 w-4" />,
-      action: () => window.open(getPlatformDownloadUrl('linux'), '_blank')
-    },
-    {
-      id: 'docker',
-      name: 'Container',
-      icon: <Container className="h-4 w-4" />,
-      action: () => copyToClipboard(dockerCommand)
-    }
-  ];
-  
   const mediaItems = [
     {
       type: "image" as const,
@@ -165,6 +83,18 @@ const LighthouseSection = () => {
           </p>
         </div>
 
+        {/* CTA Section */}
+        <div className="text-center bg-gradient-subtle rounded-2xl p-12 border border-border mb-16">
+          <h3 className="text-2xl font-bold text-foreground mb-4">
+            Try the Community Version of Lighthouse Today
+          </h3>
+          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            No credit card. No account. No hassle.
+          </p>
+          <QuickDownloadBar additionalLink={{ name: "All Downloads", url: "/lighthouse#downloads" }} />
+          <p className="text-xs text-muted-foreground mt-4">Community Version Free forever • All Code is Open Source • Everything runs on your Infrstructure - No Third-Party Cloud Services involved</p>
+        </div>
+
         {/* Installation Simplicity Section */}
         <div className="mb-20">
           <div className="text-center mb-8">
@@ -223,73 +153,6 @@ const LighthouseSection = () => {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* CTA Section */}
-        <div className="text-center bg-gradient-subtle rounded-2xl p-12 border border-border mb-16">
-          <h3 className="text-2xl font-bold text-foreground mb-4">
-            Try the Community Version of Lighthouse Today
-          </h3>
-          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-            No credit card. No account. No hassle.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="hero" size="lg" className="group">
-                  <Download className="mr-2 h-4 w-4" />
-                  Download Lighthouse
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="center" className="w-64">
-                {platforms.map((platform) => (
-                  <DropdownMenuItem
-                    key={platform.id}
-                    onClick={platform.action}
-                    aria-label={platform.id === 'docker' ? `Copy ${platform.name} command` : `Download ${platform.name}`}
-                    className="flex items-center space-x-3 p-3 cursor-pointer"
-                  >
-                    {platform.icon}
-                    <div className="flex-1">
-                      <div className="font-medium">{platform.name}</div>
-                      {platform.id === 'docker' ? (
-                        <div className="text-xs text-muted-foreground">Copy command</div>
-                      ) : platform.id === 'macos-dmg' ? (
-                        <div className="text-xs text-muted-foreground">Download dmg</div>
-                      ) : platform.id === 'macos-app' ? (
-                        <div className="text-xs text-muted-foreground">Download App Bundle</div>
-                      ) : (
-                        <div className="text-xs text-muted-foreground">Download Binaries</div>
-                      )}
-                    </div>
-                    {platform.id === 'docker' && copiedCommand && (
-                      <Check className="h-4 w-4 text-green-500" />
-                    )}
-                    {platform.id === 'docker' && !copiedCommand && (
-                      <Copy className="h-4 w-4" />
-                    )}
-                  </DropdownMenuItem>
-                ))}
-                <div className="px-3 py-2 border-t">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="w-full text-xs"
-                    onClick={() => window.open('https://github.com/LetPeopleWork/Lighthouse', '_blank')}
-                  >
-                    View on GitHub
-                  </Button>
-                </div>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <Button variant="outline" size="lg" asChild>
-              <a href="/lighthouse">
-                Learn more
-              </a>
-            </Button>
-          </div>
-          <p className="text-xs text-muted-foreground mt-4">Community Version Free forever • All Code is Open Source • Everything runs on your Infrstructure - No Third-Party Cloud Services involved</p>
         </div>
 
         {/* Testimonials Slider */} 
