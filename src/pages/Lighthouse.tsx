@@ -83,9 +83,10 @@ import almConnectionImage from "@/assets/screenshots/ALM_Connection.png";
 import queryConfigurationImage from "@/assets/screenshots/Query_Configuration.png";
 import gitHubImage from "@/assets/screenshots/GitHub.png";
 import {
-	getReleaseAssetUrl,
+	findAssetByPattern,
 	LIGHTHOUSE_DOCKER_COMMAND,
 	LIGHTHOUSE_GITHUB_RELEASES_URL,
+	type ReleaseAsset,
 } from "@/lib/lighthouseDownloads";
 import QuickDownloadBar from "@/components/QuickDownloadBar";
 
@@ -109,7 +110,7 @@ type DownloadEntry = {
 	os: "windows" | "macos" | "linux" | "docker";
 	label: string;
 	tooltip: string;
-	assetName?: string;
+	assetPattern?: string;
 };
 
 const standaloneDownloads: DownloadEntry[] = [
@@ -117,31 +118,31 @@ const standaloneDownloads: DownloadEntry[] = [
 		os: "windows",
 		label: "Windows Installer (.exe)",
 		tooltip: "Recommended NSIS installer for Windows. Code signed.",
-		assetName: "Lighthouse-win-standalone-x64.exe",
+		assetPattern: "installer.exe",
 	},
 	{
 		os: "windows",
 		label: "Windows Installer (.msi)",
 		tooltip: "MSI installer for Windows — useful for enterprise deployment. Code signed.",
-		assetName: "Lighthouse-win-standalone-x64.msi",
+		assetPattern: "installer.msi",
 	},
 	{
 		os: "macos",
 		label: "macOS Disk Image (.dmg)",
 		tooltip: "Standard macOS disk image. Signed and notarized by Apple.",
-		assetName: "Lighthouse-osx.dmg",
+		assetPattern: "osx.dmg",
 	},
 	{
 		os: "macos",
 		label: "macOS App Bundle (.zip)",
 		tooltip: "The macOS app bundle as a zip archive. Signed and notarized by Apple.",
-		assetName: "Lighthouse-osx.app.zip",
+		assetPattern: "osx.app.zip",
 	},
 	{
 		os: "linux",
 		label: "Linux App (.AppImage)",
 		tooltip: "Portable AppImage — runs on most Linux distributions without installation.",
-		assetName: "Lighthouse-linux-standalone.AppImage",
+		assetPattern: ".appimage",
 	},
 ];
 
@@ -150,13 +151,13 @@ const serverDownloads: DownloadEntry[] = [
 		os: "windows",
 		label: "Windows Binaries (.zip)",
 		tooltip: "Server binaries for Windows (x64). Extract and run as a background service.",
-		assetName: "Lighthouse-win-x64.zip",
+		assetPattern: "server-win",
 	},
 	{
 		os: "linux",
 		label: "Linux Binaries (.zip)",
 		tooltip: "Server binaries for Linux (x64). Extract and run as a background service.",
-		assetName: "Lighthouse-linux-x64.zip",
+		assetPattern: "server-linux",
 	},
 	{
 		os: "docker",
@@ -167,6 +168,7 @@ const serverDownloads: DownloadEntry[] = [
 
 const Lighthouse = () => {
 	const [latestVersion, setLatestVersion] = useState<string>("");
+	const [releaseAssets, setReleaseAssets] = useState<ReleaseAsset[]>([]);
 	const [copiedCommand, setCopiedCommand] = useState(false);
 	const [showLicenseDetails, setShowLicenseDetails] = useState(false);
 	const [purchaseForm, setPurchaseForm] = useState({
@@ -217,6 +219,7 @@ const Lighthouse = () => {
 				);
 				const data = await response.json();
 				setLatestVersion(data.tag_name);
+				setReleaseAssets(data.assets ?? []);
 			} catch (error) {
 				console.error("Failed to fetch latest version:", error);
 				setLatestVersion("v25.7.27.1729");
@@ -698,9 +701,8 @@ const Lighthouse = () => {
 													<button
 														className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent/60 transition-colors text-left group"
 														onClick={() => {
-															const url = latestVersion
-																? getReleaseAssetUrl(latestVersion, item.assetName!)
-																: LIGHTHOUSE_GITHUB_RELEASES_URL;
+															const url = findAssetByPattern(releaseAssets, item.assetPattern!)?.browser_download_url
+																?? LIGHTHOUSE_GITHUB_RELEASES_URL;
 															window.open(url, "_blank");
 														}}
 													>
@@ -749,9 +751,8 @@ const Lighthouse = () => {
 																if (isDocker) {
 																	copyToClipboard(LIGHTHOUSE_DOCKER_COMMAND);
 																} else {
-																	const url = latestVersion
-																		? getReleaseAssetUrl(latestVersion, item.assetName!)
-																		: LIGHTHOUSE_GITHUB_RELEASES_URL;
+																	const url = findAssetByPattern(releaseAssets, item.assetPattern!)?.browser_download_url
+																		?? LIGHTHOUSE_GITHUB_RELEASES_URL;
 																	window.open(url, "_blank");
 																}
 															}}

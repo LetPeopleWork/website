@@ -1,5 +1,6 @@
 export type ClientOs = "Windows" | "macOS" | "Linux" | "unknown";
 export type LighthouseEdition = "standalone" | "server";
+export type ReleaseAsset = { name: string; browser_download_url: string };
 
 export const LIGHTHOUSE_GITHUB_REPO = "LetPeopleWork/Lighthouse";
 export const LIGHTHOUSE_GITHUB_REPO_URL = `https://github.com/${LIGHTHOUSE_GITHUB_REPO}`;
@@ -28,14 +29,62 @@ export function getReleaseAssetUrl(tag: string, assetName: string): string {
 	return `https://github.com/${LIGHTHOUSE_GITHUB_REPO}/releases/download/${tag}/${assetName}`;
 }
 
+export function findAssetByPattern(
+	assets: ReleaseAsset[],
+	pattern: string,
+): ReleaseAsset | undefined {
+	const lower = pattern.toLowerCase();
+	return assets.find((a) => a.name.toLowerCase().includes(lower));
+}
+
+export function getStandaloneSearchPatternForOs(os: ClientOs): string | undefined {
+	switch (os) {
+		case "Windows":
+			return "installer.exe";
+		case "macOS":
+			return "osx.dmg";
+		case "Linux":
+			return ".appimage";
+		default:
+			return undefined;
+	}
+}
+
+export function getServerSearchPatternForOs(os: ClientOs): string | undefined {
+	switch (os) {
+		case "Windows":
+			return "server-win";
+		case "Linux":
+			return "server-linux";
+		case "macOS":
+			return undefined;
+		default:
+			return undefined;
+	}
+}
+
+export function getQuickDownloadUrlFromAssets(
+	edition: LighthouseEdition,
+	os: ClientOs,
+	assets: ReleaseAsset[],
+): string | undefined {
+	const pattern =
+		edition === "standalone"
+			? getStandaloneSearchPatternForOs(os)
+			: getServerSearchPatternForOs(os);
+
+	if (!pattern) return undefined;
+	return findAssetByPattern(assets, pattern)?.browser_download_url;
+}
+
 export function getStandaloneAssetNameForOs(os: ClientOs): string | undefined {
 	switch (os) {
 		case "Windows":
-			return "Lighthouse-win-standalone-x64.exe";
+			return "Lighthouse-standalone-installer.exe";
 		case "macOS":
-			return "Lighthouse-osx.dmg";
+			return "Lighthouse-standalone-osx.dmg";
 		case "Linux":
-			return "Lighthouse-linux-standalone.AppImage";
+			return "Lighthouse-standalone.AppImage";
 		default:
 			return undefined;
 	}
@@ -44,9 +93,9 @@ export function getStandaloneAssetNameForOs(os: ClientOs): string | undefined {
 export function getServerAssetNameForOs(os: ClientOs): string | undefined {
 	switch (os) {
 		case "Windows":
-			return "Lighthouse-win-x64.zip";
+			return "Lighthouse-server-win-x64.zip";
 		case "Linux":
-			return "Lighthouse-linux-x64.zip";
+			return "Lighthouse-server-linux-x64.zip";
 		case "macOS":
 			return undefined;
 		default:

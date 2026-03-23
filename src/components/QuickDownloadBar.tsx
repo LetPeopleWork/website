@@ -3,10 +3,11 @@ import { Download, Monitor, Container, Copy, Check, Command, Terminal } from "lu
 import { Button } from "@/components/ui/button";
 import {
 	detectClientOs,
-	getQuickDownloadUrl,
+	getQuickDownloadUrlFromAssets,
 	LIGHTHOUSE_DOCKER_COMMAND,
 	LIGHTHOUSE_GITHUB_RELEASES_URL,
 	type ClientOs,
+	type ReleaseAsset,
 } from "@/lib/lighthouseDownloads";
 
 interface AdditionalLink {
@@ -36,6 +37,7 @@ const OsChip = ({ os, ext }: { os: ClientOs; ext: string }) => (
 
 const QuickDownloadBar = ({ additionalLink }: QuickDownloadBarProps) => {
 	const [latestVersion, setLatestVersion] = useState("");
+	const [releaseAssets, setReleaseAssets] = useState<ReleaseAsset[]>([]);
 	const [isLoadingVersion, setIsLoadingVersion] = useState(false);
 	const [copiedCommand, setCopiedCommand] = useState(false);
 	const [clientOs, setClientOs] = useState<ClientOs>("unknown");
@@ -49,6 +51,7 @@ const QuickDownloadBar = ({ additionalLink }: QuickDownloadBarProps) => {
 				);
 				const data = await response.json();
 				setLatestVersion(data.tag_name);
+				setReleaseAssets(data.assets ?? []);
 			} catch {
 				setLatestVersion("v25.7.27.1729");
 			} finally {
@@ -86,9 +89,7 @@ const QuickDownloadBar = ({ additionalLink }: QuickDownloadBarProps) => {
 	};
 
 	const openQuickDownload = (edition: "standalone" | "server") => {
-		const url = latestVersion
-			? getQuickDownloadUrl(edition, clientOs, latestVersion)
-			: undefined;
+		const url = getQuickDownloadUrlFromAssets(edition, clientOs, releaseAssets);
 		window.open(url ?? LIGHTHOUSE_GITHUB_RELEASES_URL, "_blank");
 	};
 
