@@ -53,9 +53,9 @@ const testimonials: Testimonial[] = [
         companyUrl: "https://thrivve.partners/"
     },
     {
-        quote: "",
+        quote: "Whenever I am asked to assess the delivery health of a team, Lighthouse is my go-to tool as a consultant. Its quick, no-faff setup enables me to answer critical questions in a matter of minutes — shifting the conversation from gut-feel to data, and from wishful thinking to delivery risks and probabilities. For any coach trying to make risk visible and discussable, this is the tool that earns its place",
         author: "Gábor Bittera",
-        role: "VP Engineering",
+        role: "Scrum Master",
         authorUrl: "https://www.linkedin.com/in/gaborbittera/"
     },
     {
