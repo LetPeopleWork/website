@@ -1104,7 +1104,7 @@ const Lighthouse = () => {
 										<tr>
 											<td className="py-3 px-4 text-muted-foreground">
 												<div className="flex items-center space-x-2">
-													<span> Import and Export of Configuration</span>
+													<span> Blackout Days</span>
 													<TooltipProvider>
 														<Tooltip>
 															<TooltipTrigger>
@@ -1112,7 +1112,7 @@ const Lighthouse = () => {
 															</TooltipTrigger>
 															<TooltipContent>
 																<p className="text-sm">
-																	Export your Lighthouse configuration and import it into another instance, making it easy to replicate setups across teams or share configurations with others.
+																	Define days which should not be counted in the Throughput for calculating forecasts, for example bank holidays.
 																</p>
 															</TooltipContent>
 														</Tooltip>
