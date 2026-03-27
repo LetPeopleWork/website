@@ -44,3 +44,14 @@ jobs:
           echo "Response: $RESPONSE_BODY"
           exit 1
         fi
+
+    - name: Send heartbeat to Supabase DB
+      run: |
+        RESPONSE=$(curl -s -w "%{http_code}" -o response_body.txt \
+          -X POST \
+          "https://tkkghzcpwefwrgacgvdv.supabase.co/rest/v1/heartbeat" \
+          -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
+          -H "Content-Type: application/json" \
+          -H "Prefer: resolution=merge-duplicates" \
+          -d '{"id": 1, "touched_at": "'"$(date -u +%Y-%m-%dT%H:%M:%SZ)"'"}')
