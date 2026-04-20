@@ -37,16 +37,15 @@ const Hero = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="animate-fade-in">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight">
-            Unlock the Full{" "}
+            Stop defending estimates.{" "}
             <span className="bg-gradient-hero bg-clip-text text-transparent">
-              Potential
+              Start forecasting
             </span>
-            {" "}  of your Organization
+            {" "}with confidence.
           </h1>
-          
+
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-            LetPeopleWork combines the powerful tooling of Lighthouse with deep expertise and experience in Flow, Delivery, and Obeya. <br />
-            We combine the know-how and the tooling, so that we can provide you the services that creates a measurable impact.
+            We help delivery and portfolio leaders move from date-guessing to probabilistic forecasting — with Lighthouse, our self-hosted flow metrics tool, and the coaching to make it stick.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">

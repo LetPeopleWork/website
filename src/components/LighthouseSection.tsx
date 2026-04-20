@@ -3,6 +3,7 @@ import {
   BarChart3,
   Target,
   FileText,
+  Gauge,
 } from "lucide-react";
 import MediaCarousel from "@/components/MediaCarousel";
 import lighthouseLogo from "@/assets/LighthouseLogo.png";
@@ -35,23 +36,28 @@ const LighthouseSection = () => {
   const features = [
     {
       icon: <BarChart3 className="h-6 w-6" />,
-      title: "Visualize your Flow",
-      description: "Take action based on real data - with Lighthouse you have all relevant Flow Metrics at your disposal"
+      title: "Visualize the flow you actually have",
+      description: "See cycle time, throughput, WIP, and work item age for every team and portfolio — with the data already in the tool your team works in."
     },
     {
       icon: <Target className="h-6 w-6" />,
-      title: "Forecast Delivery Dates",
-      description: "Stop wasting time with guesses - Lighthouse is using your historical data to create realistic timelines in seconds"
+      title: "Forecast with ranges, not guesses",
+      description: "Monte Carlo simulations turn your team's real history into honest delivery forecasts. Give stakeholders a range you can defend, not a date you'll regret."
+    },
+    {
+      icon: <Gauge className="h-6 w-6" />,
+      title: "See where to look in five seconds",
+      description: "Every widget shows a Red/Amber/Green indicator based on your team's SLE, WIP limits, and flow signals. Spot the teams and features that need attention before the steering committee does."
     },
     {
       icon: <ArrowRight className="h-6 w-6" />,
-      title: "Integrate with most popular ALM Tools",
-      description: "No need to maintain multiple data sources - Lighthouse connects to Jira and Azure DevOps"
+      title: "Connects to Jira, Azure DevOps, and Linear",
+      description: "Three integrations, deeply built. No CSV exports, no parallel spreadsheets, no \"data engineering\" side project."
     },
     {
       icon: <FileText className="h-6 w-6" />,
-      title: "Full Transparency - Full Control",
-      description: "No need to send your data to some cloud provider in a foreign country - Lighthouse is 100% Open-Source, runs fully on your infrastructure and will not send anything to the cloud"
+      title: "Your data never leaves your network",
+      description: "Self-hosted and open source — as a Docker container for enterprise, or as a native desktop app on Windows, macOS, and Linux. No cloud dependencies, no third-party data processors, it runs where your work lives."
     }
   ];
 
@@ -61,9 +67,9 @@ const LighthouseSection = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <div className="flex justify-center mb-8">
-            <img 
-              src={lighthouseLogo} 
-              alt="Lighthouse Flow Metrics and Forecasting Tool Logo" 
+            <img
+              src={lighthouseLogo}
+              alt="Lighthouse Flow Metrics and Forecasting Tool Logo"
               className="h-16 w-auto"
               width="64"
               height="64"
@@ -77,9 +83,10 @@ const LighthouseSection = () => {
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            See Your Flow — Predict Your Delivery <br />
-            Lighthouse turns your data into flow metrics and date-accurate delivery forecasts <br />
-            Simple to install, simple to use — Most teams see measurable improvements in the first month <br />
+            Flow metrics and probabilistic forecasts, built on your team's real data. Self-hosted. Open source. Yours to trust.
+          </p>
+          <p className="text-sm text-muted-foreground mt-3">
+            Works with Jira, Azure DevOps, and Linear.
           </p>
         </div>
 
@@ -92,7 +99,7 @@ const LighthouseSection = () => {
             No credit card. No account. No hassle.
           </p>
           <QuickDownloadBar additionalLink={{ name: "All Downloads", url: "/lighthouse#downloads" }} />
-          <p className="text-xs text-muted-foreground mt-4">Community Version Free forever • All Code is Open Source • Everything runs on your Infrstructure - No Third-Party Cloud Services involved</p>
+          <p className="text-xs text-muted-foreground mt-4">Community Version free forever • 100% open source • Runs on your infrastructure — nothing sent to the cloud</p>
         </div>
 
         {/* Installation Simplicity Section */}
@@ -102,12 +109,12 @@ const LighthouseSection = () => {
               Simple to Install. Simple to Use.
             </h3>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Get started in minutes, not hours. See how easy it is to install Lighthouse.
+              From download to first forecast in under ten minutes. Here's what that looks like.
             </p>
           </div>
           <div className="max-w-4xl mx-auto">
             <div className="relative rounded-xl overflow-hidden shadow-2xl border border-border">
-              <video 
+              <video
                 className="w-full"
                 controls
                 preload="metadata"
@@ -136,7 +143,7 @@ const LighthouseSection = () => {
             <h3 className="text-2xl font-bold text-foreground mb-8">
               Highlights
             </h3>
-            
+
             {features.map((feature) => (
               <div key={feature.title} className="flex items-start space-x-4 group">
                 <div className="flex-shrink-0 w-12 h-12 bg-accent rounded-lg flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-200">
@@ -155,7 +162,7 @@ const LighthouseSection = () => {
           </div>
         </div>
 
-        {/* Testimonials Slider */} 
+        {/* Testimonials Slider */}
         <LighthouseTestimonials />
       </div>
     </section>
