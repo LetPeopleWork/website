@@ -1,31 +1,10 @@
 import { useState } from "react";
-import { ChevronDown, Wrench, BookOpen, MessageSquare, GraduationCap, Zap, Search as SearchIcon, CheckCircle2, ArrowRight } from "lucide-react";
+import { ChevronDown, MessageSquare, GraduationCap, Zap, Search as SearchIcon, CheckCircle2 } from "lucide-react";
+import PeterImage from '../assets/Peter.png';
+import BenjiImage from '../assets/Benji.png';
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
-const ENTRY_CARDS = [
-  {
-    question: "Don't see the numbers?",
-    answer: "We help you customize Lighthouse to fit your specific organizational needs, ensuring you get the most value from your data.",
-    cta: "Need a Hand with the Setup?",
-    who: "If you need technical assistance",
-    icon: Wrench,
-  },
-  {
-    question: "Don't understand the numbers?",
-    answer: "Through custom trainings and workshops, we help your team understand and effectively use flow metrics to drive improvements and get more accurate delivery forecasts.",
-    cta: "Book a Workshop or Training",
-    who: "If you want to become more data-driven",
-    icon: BookOpen,
-  },
-  {
-    question: "Don't like the numbers?",
-    answer: "Our expert guidance helps you interpret your metrics and develop actionable strategies to achieve better flow and organizational performance.",
-    cta: "Talk To Us",
-    who: "If you want continuous guidance",
-    icon: MessageSquare,
-  },
-];
 
 interface OfferingItem {
   name: string;
@@ -303,22 +282,6 @@ function CategoryAccordion({
             ))}
           </div>
 
-          {/* Lighthouse trial bonus (workshops only) */}
-          {id === "workshops" && (
-            <div className="mt-4 px-5 py-4 rounded-lg border border-dashed border-primary/25 bg-accent/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-              <div>
-                <div className="text-sm font-semibold text-foreground">
-                  Book any workshop → get 1 month Lighthouse Premium trial
-                </div>
-                <div className="text-[13px] text-muted-foreground mt-0.5">
-                  Including the full PDF export capability for your reports
-                </div>
-              </div>
-              <span className="text-[13px] text-primary font-semibold whitespace-nowrap">
-                Included free ↗
-              </span>
-            </div>
-          )}
         </div>
       </div>
     </div>
@@ -339,7 +302,7 @@ export default function ExpertiseAndServices() {
     setOpenCategories((prev) => ({ ...prev, [id]: !prev[id] }));
 
   return (
-    <section className="bg-background">
+    <section id="services" className="bg-background">
       {/* ── Section Header ── */}
       <div className="text-center max-w-2xl mx-auto px-4 pt-20 pb-12 md:pt-28 md:pb-16">
         <span className="text-xs font-semibold uppercase tracking-[0.15em] text-primary mb-5 block">
@@ -355,50 +318,8 @@ export default function ExpertiseAndServices() {
         </p>
       </div>
 
-      {/* ── Entry Point Cards ── */}
-      <div className="max-w-5xl mx-auto px-4 pb-16 md:pb-20">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {ENTRY_CARDS.map((card, i) => {
-            const Icon = card.icon;
-            return (
-              <div
-                key={i}
-                className="group rounded-xl border border-border bg-white p-6 md:p-7 flex flex-col gap-4 transition-all duration-300 hover:border-primary/30 hover:shadow-medium hover:-translate-y-1 cursor-pointer"
-              >
-                <div className="w-11 h-11 rounded-lg bg-accent flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
-                  <Icon className="w-5 h-5" />
-                </div>
-
-                <h3 className="text-lg font-semibold text-foreground leading-snug">
-                  {card.question}
-                </h3>
-
-                <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-                  {card.answer}
-                </p>
-
-                <div className="pt-2">
-                  <span className="text-xs text-muted-foreground block mb-2">
-                    {card.who}
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary group-hover:gap-2.5 transition-all duration-200">
-                    {card.cta}
-                    <ArrowRight className="w-4 h-4" />
-                  </span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* ── Divider ── */}
-      <div className="max-w-5xl mx-auto px-4">
-        <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-      </div>
-
       {/* ── Full Catalogue ── */}
-      <div className="max-w-5xl mx-auto px-4 py-16 md:py-20">
+      <div id="workshops" className="max-w-5xl mx-auto px-4 py-16 md:py-20">
         <div className="text-center mb-10 md:mb-14">
           <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
             Our Full Catalogue
@@ -419,6 +340,15 @@ export default function ExpertiseAndServices() {
               onToggle={() => toggle(id)}
             />
           ))}
+        </div>
+
+        <div className="mt-10 text-center">
+          <a
+            href="mailto:contact@letpeople.work?subject=Workshop%20Booking"
+            className="inline-block bg-primary hover:bg-primary-hover text-primary-foreground font-semibold text-sm md:text-base px-8 py-3.5 rounded-lg shadow-soft hover:shadow-medium transition-all duration-200 hover:-translate-y-0.5 no-underline"
+          >
+            Book a Workshop →
+          </a>
         </div>
       </div>
 
@@ -512,9 +442,12 @@ export default function ExpertiseAndServices() {
                   </div>
                 </div>
 
-                <button className="bg-primary hover:bg-primary-hover text-primary-foreground font-semibold text-sm md:text-base px-7 py-3.5 rounded-lg shadow-soft hover:shadow-medium transition-all duration-200 hover:-translate-y-0.5 cursor-pointer whitespace-nowrap">
+                <a
+                  href={`mailto:contact@letpeople.work?subject=Request for ${encodeURIComponent(PACKAGE.name)}`}
+                  className="bg-primary hover:bg-primary-hover text-primary-foreground font-semibold text-sm md:text-base px-7 py-3.5 rounded-lg shadow-soft hover:shadow-medium transition-all duration-200 hover:-translate-y-0.5 cursor-pointer whitespace-nowrap no-underline"
+                >
                   Schedule Workshop →
-                </button>
+                </a>
               </div>
               <div className="text-[13px] text-muted-foreground mt-3">
                 {PACKAGE.includes}
@@ -525,7 +458,7 @@ export default function ExpertiseAndServices() {
       </div>
 
       {/* ── Custom / Tailored ── */}
-      <div className="max-w-5xl mx-auto px-4 pb-20 md:pb-28">
+      <div id="custom-events" className="max-w-5xl mx-auto px-4 pb-20 md:pb-28">
         <div className="rounded-xl border border-border bg-white p-8 md:p-12 text-center">
           <div className="w-14 h-14 rounded-full bg-accent flex items-center justify-center mx-auto mb-5">
             <MessageSquare className="w-6 h-6 text-primary" />
@@ -546,9 +479,80 @@ export default function ExpertiseAndServices() {
             Perfect for teams of up to 30.
           </p>
 
-          <button className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold text-sm px-7 py-3 rounded-lg transition-all duration-200 cursor-pointer">
+          <a
+            href="mailto:contact@letpeople.work"
+            className="inline-block border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold text-sm px-7 py-3 rounded-lg transition-all duration-200 cursor-pointer no-underline"
+          >
             Reach Out To Talk About How We Can Support →
-          </button>
+          </a>
+        </div>
+      </div>
+      {/* ── About Us ── */}
+      <div className="max-w-5xl mx-auto px-4 pb-20 md:pb-28">
+        <div className="text-center bg-background/80 backdrop-blur-sm rounded-2xl p-12 border border-border">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">
+            Why Choose Our Expertise?
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto text-left">
+            <div className="space-y-4">
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-semibold text-primary mb-3">Peter Zylka-Greger</h3>
+                <img
+                  src={PeterImage}
+                  alt="Peter Zylka-Greger - Flow and Kanban Expert"
+                  className="w-20 h-20 rounded-full object-cover border-2 border-primary/20 mx-auto"
+                  width="80"
+                  height="80"
+                  loading="lazy"
+                />
+              </div>
+              <p className="text-muted-foreground">
+                For years I have been working with teams worldwide, experiencing what great teams can achieve.
+                But also seeing that success isn't just about putting individuals together—it requires the right
+                techniques, emotional intelligence, and toolkit.
+              </p>
+              <p className="text-muted-foreground">
+                We see frustrated team members, overwhelmed managers, and complaining customers because people
+                are drowning in meetings instead of delivering value. People want to contribute and be part of
+                something successful—we just need to let them work.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-semibold text-primary mb-3">Benjamin Huser-Berta</h3>
+                <img
+                  src={BenjiImage}
+                  alt="Benjamin Huser-Berta - Software Engineer and Scrum Master"
+                  className="w-20 h-20 rounded-full object-cover border-2 border-primary/20 mx-auto"
+                  width="80"
+                  height="80"
+                  loading="lazy"
+                />
+              </div>
+              <p className="text-muted-foreground">
+                As a Software Engineer and Scrum Master, I've seen teams struggle with wasteful processes
+                and overwhelming workloads that kill motivation. I believe work can be creative and fun when
+                we reduce waste and create environments focused on delivering value.
+              </p>
+              <p className="text-muted-foreground">
+                We bring you everything you need: the tools, know-how, and real-world experience.
+                Unlike traditional consultancies, we create the tools we recommend and have hands-on
+                experience making them work in complex organizational environments.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-12 text-center">
+            <p className="text-lg font-medium text-primary mb-4">
+              We don't just give advice—we build the tools and have proven they work.
+            </p>
+            <p className="text-muted-foreground max-w-3xl mx-auto">
+              Our unique combination of tool creation, practical implementation experience, and deep
+              methodological expertise means you get solutions that actually work in the real world.
+            </p>
+          </div>
         </div>
       </div>
     </section>
