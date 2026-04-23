@@ -306,15 +306,15 @@ export default function ExpertiseAndServices() {
       {/* ── Section Header ── */}
       <div className="text-center max-w-2xl mx-auto px-4 pt-20 pb-12 md:pt-28 md:pb-16">
         <span className="text-xs font-semibold uppercase tracking-[0.15em] text-primary mb-5 block">
-          Expertise & Services
+          How we help
         </span>
         <h2 className="text-3xl md:text-4xl lg:text-[44px] font-bold text-foreground leading-tight tracking-tight">
-          Comprehensive support from tool to{" "}
-          <span className="text-primary">transformation</span>
+          Your team shouldn't have to guess.{" "}
+          <span className="text-primary">We make sure they don't — and help them actually improve.</span>
         </h2>
         <p className="text-base md:text-lg text-muted-foreground mt-5 leading-relaxed max-w-xl mx-auto">
-          We bring both the technology and the know-how to make it work for you.
-          From official certifications to deep diagnostic assessments.
+          Choose where you want to start. Every session connects metrics to action —
+          from official certifications to deep diagnostic assessments.
         </p>
       </div>
 
@@ -325,8 +325,8 @@ export default function ExpertiseAndServices() {
             Our Full Catalogue
           </h3>
           <p className="text-sm md:text-base text-muted-foreground mt-3 max-w-lg mx-auto">
-            Every engagement is delivered in pairs — two senior practitioners,
-            two perspectives, maximum impact.
+            Choose what matches where you are right now. Every engagement delivered
+            by two practitioners — two perspectives, one coherent outcome.
           </p>
         </div>
 
@@ -385,7 +385,7 @@ export default function ExpertiseAndServices() {
             </div>
 
             <p className="text-sm md:text-[15px] text-muted-foreground leading-relaxed max-w-2xl mb-4">
-              {PACKAGE.description}
+              Six months from now, your team walks into any steering committee meeting with a forecast range built from real data — not gut feeling. And you'll know which parts of your delivery system to fix to make the next one even better. This package is how you get there.
             </p>
             <p className="text-sm md:text-[15px] text-muted-foreground leading-relaxed max-w-2xl mb-8">
               {PACKAGE.savings}
@@ -465,7 +465,7 @@ export default function ExpertiseAndServices() {
           </div>
 
           <h3 className="text-xl md:text-2xl font-bold text-foreground mb-3">
-            Need Something Tailored to Your Needs?
+            Your context is unique — let's design something that fits
           </h3>
 
           <p className="text-sm md:text-base text-muted-foreground max-w-lg mx-auto leading-relaxed mb-2">
@@ -491,7 +491,7 @@ export default function ExpertiseAndServices() {
       <div className="max-w-5xl mx-auto px-4 pb-20 md:pb-28">
         <div className="text-center bg-background/80 backdrop-blur-sm rounded-2xl p-12 border border-border">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">
-            Why Choose Our Expertise?
+            The practitioners behind the tools
           </h2>
 
           <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto text-left">

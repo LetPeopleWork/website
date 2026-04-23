@@ -3,17 +3,17 @@ import { Button } from "@/components/ui/button";
 import heroFlow from "@/assets/hero-flow.jpg";
 
 const Hero = () => {
-  const handleExploreLighthouse = () => {
+  const handleGetLighthouse = () => {
     const lighthouseSection = document.getElementById("lighthouse");
     if (lighthouseSection) {
       lighthouseSection.scrollIntoView({ behavior: "smooth" });
     }
   };
 
-  const handleOurServices = () => {
-    const servicesSection = document.getElementById("services");
-    if (servicesSection) {
-      servicesSection.scrollIntoView({ behavior: "smooth" });
+  const handleHowItWorks = () => {
+    const howItWorksSection = document.getElementById("how-it-works");
+    if (howItWorksSection) {
+      howItWorksSection.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -45,22 +45,25 @@ const Hero = () => {
           </h1>
 
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-            We help delivery and portfolio leaders move from date-guessing to probabilistic forecasting — with Lighthouse, our self-hosted flow metrics tool, and the coaching to make it stick.
+            You're being asked when it'll be done — and right now, your honest answer is a guess. Lighthouse shows you <em>why</em> delivery is slow and <em>when</em> it'll finish — so you fix the system and stop defending the date.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Button variant="hero" size="lg" className="group" onClick={handleExploreLighthouse}>
-              Explore Lighthouse
+            <Button variant="hero" size="lg" className="group" onClick={handleGetLighthouse}>
+              Get Lighthouse Free
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
-            
-            <Button variant="outline" size="lg" className="group" onClick={handleOurServices}>
+
+            <Button variant="outline" size="lg" className="group" onClick={handleHowItWorks}>
               <Play className="mr-2 group-hover:scale-110 transition-transform" />
-              Our Services
+              See How It Works
             </Button>
           </div>
 
           {/* Stats */}
+          <p className="text-sm text-muted-foreground mb-6 italic">
+            We've watched capable teams drown in estimate theater. Here's what we built to end it:
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold text-primary mb-2">15+</div>

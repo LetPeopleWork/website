@@ -33,10 +33,10 @@ const StayConnected = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6">
-            Stay Connected
+            Keep getting better at this
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Keep in touch with us through our various channels.
+            The methods, metrics, and mindsets that make flow stick — from the community that's building faster delivery, not just measuring it.
           </p>
         </div>
 

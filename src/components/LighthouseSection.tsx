@@ -77,23 +77,20 @@ const LighthouseSection = () => {
             />
           </div>
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6">
-            Meet{" "}
+            Understand your delivery system.{" "}
             <span className="bg-gradient-primary bg-clip-text text-transparent">
-              Lighthouse
+              Forecast it with confidence.
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Flow metrics and probabilistic forecasts, built on your team's real data. Self-hosted. Open source. Yours to trust.
-          </p>
-          <p className="text-sm text-muted-foreground mt-3">
-            Works with Jira, Azure DevOps, and Linear.
+            Most teams already have the data. They just can't see what it's telling them. Lighthouse connects to Jira, Azure DevOps, and Linear — turns your history into honest forecasts, and shows you exactly where your delivery system is losing speed.
           </p>
         </div>
 
         {/* CTA Section */}
         <div className="text-center bg-gradient-subtle rounded-2xl p-12 border border-border mb-16">
           <h3 className="text-2xl font-bold text-foreground mb-4">
-            Try the Community Version of Lighthouse Today
+            Start seeing your delivery system clearly — free
           </h3>
           <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
             No credit card. No account. No hassle.
@@ -141,7 +138,7 @@ const LighthouseSection = () => {
           {/* Features */}
           <div className="order-1 lg:order-2 space-y-6">
             <h3 className="text-2xl font-bold text-foreground mb-8">
-              Highlights
+              What changes when you use Lighthouse
             </h3>
 
             {features.map((feature) => (
