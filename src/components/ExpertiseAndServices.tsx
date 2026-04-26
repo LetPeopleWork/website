@@ -303,29 +303,28 @@ export default function ExpertiseAndServices() {
   return (
     <section id="services" className="bg-background">
       {/* ── Section Header ── */}
-      <div className="text-center max-w-4xl mx-auto px-4 pt-20 pb-12 md:pt-28 md:pb-16">
+      <div className="text-center max-w-4xl mx-auto px-4 pt-20 pb-8 md:pt-28 md:pb-10">
         <span className="text-xs font-semibold uppercase tracking-[0.15em] text-primary mb-5 block">
           How we help
         </span>
-        <h2 className="text-3xl md:text-4xl lg:text-[44px] font-bold text-foreground leading-tight tracking-tight">
-          Your team shouldn't have to guess.{" "}
-          <span className="text-primary">We make sure they don't, and help identify improvements you can measure.</span>
+        <h2 className="text-3xl md:text-4xl lg:text-[44px] font-bold leading-tight tracking-tight">
+          <span className="text-foreground">Your team shouldn't have to guess.</span>
+          <br />
+          <span className="text-primary">We replace gut feel with flow data and help you identify improvements you can actually measure.</span>
         </h2>
         <p className="text-base md:text-lg text-muted-foreground mt-5 leading-relaxed max-w-xl mx-auto">
-          Choose where you want to start. Every session connects metrics to action —
-          from official certifications to deep diagnostic assessments.
+          We bring both the tool and the expertise to make it work — from official certifications to deep diagnostic assessments.
         </p>
       </div>
 
       {/* ── Full Catalogue ── */}
-      <div id="workshops" className="max-w-5xl mx-auto px-4 py-16 md:py-20">
+      <div id="workshops" className="max-w-5xl mx-auto px-4 py-10 md:py-14">
         <div className="text-center mb-10 md:mb-14">
           <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
-            Our Full Catalogue
+            Where to Start
           </h3>
           <p className="text-sm md:text-base text-muted-foreground mt-3 max-w-lg mx-auto">
-            Choose what matches where you are right now. Every engagement delivered
-            by two practitioners, two perspectives, one coherent outcome.
+            Every engagement delivered by two practitioners, two perspectives, one coherent outcome.
           </p>
         </div>
 
