@@ -273,9 +273,9 @@ function CategoryAccordion({
                   {item.description}
                 </div>
 
-                <div className="flex flex-wrap gap-x-2 gap-y-1 pt-3 border-t border-border text-[12px] text-muted-foreground mt-auto">
+                <div className="flex flex-col gap-1 pt-3 border-t border-border text-[12px] text-muted-foreground mt-auto">
                   {item.duration && <span>⏱ {item.duration}</span>}
-                  <span>{item.duration ? "· " : ""}{item.format}</span>
+                  <span>{item.format}</span>
                 </div>
               </div>
             ))}
