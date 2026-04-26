@@ -45,7 +45,7 @@ const Hero = () => {
           </h1>
 
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-            You're being asked when it'll be done — and right now, your honest answer is a guess. Lighthouse shows you <em>why</em> delivery is slow and <em>when</em> it'll finish — so you fix the system and stop defending the date.
+            You're being asked when it'll be done. Right now, your honest answer is a guess. Lighthouse shows you <em>why</em> delivery is slow and <em>when</em> it'll finish, so you can fix the system and stop defending the date.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">

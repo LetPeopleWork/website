@@ -37,7 +37,7 @@ const LighthouseSection = () => {
     {
       icon: <BarChart3 className="h-6 w-6" />,
       title: "Visualize the flow you actually have",
-      description: "See cycle time, throughput, WIP, and work item age for every team and portfolio — with the data already in the tool your team works in."
+      description: "See cycle time, throughput, WIP, and work item age for every team and portfolio, with the data already in the tool your team works in."
     },
     {
       icon: <Target className="h-6 w-6" />,
@@ -57,7 +57,7 @@ const LighthouseSection = () => {
     {
       icon: <FileText className="h-6 w-6" />,
       title: "Your data never leaves your network",
-      description: "Self-hosted and open source — as a Docker container for enterprise, or as a native desktop app on Windows, macOS, and Linux. No cloud dependencies, no third-party data processors, it runs where your work lives."
+      description: "Self-hosted and open source, as a Docker container for enterprise or a native desktop app on Windows, macOS, and Linux. No cloud dependencies, no third-party data processors. It runs where your work lives."
     }
   ];
 
@@ -83,20 +83,20 @@ const LighthouseSection = () => {
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Most teams already have the data. They just can't see what it's telling them. Lighthouse connects to Jira, Azure DevOps, and Linear — turns your history into honest forecasts, and shows you exactly where your delivery system is losing speed.
+            Most teams already have the data. They just can't see what it's telling them. Lighthouse connects to Jira, Azure DevOps, and Linear, turns your history into honest forecasts, and shows you exactly where your delivery system is losing speed.
           </p>
         </div>
 
         {/* CTA Section */}
         <div className="text-center bg-gradient-subtle rounded-2xl p-12 border border-border mb-16">
           <h3 className="text-2xl font-bold text-foreground mb-4">
-            Start seeing your delivery system clearly — free
+            Start seeing your delivery system clearly. Free.
           </h3>
           <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
             No credit card. No account. No hassle.
           </p>
           <QuickDownloadBar additionalLink={{ name: "All Downloads", url: "/lighthouse#downloads" }} />
-          <p className="text-xs text-muted-foreground mt-4">Community Version free forever • 100% open source • Runs on your infrastructure — nothing sent to the cloud</p>
+          <p className="text-xs text-muted-foreground mt-4">Community Version free forever • 100% open source • Runs on your infrastructure. Nothing sent to the cloud.</p>
         </div>
 
         {/* Installation Simplicity Section */}

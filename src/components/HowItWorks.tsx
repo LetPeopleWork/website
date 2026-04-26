@@ -9,13 +9,13 @@ const steps = [
     number: "2",
     title: "See why delivery is slow",
     description:
-      "Cycle time, WIP, throughput, and work item age reveal your actual delivery system — not the idealized version. Spot bottlenecks before the steering committee does.",
+      "Cycle time, WIP, throughput, and work item age reveal your actual delivery system, not the idealized version. Spot bottlenecks before the steering committee does.",
   },
   {
     number: "3",
     title: "Forecast with data you can defend",
     description:
-      "Monte Carlo simulations turn your team's real history into delivery ranges that hold up in stakeholder conversations — and improve as your system does.",
+      "Monte Carlo simulations turn your team's real history into delivery ranges that hold up in stakeholder conversations, and improve as your system does.",
   },
 ];
 

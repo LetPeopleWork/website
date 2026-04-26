@@ -9,7 +9,7 @@ import BenjiImage from '../assets/Benji.png';
 interface OfferingItem {
   name: string;
   description: string;
-  duration: string;
+  duration?: string;
   format: string;
   badge?: string;
   highlight?: boolean;
@@ -25,118 +25,117 @@ interface Category {
 const CATEGORIES: Record<string, Category> = {
   certifications: {
     label: "Official Certifications",
-    tagline: "ProKanban.org accredited training — leave with a credential and a skillset",
+    tagline: "ProKanban.org accredited training. Leave with a credential and a skillset.",
     icon: GraduationCap,
     items: [
       {
         name: "Applying Professional Kanban (APK)",
-        description: "Master Kanban fundamentals with hands-on exercises. Build your own board, define policies, and learn to manage flow — not just tasks.",
+        description: "Master Kanban fundamentals with hands-on exercises. Build your own board, define policies, and learn to manage flow, not just tasks.",
         duration: "2 days",
-        format: "Remote or On-Site",
+        format: "Starting at CHF 5,000 · Min. 5 participants",
         badge: "Certification",
       },
       {
         name: "Applying Metrics for Predictability (AMP)",
         description: "Go beyond velocity. Learn to use cycle time, throughput, and Monte Carlo simulations to answer \"when will it be done?\" with confidence.",
         duration: "2 days",
-        format: "Remote or On-Site",
+        format: "Starting at CHF 5,000 · Min. 5 participants",
         badge: "Certification",
       },
     ],
   },
   workshops: {
     label: "Hands-On Workshops",
-    tagline: "Practical, focused sessions built around your real challenges — 2 to 4 hours each",
+    tagline: "Practical, focused sessions built around your real challenges. Two to four hours each.",
     icon: Zap,
     items: [
       {
         name: "Bring Your Own Data Workshop",
         description: "Stop pretending sample datasets represent your reality. We configure Lighthouse Premium with your live data and build a working system that reflects how work actually moves through your organization.",
         duration: "1 day",
-        format: "Remote CHF 3,500 · On-Site CHF 4,500",
+        format: "Starting at CHF 3,500",
         badge: "Most Popular",
         highlight: true,
       },
       {
         name: "Introduction to Probabilistic Forecasting",
-        description: "Learn how Monte Carlo simulations turn historical throughput into reliable delivery date ranges — no estimates required.",
+        description: "Learn how Monte Carlo simulations turn historical throughput into reliable delivery date ranges. No estimates required.",
         duration: "2–4 hours",
-        format: "Remote or On-Site",
+        format: "Starting at CHF 1,000 · Up to 30 participants",
       },
       {
         name: "Flow Metrics & Little's Law",
-        description: "Understand the physics of your delivery system. WIP, throughput, cycle time — and why controlling one changes everything.",
+        description: "Understand the physics of your delivery system. WIP, throughput, cycle time, and why controlling one changes everything.",
         duration: "2–4 hours",
-        format: "Remote or On-Site",
+        format: "Starting at CHF 1,000 · Up to 30 participants",
       },
       {
         name: "Visualization & Interpretation of Flow Metrics",
         description: "Reading charts is easy. Knowing what they're telling you to do is the hard part. Learn to spot signals and take action.",
         duration: "2–4 hours",
-        format: "Remote or On-Site",
+        format: "Starting at CHF 1,000 · Up to 30 participants",
       },
       {
         name: "SLE & Right Sizing",
         description: "Define meaningful Service Level Expectations and learn to slice work into predictable sizes that actually flow.",
         duration: "2–4 hours",
-        format: "Remote or On-Site",
+        format: "Starting at CHF 1,000 · Up to 30 participants",
       },
       {
         name: "Working in Small Batches",
-        description: "Why smaller is faster — and how to convince your organization to stop building everything at once.",
+        description: "Why smaller is faster, and how to convince your organization to stop building everything at once.",
         duration: "2–4 hours",
-        format: "Remote or On-Site",
+        format: "Starting at CHF 1,000 · Up to 30 participants",
       },
       {
         name: "Epic Right Sizing & Slicing",
         description: "Your Epics are too big. Learn practical techniques to decompose them into pieces that flow and can be forecasted.",
         duration: "2–4 hours",
-        format: "Remote or On-Site",
+        format: "Starting at CHF 1,000 · Up to 30 participants",
       },
       {
         name: "Signal & Noise",
         description: "Not every metric movement matters. Learn to distinguish meaningful signals from random variation using process behavior charts.",
         duration: "2–4 hours",
-        format: "Remote or On-Site",
+        format: "Starting at CHF 1,000 · Up to 30 participants",
       },
       {
         name: "Actively Manage Items in a Workflow",
         description: "A board without active management is just wallpaper. Learn the daily practices that keep work flowing.",
         duration: "2–4 hours",
-        format: "Remote or On-Site",
+        format: "Starting at CHF 1,000 · Up to 30 participants",
       },
       {
         name: "Workflow Definition & Visualization",
-        description: "Design workflows that reveal reality instead of hiding it. Map your actual process — not the idealized version.",
+        description: "Design workflows that reveal reality instead of hiding it. Map your actual process, not the idealized version.",
         duration: "2–4 hours",
-        format: "Remote or On-Site",
+        format: "Starting at CHF 1,000 · Up to 30 participants",
       },
     ],
   },
   consulting: {
     label: "Consulting & Assessment",
-    tagline: "Deep diagnostic work and ongoing advisory — see what your data actually says",
+    tagline: "Deep diagnostic work and ongoing advisory to see what your data actually says.",
     icon: SearchIcon,
     items: [
       {
         name: "Flow Clarity Assessment",
-        description: "A standardized, data-driven diagnostic that cuts through assumptions and reveals what your historical data says about how work flows through your teams. No opinions — just objective analysis.",
+        description: "A standardized, data-driven diagnostic that cuts through assumptions and reveals what your historical data says about how work flows through your teams. No opinions, just objective analysis.",
         duration: "3–6 months of data analyzed",
         format: "CHF 3,500 · Includes Lighthouse Premium License",
         badge: "Diagnostic",
       },
       {
         name: "Flow Health Check",
-        description: "A focused snapshot of your team or portfolio's delivery health. Get a clear report with actionable findings — the fastest way to know where you stand.",
+        description: "A focused snapshot of your team or portfolio's delivery health. Get a clear report with actionable findings, the fastest way to know where you stand.",
         duration: "Report or half-day workshop",
         format: "From CHF 200/team · CHF 500/portfolio",
         badge: "Quick Start",
       },
       {
         name: "Lighthouse Setup & Introduction",
-        description: "Get Lighthouse configured and running in your environment. We handle the technical setup so your teams can focus on the insights from day one.",
-        duration: "Flexible",
-        format: "Remote or On-Site",
+        description: "Get Lighthouse configured and running in your environment. We set up 3 teams and 1 portfolio, connect your data sources, and walk your team through the tool so they can use it from day one.",
+        format: "Starting at CHF 500 · 3 teams + 1 portfolio",
       },
     ],
   },
@@ -146,7 +145,7 @@ const PACKAGE = {
   name: "Complete Flow Transformation Package",
   subtitle: "End-to-End: Assessment + Implementation + Sustaining Capability",
   description: "The complete journey from understanding your delivery system's current state to implementing a working solution that provides ongoing visibility. This package combines diagnostic assessment with hands-on implementation and sustained capability through Lighthouse Premium.",
-  savings: "You get the strategic insight of the Flow Clarity Assessment combined with the practical implementation of the BYOD Workshop, plus the ongoing capability to maintain visibility into your delivery system. This is 25% less than purchasing separately — the most comprehensive and cost-effective way to transform your delivery predictability.",
+  savings: "You get the strategic insight of the Flow Clarity Assessment combined with the practical implementation of the BYOD Workshop, plus the ongoing capability to maintain visibility into your delivery system. This is 25% less than purchasing separately, the most comprehensive and cost-effective way to transform your delivery predictability.",
   scope: [
     "Two-phase engagement: Assessment followed by Implementation",
     "Remote or on-site delivery options",
@@ -274,9 +273,9 @@ function CategoryAccordion({
                   {item.description}
                 </div>
 
-                <div className="flex flex-wrap gap-x-2 gap-y-1 pt-3 border-t border-border text-[12px] text-muted-foreground">
-                  <span>⏱ {item.duration}</span>
-                  <span>· {item.format}</span>
+                <div className="flex flex-wrap gap-x-2 gap-y-1 pt-3 border-t border-border text-[12px] text-muted-foreground mt-auto">
+                  {item.duration && <span>⏱ {item.duration}</span>}
+                  <span>{item.duration ? "· " : ""}{item.format}</span>
                 </div>
               </div>
             ))}
@@ -304,13 +303,13 @@ export default function ExpertiseAndServices() {
   return (
     <section id="services" className="bg-background">
       {/* ── Section Header ── */}
-      <div className="text-center max-w-2xl mx-auto px-4 pt-20 pb-12 md:pt-28 md:pb-16">
+      <div className="text-center max-w-4xl mx-auto px-4 pt-20 pb-12 md:pt-28 md:pb-16">
         <span className="text-xs font-semibold uppercase tracking-[0.15em] text-primary mb-5 block">
           How we help
         </span>
         <h2 className="text-3xl md:text-4xl lg:text-[44px] font-bold text-foreground leading-tight tracking-tight">
           Your team shouldn't have to guess.{" "}
-          <span className="text-primary">We make sure they don't — and help them actually improve.</span>
+          <span className="text-primary">We make sure they don't, and help identify improvements you can measure.</span>
         </h2>
         <p className="text-base md:text-lg text-muted-foreground mt-5 leading-relaxed max-w-xl mx-auto">
           Choose where you want to start. Every session connects metrics to action —
@@ -326,7 +325,7 @@ export default function ExpertiseAndServices() {
           </h3>
           <p className="text-sm md:text-base text-muted-foreground mt-3 max-w-lg mx-auto">
             Choose what matches where you are right now. Every engagement delivered
-            by two practitioners — two perspectives, one coherent outcome.
+            by two practitioners, two perspectives, one coherent outcome.
           </p>
         </div>
 
@@ -385,7 +384,7 @@ export default function ExpertiseAndServices() {
             </div>
 
             <p className="text-sm md:text-[15px] text-muted-foreground leading-relaxed max-w-2xl mb-4">
-              Six months from now, your team walks into any steering committee meeting with a forecast range built from real data — not gut feeling. And you'll know which parts of your delivery system to fix to make the next one even better. This package is how you get there.
+              Six months from now, your team walks into any steering committee meeting with a forecast range built from real data, not gut feeling. And you'll know which parts of your delivery system to fix to make the next one even better. This package is how you get there.
             </p>
             <p className="text-sm md:text-[15px] text-muted-foreground leading-relaxed max-w-2xl mb-8">
               {PACKAGE.savings}
@@ -465,7 +464,7 @@ export default function ExpertiseAndServices() {
           </div>
 
           <h3 className="text-xl md:text-2xl font-bold text-foreground mb-3">
-            Your context is unique — let's design something that fits
+            Your context is unique. Let's design something that fits.
           </h3>
 
           <p className="text-sm md:text-base text-muted-foreground max-w-lg mx-auto leading-relaxed mb-2">

@@ -36,7 +36,7 @@ const StayConnected = () => {
             Keep getting better at this
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            The methods, metrics, and mindsets that make flow stick — from the community that's building faster delivery, not just measuring it.
+            The methods, metrics, and mindsets that make flow stick, from the community that's building faster delivery, not just measuring it.
           </p>
         </div>
 
