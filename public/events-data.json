@@ -2,6 +2,19 @@
   "events": [
     {
       "type": "Meetup",
+      "title": "From Zero to Forecasting Hero",
+      "date": null,
+      "displayDate": "TBD",
+      "time": "",
+      "location": "Online",
+      "price": "Free",
+      "description": "**From Zero to Forecasting Hero**\nWhat if you could tell your stakeholders exactly when the next 10 items on your backlog will be done — and actually back it up with data?\nIn this Lighthouse Live session, Gabor Bittera takes you from a blank slate to a working probabilistic forecast in real time. No...",
+      "ctaText": "RSVP on Meetup",
+      "ctaLink": "https://www.meetup.com/lighthouselive/events/314577947/",
+      "source": "meetup"
+    },
+    {
+      "type": "Meetup",
       "title": "Managing Delivery Risk with Goal-Based Planning",
       "date": null,
       "displayDate": "TBD",
