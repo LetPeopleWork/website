@@ -35,7 +35,7 @@ const AIIntegrationSection = () => {
             </span>
           </h2>
           <p className="text-xl text-primary-foreground/80 max-w-3xl mx-auto leading-relaxed">
-            Your AI assistant can now read your Lighthouse data directly. No exports, no copy-paste, no dashboard tab-switching. Ask what needs your attention, run a forecast, or build agentic workflows. All grounded in your team's real metrics.
+            Your AI assistant can read your Lighthouse data directly. No exports, no copy-paste, no dashboard tab-switching. Ask what needs your attention, run a forecast, or build agentic workflows. All grounded in your team's real metrics.
           </p>
         </div>
 

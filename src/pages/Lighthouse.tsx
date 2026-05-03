@@ -1667,7 +1667,7 @@ const Lighthouse = () => {
 							<div className="rounded-xl bg-white/10 border border-white/20 p-6">
 								<h4 className="text-sm font-semibold text-primary-foreground mb-1">Agent Skill</h4>
 								<p className="text-primary-foreground/70 text-sm leading-relaxed mb-4">
-									A pre-built skill that teaches your AI agent when and how to use Lighthouse tools — including fallbacks and authentication. Drop it into Claude Code, VS Code, or any skill-compatible agent.
+									A pre-built skill that teaches your AI agent when and how to use Lighthouse tools, including fallbacks and authentication. Drop it into Claude Code, VS Code, or any skill-compatible agent.
 								</p>
 								<a
 									href="https://docs.lighthouse.letpeople.work/aiintegration.html"
@@ -1675,7 +1675,7 @@ const Lighthouse = () => {
 									rel="noopener noreferrer"
 									className="inline-flex items-center gap-2 text-sm font-medium text-green-300 hover:text-green-200 transition-colors"
 								>
-									Download lighthouse-skill.zip
+									Get lighthouse-skill.zip on docs
 									<ArrowRight className="w-4 h-4" />
 								</a>
 							</div>
@@ -1683,7 +1683,7 @@ const Lighthouse = () => {
 							<div className="rounded-xl bg-white/10 border border-white/20 p-6">
 								<h4 className="text-sm font-semibold text-primary-foreground mb-1">MCPB Bundle</h4>
 								<p className="text-primary-foreground/70 text-sm leading-relaxed mb-4">
-									A single-file bundle for clients that support the MCPB format. No npm install, no configuration — just drop it in and connect.
+									A single-file bundle for clients that support the MCPB format. No npm install, no configuration. Just drop it in and connect.
 								</p>
 								<a
 									href="https://docs.lighthouse.letpeople.work/aiintegration.html"
@@ -1691,7 +1691,7 @@ const Lighthouse = () => {
 									rel="noopener noreferrer"
 									className="inline-flex items-center gap-2 text-sm font-medium text-green-300 hover:text-green-200 transition-colors"
 								>
-									Download lighthouse-mcp-stdio.mcpb
+									Get lighthouse-mcp-stdio.mcpb on docs
 									<ArrowRight className="w-4 h-4" />
 								</a>
 							</div>
