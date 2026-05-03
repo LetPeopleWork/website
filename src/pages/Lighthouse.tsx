@@ -91,18 +91,28 @@ import {
 import QuickDownloadBar from "@/components/QuickDownloadBar";
 
 const WindowsIcon = ({ className }: { className?: string }) => (
-	<svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
+	<svg
+		viewBox="0 0 24 24"
+		className={className}
+		fill="currentColor"
+		aria-hidden="true"
+	>
 		<path d="M0 0h11.4v11.4H0ZM12.6 0H24v11.4H12.6ZM0 12.6h11.4V24H0ZM12.6 12.6H24V24H12.6Z" />
 	</svg>
 );
 
 const OsIcon = ({ os, className }: { os: string; className?: string }) => {
 	switch (os) {
-		case "windows": return <WindowsIcon className={className} />;
-		case "macos": return <Command className={className} />;
-		case "linux": return <Terminal className={className} />;
-		case "docker": return <Container className={className} />;
-		default: return <Monitor className={className} />;
+		case "windows":
+			return <WindowsIcon className={className} />;
+		case "macos":
+			return <Command className={className} />;
+		case "linux":
+			return <Terminal className={className} />;
+		case "docker":
+			return <Container className={className} />;
+		default:
+			return <Monitor className={className} />;
 	}
 };
 
@@ -123,7 +133,8 @@ const standaloneDownloads: DownloadEntry[] = [
 	{
 		os: "windows",
 		label: "Windows Installer (.msi)",
-		tooltip: "MSI installer for Windows — useful for enterprise deployment. Code signed.",
+		tooltip:
+			"MSI installer for Windows — useful for enterprise deployment. Code signed.",
 		assetPattern: "installer.msi",
 	},
 	{
@@ -135,13 +146,15 @@ const standaloneDownloads: DownloadEntry[] = [
 	{
 		os: "macos",
 		label: "macOS App Bundle (.zip)",
-		tooltip: "The macOS app bundle as a zip archive. Signed and notarized by Apple.",
+		tooltip:
+			"The macOS app bundle as a zip archive. Signed and notarized by Apple.",
 		assetPattern: "osx.app.zip",
 	},
 	{
 		os: "linux",
 		label: "Linux App (.AppImage)",
-		tooltip: "Portable AppImage — runs on most Linux distributions without installation.",
+		tooltip:
+			"Portable AppImage — runs on most Linux distributions without installation.",
 		assetPattern: ".appimage",
 	},
 ];
@@ -150,19 +163,22 @@ const serverDownloads: DownloadEntry[] = [
 	{
 		os: "windows",
 		label: "Windows Binaries (.zip)",
-		tooltip: "Server binaries for Windows (x64). Extract and run as a background service.",
+		tooltip:
+			"Server binaries for Windows (x64). Extract and run as a background service.",
 		assetPattern: "server-win",
 	},
 	{
 		os: "linux",
 		label: "Linux Binaries (.zip)",
-		tooltip: "Server binaries for Linux (x64). Extract and run as a background service.",
+		tooltip:
+			"Server binaries for Linux (x64). Extract and run as a background service.",
 		assetPattern: "server-linux",
 	},
 	{
 		os: "docker",
 		label: "Docker Container",
-		tooltip: "Copies the docker run command to your clipboard. Runs the server edition as a container.",
+		tooltip:
+			"Copies the docker run command to your clipboard. Runs the server edition as a container.",
 	},
 ];
 
@@ -656,7 +672,13 @@ const Lighthouse = () => {
 
 						{/* Download CTA */}
 						<div className="mb-8">
-							<QuickDownloadBar additionalLink={{ name: "View Documentation", url: "https://docs.lighthouse.letpeople.work", external: true }} />
+							<QuickDownloadBar
+								additionalLink={{
+									name: "View Documentation",
+									url: "https://docs.lighthouse.letpeople.work",
+									external: true,
+								}}
+							/>
 						</div>
 						<p className="text-xs text-muted-foreground">
 							No credit card required • Community Version Free forever
@@ -673,7 +695,9 @@ const Lighthouse = () => {
 							Downloads
 						</h2>
 						{latestVersion && (
-							<p className="text-sm font-medium text-primary">Latest: {latestVersion}</p>
+							<p className="text-sm font-medium text-primary">
+								Latest: {latestVersion}
+							</p>
 						)}
 					</div>
 
@@ -686,12 +710,17 @@ const Lighthouse = () => {
 										<Laptop className="h-5 w-5" />
 									</div>
 									<div>
-										<h3 className="text-lg font-semibold text-foreground">Standalone</h3>
-										<p className="text-xs text-muted-foreground">Desktop app with auto-updates</p>
+										<h3 className="text-lg font-semibold text-foreground">
+											Standalone
+										</h3>
+										<p className="text-xs text-muted-foreground">
+											Desktop app with auto-updates
+										</p>
 									</div>
 								</div>
 								<p className="text-sm text-muted-foreground mb-5">
-									Best for personal use and getting started quickly. Runs as a native desktop application.
+									Best for personal use and getting started quickly. Runs as a
+									native desktop application.
 								</p>
 								<div className="space-y-0.5">
 									{standaloneDownloads.map((item) => (
@@ -701,8 +730,12 @@ const Lighthouse = () => {
 													<button
 														className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent/60 transition-colors text-left group"
 														onClick={() => {
-															const url = findAssetByPattern(releaseAssets, item.assetPattern!)?.browser_download_url
-																?? LIGHTHOUSE_GITHUB_RELEASES_URL;
+															const url =
+																findAssetByPattern(
+																	releaseAssets,
+																	item.assetPattern!,
+																)?.browser_download_url ??
+																LIGHTHOUSE_GITHUB_RELEASES_URL;
 															window.open(url, "_blank");
 														}}
 													>
@@ -731,12 +764,17 @@ const Lighthouse = () => {
 										<ServerIcon className="h-5 w-5" />
 									</div>
 									<div>
-										<h3 className="text-lg font-semibold text-foreground">Server</h3>
-										<p className="text-xs text-muted-foreground">Centrally hosted for your team</p>
+										<h3 className="text-lg font-semibold text-foreground">
+											Server
+										</h3>
+										<p className="text-xs text-muted-foreground">
+											Centrally hosted for your team
+										</p>
 									</div>
 								</div>
 								<p className="text-sm text-muted-foreground mb-5">
-									Best for hosting Lighthouse centrally for multiple users. Available for Windows, Linux, and as a Docker container.
+									Best for hosting Lighthouse centrally for multiple users.
+									Available for Windows, Linux, and as a Docker container.
 								</p>
 								<div className="space-y-0.5">
 									{serverDownloads.map((item) => {
@@ -751,8 +789,12 @@ const Lighthouse = () => {
 																if (isDocker) {
 																	copyToClipboard(LIGHTHOUSE_DOCKER_COMMAND);
 																} else {
-																	const url = findAssetByPattern(releaseAssets, item.assetPattern!)?.browser_download_url
-																		?? LIGHTHOUSE_GITHUB_RELEASES_URL;
+																	const url =
+																		findAssetByPattern(
+																			releaseAssets,
+																			item.assetPattern!,
+																		)?.browser_download_url ??
+																		LIGHTHOUSE_GITHUB_RELEASES_URL;
 																	window.open(url, "_blank");
 																}
 															}}
@@ -760,11 +802,15 @@ const Lighthouse = () => {
 															<span className="flex-shrink-0 w-5 h-5 flex items-center justify-center text-muted-foreground">
 																<OsIcon os={item.os} className="h-4 w-4" />
 															</span>
-															<span className="flex-1 text-sm">{item.label}</span>
+															<span className="flex-1 text-sm">
+																{item.label}
+															</span>
 															{isDocker ? (
-																copiedCommand
-																	? <Check className="h-3.5 w-3.5 text-green-500" />
-																	: <Copy className="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+																copiedCommand ? (
+																	<Check className="h-3.5 w-3.5 text-green-500" />
+																) : (
+																	<Copy className="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+																)
 															) : (
 																<Download className="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
 															)}
@@ -971,6 +1017,62 @@ const Lighthouse = () => {
 											<Check className="h-5 w-5 text-green-600 mx-auto" />
 										</td>
 									</tr>
+									<tr>
+										<td className="py-3 px-4 text-muted-foreground">
+											<div className="flex items-center space-x-2">
+												<span>AI &amp; LLM Integration</span>
+												<TooltipProvider>
+													<Tooltip>
+														<TooltipTrigger>
+															<Info className="h-4 w-4 text-blue-500" />
+														</TooltipTrigger>
+														<TooltipContent>
+															<p className="text-sm">
+																Connect Lighthouse to Claude, ChatGPT, or any
+																MCP-compatible AI assistant. Query metrics, run
+																forecasts, and explore delivery data through
+																natural language — no dashboard required.
+															</p>
+														</TooltipContent>
+													</Tooltip>
+												</TooltipProvider>
+											</div>
+										</td>
+										<td className="py-3 px-4 text-center">
+											<Check className="h-5 w-5 text-green-600 mx-auto" />
+										</td>
+										<td className="py-3 px-4 text-center">
+											<Check className="h-5 w-5 text-green-600 mx-auto" />
+										</td>
+									</tr>
+									<tr>
+										<td className="py-3 px-4 text-muted-foreground">
+											<div className="flex items-center space-x-2">
+												<span>CLI &amp; Automation</span>
+												<TooltipProvider>
+													<Tooltip>
+														<TooltipTrigger>
+															<Info className="h-4 w-4 text-blue-500" />
+														</TooltipTrigger>
+														<TooltipContent>
+															<p className="text-sm">
+																Automate metrics collection and forecasting via
+																the <code>lh</code> CLI or the MCP server.
+																Integrate Lighthouse data into scripts, CI/CD
+																pipelines, and custom tooling.
+															</p>
+														</TooltipContent>
+													</Tooltip>
+												</TooltipProvider>
+											</div>
+										</td>
+										<td className="py-3 px-4 text-center">
+											<Check className="h-5 w-5 text-green-600 mx-auto" />
+										</td>
+										<td className="py-3 px-4 text-center">
+											<Check className="h-5 w-5 text-green-600 mx-auto" />
+										</td>
+									</tr>
 
 									{/* Constraints in Community Version */}
 									<tr>
@@ -1048,7 +1150,8 @@ const Lighthouse = () => {
 														</TooltipTrigger>
 														<TooltipContent>
 															<p className="text-sm">
-																Add custom fields to capture additional metadata specific to your workflow and requirements.
+																Add custom fields to capture additional metadata
+																specific to your workflow and requirements.
 															</p>
 														</TooltipContent>
 													</Tooltip>
@@ -1112,7 +1215,9 @@ const Lighthouse = () => {
 															</TooltipTrigger>
 															<TooltipContent>
 																<p className="text-sm">
-																	Define days which should not be counted in the Throughput for calculating forecasts, for example bank holidays.
+																	Define days which should not be counted in the
+																	Throughput for calculating forecasts, for
+																	example bank holidays.
 																</p>
 															</TooltipContent>
 														</Tooltip>
@@ -1130,34 +1235,7 @@ const Lighthouse = () => {
 									<tr>
 										<td className="py-3 px-4 text-muted-foreground">
 											<div className="flex items-center space-x-2">
-												<span>Extended AI/LLM Support</span>
-												<TooltipProvider>
-													<Tooltip>
-														<TooltipTrigger>
-															<Info className="h-4 w-4 text-blue-500" />
-														</TooltipTrigger>
-														<TooltipContent>
-															<p className="text-sm">
-																Connect Lighthouse to your AI Chat of choice and
-																interact with the data and forecasts through
-																this interface
-															</p>
-														</TooltipContent>
-													</Tooltip>
-												</TooltipProvider>
-											</div>
-										</td>
-										<td className="py-3 px-4 text-center">
-											<XCircle className="h-5 w-5 text-red-500 mx-auto" />
-										</td>
-										<td className="py-3 px-4 text-center">
-											<Check className="h-5 w-5 text-green-600 mx-auto" />
-										</td>
-									</tr>
-									<tr>
-										<td className="py-3 px-4 text-muted-foreground">
-											<div className="flex items-center space-x-2">
-												<span>Data Export & Sharing</span>
+												<span>Data Export &amp; Sharing</span>
 												<TooltipProvider>
 													<Tooltip>
 														<TooltipTrigger>
@@ -1192,7 +1270,8 @@ const Lighthouse = () => {
 														</TooltipTrigger>
 														<TooltipContent>
 															<p className="text-sm">
-																Write Metrics and Forecasts back to Jira and Azure DevOps and store them in your system.
+																Write Metrics and Forecasts back to Jira and
+																Azure DevOps and store them in your system.
 															</p>
 														</TooltipContent>
 													</Tooltip>
