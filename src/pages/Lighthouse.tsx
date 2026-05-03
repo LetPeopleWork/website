@@ -1670,12 +1670,10 @@ const Lighthouse = () => {
 									A pre-built skill that teaches your AI agent when and how to use Lighthouse tools, including fallbacks and authentication. Drop it into Claude Code, VS Code, or any skill-compatible agent.
 								</p>
 								<a
-									href="https://docs.lighthouse.letpeople.work/aiintegration.html"
-									target="_blank"
-									rel="noopener noreferrer"
+									href="https://github.com/LetPeopleWork/lighthouse-clients/releases/latest/download/lighthouse-skill.zip"
 									className="inline-flex items-center gap-2 text-sm font-medium text-green-300 hover:text-green-200 transition-colors"
 								>
-									Get lighthouse-skill.zip on docs
+									Download lighthouse-skill.zip
 									<ArrowRight className="w-4 h-4" />
 								</a>
 							</div>
@@ -1686,12 +1684,10 @@ const Lighthouse = () => {
 									A single-file bundle for clients that support the MCPB format. No npm install, no configuration. Just drop it in and connect.
 								</p>
 								<a
-									href="https://docs.lighthouse.letpeople.work/aiintegration.html"
-									target="_blank"
-									rel="noopener noreferrer"
+									href="https://github.com/LetPeopleWork/lighthouse-clients/releases/latest/download/lighthouse-mcp-stdio.mcpb"
 									className="inline-flex items-center gap-2 text-sm font-medium text-green-300 hover:text-green-200 transition-colors"
 								>
-									Get lighthouse-mcp-stdio.mcpb on docs
+									Download lighthouse-mcp-stdio.mcpb
 									<ArrowRight className="w-4 h-4" />
 								</a>
 							</div>
