@@ -23,6 +23,7 @@ const Navigation = () => {
     { name: "Testimonials", href: "#lighthouse-testimonials" },
     { name: "Lighthouse Premium", href: "#lighthouse-premium" },
     { name: "Get a License", href: "#lighthouse-license" },
+    { name: "AI Integration", href: "#lighthouse-ai" },
     { name: "Pitch Deck (PDF)", href: "#lighthouse-convince" },
     { name: "Key Features", href: "#lighthouse-features" },
   ];

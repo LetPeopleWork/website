@@ -1586,6 +1586,132 @@ const Lighthouse = () => {
 				</div>
 			</section>
 
+			{/* AI Integration Section */}
+			<section id="lighthouse-ai" className="py-20 bg-gradient-hero">
+				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+					<div className="text-center mb-16">
+						<span className="text-xs font-semibold uppercase tracking-[0.15em] text-primary-foreground/60 mb-4 block">
+							AI Integration
+						</span>
+						<h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-6">
+							Connect Your AI Assistant
+						</h2>
+						<p className="text-xl text-primary-foreground/80 max-w-3xl mx-auto leading-relaxed">
+							Lighthouse exposes your flow data through three integration points — pick the one that fits your setup. Works with any AI that supports tool calling. No vendor lock-in.
+						</p>
+					</div>
+
+					{/* Three method cards */}
+					<div className="grid md:grid-cols-3 gap-6 mb-16">
+						<div className="rounded-xl bg-white/10 border border-white/20 p-6">
+							<div className="text-xs font-bold uppercase tracking-wider text-green-300 mb-3">CLI</div>
+							<h3 className="text-lg font-semibold text-primary-foreground mb-2">Shell & Scripts</h3>
+							<p className="text-primary-foreground/70 text-sm leading-relaxed mb-4">
+								Use the Lighthouse CLI in shell scripts, CI jobs, or any terminal-capable agent. Outputs JSON for easy integration with existing pipelines.
+							</p>
+							<code className="block text-xs bg-black/30 text-green-300 rounded-lg px-3 py-2 font-mono">
+								npm install -g @letpeoplework/lighthouse-cli
+							</code>
+						</div>
+
+						<div className="rounded-xl bg-white/15 border border-white/30 p-6 ring-1 ring-white/20">
+							<div className="text-xs font-bold uppercase tracking-wider text-green-300 mb-3">MCP stdio · Most Popular</div>
+							<h3 className="text-lg font-semibold text-primary-foreground mb-2">Local AI Clients</h3>
+							<p className="text-primary-foreground/70 text-sm leading-relaxed mb-4">
+								Connect VS Code, GitHub Copilot, Claude Code, or any local AI tool via the MCP stdio package. Or drop the <span className="text-green-300 font-mono">.mcpb</span> bundle directly into your client — no npm required.
+							</p>
+							<code className="block text-xs bg-black/30 text-green-300 rounded-lg px-3 py-2 font-mono">
+								@letpeoplework/lighthouse-mcp-stdio
+							</code>
+						</div>
+
+						<div className="rounded-xl bg-white/10 border border-white/20 p-6">
+							<div className="text-xs font-bold uppercase tracking-wider text-green-300 mb-3">MCP HTTP</div>
+							<h3 className="text-lg font-semibold text-primary-foreground mb-2">Shared & Hosted</h3>
+							<p className="text-primary-foreground/70 text-sm leading-relaxed mb-4">
+								Run the HTTP server for shared team setups, container deployments, or remote development environments. Exposes a standard <span className="text-green-300 font-mono">/mcp</span> endpoint.
+							</p>
+							<code className="block text-xs bg-black/30 text-green-300 rounded-lg px-3 py-2 font-mono">
+								@letpeoplework/lighthouse-mcp-http
+							</code>
+						</div>
+					</div>
+
+					{/* Config example + downloads */}
+					<div className="grid lg:grid-cols-2 gap-10 mb-16">
+						{/* VS Code config snippet */}
+						<div className="rounded-xl bg-black/40 border border-white/20 overflow-hidden">
+							<div className="flex items-center gap-2 px-4 py-3 bg-black/30 border-b border-white/10">
+								<div className="w-3 h-3 rounded-full bg-red-400/60" />
+								<div className="w-3 h-3 rounded-full bg-yellow-400/60" />
+								<div className="w-3 h-3 rounded-full bg-green-400/60" />
+								<span className="text-xs text-white/40 ml-2 font-mono">.vscode/mcp.json</span>
+							</div>
+							<pre className="p-5 text-xs text-green-300 font-mono leading-relaxed overflow-x-auto">{`{
+  "servers": {
+    "lighthouse": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@letpeoplework/lighthouse-mcp-stdio"],
+      "env": {
+        "LIGHTHOUSE_URL": "https://your-lighthouse-instance",
+        "LIGHTHOUSE_API_KEY": "your-api-key"
+      }
+    }
+  }
+}`}</pre>
+						</div>
+
+						{/* Downloads + skill */}
+						<div className="space-y-4">
+							<div className="rounded-xl bg-white/10 border border-white/20 p-6">
+								<h4 className="text-sm font-semibold text-primary-foreground mb-1">Agent Skill</h4>
+								<p className="text-primary-foreground/70 text-sm leading-relaxed mb-4">
+									A pre-built skill that teaches your AI agent when and how to use Lighthouse tools — including fallbacks and authentication. Drop it into Claude Code, VS Code, or any skill-compatible agent.
+								</p>
+								<a
+									href="https://docs.lighthouse.letpeople.work/aiintegration.html"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="inline-flex items-center gap-2 text-sm font-medium text-green-300 hover:text-green-200 transition-colors"
+								>
+									Download lighthouse-skill.zip
+									<ArrowRight className="w-4 h-4" />
+								</a>
+							</div>
+
+							<div className="rounded-xl bg-white/10 border border-white/20 p-6">
+								<h4 className="text-sm font-semibold text-primary-foreground mb-1">MCPB Bundle</h4>
+								<p className="text-primary-foreground/70 text-sm leading-relaxed mb-4">
+									A single-file bundle for clients that support the MCPB format. No npm install, no configuration — just drop it in and connect.
+								</p>
+								<a
+									href="https://docs.lighthouse.letpeople.work/aiintegration.html"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="inline-flex items-center gap-2 text-sm font-medium text-green-300 hover:text-green-200 transition-colors"
+								>
+									Download lighthouse-mcp-stdio.mcpb
+									<ArrowRight className="w-4 h-4" />
+								</a>
+							</div>
+						</div>
+					</div>
+
+					<div className="text-center">
+						<a
+							href="https://docs.lighthouse.letpeople.work/aiintegration.html"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="inline-flex items-center gap-2 bg-white text-primary font-semibold px-6 py-3 rounded-lg hover:bg-white/90 transition-all duration-200 hover:-translate-y-0.5 no-underline"
+						>
+							Full setup guide
+							<ArrowRight className="w-4 h-4" />
+						</a>
+					</div>
+				</div>
+			</section>
+
 			{/* Detailed Features Section */}
 			<section id="lighthouse-features" className="py-20 bg-gradient-subtle">
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
