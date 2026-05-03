@@ -2,6 +2,7 @@ import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import HowItWorks from "@/components/HowItWorks";
 import LighthouseSection from "@/components/LighthouseSection";
+import AIIntegrationSection from "@/components/AIIntegrationSection";
 import ExpertiseAndServices from "@/components/ExpertiseAndServices";
 import StayConnected from "@/components/StayConnected";
 import SimpleFooter from "@/components/SimpleFooter";
@@ -116,6 +117,7 @@ const Index = () => {
       <Hero />
       <HowItWorks />
       <LighthouseSection />
+      <AIIntegrationSection />
       <ExpertiseAndServices />
       <StayConnected />
       <SimpleFooter />
