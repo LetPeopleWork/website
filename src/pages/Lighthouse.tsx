@@ -540,18 +540,21 @@ const Lighthouse = () => {
 			},
 		],
 		description:
-			"Open-source flow metrics and forecasting tool for agile teams. Visualize flow metrics, forecast delivery dates using Monte Carlo simulations, and integrate with Jira and Azure DevOps.",
+			"Open-source flow metrics and probabilistic forecasting tool. Connects to Jira, Azure DevOps, and Linear. AI integration via MCP — ask your AI assistant questions about your delivery data directly. Self-hosted, no cloud dependency.",
 		featureList: [
 			"Flow Metrics Visualization",
-			"Monte Carlo Forecasting",
+			"Monte Carlo Probabilistic Forecasting",
 			"Jira Integration",
 			"Azure DevOps Integration",
+			"Linear Integration",
+			"AI Integration via MCP (Model Context Protocol)",
+			"CLI for Shell Scripts and CI/CD Pipelines",
 			"Team and Portfolio Level Analytics",
 			"Throughput Analysis",
 			"Cycle Time Tracking",
-			"Lead Time Metrics",
+			"Work Item Age Tracking",
 			"Work In Progress Limits",
-			"Deliveries",
+			"Self-Hosted, No Cloud Dependency",
 		],
 		screenshot: "https://letpeople.work/forecasts-project.png",
 		aggregateRating: {
@@ -630,8 +633,8 @@ const Lighthouse = () => {
 		<div className="min-h-screen bg-background">
 			<SEO
 				title="Lighthouse - Flow Metrics & Forecasting Tool for Agile Teams"
-				description="Lighthouse is an open-source tool for visualizing flow metrics and forecasting delivery dates using Monte Carlo simulations. Connect to Jira & Azure DevOps for data-driven agile insights. Free community version available."
-				keywords="lighthouse flow metrics, agile forecasting tool, Monte Carlo simulation, delivery forecasting, when will it be done, how much can we do, Jira flow metrics, Azure DevOps metrics, throughput, cycle time, lead time, WIP, work in progress, team velocity, sprint forecasting, agile metrics dashboard, kanban metrics, scrum metrics, project forecasting, portfolio forecasting, open source agile, predictability, agile analytics"
+				description="Lighthouse is an open-source tool for visualizing flow metrics and forecasting delivery dates using Monte Carlo simulations. Connects to Jira, Azure DevOps, and Linear. AI integration via MCP — ask Claude or Copilot questions about your delivery data. Free community version available."
+				keywords="lighthouse flow metrics, agile forecasting tool, Monte Carlo simulation, delivery forecasting, when will it be done, how much can we do, Jira flow metrics, Azure DevOps metrics, Linear integration, AI integration, MCP, Model Context Protocol, agile AI assistant, throughput, cycle time, lead time, WIP, work in progress, team velocity, sprint forecasting, agile metrics dashboard, kanban metrics, scrum metrics, project forecasting, portfolio forecasting, open source agile, predictability, self-hosted forecasting, agile analytics"
 				ogImage="https://letpeople.work/forecasts-project.png"
 				ogType="website"
 				canonicalUrl="https://letpeople.work/lighthouse"

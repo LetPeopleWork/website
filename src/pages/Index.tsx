@@ -67,7 +67,7 @@ const Index = () => {
         "itemOffered": {
           "@type": "SoftwareApplication",
           "name": "Lighthouse",
-          "description": "Open-source flow metrics and forecasting tool with Community and Premium editions",
+          "description": "Open-source flow metrics and forecasting tool. Connects to Jira, Azure DevOps, and Linear. AI integration via MCP. Community and Premium editions.",
           "applicationCategory": "DeveloperApplication",
           "operatingSystem": "Cross-platform",
           "offers": [

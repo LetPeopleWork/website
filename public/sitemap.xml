@@ -5,7 +5,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://letpeople.work/</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2026-05-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -13,7 +13,7 @@
   <!-- Lighthouse Product Page -->
   <url>
     <loc>https://letpeople.work/lighthouse</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2026-05-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -31,7 +31,7 @@
   <!-- LLM-Friendly Resources -->
   <url>
     <loc>https://letpeople.work/llms.txt</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2026-05-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
