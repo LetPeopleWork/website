@@ -560,24 +560,109 @@ const Lighthouse = () => {
 		aggregateRating: {
 			"@type": "AggregateRating",
 			ratingValue: "5",
-			ratingCount: "1",
+			ratingCount: "6",
+			reviewCount: "6",
 			bestRating: "5",
+			worstRating: "1",
 		},
-		review: {
-			"@type": "Review",
-			author: {
-				"@type": "Person",
-				name: "Gonzalo Mendez",
-				jobTitle: "Scrum Master",
+		review: [
+			{
+				"@type": "Review",
+				datePublished: "2024-01-01",
+				author: {
+					"@type": "Person",
+					name: "Gonzalo Mendez",
+					jobTitle: "Scrum Master",
+				},
+				reviewRating: {
+					"@type": "Rating",
+					ratingValue: "5",
+					bestRating: "5",
+				},
+				reviewBody:
+					"Lighthouse helped us be more on to it. We're now more predictable, efficient, and responsive when it comes to delivering value and serving our customers. It's made planning sessions run smoother and helped set clearer expectations with our stakeholders. The insights we get from the data really sharpen our conversations and keep us focused on what matters.",
 			},
-			reviewRating: {
-				"@type": "Rating",
-				ratingValue: "5",
-				bestRating: "5",
+			{
+				"@type": "Review",
+				datePublished: "2024-01-01",
+				author: {
+					"@type": "Person",
+					name: "Lorenzo Santoro",
+					jobTitle: "Project Manager",
+				},
+				reviewRating: {
+					"@type": "Rating",
+					ratingValue: "5",
+					bestRating: "5",
+				},
+				reviewBody:
+					"The ability of Lighthouse to continuous forecast is a game changer. It transforms something complex and time consuming in a continuous activity which enlightens both your project planning and tracking.",
 			},
-			reviewBody:
-				"Lighthouse helped us be more on to it. We're now more predictable, efficient, and responsive when it comes to delivering value and serving our customers.",
-		},
+			{
+				"@type": "Review",
+				datePublished: "2024-01-01",
+				author: {
+					"@type": "Person",
+					name: "Agnieszka Reginek",
+					jobTitle: "Professional Kanban Trainer | Scrum Master",
+				},
+				reviewRating: {
+					"@type": "Rating",
+					ratingValue: "5",
+					bestRating: "5",
+				},
+				reviewBody:
+					"Lighthouse transformed how our Agile Release Train operates: moving us from guesstimations and overcommitment to data-driven PI Planning. It streamlined progress tracking across teams, making delivery more transparent and predictable. With continuous forecasting, we're now better equipped to anticipate risks, align expectations, and deliver value with confidence.",
+			},
+			{
+				"@type": "Review",
+				datePublished: "2024-01-01",
+				author: {
+					"@type": "Person",
+					name: "Chris Graves",
+					jobTitle: "Agile Coach",
+				},
+				reviewRating: {
+					"@type": "Rating",
+					ratingValue: "5",
+					bestRating: "5",
+				},
+				reviewBody:
+					"Lighthouse has transformed how we approach delivery. By prompting the right questions earlier and using the default feature size function to quickly forecast 'how much?', it provides a lean, cost-effective way to surface risk and enable better decisions.",
+			},
+			{
+				"@type": "Review",
+				datePublished: "2024-01-01",
+				author: {
+					"@type": "Person",
+					name: "Nicolas Brown",
+					jobTitle: "Author of 'Real World Agility' | Consultant | Speaker",
+				},
+				reviewRating: {
+					"@type": "Rating",
+					ratingValue: "5",
+					bestRating: "5",
+				},
+				reviewBody:
+					"Very few tools out there are able to distill what is going on in your system to act effectively as your mission control for all things delivery related. If John Anderton designed a system for flow, this would be it.",
+			},
+			{
+				"@type": "Review",
+				datePublished: "2024-01-01",
+				author: {
+					"@type": "Person",
+					name: "Gábor Bittera",
+					jobTitle: "Scrum Master",
+				},
+				reviewRating: {
+					"@type": "Rating",
+					ratingValue: "5",
+					bestRating: "5",
+				},
+				reviewBody:
+					"Whenever I am asked to assess the delivery health of a team, Lighthouse is my go-to tool as a consultant. Its quick, no-faff setup enables me to answer critical questions in a matter of minutes — shifting the conversation from gut-feel to data, and from wishful thinking to delivery risks and probabilities. For any coach trying to make risk visible and discussable, this is the tool that earns its place.",
+			},
+		],
 		softwareVersion: latestVersion,
 		downloadUrl: "https://github.com/LetPeopleWork/Lighthouse/releases",
 		publisher: {
