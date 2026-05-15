@@ -1265,6 +1265,34 @@ const Lighthouse = () => {
 									<tr>
 										<td className="py-3 px-4 text-muted-foreground">
 											<div className="flex items-center space-x-2">
+												<span>Authentication &amp; RBAC</span>
+												<TooltipProvider>
+													<Tooltip>
+														<TooltipTrigger>
+															<Info className="h-4 w-4 text-blue-500" />
+														</TooltipTrigger>
+														<TooltipContent>
+															<p className="text-sm">
+																Secure your Lighthouse instance with any
+																OIDC-compatible identity provider (Microsoft
+																Entra, Google, Keycloak, Auth0, etc.) and
+																control access with Role Based Access Control.
+															</p>
+														</TooltipContent>
+													</Tooltip>
+												</TooltipProvider>
+											</div>
+										</td>
+										<td className="py-3 px-4 text-center">
+											<XCircle className="h-5 w-5 text-red-500 mx-auto" />
+										</td>
+										<td className="py-3 px-4 text-center">
+											<Check className="h-5 w-5 text-green-600 mx-auto" />
+										</td>
+									</tr>
+									<tr>
+										<td className="py-3 px-4 text-muted-foreground">
+											<div className="flex items-center space-x-2">
 												<span>Rule-Based Deliveries</span>
 												<TooltipProvider>
 													<Tooltip>
@@ -1685,17 +1713,25 @@ const Lighthouse = () => {
 							Connect Your AI Assistant
 						</h2>
 						<p className="text-xl text-primary-foreground/80 max-w-3xl mx-auto leading-relaxed">
-							Lighthouse exposes your flow data through three integration points — pick the one that fits your setup. Works with any AI that supports tool calling. No vendor lock-in.
+							Lighthouse exposes your flow data through three integration points
+							— pick the one that fits your setup. Works with any AI that
+							supports tool calling. No vendor lock-in.
 						</p>
 					</div>
 
 					{/* Three method cards */}
 					<div className="grid md:grid-cols-3 gap-6 mb-16">
 						<div className="rounded-xl bg-white/10 border border-white/20 p-6">
-							<div className="text-xs font-bold uppercase tracking-wider text-green-300 mb-3">CLI</div>
-							<h3 className="text-lg font-semibold text-primary-foreground mb-2">Shell & Scripts</h3>
+							<div className="text-xs font-bold uppercase tracking-wider text-green-300 mb-3">
+								CLI
+							</div>
+							<h3 className="text-lg font-semibold text-primary-foreground mb-2">
+								Shell & Scripts
+							</h3>
 							<p className="text-primary-foreground/70 text-sm leading-relaxed mb-4">
-								Use the Lighthouse CLI in shell scripts, CI jobs, or any terminal-capable agent. Outputs JSON for easy integration with existing pipelines.
+								Use the Lighthouse CLI in shell scripts, CI jobs, or any
+								terminal-capable agent. Outputs JSON for easy integration with
+								existing pipelines.
 							</p>
 							<code className="block text-xs bg-black/30 text-green-300 rounded-lg px-3 py-2 font-mono">
 								npm install -g @letpeoplework/lighthouse-cli
@@ -1703,10 +1739,17 @@ const Lighthouse = () => {
 						</div>
 
 						<div className="rounded-xl bg-white/15 border border-white/30 p-6 ring-1 ring-white/20">
-							<div className="text-xs font-bold uppercase tracking-wider text-green-300 mb-3">MCP stdio · Most Popular</div>
-							<h3 className="text-lg font-semibold text-primary-foreground mb-2">Local AI Clients</h3>
+							<div className="text-xs font-bold uppercase tracking-wider text-green-300 mb-3">
+								MCP stdio · Most Popular
+							</div>
+							<h3 className="text-lg font-semibold text-primary-foreground mb-2">
+								Local AI Clients
+							</h3>
 							<p className="text-primary-foreground/70 text-sm leading-relaxed mb-4">
-								Connect VS Code, GitHub Copilot, Claude Code, or any local AI tool via the MCP stdio package. Or drop the <span className="text-green-300 font-mono">.mcpb</span> bundle directly into your client — no npm required.
+								Connect VS Code, GitHub Copilot, Claude Code, or any local AI
+								tool via the MCP stdio package. Or drop the{" "}
+								<span className="text-green-300 font-mono">.mcpb</span> bundle
+								directly into your client — no npm required.
 							</p>
 							<code className="block text-xs bg-black/30 text-green-300 rounded-lg px-3 py-2 font-mono">
 								@letpeoplework/lighthouse-mcp-stdio
@@ -1714,10 +1757,17 @@ const Lighthouse = () => {
 						</div>
 
 						<div className="rounded-xl bg-white/10 border border-white/20 p-6">
-							<div className="text-xs font-bold uppercase tracking-wider text-green-300 mb-3">MCP HTTP</div>
-							<h3 className="text-lg font-semibold text-primary-foreground mb-2">Shared & Hosted</h3>
+							<div className="text-xs font-bold uppercase tracking-wider text-green-300 mb-3">
+								MCP HTTP
+							</div>
+							<h3 className="text-lg font-semibold text-primary-foreground mb-2">
+								Shared & Hosted
+							</h3>
 							<p className="text-primary-foreground/70 text-sm leading-relaxed mb-4">
-								Run the HTTP server for shared team setups, container deployments, or remote development environments. Exposes a standard <span className="text-green-300 font-mono">/mcp</span> endpoint.
+								Run the HTTP server for shared team setups, container
+								deployments, or remote development environments. Exposes a
+								standard <span className="text-green-300 font-mono">/mcp</span>{" "}
+								endpoint.
 							</p>
 							<code className="block text-xs bg-black/30 text-green-300 rounded-lg px-3 py-2 font-mono">
 								@letpeoplework/lighthouse-mcp-http
@@ -1733,7 +1783,9 @@ const Lighthouse = () => {
 								<div className="w-3 h-3 rounded-full bg-red-400/60" />
 								<div className="w-3 h-3 rounded-full bg-yellow-400/60" />
 								<div className="w-3 h-3 rounded-full bg-green-400/60" />
-								<span className="text-xs text-white/40 ml-2 font-mono">.vscode/mcp.json</span>
+								<span className="text-xs text-white/40 ml-2 font-mono">
+									.vscode/mcp.json
+								</span>
 							</div>
 							<pre className="p-5 text-xs text-green-300 font-mono leading-relaxed overflow-x-auto">{`{
   "servers": {
@@ -1753,9 +1805,14 @@ const Lighthouse = () => {
 						{/* Downloads + skill */}
 						<div className="space-y-4">
 							<div className="rounded-xl bg-white/10 border border-white/20 p-6">
-								<h4 className="text-sm font-semibold text-primary-foreground mb-1">Agent Skill</h4>
+								<h4 className="text-sm font-semibold text-primary-foreground mb-1">
+									Agent Skill
+								</h4>
 								<p className="text-primary-foreground/70 text-sm leading-relaxed mb-4">
-									A pre-built skill that teaches your AI agent when and how to use Lighthouse tools, including fallbacks and authentication. Drop it into Claude Code, VS Code, or any skill-compatible agent.
+									A pre-built skill that teaches your AI agent when and how to
+									use Lighthouse tools, including fallbacks and authentication.
+									Drop it into Claude Code, VS Code, or any skill-compatible
+									agent.
 								</p>
 								<a
 									href="https://github.com/LetPeopleWork/lighthouse-clients/releases/latest/download/lighthouse-skill.zip"
@@ -1767,9 +1824,12 @@ const Lighthouse = () => {
 							</div>
 
 							<div className="rounded-xl bg-white/10 border border-white/20 p-6">
-								<h4 className="text-sm font-semibold text-primary-foreground mb-1">MCPB Bundle</h4>
+								<h4 className="text-sm font-semibold text-primary-foreground mb-1">
+									MCPB Bundle
+								</h4>
 								<p className="text-primary-foreground/70 text-sm leading-relaxed mb-4">
-									A single-file bundle for clients that support the MCPB format. No npm install, no configuration. Just drop it in and connect.
+									A single-file bundle for clients that support the MCPB format.
+									No npm install, no configuration. Just drop it in and connect.
 								</p>
 								<a
 									href="https://github.com/LetPeopleWork/lighthouse-clients/releases/latest/download/lighthouse-mcp-stdio.mcpb"
