@@ -1,6 +1,7 @@
 import { ArrowRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroFlow from "@/assets/hero-flow.jpg";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const Hero = () => {
   const handleGetLighthouse = () => {
@@ -17,70 +18,87 @@ const Hero = () => {
     }
   };
 
+  const { ref: statsRef, revealed: statsRevealed } = useScrollReveal<HTMLDivElement>();
+
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center bg-gradient-subtle overflow-hidden pt-16">
-      {/* Background Image */}
+    <section id="home" className="relative min-h-screen flex items-center justify-center bg-background overflow-hidden pt-16">
+      {/* Background Image — very subtle */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src={heroFlow} 
+        <img
+          src={heroFlow}
           alt="Flow visualization background showing agile workflow"
-          className="w-full h-full object-cover opacity-10"
+          className="w-full h-full object-cover opacity-[0.04]"
           width="1920"
           height="1080"
           loading="eager"
           fetchPriority="high"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-background/80 to-background/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="animate-fade-in">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight">
-            Stop defending estimates.{" "}
-            <span className="bg-gradient-hero bg-clip-text text-transparent">
+          <span className="inline-block text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-6">
+            Flow metrics, finally usable
+          </span>
+
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[88px] font-bold text-foreground mb-8 leading-[1.02] tracking-tight">
+            Stop defending estimates.
+            <br />
+            <span className="bg-gradient-hero bg-clip-text text-transparent font-light">
               Start forecasting
-            </span>
-            {" "}with confidence.
+            </span>{" "}
+            <span className="font-light">with confidence.</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-            You're being asked when it'll be done. Right now, your honest answer is a guess. Lighthouse shows you <em>why</em> delivery is slow and <em>when</em> it'll finish, so you can fix the system and stop defending the date.
+          <p className="text-lg md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed font-light">
+            You're being asked when it'll be done. Right now, your honest answer is a guess. Lighthouse shows you <em className="text-foreground/80 not-italic font-normal">why</em> delivery is slow and <em className="text-foreground/80 not-italic font-normal">when</em> it'll finish — so you can fix the system and stop defending the date.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Button variant="hero" size="lg" className="group" onClick={handleGetLighthouse}>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20">
+            <Button variant="hero" size="lg" className="group rounded-full px-8 py-6 text-base" onClick={handleGetLighthouse}>
               Get Lighthouse Free
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
 
-            <Button variant="outline" size="lg" className="group" onClick={handleHowItWorks}>
+            <Button variant="outline" size="lg" className="group rounded-full px-8 py-6 text-base" onClick={handleHowItWorks}>
               <Play className="mr-2 group-hover:scale-110 transition-transform" />
               See How It Works
             </Button>
           </div>
 
-          {/* Stats */}
-          <p className="text-sm text-muted-foreground mb-6 italic">
-            We've watched capable teams drown in estimate theater. Here's what we built to end it:
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">15+</div>
-              <div className="text-muted-foreground">Years Experience</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">500+</div>
-              <div className="text-muted-foreground">Professionals Trained</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">100%</div>
-              <div className="text-muted-foreground">Open Source</div>
+          {/* Stats with scroll reveal */}
+          <div
+            ref={statsRef}
+            className={`transition-all duration-700 ease-out ${
+              statsRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            }`}
+          >
+            <p className="text-sm text-muted-foreground mb-8 italic font-light">
+              We've watched capable teams drown in estimate theater. Here's what we built to end it.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-4xl mx-auto">
+              {[
+                { value: "15+", label: "Years Experience" },
+                { value: "500+", label: "Professionals Trained" },
+                { value: "100%", label: "Open Source" },
+              ].map((s, i) => (
+                <div
+                  key={s.label}
+                  style={{ transitionDelay: statsRevealed ? `${100 + i * 90}ms` : "0ms" }}
+                  className={`text-center transition-all duration-700 ease-out ${
+                    statsRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                  }`}
+                >
+                  <div className="text-5xl md:text-6xl font-semibold text-primary mb-2 tracking-tight">{s.value}</div>
+                  <div className="text-muted-foreground text-sm uppercase tracking-wider font-light">{s.label}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
-
     </section>
   );
 };

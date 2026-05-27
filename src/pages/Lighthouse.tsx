@@ -70,6 +70,7 @@ import lighthouseLogo from "@/assets/LighthouseLogo.png";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 import LighthouseTestimonials from "@/components/LighthouseTestimonials";
+import FAQSection from "@/components/FAQSection";
 import { format } from "date-fns";
 import metricsTeam1 from "@/assets/screenshots/Metrics_Team_1.png";
 import metricsProject1 from "@/assets/screenshots/Metrics_Project_1.png";
@@ -525,18 +526,26 @@ const Lighthouse = () => {
 		offers: [
 			{
 				"@type": "Offer",
-				name: "Community Version",
+				name: "Community Edition",
 				price: "0",
 				priceCurrency: "CHF",
-				description: "Free forever community version with core features",
+				description: "Free forever community edition with core features (capped to 3 teams, 1 portfolio)",
 			},
 			{
 				"@type": "Offer",
-				name: "Premium License",
-				price: "999",
+				name: "Self-Service License",
+				price: "2000",
 				priceCurrency: "CHF",
 				description:
-					"Annual premium license with unlimited teams and advanced features",
+					"Annual self-hosted license with unlimited teams, portfolios, and all paid-tier features. Community Slack support.",
+			},
+			{
+				"@type": "Offer",
+				name: "Enterprise License",
+				price: "10000",
+				priceCurrency: "CHF",
+				description:
+					"Annual self-hosted license with prioritised support, 24h acknowledgement, 2x60-min onboarding, named contacts, and workshop discounts.",
 			},
 		],
 		description:
@@ -989,30 +998,129 @@ const Lighthouse = () => {
 				</div>
 			</section>
 
-			{/* Why Premium Section */}
-			<section id="lighthouse-premium" className="py-20 bg-gradient-subtle">
+			{/* FAQ — assumption-debunking */}
+			<FAQSection />
+
+			{/* Pricing Section — 3 tiers */}
+			<section id="lighthouse-premium" className="py-24 md:py-32 bg-gradient-subtle">
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-					<div className="text-center mb-16">
-						<h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-							Lighthouse{" "}
-							<span className="bg-gradient-primary bg-clip-text text-transparent">
-								Premium
-							</span>
+					<div className="text-center mb-16 md:mb-20">
+						<span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-4 block">
+							Pricing
+						</span>
+						<h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.05] mb-6">
+							Three editions.
+							<br />
+							<span className="text-primary font-light">Same product. Different access.</span>
 						</h2>
-						<p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-12">
-							While our Community Version provides all the features you need to
-							analyze the flow and forecast delivery dates, Premium unlocks
-							enterprise-grade capabilities that help you scale the usage and
-							adoption within your organization and thus lead to a scaled
-							learning.
+						<p className="text-lg md:text-xl text-muted-foreground font-light max-w-2xl mx-auto leading-relaxed">
+							Lighthouse stays open source and self-hosted across every edition. Paid tiers unlock unlimited usage and choose how much of us you want alongside it.
 						</p>
 					</div>
 
-					{/* Comparison Table */}
+					{/* Bridge / pre-launch notice */}
+					<div className="max-w-3xl mx-auto mb-16 rounded-2xl border border-primary/20 bg-white/70 backdrop-blur-sm px-6 py-5 text-sm md:text-base text-muted-foreground text-center">
+						<span className="font-semibold text-foreground">New pricing launches August 2026.</span>{" "}
+						Existing CHF 999 customers get a one-year bridge license at renewal — no surprises. Buying before launch? You stay on the current rate for a year.
+					</div>
+
+					{/* 3-tier card grid */}
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-16 md:mb-20 items-stretch">
+						{/* Community */}
+						<div className="flex flex-col rounded-3xl border border-border bg-background p-8 md:p-10">
+							<div className="text-xs font-semibold uppercase tracking-[0.15em] text-primary mb-3">Community</div>
+							<div className="flex items-baseline gap-2 mb-1">
+								<div className="text-4xl md:text-5xl font-semibold text-foreground tracking-tight">Free</div>
+							</div>
+							<div className="text-sm text-muted-foreground mb-6">Forever. Open source. Self-hosted.</div>
+							<p className="text-base text-foreground/80 leading-relaxed mb-6">
+								Everything you need to forecast and see your flow — up to a few teams.
+							</p>
+							<ul className="space-y-2.5 mb-8 flex-1 text-sm text-foreground/80">
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>All core flow metrics &amp; Monte Carlo forecasts</span></li>
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Jira, Azure DevOps, Linear, CSV</span></li>
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>AI / MCP integration</span></li>
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Up to 3 teams · 1 portfolio · 1 delivery</span></li>
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Community Slack support</span></li>
+							</ul>
+							<a
+								href="#downloads"
+								className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-sm bg-foreground/5 text-foreground hover:bg-foreground/10 transition-colors no-underline"
+							>
+								Download free
+							</a>
+						</div>
+
+						{/* Self-Service — Recommended */}
+						<div className="relative flex flex-col rounded-3xl border-2 border-primary/50 bg-background p-8 md:p-10 shadow-medium md:scale-[1.02] md:-translate-y-2">
+							<span className="absolute -top-3 right-6 text-[11px] font-bold uppercase tracking-[0.15em] bg-primary text-primary-foreground px-3 py-1 rounded-full shadow-soft">
+								Most popular
+							</span>
+							<div className="text-xs font-semibold uppercase tracking-[0.15em] text-primary mb-3">Self-Service</div>
+							<div className="flex items-baseline gap-2 mb-1">
+								<div className="text-4xl md:text-5xl font-semibold text-foreground tracking-tight">CHF 2,000</div>
+								<div className="text-sm text-muted-foreground">/ year</div>
+							</div>
+							<div className="text-sm text-muted-foreground mb-6">Annual license. Self-hosted.</div>
+							<p className="text-base text-foreground/80 leading-relaxed mb-6">
+								The full product, your way. Run it, configure it, scale it — with the community at your back.
+							</p>
+							<ul className="space-y-2.5 mb-8 flex-1 text-sm text-foreground/80">
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span><span className="font-semibold">Everything in Community</span>, no caps</span></li>
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Unlimited teams, portfolios, deliveries</span></li>
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Auth &amp; RBAC, rule-based deliveries, data sync mappings</span></li>
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Community Slack — alongside our team</span></li>
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>
+									Feature requests via <a href="https://ideas.letpeople.work/" className="text-primary underline underline-offset-2" target="_blank" rel="noopener noreferrer">ideas.letpeople.work</a>
+								</span></li>
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Best-effort help from us when we have capacity</span></li>
+							</ul>
+							<a
+								href="#lighthouse-license"
+								className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-sm bg-primary text-primary-foreground hover:bg-primary-hover shadow-soft hover:shadow-medium transition-all hover:-translate-y-0.5 no-underline"
+							>
+								Get Self-Service <ArrowRight className="w-4 h-4" />
+							</a>
+						</div>
+
+						{/* Enterprise */}
+						<div className="flex flex-col rounded-3xl border border-border bg-background p-8 md:p-10">
+							<div className="text-xs font-semibold uppercase tracking-[0.15em] text-primary mb-3">Enterprise</div>
+							<div className="flex items-baseline gap-2 mb-1">
+								<div className="text-4xl md:text-5xl font-semibold text-foreground tracking-tight">CHF 10,000</div>
+								<div className="text-sm text-muted-foreground">/ year</div>
+							</div>
+							<div className="text-sm text-muted-foreground mb-6">For teams that want us prioritised.</div>
+							<p className="text-base text-foreground/80 leading-relaxed mb-6">
+								Everything in Self-Service, plus direct access to the people who build the tool — when you need it, fast.
+							</p>
+							<ul className="space-y-2.5 mb-8 flex-1 text-sm text-foreground/80">
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span><span className="font-semibold">Everything in Self-Service</span></span></li>
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span><span className="font-semibold">Prioritised support</span> — your questions and feature requests jump the queue</span></li>
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>24h acknowledgement on async requests</span></li>
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>2 × 60-min onboarding calls in your first 90 days</span></li>
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Named contacts — Peter (flow/coaching) &amp; Benjamin (technical)</span></li>
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>10% off any LetPeopleWork workshop or training</span></li>
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Data Processing Agreement (you self-host — minimal)</span></li>
+							</ul>
+							<p className="text-xs text-muted-foreground mb-4 italic">Capacity capped at 5–8 customers so we can actually deliver on this.</p>
+							<a
+								href="mailto:licensing@letpeople.work?subject=Lighthouse%20Enterprise%20enquiry"
+								className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-sm border border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-colors no-underline"
+							>
+								Talk to us
+							</a>
+						</div>
+					</div>
+
+					{/* Full feature comparison table */}
 					<div className="bg-background rounded-2xl p-8 shadow-soft border border-border">
-						<h3 className="text-2xl font-bold text-foreground mb-8 text-center">
-							Community vs Premium Comparison
+						<h3 className="text-2xl font-bold text-foreground mb-2 text-center">
+							Feature comparison
 						</h3>
+						<p className="text-sm text-muted-foreground text-center mb-8">
+							Tiers split on access and support, not features. Paid tiers share the same product.
+						</p>
 
 						<div className="overflow-x-auto">
 							<table className="w-full">
@@ -1022,396 +1130,151 @@ const Lighthouse = () => {
 											Feature
 										</th>
 										<th className="text-center py-4 px-4 font-semibold text-foreground">
-											Community Version
+											Community
 										</th>
-										<th className="text-center py-4 px-4 font-semibold text-foreground bg-gradient-primary bg-clip-text text-transparent">
-											Premium Version
+										<th className="text-center py-4 px-4 font-semibold text-primary">
+											Self-Service
+										</th>
+										<th className="text-center py-4 px-4 font-semibold text-primary">
+											Enterprise
 										</th>
 									</tr>
 								</thead>
 								<tbody className="divide-y divide-border">
-									{/* Base Functionality */}
-									<tr>
-										<td
-											colSpan={3}
-											className="py-4 px-4 font-semibold text-foreground bg-accent/30"
-										>
-											Base Functionality
-										</td>
-									</tr>
-									<tr>
-										<td className="py-3 px-4 text-muted-foreground">
-											Flow Metrics for Teams
-										</td>
-										<td className="py-3 px-4 text-center">
-											<Check className="h-5 w-5 text-green-600 mx-auto" />
-										</td>
-										<td className="py-3 px-4 text-center">
-											<Check className="h-5 w-5 text-green-600 mx-auto" />
-										</td>
-									</tr>
-									<tr>
-										<td className="py-3 px-4 text-muted-foreground">
-											Flow Metrics for Projects
-										</td>
-										<td className="py-3 px-4 text-center">
-											<Check className="h-5 w-5 text-green-600 mx-auto" />
-										</td>
-										<td className="py-3 px-4 text-center">
-											<Check className="h-5 w-5 text-green-600 mx-auto" />
-										</td>
-									</tr>
-									<tr>
-										<td className="py-3 px-4 text-muted-foreground">
-											Manual Forecasts for Teams
-										</td>
-										<td className="py-3 px-4 text-center">
-											<Check className="h-5 w-5 text-green-600 mx-auto" />
-										</td>
-										<td className="py-3 px-4 text-center">
-											<Check className="h-5 w-5 text-green-600 mx-auto" />
-										</td>
-									</tr>
-									<tr>
-										<td className="py-3 px-4 text-muted-foreground">
-											Continuous Forecasts for Projects
-										</td>
-										<td className="py-3 px-4 text-center">
-											<Check className="h-5 w-5 text-green-600 mx-auto" />
-										</td>
-										<td className="py-3 px-4 text-center">
-											<Check className="h-5 w-5 text-green-600 mx-auto" />
-										</td>
-									</tr>
-									<tr>
-										<td className="py-3 px-4 text-muted-foreground">
-											100% Open Source (MIT License)
-										</td>
-										<td className="py-3 px-4 text-center">
-											<Check className="h-5 w-5 text-green-600 mx-auto" />
-										</td>
-										<td className="py-3 px-4 text-center">
-											<Check className="h-5 w-5 text-green-600 mx-auto" />
-										</td>
-									</tr>
-									<tr>
-										<td className="py-3 px-4 text-muted-foreground">
-											Connection to Jira and Azure DevOps
-										</td>
-										<td className="py-3 px-4 text-center">
-											<Check className="h-5 w-5 text-green-600 mx-auto" />
-										</td>
-										<td className="py-3 px-4 text-center">
-											<Check className="h-5 w-5 text-green-600 mx-auto" />
-										</td>
-									</tr>
-									<tr>
-										<td className="py-3 px-4 text-muted-foreground">
-											<div className="flex items-center space-x-2">
-												<span>AI &amp; LLM Integration</span>
-												<TooltipProvider>
-													<Tooltip>
-														<TooltipTrigger>
-															<Info className="h-4 w-4 text-blue-500" />
-														</TooltipTrigger>
-														<TooltipContent>
-															<p className="text-sm">
-																Connect Lighthouse to Claude, ChatGPT, or any
-																MCP-compatible AI assistant. Query metrics, run
-																forecasts, and explore delivery data through
-																natural language — no dashboard required.
-															</p>
-														</TooltipContent>
-													</Tooltip>
-												</TooltipProvider>
-											</div>
-										</td>
-										<td className="py-3 px-4 text-center">
-											<Check className="h-5 w-5 text-green-600 mx-auto" />
-										</td>
-										<td className="py-3 px-4 text-center">
-											<Check className="h-5 w-5 text-green-600 mx-auto" />
-										</td>
-									</tr>
-									<tr>
-										<td className="py-3 px-4 text-muted-foreground">
-											<div className="flex items-center space-x-2">
-												<span>CLI &amp; Automation</span>
-												<TooltipProvider>
-													<Tooltip>
-														<TooltipTrigger>
-															<Info className="h-4 w-4 text-blue-500" />
-														</TooltipTrigger>
-														<TooltipContent>
-															<p className="text-sm">
-																Automate metrics collection and forecasting via
-																the <code>lh</code> CLI or the MCP server.
-																Integrate Lighthouse data into scripts, CI/CD
-																pipelines, and custom tooling.
-															</p>
-														</TooltipContent>
-													</Tooltip>
-												</TooltipProvider>
-											</div>
-										</td>
-										<td className="py-3 px-4 text-center">
-											<Check className="h-5 w-5 text-green-600 mx-auto" />
-										</td>
-										<td className="py-3 px-4 text-center">
-											<Check className="h-5 w-5 text-green-600 mx-auto" />
-										</td>
-									</tr>
+									{(() => {
+										type Cell = boolean | string | { label: string; tooltip: string };
+										type Row = { feature: Cell; community: Cell; self: Cell; enterprise: Cell };
+										type Group = { title: string; rows: Row[] };
 
-									{/* Constraints in Community Version */}
-									<tr>
-										<td
-											colSpan={3}
-											className="py-4 px-4 font-semibold text-foreground bg-accent/30"
-										>
-											Usage Limits
-										</td>
-									</tr>
-									<tr>
-										<td className="py-3 px-4 text-muted-foreground">
-											Number of Teams
-										</td>
-										<td className="py-3 px-4 text-center text-muted-foreground">
-											Max 3
-										</td>
-										<td className="py-3 px-4 text-center text-foreground font-semibold bg-gradient-primary bg-clip-text text-transparent">
-											Unlimited
-										</td>
-									</tr>
-									<tr>
-										<td className="py-3 px-4 text-muted-foreground">
-											Number of Portfolios
-										</td>
-										<td className="py-3 px-4 text-center text-muted-foreground">
-											Max 1
-										</td>
-										<td className="py-3 px-4 text-center text-foreground font-semibold bg-gradient-primary bg-clip-text text-transparent">
-											Unlimited
-										</td>
-									</tr>
-									<tr>
-										<td className="py-3 px-4 text-muted-foreground">
-											CSV Support
-										</td>
-										<td className="py-3 px-4 text-center text-muted-foreground">
-											Max 1 Team
-										</td>
-										<td className="py-3 px-4 text-center text-foreground font-semibold bg-gradient-primary bg-clip-text text-transparent">
-											Unlimited Teams and Portfolios
-										</td>
-									</tr>
-									<tr>
-										<td className="py-3 px-4 text-muted-foreground">
-											Demo Data
-										</td>
-										<td className="py-3 px-4 text-center text-muted-foreground">
-											Basic Scenarios
-										</td>
-										<td className="py-3 px-4 text-center text-foreground font-semibold bg-gradient-primary bg-clip-text text-transparent">
-											Advanced Scenarios
-										</td>
-									</tr>
-									<tr>
-										<td className="py-3 px-4 text-muted-foreground">
-											Deliveries
-										</td>
-										<td className="py-3 px-4 text-center text-muted-foreground">
-											1 Delivery
-										</td>
-										<td className="py-3 px-4 text-center text-foreground font-semibold bg-gradient-primary bg-clip-text text-transparent">
-											Unlimited
-										</td>
-									</tr>
+										const renderFeature = (cell: Cell) => {
+											if (typeof cell === "object" && cell !== null && "tooltip" in cell) {
+												return (
+													<div className="flex items-center space-x-2">
+														<span>{cell.label}</span>
+														<TooltipProvider>
+															<Tooltip>
+																<TooltipTrigger>
+																	<Info className="h-4 w-4 text-blue-500" />
+																</TooltipTrigger>
+																<TooltipContent>
+																	<p className="text-sm max-w-xs">{cell.tooltip}</p>
+																</TooltipContent>
+															</Tooltip>
+														</TooltipProvider>
+													</div>
+												);
+											}
+											return cell as string;
+										};
 
-									<tr>
-										<td className="py-3 px-4 text-muted-foreground">
-											<div className="flex items-center space-x-2">
-												<span>Additional Fields</span>
-												<TooltipProvider>
-													<Tooltip>
-														<TooltipTrigger>
-															<Info className="h-4 w-4 text-blue-500" />
-														</TooltipTrigger>
-														<TooltipContent>
-															<p className="text-sm">
-																Add custom fields to capture additional metadata
-																specific to your workflow and requirements.
-															</p>
-														</TooltipContent>
-													</Tooltip>
-												</TooltipProvider>
-											</div>
-										</td>
-										<td className="py-3 px-4 text-center text-muted-foreground">
-											1 Additional Field
-										</td>
-										<td className="py-3 px-4 text-center text-foreground font-semibold bg-gradient-primary bg-clip-text text-transparent">
-											Unlimited
-										</td>
-									</tr>
-									{/* Premium Features */}
-									<tr>
-										<td
-											colSpan={3}
-											className="py-4 px-4 font-semibold text-foreground bg-accent/30"
-										>
-											Premium-Only Features
-										</td>
-									</tr>
-									<tr>
-										<td className="py-3 px-4 text-muted-foreground">
-											<div className="flex items-center space-x-2">
-												<span>Authentication &amp; RBAC</span>
-												<TooltipProvider>
-													<Tooltip>
-														<TooltipTrigger>
-															<Info className="h-4 w-4 text-blue-500" />
-														</TooltipTrigger>
-														<TooltipContent>
-															<p className="text-sm">
-																Secure your Lighthouse instance with any
-																OIDC-compatible identity provider (Microsoft
-																Entra, Google, Keycloak, Auth0, etc.) and
-																control access with Role Based Access Control.
-															</p>
-														</TooltipContent>
-													</Tooltip>
-												</TooltipProvider>
-											</div>
-										</td>
-										<td className="py-3 px-4 text-center">
-											<XCircle className="h-5 w-5 text-red-500 mx-auto" />
-										</td>
-										<td className="py-3 px-4 text-center">
-											<Check className="h-5 w-5 text-green-600 mx-auto" />
-										</td>
-									</tr>
-									<tr>
-										<td className="py-3 px-4 text-muted-foreground">
-											<div className="flex items-center space-x-2">
-												<span>Rule-Based Deliveries</span>
-												<TooltipProvider>
-													<Tooltip>
-														<TooltipTrigger>
-															<Info className="h-4 w-4 text-blue-500" />
-														</TooltipTrigger>
-														<TooltipContent>
-															<p className="text-sm">
-																Define rules to automatically include your
-																Features based on criteria like labels,
-																fixVersion, or custom fields, ensuring your
-																deliveries are always up-to-date without manual
-																updating.
-															</p>
-														</TooltipContent>
-													</Tooltip>
-												</TooltipProvider>
-											</div>
-										</td>
-										<td className="py-3 px-4 text-center">
-											<XCircle className="h-5 w-5 text-red-500 mx-auto" />
-										</td>
-										<td className="py-3 px-4 text-center">
-											<Check className="h-5 w-5 text-green-600 mx-auto" />
-										</td>
-									</tr>
-									<tr>
-										<tr>
-											<td className="py-3 px-4 text-muted-foreground">
-												<div className="flex items-center space-x-2">
-													<span> Blackout Days</span>
-													<TooltipProvider>
-														<Tooltip>
-															<TooltipTrigger>
-																<Info className="h-4 w-4 text-blue-500" />
-															</TooltipTrigger>
-															<TooltipContent>
-																<p className="text-sm">
-																	Define days which should not be counted in the
-																	Throughput for calculating forecasts, for
-																	example bank holidays.
-																</p>
-															</TooltipContent>
-														</Tooltip>
-													</TooltipProvider>
-												</div>
-											</td>
-										</tr>
-										<td className="py-3 px-4 text-center">
-											<XCircle className="h-5 w-5 text-red-500 mx-auto" />
-										</td>
-										<td className="py-3 px-4 text-center">
-											<Check className="h-5 w-5 text-green-600 mx-auto" />
-										</td>
-									</tr>
-									<tr>
-										<td className="py-3 px-4 text-muted-foreground">
-											<div className="flex items-center space-x-2">
-												<span>Data Export &amp; Sharing</span>
-												<TooltipProvider>
-													<Tooltip>
-														<TooltipTrigger>
-															<Info className="h-4 w-4 text-blue-500" />
-														</TooltipTrigger>
-														<TooltipContent>
-															<p className="text-sm">
-																Export flow metrics data to CSV or clipboard for
-																sharing via email or custom analysis
-															</p>
-														</TooltipContent>
-													</Tooltip>
-												</TooltipProvider>
-											</div>
-										</td>
-										<td className="py-3 px-4 text-center">
-											<XCircle className="h-5 w-5 text-red-500 mx-auto" />
-										</td>
-										<td className="py-3 px-4 text-center">
-											<Check className="h-5 w-5 text-green-600 mx-auto" />
-										</td>
-									</tr>
-									{/* Data Sync Mappings - Premium Only */}
-									<tr>
-										<td className="py-3 px-4 text-muted-foreground">
-											<div className="flex items-center space-x-2">
-												<span>Data Sync Mappings</span>
-												<TooltipProvider>
-													<Tooltip>
-														<TooltipTrigger>
-															<Info className="h-4 w-4 text-blue-500" />
-														</TooltipTrigger>
-														<TooltipContent>
-															<p className="text-sm">
-																Write Metrics and Forecasts back to Jira and
-																Azure DevOps and store them in your system.
-															</p>
-														</TooltipContent>
-													</Tooltip>
-												</TooltipProvider>
-											</div>
-										</td>
-										<td className="py-3 px-4 text-center">
-											<XCircle className="h-5 w-5 text-red-500 mx-auto" />
-										</td>
-										<td className="py-3 px-4 text-center">
-											<Check className="h-5 w-5 text-green-600 mx-auto" />
-										</td>
-									</tr>
+										const renderValue = (cell: Cell, accent = false) => {
+											if (typeof cell === "boolean") {
+												return cell
+													? <Check className="h-5 w-5 text-green-600 mx-auto" />
+													: <XCircle className="h-5 w-5 text-red-500 mx-auto" />;
+											}
+											return <span className={accent ? "text-primary font-semibold" : "text-muted-foreground"}>{cell as string}</span>;
+										};
+
+										const groups: Group[] = [
+											{
+												title: "Base Functionality",
+												rows: [
+													{ feature: "Flow Metrics for Teams", community: true, self: true, enterprise: true },
+													{ feature: "Flow Metrics for Projects", community: true, self: true, enterprise: true },
+													{ feature: "Manual Forecasts for Teams", community: true, self: true, enterprise: true },
+													{ feature: "Continuous Forecasts for Projects", community: true, self: true, enterprise: true },
+													{ feature: "100% Open Source (MIT License)", community: true, self: true, enterprise: true },
+													{ feature: "Connection to Jira, Azure DevOps & Linear", community: true, self: true, enterprise: true },
+													{
+														feature: { label: "AI & LLM Integration", tooltip: "Connect Lighthouse to Claude, ChatGPT, or any MCP-compatible AI assistant. Query metrics, run forecasts, and explore delivery data through natural language — no dashboard required." },
+														community: true, self: true, enterprise: true,
+													},
+													{
+														feature: { label: "CLI & Automation", tooltip: "Automate metrics collection and forecasting via the lh CLI or the MCP server. Integrate Lighthouse data into scripts, CI/CD pipelines, and custom tooling." },
+														community: true, self: true, enterprise: true,
+													},
+												],
+											},
+											{
+												title: "Usage Limits",
+												rows: [
+													{ feature: "Number of Teams", community: "Max 3", self: "Unlimited", enterprise: "Unlimited" },
+													{ feature: "Number of Portfolios", community: "Max 1", self: "Unlimited", enterprise: "Unlimited" },
+													{ feature: "CSV Support", community: "Max 1 Team", self: "Unlimited", enterprise: "Unlimited" },
+													{ feature: "Demo Data", community: "Basic Scenarios", self: "Advanced Scenarios", enterprise: "Advanced Scenarios" },
+													{ feature: "Deliveries", community: "1 Delivery", self: "Unlimited", enterprise: "Unlimited" },
+													{
+														feature: { label: "Additional Fields", tooltip: "Add custom fields to capture additional metadata specific to your workflow and requirements." },
+														community: "1 Field", self: "Unlimited", enterprise: "Unlimited",
+													},
+												],
+											},
+											{
+												title: "Paid-tier Features",
+												rows: [
+													{
+														feature: { label: "Authentication & RBAC", tooltip: "Secure your Lighthouse instance with any OIDC-compatible identity provider (Microsoft Entra, Google, Keycloak, Auth0, etc.) and control access with Role Based Access Control." },
+														community: false, self: true, enterprise: true,
+													},
+													{
+														feature: { label: "Rule-Based Deliveries", tooltip: "Define rules to automatically include your Features based on criteria like labels, fixVersion, or custom fields, ensuring your deliveries are always up-to-date without manual updating." },
+														community: false, self: true, enterprise: true,
+													},
+													{
+														feature: { label: "Blackout Days", tooltip: "Define days which should not be counted in the Throughput for calculating forecasts, for example bank holidays." },
+														community: false, self: true, enterprise: true,
+													},
+													{
+														feature: { label: "Data Export & Sharing", tooltip: "Export flow metrics data to CSV or clipboard for sharing via email or custom analysis." },
+														community: false, self: true, enterprise: true,
+													},
+													{
+														feature: { label: "Data Sync Mappings", tooltip: "Write Metrics and Forecasts back to Jira and Azure DevOps and store them in your system." },
+														community: false, self: true, enterprise: true,
+													},
+												],
+											},
+											{
+												title: "Support & Onboarding",
+												rows: [
+													{ feature: "Community Slack", community: true, self: true, enterprise: true },
+													{ feature: "Feature requests (ideas.letpeople.work)", community: true, self: true, enterprise: true },
+													{ feature: "Best-effort help from the team", community: false, self: true, enterprise: true },
+													{ feature: "Prioritised support queue", community: false, self: false, enterprise: true },
+													{ feature: "24h acknowledgement (async)", community: false, self: false, enterprise: true },
+													{ feature: "Onboarding calls (2×60 min in first 90 days)", community: false, self: false, enterprise: true },
+													{ feature: "Named contacts (Peter & Benjamin)", community: false, self: false, enterprise: true },
+													{ feature: "10% workshop / training discount", community: false, self: false, enterprise: true },
+												],
+											},
+										];
+
+										return groups.flatMap((group, gi) => [
+											<tr key={`g${gi}`}>
+												<td colSpan={4} className="py-4 px-4 font-semibold text-foreground bg-accent/30">
+													{group.title}
+												</td>
+											</tr>,
+											...group.rows.map((row, ri) => (
+												<tr key={`g${gi}r${ri}`}>
+													<td className="py-3 px-4 text-muted-foreground">
+														{renderFeature(row.feature)}
+													</td>
+													<td className="py-3 px-4 text-center">{renderValue(row.community)}</td>
+													<td className="py-3 px-4 text-center">{renderValue(row.self, true)}</td>
+													<td className="py-3 px-4 text-center">{renderValue(row.enterprise, true)}</td>
+												</tr>
+											)),
+										]);
+									})()}
 								</tbody>
 							</table>
 						</div>
 
 						<div className="mt-6 p-4 bg-accent/20 rounded-lg">
 							<p className="text-sm text-muted-foreground">
-								<span className="font-semibold text-foreground">Note:</span> New
-								premium features may be introduced as premium-only for the first
-								few months before being made available to the Community Version,
-								ensuring premium users get early access to cutting-edge
-								capabilities.
+								<span className="font-semibold text-foreground">Note:</span> New paid-tier features may be introduced for Self-Service and Enterprise first, before being made available in the Community edition. Community customers stay on the same feature line — they just get there a release or two later.
 							</p>
 						</div>
 					</div>
@@ -1419,18 +1282,19 @@ const Lighthouse = () => {
 			</section>
 
 			{/* License Purchase Section */}
-			<section id="lighthouse-license" className="py-20 bg-background">
+			<section id="lighthouse-license" className="py-24 md:py-32 bg-background">
 				<div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="text-center mb-12">
-						<h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-							Get Your{" "}
-							<span className="bg-gradient-primary bg-clip-text text-transparent">
-								Premium License
-							</span>
+						<span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-4 block">
+							Get a license
+						</span>
+						<h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.05] mb-6">
+							Self-Service today.
+							<br />
+							<span className="text-primary font-light">Enterprise when you're ready.</span>
 						</h2>
-						<p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-							Purchase your Lighthouse Premium license and unlock the full
-							potential of your organization.
+						<p className="text-lg md:text-xl text-muted-foreground font-light max-w-2xl mx-auto">
+							Pick the path that fits. You can move up later — just write to us.
 						</p>
 					</div>
 
@@ -1442,34 +1306,32 @@ const Lighthouse = () => {
 									<div className="w-20 h-20 bg-gradient-primary rounded-full flex items-center justify-center mb-6">
 										<Shield className="h-10 w-10 text-white" />
 									</div>
-									<h3 className="text-2xl font-bold text-foreground mb-4">
-										Lighthouse Premium License
+									<h3 className="text-2xl font-bold text-foreground mb-2">
+										Self-Service License
 									</h3>
-									<p className="text-muted-foreground mb-2">
-										Valid for one year from the date of purchase
+									<p className="text-sm text-primary font-semibold mb-4">Annual · Self-hosted</p>
+									<p className="text-muted-foreground mb-4">
+										The full Lighthouse product, no caps, all paid-tier features. Community Slack support, feature requests via <a href="https://ideas.letpeople.work/" className="text-primary underline underline-offset-2" target="_blank" rel="noopener noreferrer">ideas.letpeople.work</a>, and best-effort help from us when we have capacity.
 									</p>
 									<div className="text-sm text-muted-foreground mb-6">
-										<p className="mb-2">
-											Please contact us at licensing@letpeople.work if you:
-										</p>
+										<p className="mb-2">Get in touch at licensing@letpeople.work if you:</p>
 										<ul className="space-y-1 ml-4">
-											<li>• Are interested in a trial license</li>
-											<li>
-												• Want to explore a pricing reduction or a custom
-												enterprise agreements
-											</li>
-											<li>• Need a custom invoice</li>
-											<li>• Have any other license related question</li>
+											<li>• Want a trial license</li>
+											<li>• Need a custom invoice or PO process</li>
+											<li>• Want to talk Enterprise terms instead</li>
 										</ul>
 									</div>
 
 									<div className="mb-6">
-										<div className="text-4xl font-bold text-foreground mb-2">
-											CHF 999{" "}
-											<span className="text-lg font-normal text-muted-foreground">
-												.-
-											</span>
+										<div className="flex items-baseline gap-3">
+											<div className="text-4xl font-bold text-foreground">
+												CHF 2,000
+											</div>
+											<div className="text-lg text-muted-foreground">/ year</div>
 										</div>
+										<p className="text-xs text-muted-foreground mt-2">
+											New pricing in effect from launch (August 2026). Existing CHF 999 customers — see the bridge offer above. Pre-launch buyers stay on the lower rate for a year.
+										</p>
 									</div>
 
 									{/* License Details Collapsible */}
@@ -1672,6 +1534,42 @@ const Lighthouse = () => {
 							</div>
 						</CardContent>
 					</Card>
+
+					{/* Enterprise enquiry card */}
+					<div className="mt-8 rounded-3xl border-2 border-primary/30 bg-gradient-to-br from-white to-accent/30 p-8 md:p-12 relative overflow-hidden">
+						<div className="absolute -top-20 -right-20 w-60 h-60 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+						<div className="relative grid lg:grid-cols-2 gap-10 items-center">
+							<div>
+								<span className="text-xs font-semibold uppercase tracking-[0.15em] text-primary mb-3 block">
+									Enterprise
+								</span>
+								<h3 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight leading-tight mb-4">
+									Want us prioritised?
+								</h3>
+								<p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-2">
+									Enterprise gets you the same product as Self-Service plus direct access to Peter and Benjamin — prioritised queue, 24h ack, onboarding calls, and a 10% workshop discount.
+								</p>
+								<p className="text-sm text-muted-foreground italic">
+									Capped at 5–8 customers so we can actually deliver on it.
+								</p>
+							</div>
+							<div className="flex flex-col gap-4">
+								<div className="flex items-baseline gap-3">
+									<div className="text-4xl md:text-5xl font-semibold text-foreground tracking-tight">CHF 10,000</div>
+									<div className="text-base text-muted-foreground">/ year</div>
+								</div>
+								<a
+									href="mailto:licensing@letpeople.work?subject=Lighthouse%20Enterprise%20enquiry"
+									className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full font-semibold text-sm md:text-base bg-primary text-primary-foreground hover:bg-primary-hover shadow-soft hover:shadow-medium transition-all hover:-translate-y-0.5 no-underline self-start"
+								>
+									Talk to us <ArrowRight className="w-4 h-4" />
+								</a>
+								<p className="text-xs text-muted-foreground">
+									Reply within one working day. We'll set up a short call to scope the agreement and onboarding.
+								</p>
+							</div>
+						</div>
+					</div>
 				</div>
 			</section>
 

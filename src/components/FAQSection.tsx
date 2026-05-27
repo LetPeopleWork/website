@@ -4,44 +4,49 @@ import { Helmet } from "react-helmet-async";
 
 const faqs = [
   {
-    question: "What is the difference between Lighthouse Community and Premium?",
+    question: "I need lots of data first.",
     answer:
-      "Community is free, open source, and includes all core flow metrics and forecasting features — cycle time, throughput, WIP, work item age, and Monte Carlo simulations. Premium (CHF 999/year) adds unlimited teams and projects, priority support, and advanced features including an AI integration via MCP. Most teams start with Community and upgrade when they need to scale.",
+      "You need around ten finished work items to get a first useful forecast. Most teams already have that from a fortnight of throughput. You don't need a year of history — you need what you've already done.",
   },
   {
-    question: "Does Lighthouse work with Jira, Azure DevOps, and Linear?",
+    question: "Our tracker is messy. I don't have clean data.",
     answer:
-      "Yes. Lighthouse has native integrations with all three. No CSV exports, no parallel spreadsheets — it reads directly from the tools your teams already work in. Setup takes under 10 minutes per integration.",
+      "Messy is normal. Lighthouse pulls from Jira, Azure DevOps, Linear, or CSV — and the math is robust to noisy data. The signal you need (when items started, when they finished) survives even in trackers that have been through three reorgs.",
   },
   {
-    question: "How long does it take to get started with Lighthouse?",
+    question: "I can't run this in my org — IT will block it.",
     answer:
-      "Under 10 minutes from download to first forecast. Connect your Jira, Azure DevOps, or Linear account, and Lighthouse pulls your historical data automatically. The installation video on this page shows the full process.",
+      "It runs on your laptop. Docker container or native .NET — no external network calls by default. Your Jira / ADO / Linear data never leaves your machine. You don't need to file a ticket to try it for a fortnight.",
   },
   {
-    question: "What is probabilistic forecasting and why is it better than estimates?",
+    question: "My team's not mature enough for this.",
     answer:
-      "Probabilistic forecasting uses your team's actual delivery history — how many items you complete per week — to simulate thousands of possible futures and produce a confidence range (for example, '85% chance of delivery by October 14'). Unlike estimates, it is based on what your team actually does, not what you think you can do. The range is honest because it reflects real variability in your system.",
+      "Probabilistic forecasting works on whatever flow you have today. Maturity is the output, not the prerequisite. The reason to start now is precisely because the forecast surfaces what to improve — waiting until you're 'ready' is waiting forever.",
   },
   {
-    question: "How is flow metrics different from velocity?",
+    question: "I need management buy-in first.",
     answer:
-      "Velocity measures how much work a team planned to complete in a sprint — in points, which vary by team and sprint. Flow metrics measure what actually happens: how long work takes (cycle time), how much is in progress at once (WIP), and how reliably work flows through the system. Flow metrics are based on elapsed time, not points, which makes them more stable, more honest, and far more useful for forecasting.",
+      "You don't — to try it. You might — to roll it out. Try it solo, produce a forecast you couldn't have produced before, then decide whether to broadcast it. The cheapest demo of value is one you ran on your own laptop.",
   },
   {
-    question: "Do you work with teams using Scrum or SAFe?",
+    question: "I'm just an IC / Scrum Master / coach. This isn't my call.",
     answer:
-      "Yes. Flow metrics and probabilistic forecasting work regardless of your process framework. We have worked with teams using Kanban, Scrum, SAFe, and hybrid approaches. The data-driven approach works wherever work flows through a system — the framework is just context.",
+      "Most of Lighthouse's early users are exactly that — ICs, Scrum Masters, and coaches running it for their own team. The 'I need permission to introduce a tool' framing is your story, not your manager's. The tool installs on your laptop; nobody else needs to know until you have something worth showing.",
   },
   {
-    question: "Can we book a single workshop, or do we need a full engagement?",
+    question: "It looks complicated.",
     answer:
-      "Single workshops start at CHF 1,000 and run 2 to 4 hours. There is no minimum commitment. Many teams start with one session — Introduction to Probabilistic Forecasting or Flow Metrics and Little's Law — to see what resonates before going deeper. The Complete Flow Transformation Package is there for teams that want the full journey in one go.",
+      "First useful output is about thirty minutes from download. Pre-loaded sample data lets you see the shape before connecting anything. If you've ever opened Excel and made a pivot table, you're already past the hardest part.",
   },
   {
-    question: "Is our data safe? Does anything leave our network?",
+    question: "I tried something like this before and it didn't stick.",
     answer:
-      "Lighthouse runs entirely on your infrastructure, either as a Docker container or as a native desktop app. Nothing is sent to the cloud. Your Jira, Azure DevOps, or Linear data never leaves your network. Lighthouse uses SQLite by default and stores all data locally.",
+      "What was it — Actionable Agile, Nave, Jira's native forecasting? The specific debunk varies, but Lighthouse's shape (self-hosted, open source, free tier) removes most of the failure modes that kill these tools in real orgs: IT blocks the SaaS, budget gets cut, the champion leaves. None of those land the same way when the tool is free and runs on your laptop.",
+  },
+  {
+    question: "Is this even for me?",
+    answer:
+      "We'd rather you not download Lighthouse than download it and bounce. It's probably not for you if: you're a single team with no portfolio question (a cycle-time chart in Jira will do); your project is one-shot and nearly done (forecasting can't help retroactively); or you work in a hard fixed-deadline culture where commitment is non-negotiable (the math is irrelevant if 'we'll work weekends to hit the date' is the answer). If any of these is you — save the download.",
   },
 ];
 
@@ -69,23 +74,17 @@ const FAQSection = () => {
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       </Helmet>
 
-      <section id="faq" className="py-20 bg-background">
+      <section id="faq" className="py-24 sm:py-32 bg-background">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <span className="text-xs font-semibold uppercase tracking-[0.15em] text-primary mb-4 block">
-              FAQ
+          <div className="text-center mb-16">
+            <span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-4 block">
+              The honest answers
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Common questions
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-tight">
+              What's stopping you?
             </h2>
-            <p className="text-lg text-muted-foreground">
-              Anything not covered here? Email us at{" "}
-              <a
-                href="mailto:contact@letpeople.work"
-                className="text-primary underline underline-offset-2"
-              >
-                contact@letpeople.work
-              </a>
+            <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed">
+              We've heard every reason not to try Lighthouse. Here are the ones that come up most — and what we actually think about them.
             </p>
           </div>
 
@@ -93,9 +92,9 @@ const FAQSection = () => {
             {faqs.map((faq, i) => (
               <div
                 key={i}
-                className={`rounded-xl border transition-all duration-200 bg-white ${
+                className={`rounded-2xl border transition-all duration-300 bg-white ${
                   openIndex === i
-                    ? "border-primary/30 shadow-soft"
+                    ? "border-primary/40 shadow-medium"
                     : "border-border hover:border-primary/20"
                 }`}
               >
@@ -104,28 +103,39 @@ const FAQSection = () => {
                   className="w-full flex items-center justify-between px-6 py-5 text-left gap-4"
                   aria-expanded={openIndex === i}
                 >
-                  <span className="text-base font-semibold text-foreground leading-snug">
-                    {faq.question}
+                  <span className="text-base md:text-lg font-semibold text-foreground leading-snug">
+                    "{faq.question}"
                   </span>
                   <ChevronDown
                     className={`w-5 h-5 text-muted-foreground shrink-0 transition-transform duration-300 ${
-                      openIndex === i ? "rotate-180" : ""
+                      openIndex === i ? "rotate-180 text-primary" : ""
                     }`}
                   />
                 </button>
 
                 <div
-                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                    openIndex === i ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                  className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                    openIndex === i ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
                   }`}
                 >
-                  <p className="px-6 pb-5 text-muted-foreground leading-relaxed">
+                  <p className="px-6 pb-6 text-muted-foreground leading-relaxed text-base md:text-lg">
                     {faq.answer}
                   </p>
                 </div>
               </div>
             ))}
           </div>
+
+          <p className="text-center text-sm text-muted-foreground mt-12">
+            Something else on your mind? Email us at{" "}
+            <a
+              href="mailto:contact@letpeople.work"
+              className="text-primary underline underline-offset-4 hover:text-primary-hover"
+            >
+              contact@letpeople.work
+            </a>
+            .
+          </p>
         </div>
       </section>
     </>
