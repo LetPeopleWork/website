@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { toast } from "sonner";
 import SEO from "@/components/SEO";
 import { IntroStep } from "@/features/assessment/components/IntroStep";
 import { QuestionStep } from "@/features/assessment/components/QuestionStep";
@@ -12,21 +13,33 @@ import {
   type QuizAction,
   type QuizState,
 } from "@/features/assessment/core/quizMachine";
-import { score } from "@/features/assessment/core/scoring";
+import { score, type Answers } from "@/features/assessment/core/scoring";
+import { runDegradeOpen } from "@/features/assessment/core/degradeOpen";
 import {
   createSessionStoragePersistence,
   type AnswersPersistence,
 } from "@/features/assessment/adapters/sessionStoragePersistence";
+import { createSupabaseResponseRepository } from "@/features/assessment/adapters/supabaseResponseRepository";
+import type { ResponseRepository } from "@/features/assessment/ports";
 
 interface AssessmentProps {
   persistence?: AnswersPersistence;
+  responseRepository?: ResponseRepository;
 }
 
-const Assessment = ({ persistence }: AssessmentProps) => {
+const CAPTURE_FAILED_NOTICE =
+  "We couldn't save your result just now — your breakdown is still here.";
+
+const Assessment = ({ persistence, responseRepository }: AssessmentProps) => {
   const store = useMemo(
     () => persistence ?? createSessionStoragePersistence(),
     [persistence],
   );
+  const repository = useMemo(
+    () => responseRepository ?? createSupabaseResponseRepository(),
+    [responseRepository],
+  );
+  const captured = useRef(false);
 
   const [restored] = useState(() => {
     const draft = store.load();
@@ -50,10 +63,31 @@ const Assessment = ({ persistence }: AssessmentProps) => {
     }
   }, [state.answers, state.phase, store]);
 
+  useEffect(() => {
+    if (state.phase !== "teaser" || !canProduceResult(state) || captured.current) {
+      return;
+    }
+    captured.current = true;
+    const result = score(state.answers as number[]);
+    void runDegradeOpen(
+      () =>
+        repository.save({
+          source: "readiness-assessment",
+          kind: null,
+          answers: state.answers as unknown as Answers,
+          rawSum: result.rawSum,
+          score: result.score,
+          band: result.band,
+        }),
+      { onFailure: () => toast(CAPTURE_FAILED_NOTICE) },
+    );
+  }, [state, repository]);
+
   const dispatch = (action: QuizAction) => {
     if (action.type === "restart") {
       store.clear();
       setShowRestoredNotice(false);
+      captured.current = false;
     }
     setState((current) => reduce(current, action));
   };
