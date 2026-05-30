@@ -20,17 +20,26 @@ import {
   type AnswersPersistence,
 } from "@/features/assessment/adapters/sessionStoragePersistence";
 import { createSupabaseResponseRepository } from "@/features/assessment/adapters/supabaseResponseRepository";
-import type { ResponseRepository } from "@/features/assessment/ports";
+import { createEdgeFunctionLeadCapture } from "@/features/assessment/adapters/edgeFunctionLeadCapture";
+import type { LeadCapture, ResponseRepository } from "@/features/assessment/ports";
 
 interface AssessmentProps {
   persistence?: AnswersPersistence;
   responseRepository?: ResponseRepository;
+  leadCapture?: LeadCapture;
 }
 
 const CAPTURE_FAILED_NOTICE =
   "We couldn't save your result just now — your breakdown is still here.";
 
-const Assessment = ({ persistence, responseRepository }: AssessmentProps) => {
+const LEAD_FAILED_NOTICE =
+  "We couldn't record your email just now — your breakdown is unlocked anyway.";
+
+const Assessment = ({
+  persistence,
+  responseRepository,
+  leadCapture,
+}: AssessmentProps) => {
   const store = useMemo(
     () => persistence ?? createSessionStoragePersistence(),
     [persistence],
@@ -39,7 +48,12 @@ const Assessment = ({ persistence, responseRepository }: AssessmentProps) => {
     () => responseRepository ?? createSupabaseResponseRepository(),
     [responseRepository],
   );
+  const leads = useMemo(
+    () => leadCapture ?? createEdgeFunctionLeadCapture(),
+    [leadCapture],
+  );
   const captured = useRef(false);
+  const [unlocked, setUnlocked] = useState(false);
 
   const [restored] = useState(() => {
     const draft = store.load();
@@ -88,8 +102,25 @@ const Assessment = ({ persistence, responseRepository }: AssessmentProps) => {
       store.clear();
       setShowRestoredNotice(false);
       captured.current = false;
+      setUnlocked(false);
     }
     setState((current) => reduce(current, action));
+  };
+
+  const unlock = (email: string) => {
+    setUnlocked(true);
+    const result = score(state.answers as number[]);
+    void runDegradeOpen(
+      () =>
+        leads.capture({
+          source: "readiness-assessment",
+          email,
+          score: result.score,
+          band: result.band,
+          wantsTrial: false,
+        }),
+      { onFailure: () => toast(LEAD_FAILED_NOTICE) },
+    );
   };
 
   const currentAnswer = state.answers[state.currentIndex] ?? null;
@@ -133,6 +164,8 @@ const Assessment = ({ persistence, responseRepository }: AssessmentProps) => {
       {state.phase === "teaser" && canProduceResult(state) && (
         <ResultView
           result={score(state.answers as number[])}
+          unlocked={unlocked}
+          onUnlock={unlock}
           onRestart={() => dispatch({ type: "restart" })}
         />
       )}

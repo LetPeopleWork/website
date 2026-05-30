@@ -1,17 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  assessmentContent,
-  bandContent,
-} from "../content/assessmentContent";
+import { assessmentContent, bandContent } from "../content/assessmentContent";
 import type { ScoreResult } from "../core/scoring";
+import { EmailGate } from "./EmailGate";
 
 interface ResultViewProps {
   result: ScoreResult;
+  unlocked: boolean;
+  onUnlock: (email: string) => void;
   onRestart: () => void;
 }
 
-export const ResultView = ({ result, onRestart }: ResultViewProps) => {
+export const ResultView = ({
+  result,
+  unlocked,
+  onUnlock,
+  onRestart,
+}: ResultViewProps) => {
   const band = bandContent(result.band);
 
   return (
@@ -34,35 +39,50 @@ export const ResultView = ({ result, onRestart }: ResultViewProps) => {
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-xl">What your score means</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4 text-base text-muted-foreground">
-          <p>{band.measureRead}</p>
-          <p>{band.forecastRead}</p>
-          <p className="font-medium text-foreground">{band.nextRung}</p>
-        </CardContent>
-      </Card>
+      {!unlocked && (
+        <Card data-testid="assessment-gate">
+          <CardHeader>
+            <CardTitle className="text-xl">Unlock your full breakdown</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <EmailGate onUnlock={onUnlock} />
+          </CardContent>
+        </Card>
+      )}
 
-      <Card data-testid="assessment-next-steps">
-        <CardHeader>
-          <CardTitle className="text-xl">Your next step</CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-3">
-          {band.ctas.map((cta) => (
-            <Button
-              key={cta.label}
-              asChild
-              variant={cta.isCommunity ? "default" : "outline"}
-            >
-              <a href={cta.href} target="_blank" rel="noreferrer">
-                {cta.label}
-              </a>
-            </Button>
-          ))}
-        </CardContent>
-      </Card>
+      {unlocked && (
+        <div data-testid="assessment-breakdown" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-xl">What your score means</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4 text-base text-muted-foreground">
+              <p>{band.measureRead}</p>
+              <p>{band.forecastRead}</p>
+              <p className="font-medium text-foreground">{band.nextRung}</p>
+            </CardContent>
+          </Card>
+
+          <Card data-testid="assessment-next-steps">
+            <CardHeader>
+              <CardTitle className="text-xl">Your next step</CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-3">
+              {band.ctas.map((cta) => (
+                <Button
+                  key={cta.label}
+                  asChild
+                  variant={cta.isCommunity ? "default" : "outline"}
+                >
+                  <a href={cta.href} target="_blank" rel="noreferrer">
+                    {cta.label}
+                  </a>
+                </Button>
+              ))}
+            </CardContent>
+          </Card>
+        </div>
+      )}
 
       <div className="text-center">
         <Button variant="ghost" onClick={onRestart}>

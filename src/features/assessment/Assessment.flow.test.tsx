@@ -90,7 +90,7 @@ describe("Assessment flow integration (#3 back, #4 resume, #5 restart, #19 tease
     expect(screen.queryByText(/restored your answers/i)).not.toBeInTheDocument();
   });
 
-  it("#19 the teaser shows score, band and the credibility anchor with no email asked", async () => {
+  it("#19 the teaser shows score, band and the credibility anchor with the breakdown gated below", async () => {
     const user = userEvent.setup();
     renderAssessment();
     await user.click(
@@ -107,8 +107,6 @@ describe("Assessment flow integration (#3 back, #4 resume, #5 restart, #19 tease
     expect(within(result).getByText(/\/ 100/)).toBeInTheDocument();
     expect(within(result).getByText(/Output-focused/)).toBeInTheDocument();
     expect(within(result).getByText(/Vacanti \/ ProKanban/)).toBeInTheDocument();
-    expect(
-      screen.queryByRole("textbox", { name: /email/i }),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByTestId("assessment-breakdown")).not.toBeInTheDocument();
   });
 });

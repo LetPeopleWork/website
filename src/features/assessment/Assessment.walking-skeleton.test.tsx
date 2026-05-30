@@ -39,7 +39,10 @@ describe("Assessment walking skeleton (#1)", () => {
     const result = screen.getByTestId("assessment-result");
     expect(within(result).getByText(/Probabilistic/)).toBeInTheDocument();
 
-    const nextSteps = screen.getByTestId("assessment-next-steps");
+    await user.type(screen.getByLabelText(/email/i), "visitor@example.com");
+    await user.click(screen.getByRole("button", { name: /unlock/i }));
+
+    const nextSteps = await screen.findByTestId("assessment-next-steps");
     expect(
       within(nextSteps).getByRole("link", { name: /community/i }),
     ).toBeInTheDocument();
