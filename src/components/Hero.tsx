@@ -40,7 +40,7 @@ const Hero = () => {
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="animate-fade-in">
           <span className="inline-block text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-6">
-            Flow metrics, finally usable
+            Open-source flow metrics and forecasting
           </span>
 
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[88px] font-bold text-foreground mb-8 leading-[1.02] tracking-tight">
@@ -56,7 +56,7 @@ const Hero = () => {
             You're being asked when it'll be done. Right now, your honest answer is a guess. Lighthouse shows you <em className="text-foreground/80 not-italic font-normal">why</em> delivery is slow and <em className="text-foreground/80 not-italic font-normal">when</em> it'll finish, so you can fix the system and stop defending the date.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
             <Button variant="hero" size="lg" className="group rounded-full px-8 py-6 text-base" onClick={handleGetLighthouse}>
               Get Lighthouse Free
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
@@ -68,6 +68,14 @@ const Hero = () => {
             </Button>
           </div>
 
+          <p className="text-sm text-muted-foreground mb-20">
+            Not sure where to start?{" "}
+            <a href="/assessment" className="text-primary font-medium underline underline-offset-4 hover:text-primary-hover">
+              Take the free Flow Assessment
+            </a>{" "}
+            and see where you stand.
+          </p>
+
           {/* Stats with scroll reveal */}
           <div
             ref={statsRef}
@@ -76,7 +84,7 @@ const Hero = () => {
             }`}
           >
             <p className="text-sm text-muted-foreground mb-8 italic font-light">
-              We've watched capable teams drown in estimate theater. Here's what we built to end it.
+              We've spent years helping teams move from guesswork to data. Lighthouse is what we built along the way.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-4xl mx-auto">
               {[

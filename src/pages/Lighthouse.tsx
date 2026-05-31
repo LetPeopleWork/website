@@ -71,6 +71,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 import LighthouseTestimonials from "@/components/LighthouseTestimonials";
 import FAQSection from "@/components/FAQSection";
+import LighthouseLearnMore from "@/components/LighthouseLearnMore";
+import LighthouseWhatsNew from "@/components/LighthouseWhatsNew";
 import { format } from "date-fns";
 import metricsTeam1 from "@/assets/screenshots/Metrics_Team_1.png";
 import metricsProject1 from "@/assets/screenshots/Metrics_Project_1.png";
@@ -374,9 +376,9 @@ const Lighthouse = () => {
 				"Take action based on real data - with Lighthouse you have all relevant Flow Metrics at your disposal",
 			extendedDescription: `Whether it's on team or on portfolio level, you can't have easier access to a complete overview over your Flow than with Lighthouse.
       Whether you want to see the impact of a recent change, analyze how the last weeks went together with the team, or look for outliers to learn from - Lighthouse is making it easy for you!
-      
-      You have access to all the metrics that are relevant for a deep analysis, can filter the date range you look at, and drill down to the specific items including direct links to your connected systems.
-      
+
+      You get the full set: Cycle Time, Throughput, Work In Progress, Work Item Aging with pace bands, Arrivals, and a Flow Overview that flags stale and blocked work at a glance. Newer additions like the Load Balance Matrix help you control WIP, while Time in State shows how long each item has been sitting right now. Filter the date range, drill down to specific items, and jump straight to your connected system.
+
       If you want to work data-driven, these are the metrics you need. And Lighthouse is the tool you want to visualize them!`,
 			callToAction: "Miss some specific Metric or Chart? Reach out!",
 			mediaItems: [
@@ -429,12 +431,12 @@ const Lighthouse = () => {
 		},
 		{
 			icon: <ArrowRight className="h-8 w-8" />,
-			title: "Integrate with most popular ALM Tools",
+			title: "Integrate with the tools you already use",
 			description:
-				"No need to maintain multiple data sources - Lighthouse connects to Jira and Azure DevOps",
-			extendedDescription: `You don't want to maintain your data in yet another tool. This is why Lighthouse is connected to what you are already using.
-      
-      Its flexible design allows Lighthouse to connect with your data source, independent how you designed it. Using custom fields or labels? Have some special filters you want to apply? Lighthouse can cope with that!`,
+				"No need to maintain multiple data sources - Lighthouse connects to Jira, Azure DevOps, Linear, and CSV",
+			extendedDescription: `You don't want to maintain your data in yet another tool. This is why Lighthouse connects to what you are already using: Jira, Azure DevOps, Linear, or a simple CSV export.
+
+      Its flexible design lets Lighthouse work with your data source no matter how you set it up. Using custom fields or labels? Have special filters you want to apply? Lighthouse can cope with that. Connect with a Personal Access Token, or use OAuth for Jira and Azure DevOps on the paid tiers.`,
 			callToAction: "Your System is not supported? Let us know!",
 			mediaItems: [
 				{
@@ -998,8 +1000,8 @@ const Lighthouse = () => {
 				</div>
 			</section>
 
-			{/* FAQ — assumption-debunking */}
-			<FAQSection />
+			{/* See-it-for-yourself: demo / walkthrough / community */}
+			<LighthouseLearnMore />
 
 			{/* Pricing Section — 3 tiers */}
 			<section id="lighthouse-premium" className="py-24 md:py-32 bg-gradient-subtle">
@@ -1187,7 +1189,7 @@ const Lighthouse = () => {
 													{ feature: "100% Open Source (MIT License)", community: true, self: true, enterprise: true },
 													{ feature: "Connection to Jira, Azure DevOps & Linear", community: true, self: true, enterprise: true },
 													{
-														feature: { label: "AI & LLM Integration", tooltip: "Connect Lighthouse to Claude, ChatGPT, or any MCP-compatible AI assistant. Query metrics, run forecasts, and explore delivery data through natural language — no dashboard required." },
+														feature: { label: "AI & LLM Integration", tooltip: "Connect Lighthouse to Claude, ChatGPT, or any MCP-compatible AI assistant. Query metrics, run forecasts, and explore delivery data through natural language, no dashboard required." },
 														community: true, self: true, enterprise: true,
 													},
 													{
@@ -1214,7 +1216,15 @@ const Lighthouse = () => {
 												title: "Paid-tier Features",
 												rows: [
 													{
-														feature: { label: "Authentication & RBAC", tooltip: "Secure your Lighthouse instance with any OIDC-compatible identity provider (Microsoft Entra, Google, Keycloak, Auth0, etc.) and control access with Role Based Access Control." },
+														feature: { label: "Authentication & RBAC", tooltip: "Secure your Lighthouse instance with any OIDC-compatible identity provider (Microsoft Entra, Google, Keycloak, Auth0, etc.) and control access with Role Based Access Control across four roles and SSO group mappings." },
+														community: false, self: true, enterprise: true,
+													},
+													{
+														feature: { label: "OAuth for Jira & Azure DevOps", tooltip: "Connect to Jira (Atlassian 3LO) and Azure DevOps (Microsoft Entra ID) via OAuth, with automatic token refresh and guided reconnect, alongside the standard Personal Access Token flow." },
+														community: false, self: true, enterprise: true,
+													},
+													{
+														feature: { label: "Exclude Items for Throughput", tooltip: "Keep maintenance, support, and unplanned work out of your throughput so forecasts reflect the work your team actually delivers. The filter flows through every forecast and metric." },
 														community: false, self: true, enterprise: true,
 													},
 													{
@@ -1281,6 +1291,9 @@ const Lighthouse = () => {
 				</div>
 			</section>
 
+			{/* FAQ — objection-handling, placed right before the final license CTA */}
+			<FAQSection />
+
 			{/* License Purchase Section */}
 			<section id="lighthouse-license" className="py-24 md:py-32 bg-background">
 				<div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1311,10 +1324,10 @@ const Lighthouse = () => {
 									</h3>
 									<p className="text-sm text-primary font-semibold mb-4">Annual · Self-hosted</p>
 									<p className="text-muted-foreground mb-4">
-										The full Lighthouse product, no caps, all paid-tier features. Community Slack support, feature requests via <a href="https://ideas.letpeople.work/" className="text-primary underline underline-offset-2" target="_blank" rel="noopener noreferrer">ideas.letpeople.work</a>, and best-effort help from us when we have capacity.
+										Everything in the Self-Service column above. Fill in your details and you'll have your license in minutes.
 									</p>
 									<div className="text-sm text-muted-foreground mb-6">
-										<p className="mb-2">Get in touch at licensing@letpeople.work if you:</p>
+										<p className="mb-2">Or write to licensing@letpeople.work if you:</p>
 										<ul className="space-y-1 ml-4">
 											<li>• Want a trial license</li>
 											<li>• Need a custom invoice or PO process</li>
@@ -1753,6 +1766,9 @@ const Lighthouse = () => {
 					</div>
 				</div>
 			</section>
+
+			{/* Recently shipped / what's new */}
+			<LighthouseWhatsNew />
 
 			{/* Detailed Features Section */}
 			<section id="lighthouse-features" className="py-20 bg-gradient-subtle">
