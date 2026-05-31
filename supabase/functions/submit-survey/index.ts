@@ -1,5 +1,11 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.95.3";
+import { readMailgunConfig, sendViaMailgun } from "../../_shared/mailgun.ts";
+import {
+  TEAM_NOTIFICATION_RECIPIENT,
+  notifyTeamDegradeOpen,
+  renderSurveyNotificationEmail,
+} from "../../_shared/surveyNotificationEmail.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -37,6 +43,19 @@ const refuse = (reason: string) =>
     status: 400,
   });
 
+const notifyTeam = (payload: SurveyPayload): Promise<void> =>
+  notifyTeamDegradeOpen(async () => {
+    const config = readMailgunConfig((key) => Deno.env.get(key));
+    if (!config) return;
+    const email = renderSurveyNotificationEmail({ answers: payload.answers });
+    await sendViaMailgun(config, {
+      to: TEAM_NOTIFICATION_RECIPIENT,
+      subject: email.subject,
+      text: email.text,
+      html: email.html,
+    });
+  });
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -60,6 +79,8 @@ serve(async (req) => {
       band: null,
     });
     if (error) throw new Error(error.message);
+
+    await notifyTeam(payload);
 
     return new Response(JSON.stringify({ recorded: true }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
