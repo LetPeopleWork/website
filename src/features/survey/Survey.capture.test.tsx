@@ -1,18 +1,18 @@
 import { describe, it, expect } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
-import { SurveyForm, type SurveySelections } from "./components/SurveyForm";
+import { SurveyForm } from "./components/SurveyForm";
 import { SURVEY_QUESTIONS } from "./content/surveyContent";
-import type { SurveySubmission } from "../assessment/ports";
+import type { SurveyAnswers, SurveySubmission } from "../assessment/ports";
 
-const firstOptionSelections = (): SurveySelections =>
+const firstOptionSelections = (): SurveyAnswers =>
   Object.fromEntries(
     SURVEY_QUESTIONS.map((question) => [question.id, question.options[0].id]),
   );
 
 const recordingSubmission = () => {
-  const submitted: SurveySelections[] = [];
+  const submitted: SurveyAnswers[] = [];
   const submission: SurveySubmission = {
     submit: (answers) => {
       submitted.push(answers);
@@ -23,7 +23,7 @@ const recordingSubmission = () => {
 };
 
 const failingSubmission = () => {
-  const submitted: SurveySelections[] = [];
+  const submitted: SurveyAnswers[] = [];
   const submission: SurveySubmission = {
     submit: (answers) => {
       submitted.push(answers);
@@ -34,7 +34,7 @@ const failingSubmission = () => {
 };
 
 const slowSubmission = () => {
-  const submitted: SurveySelections[] = [];
+  const submitted: SurveyAnswers[] = [];
   let release = (): void => undefined;
   const gate = new Promise<void>((resolve) => {
     release = resolve;
@@ -55,15 +55,24 @@ const renderForm = (submission: SurveySubmission) =>
     </MemoryRouter>,
   );
 
-const answerEveryQuestion = async (
+const advanceButton = (last: boolean) =>
+  last
+    ? screen.getByRole("button", { name: /submit/i })
+    : screen.getByRole("button", { name: /^next$/i });
+
+const stepThroughEveryQuestion = async (
   user: ReturnType<typeof userEvent.setup>,
 ) => {
-  for (const question of SURVEY_QUESTIONS) {
+  await user.click(screen.getByRole("button", { name: /start/i }));
+  for (let i = 0; i < SURVEY_QUESTIONS.length; i += 1) {
+    const question = SURVEY_QUESTIONS[i];
     await user.click(screen.getByText(question.options[0].label));
+    const last = i === SURVEY_QUESTIONS.length - 1;
+    if (!last) {
+      await user.click(advanceButton(false));
+    }
   }
 };
-
-const submitButton = () => screen.getByRole("button", { name: /submit/i });
 
 describe("Survey capture (US-02: anonymous store, success-only thank-you, retry, dedup)", () => {
   it("shows the thank-you confirmation only after a recording succeeds", async () => {
@@ -71,10 +80,10 @@ describe("Survey capture (US-02: anonymous store, success-only thank-you, retry,
     const { submission, submitted } = recordingSubmission();
     renderForm(submission);
 
-    await answerEveryQuestion(user);
+    await stepThroughEveryQuestion(user);
     expect(screen.queryByText(/thank you/i)).not.toBeInTheDocument();
 
-    await user.click(submitButton());
+    await user.click(advanceButton(true));
 
     await screen.findByText(/thank you/i);
     expect(submitted).toEqual([firstOptionSelections()]);
@@ -85,20 +94,19 @@ describe("Survey capture (US-02: anonymous store, success-only thank-you, retry,
     const { submission } = failingSubmission();
     renderForm(submission);
 
-    await answerEveryQuestion(user);
-    await user.click(submitButton());
+    await stepThroughEveryQuestion(user);
+    await user.click(advanceButton(true));
 
     await screen.findByRole("alert");
     expect(screen.queryByText(/thank you/i)).not.toBeInTheDocument();
-    expect(submitButton()).toBeEnabled();
+    expect(screen.getByRole("button", { name: /submit/i })).toBeEnabled();
 
-    const checkedValues = screen
+    const lastQuestion = SURVEY_QUESTIONS[SURVEY_QUESTIONS.length - 1];
+    const checked = screen
       .getAllByRole("radio")
       .filter((radio) => radio.getAttribute("aria-checked") === "true")
       .map((radio) => radio.getAttribute("value"));
-    expect(checkedValues).toEqual(
-      SURVEY_QUESTIONS.map((question) => question.options[0].id),
-    );
+    expect(checked).toEqual([lastQuestion.options[0].id]);
   });
 
   it("records one logical response when submitted twice in quick succession", async () => {
@@ -106,13 +114,43 @@ describe("Survey capture (US-02: anonymous store, success-only thank-you, retry,
     const { submission, submitted, release } = slowSubmission();
     renderForm(submission);
 
-    await answerEveryQuestion(user);
-    await user.click(submitButton());
-    await user.click(submitButton());
+    await stepThroughEveryQuestion(user);
+    await user.click(advanceButton(true));
+    await user.click(advanceButton(true));
     release();
 
     await screen.findByText(/thank you/i);
     expect(submitted).toHaveLength(1);
+  });
+
+  it("preserves earlier answers when stepping back and forward", async () => {
+    const user = userEvent.setup();
+    const { submission, submitted } = recordingSubmission();
+    renderForm(submission);
+
+    await user.click(screen.getByRole("button", { name: /start/i }));
+    await user.click(screen.getByText(SURVEY_QUESTIONS[0].options[1].label));
+    await user.click(advanceButton(false));
+    await user.click(screen.getByText(SURVEY_QUESTIONS[1].options[0].label));
+    await user.click(screen.getByRole("button", { name: /back/i }));
+
+    const checkedAfterBack = screen
+      .getAllByRole("radio")
+      .filter((radio) => radio.getAttribute("aria-checked") === "true")
+      .map((radio) => radio.getAttribute("value"));
+    expect(checkedAfterBack).toEqual([SURVEY_QUESTIONS[0].options[1].id]);
+
+    await user.click(advanceButton(false));
+    await user.click(advanceButton(false));
+    await user.click(screen.getByText(SURVEY_QUESTIONS[2].options[0].label));
+    await user.click(advanceButton(false));
+    await user.click(screen.getByText(SURVEY_QUESTIONS[3].options[0].label));
+    await user.click(advanceButton(true));
+
+    await screen.findByText(/thank you/i);
+    expect(submitted[0][SURVEY_QUESTIONS[0].id]).toBe(
+      SURVEY_QUESTIONS[0].options[1].id,
+    );
   });
 });
 
