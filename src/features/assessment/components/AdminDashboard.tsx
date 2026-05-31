@@ -1,3 +1,4 @@
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -8,29 +9,93 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { BAND_NAMES, type DashboardSummary } from "../core/dashboardSummary";
-import type { DashboardSurveyTrialRequest } from "../ports";
-import type { SurveySummary } from "@/features/survey/core/summarizeSurvey";
+import type {
+  DashboardSurveyResponse,
+  DashboardSurveyTrialRequest,
+} from "../ports";
+import {
+  summarizeSurvey,
+  type SurveySummary,
+} from "@/features/survey/core/summarizeSurvey";
+import { SurveyCharts } from "@/features/survey/components/SurveyCharts";
+import {
+  filterByDateRange,
+  type DateRange,
+} from "@/features/survey/core/filterByDateRange";
 
 interface AdminDashboardProps {
   summary: DashboardSummary;
   surveySummary?: SurveySummary;
+  surveyResponses?: readonly DashboardSurveyResponse[];
   surveyTrialRequests?: readonly DashboardSurveyTrialRequest[];
+  now?: string;
   onSignOut: () => void;
 }
 
-const SurveyView = ({ surveySummary }: { surveySummary: SurveySummary }) => (
+const DEFAULT_RANGE: DateRange = "30d";
+
+const RANGE_OPTIONS: readonly { value: DateRange; label: string }[] = [
+  { value: "7d", label: "7 days" },
+  { value: "30d", label: "30 days" },
+  { value: "90d", label: "90 days" },
+  { value: "all", label: "All time" },
+];
+
+const SurveyRangeFilter = ({
+  range,
+  onChange,
+}: {
+  range: DateRange;
+  onChange: (range: DateRange) => void;
+}) => (
+  <ToggleGroup
+    type="single"
+    value={range}
+    data-testid="survey-range-filter"
+    onValueChange={(next) => {
+      if (next) {
+        onChange(next as DateRange);
+      }
+    }}
+  >
+    {RANGE_OPTIONS.map((option) => (
+      <ToggleGroupItem
+        key={option.value}
+        value={option.value}
+        aria-label={option.label}
+      >
+        {option.label}
+      </ToggleGroupItem>
+    ))}
+  </ToggleGroup>
+);
+
+const SurveyView = ({
+  surveySummary,
+  filter,
+  showCharts,
+}: {
+  surveySummary: SurveySummary;
+  filter?: React.ReactNode;
+  showCharts: boolean;
+}) => (
   <Card data-testid="dashboard-survey">
-    <CardHeader>
+    <CardHeader className="flex flex-row items-center justify-between gap-4">
       <CardTitle className="text-xl">Survey responses</CardTitle>
+      {filter}
     </CardHeader>
     <CardContent className="space-y-6">
       <p className="text-sm text-muted-foreground">
         {surveySummary.totalResponses} anonymous responses collected
       </p>
+      {showCharts ? <SurveyCharts questions={surveySummary.questions} /> : null}
       {surveySummary.questions.map((question) => (
         <div key={question.id} className="space-y-2">
-          <p className="font-semibold">{question.prompt}</p>
+          {showCharts ? null : (
+            <p className="font-semibold">{question.prompt}</p>
+          )}
           <Table>
             <TableHeader>
               <TableRow>
@@ -97,22 +162,63 @@ const formatDate = (iso: string): string =>
 export const AdminDashboard = ({
   summary,
   surveySummary,
+  surveyResponses,
   surveyTrialRequests,
+  now,
   onSignOut,
-}: AdminDashboardProps) => (
-  <div className="mx-auto w-full max-w-4xl space-y-6">
-    <div className="flex items-center justify-between">
-      <h1 className="text-2xl font-bold">Assessment results</h1>
-      <Button variant="outline" onClick={onSignOut}>
-        Sign out
-      </Button>
-    </div>
+}: AdminDashboardProps) => {
+  const [range, setRange] = useState<DateRange>(DEFAULT_RANGE);
+  const filtersEnabled = surveyResponses !== undefined;
+  const referenceNow = useMemo(() => now ?? new Date().toISOString(), [now]);
 
-    {surveySummary ? <SurveyView surveySummary={surveySummary} /> : null}
+  const scopedSummary = useMemo<SurveySummary | undefined>(() => {
+    if (!surveyResponses) {
+      return surveySummary;
+    }
+    const scoped = filterByDateRange(surveyResponses, range, referenceNow);
+    return summarizeSurvey({
+      responses: [],
+      leads: [],
+      surveyResponses: scoped,
+    });
+  }, [surveyResponses, surveySummary, range, referenceNow]);
 
-    {surveyTrialRequests ? (
-      <SurveyTrialRequestsView trialRequests={surveyTrialRequests} />
-    ) : null}
+  const scopedTrialRequests = useMemo<
+    readonly DashboardSurveyTrialRequest[] | undefined
+  >(() => {
+    if (!surveyTrialRequests) {
+      return surveyTrialRequests;
+    }
+    if (!filtersEnabled) {
+      return surveyTrialRequests;
+    }
+    return filterByDateRange(surveyTrialRequests, range, referenceNow);
+  }, [surveyTrialRequests, filtersEnabled, range, referenceNow]);
+
+  return (
+    <div className="mx-auto w-full max-w-4xl space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold">Assessment results</h1>
+        <Button variant="outline" onClick={onSignOut}>
+          Sign out
+        </Button>
+      </div>
+
+      {scopedSummary ? (
+        <SurveyView
+          surveySummary={scopedSummary}
+          showCharts={filtersEnabled}
+          filter={
+            filtersEnabled ? (
+              <SurveyRangeFilter range={range} onChange={setRange} />
+            ) : undefined
+          }
+        />
+      ) : null}
+
+      {scopedTrialRequests ? (
+        <SurveyTrialRequestsView trialRequests={scopedTrialRequests} />
+      ) : null}
 
     <div data-testid="dashboard-totals" className="grid gap-4 sm:grid-cols-2">
       <Card>
@@ -180,5 +286,6 @@ export const AdminDashboard = ({
         </Table>
       </CardContent>
     </Card>
-  </div>
-);
+    </div>
+  );
+};
