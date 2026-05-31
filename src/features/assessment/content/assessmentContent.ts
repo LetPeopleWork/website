@@ -43,7 +43,7 @@ export type BandCopy = z.infer<typeof bandSchema>;
 
 const COMMUNITY_CTA: Cta = {
   label: "Start with Lighthouse Community (free)",
-  href: "https://www.lighthouse-tools.io/lighthouse-community",
+  href: "https://letpeople.work/lighthouse",
   isCommunity: true,
 };
 
@@ -189,7 +189,7 @@ const rawContent = {
         COMMUNITY_CTA,
         {
           label: "Book a consulting call",
-          href: "https://www.lighthouse-tools.io/contact",
+          href: "https://letpeople.work/#stay-connected",
           isCommunity: false,
         },
       ],
@@ -209,7 +209,7 @@ const rawContent = {
         COMMUNITY_CTA,
         {
           label: "Get light coaching",
-          href: "https://www.lighthouse-tools.io/contact",
+          href: "https://letpeople.work/#stay-connected",
           isCommunity: false,
         },
       ],
@@ -246,7 +246,7 @@ const rawContent = {
       ctas: [
         {
           label: "Explore Lighthouse paid / portfolio tiers",
-          href: "https://www.lighthouse-tools.io",
+          href: "https://letpeople.work/lighthouse#lighthouse-premium",
           isCommunity: false,
         },
         {
