@@ -19,32 +19,32 @@ const TIERS: Tier[] = [
     id: "assess",
     label: "Assess",
     icon: Compass,
-    duration: "Half-day → 1 week",
+    duration: "Free",
     headline: "See where you stand today.",
     description:
-      "Start with your real data, not generic playbooks. A focused diagnostic that surfaces the constraints in your flow and the one or two things worth changing first.",
+      "Start with your real data, not a generic playbook. A focused assessment that shows you the constraints in your flow and the one or two things worth changing first.",
     highlights: [
-      "Flow Health Check — fast report on team or portfolio health",
-      "Flow Clarity Assessment — deep analysis with prioritised recommendations",
       "Built on your historical data, not interviews and opinions",
+      "A clear read on team or portfolio health",
+      "No cost, no commitment, no sales pitch",
     ],
-    price: "From CHF 200",
-    cta: { label: "Get your assessment", href: "mailto:contact@letpeople.work?subject=Flow%20Health%20Check" },
+    price: "Free",
+    cta: { label: "Get your free assessment", href: "mailto:contact@letpeople.work?subject=Free%20Flow%20Assessment" },
   },
   {
     id: "implement",
     label: "Implement",
     icon: Wrench,
-    duration: "1–2 weeks",
+    duration: "1 to 2 weeks",
     headline: "Run the pilot. Get the first forecast.",
     description:
-      "We work with your team on your real data — set up Lighthouse, configure flow metrics, run probabilistic forecasts your team can defend. You walk away with a working pilot, not slides.",
+      "We work with your team on your real data. We set up Lighthouse, configure your flow metrics, and run forecasts your team can stand behind. You walk away with a working pilot, not slides.",
     highlights: [
-      "Bring-Your-Own-Data Workshop with your actual delivery history",
+      "Bring-Your-Own-Data workshop with your actual delivery history",
       "Lighthouse configured to your workflow and tracker",
       "Your team knows how to maintain and extend it",
     ],
-    price: "CHF 3,500",
+    price: "CHF 2,000",
     cta: { label: "Plan your pilot", href: "mailto:contact@letpeople.work?subject=BYOD%20Workshop%20%2B%20Lighthouse%20Pilot" },
     recommended: true,
   },
@@ -52,16 +52,16 @@ const TIERS: Tier[] = [
     id: "transform",
     label: "Transform",
     icon: TrendingUp,
-    duration: "1 quarter +",
+    duration: "1 quarter and up",
     headline: "Roll it out. Make it stick.",
     description:
-      "Assessment plus implementation plus the year of Lighthouse Premium it takes to embed the change. We pair with you across the quarter — from first forecast to predictable cadence.",
+      "Assessment, implementation, and the time it takes to embed the change for good. We pair with you across the quarter, from the first forecast to a predictable delivery cadence across your teams.",
     highlights: [
-      "Flow Clarity Assessment + BYOD Workshop bundled",
-      "Annual Lighthouse Premium license included",
-      "Designed for portfolios — multiple teams, one coherent view",
+      "Full assessment and workshop programme bundled",
+      "Lighthouse rolled out across multiple teams",
+      "Built for portfolios, with one coherent view",
     ],
-    price: "From CHF 6,000",
+    price: "CHF 10,000",
     cta: { label: "Design your rollout", href: "mailto:contact@letpeople.work?subject=Flow%20Transformation%20Package" },
   },
 ];
@@ -159,14 +159,14 @@ export default function EngagementPath() {
           <span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-5 block">
             How we work with you
           </span>
-          {/* TODO(peter): replace headline with final wording — 3-5 candidates to draft */}
+          {/* TODO(peter): replace headline with final wording when ready */}
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.05]">
             Three ways to work with us.
             <br />
             <span className="text-primary font-light">All grounded in your real flow.</span>
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed mt-6">
-            From a half-day check-in to a quarter-long transformation — every path starts with your data, not our slides.
+            Start with a free assessment and go as far as you need. Every path starts with your data, not our slides.
           </p>
         </div>
 

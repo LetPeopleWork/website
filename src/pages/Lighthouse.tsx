@@ -1018,10 +1018,10 @@ const Lighthouse = () => {
 						</p>
 					</div>
 
-					{/* Bridge / pre-launch notice */}
+					{/* Pre-launch notice */}
 					<div className="max-w-3xl mx-auto mb-16 rounded-2xl border border-primary/20 bg-white/70 backdrop-blur-sm px-6 py-5 text-sm md:text-base text-muted-foreground text-center">
-						<span className="font-semibold text-foreground">New pricing launches August 2026.</span>{" "}
-						Existing CHF 999 customers get a one-year bridge license at renewal — no surprises. Buying before launch? You stay on the current rate for a year.
+						<span className="font-semibold text-foreground">Heads up:</span>{" "}
+						prices change after August 2026.
 					</div>
 
 					{/* 3-tier card grid */}
@@ -1034,7 +1034,7 @@ const Lighthouse = () => {
 							</div>
 							<div className="text-sm text-muted-foreground mb-6">Forever. Open source. Self-hosted.</div>
 							<p className="text-base text-foreground/80 leading-relaxed mb-6">
-								Everything you need to forecast and see your flow — up to a few teams.
+								Everything you need to forecast and see your flow, up to a few teams.
 							</p>
 							<ul className="space-y-2.5 mb-8 flex-1 text-sm text-foreground/80">
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>All core flow metrics &amp; Monte Carlo forecasts</span></li>
@@ -1063,13 +1063,13 @@ const Lighthouse = () => {
 							</div>
 							<div className="text-sm text-muted-foreground mb-6">Annual license. Self-hosted.</div>
 							<p className="text-base text-foreground/80 leading-relaxed mb-6">
-								The full product, your way. Run it, configure it, scale it — with the community at your back.
+								The full product, your way. Run it, configure it, and scale it, with the community at your back.
 							</p>
 							<ul className="space-y-2.5 mb-8 flex-1 text-sm text-foreground/80">
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span><span className="font-semibold">Everything in Community</span>, no caps</span></li>
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Unlimited teams, portfolios, deliveries</span></li>
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Auth &amp; RBAC, rule-based deliveries, data sync mappings</span></li>
-								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Community Slack — alongside our team</span></li>
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Community Slack, alongside our team</span></li>
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>
 									Feature requests via <a href="https://ideas.letpeople.work/" className="text-primary underline underline-offset-2" target="_blank" rel="noopener noreferrer">ideas.letpeople.work</a>
 								</span></li>
@@ -1092,18 +1092,18 @@ const Lighthouse = () => {
 							</div>
 							<div className="text-sm text-muted-foreground mb-6">For teams that want us prioritised.</div>
 							<p className="text-base text-foreground/80 leading-relaxed mb-6">
-								Everything in Self-Service, plus direct access to the people who build the tool — when you need it, fast.
+								Everything in Self-Service, plus direct access to the people who build the tool, fast, when you need it.
 							</p>
 							<ul className="space-y-2.5 mb-8 flex-1 text-sm text-foreground/80">
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span><span className="font-semibold">Everything in Self-Service</span></span></li>
-								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span><span className="font-semibold">Prioritised support</span> — your questions and feature requests jump the queue</span></li>
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span><span className="font-semibold">Prioritised support.</span> Your questions and feature requests jump the queue</span></li>
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>24h acknowledgement on async requests</span></li>
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>2 × 60-min onboarding calls in your first 90 days</span></li>
-								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Named contacts — Peter (flow/coaching) &amp; Benjamin (technical)</span></li>
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Named contacts: Peter (flow/coaching) &amp; Benjamin (technical)</span></li>
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>10% off any LetPeopleWork workshop or training</span></li>
-								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Data Processing Agreement (you self-host — minimal)</span></li>
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Data Processing Agreement (minimal, since you self-host)</span></li>
 							</ul>
-							<p className="text-xs text-muted-foreground mb-4 italic">Capacity capped at 5–8 customers so we can actually deliver on this.</p>
+							<p className="text-xs text-muted-foreground mb-4 italic">Capacity capped at 5 to 8 customers so we can actually deliver on this.</p>
 							<a
 								href="mailto:licensing@letpeople.work?subject=Lighthouse%20Enterprise%20enquiry"
 								className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-sm border border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-colors no-underline"
@@ -1274,7 +1274,7 @@ const Lighthouse = () => {
 
 						<div className="mt-6 p-4 bg-accent/20 rounded-lg">
 							<p className="text-sm text-muted-foreground">
-								<span className="font-semibold text-foreground">Note:</span> New paid-tier features may be introduced for Self-Service and Enterprise first, before being made available in the Community edition. Community customers stay on the same feature line — they just get there a release or two later.
+								<span className="font-semibold text-foreground">Note:</span> New paid-tier features may be introduced for Self-Service and Enterprise first, before being made available in the Community edition. Community customers stay on the same feature line and just get there a release or two later.
 							</p>
 						</div>
 					</div>
@@ -1294,7 +1294,7 @@ const Lighthouse = () => {
 							<span className="text-primary font-light">Enterprise when you're ready.</span>
 						</h2>
 						<p className="text-lg md:text-xl text-muted-foreground font-light max-w-2xl mx-auto">
-							Pick the path that fits. You can move up later — just write to us.
+							Pick the path that fits. You can move up later, just write to us.
 						</p>
 					</div>
 
@@ -1330,7 +1330,7 @@ const Lighthouse = () => {
 											<div className="text-lg text-muted-foreground">/ year</div>
 										</div>
 										<p className="text-xs text-muted-foreground mt-2">
-											New pricing in effect from launch (August 2026). Existing CHF 999 customers — see the bridge offer above. Pre-launch buyers stay on the lower rate for a year.
+											Prices change after August 2026.
 										</p>
 									</div>
 
@@ -1547,10 +1547,10 @@ const Lighthouse = () => {
 									Want us prioritised?
 								</h3>
 								<p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-2">
-									Enterprise gets you the same product as Self-Service plus direct access to Peter and Benjamin — prioritised queue, 24h ack, onboarding calls, and a 10% workshop discount.
+									Enterprise gets you the same product as Self-Service plus direct access to Peter and Benjamin: a prioritised queue, 24h acknowledgement, onboarding calls, and a 10% workshop discount.
 								</p>
 								<p className="text-sm text-muted-foreground italic">
-									Capped at 5–8 customers so we can actually deliver on it.
+									Capped at 5 to 8 customers so we can actually deliver on it.
 								</p>
 							</div>
 							<div className="flex flex-col gap-4">
