@@ -9,11 +9,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { BAND_NAMES, type DashboardSummary } from "../core/dashboardSummary";
+import type { DashboardSurveyTrialRequest } from "../ports";
 import type { SurveySummary } from "@/features/survey/core/summarizeSurvey";
 
 interface AdminDashboardProps {
   summary: DashboardSummary;
   surveySummary?: SurveySummary;
+  surveyTrialRequests?: readonly DashboardSurveyTrialRequest[];
   onSignOut: () => void;
 }
 
@@ -51,6 +53,40 @@ const SurveyView = ({ surveySummary }: { surveySummary: SurveySummary }) => (
   </Card>
 );
 
+const SurveyTrialRequestsView = ({
+  trialRequests,
+}: {
+  trialRequests: readonly DashboardSurveyTrialRequest[];
+}) => (
+  <Card data-testid="dashboard-survey-trials">
+    <CardHeader>
+      <CardTitle className="text-xl">Trial requests</CardTitle>
+    </CardHeader>
+    <CardContent>
+      <p className="mb-4 text-sm text-muted-foreground">
+        Members who volunteered their email for a premium trial. Action each
+        trial by hand.
+      </p>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Email</TableHead>
+            <TableHead>Date</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {trialRequests.map((request) => (
+            <TableRow key={`${request.email}-${request.createdAt}`}>
+              <TableCell>{request.email}</TableCell>
+              <TableCell>{formatDate(request.createdAt)}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </CardContent>
+  </Card>
+);
+
 const formatDate = (iso: string): string =>
   new Date(iso).toLocaleDateString(undefined, {
     year: "numeric",
@@ -61,6 +97,7 @@ const formatDate = (iso: string): string =>
 export const AdminDashboard = ({
   summary,
   surveySummary,
+  surveyTrialRequests,
   onSignOut,
 }: AdminDashboardProps) => (
   <div className="mx-auto w-full max-w-4xl space-y-6">
@@ -72,6 +109,10 @@ export const AdminDashboard = ({
     </div>
 
     {surveySummary ? <SurveyView surveySummary={surveySummary} /> : null}
+
+    {surveyTrialRequests ? (
+      <SurveyTrialRequestsView trialRequests={surveyTrialRequests} />
+    ) : null}
 
     <div data-testid="dashboard-totals" className="grid gap-4 sm:grid-cols-2">
       <Card>

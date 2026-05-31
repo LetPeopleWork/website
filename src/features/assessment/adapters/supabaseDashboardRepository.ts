@@ -5,6 +5,7 @@ import type {
   DashboardRepository,
   DashboardResponse,
   DashboardSurveyResponse,
+  DashboardSurveyTrialRequest,
   ResponseSource,
   SurveyAnswers,
 } from "../ports";
@@ -14,6 +15,7 @@ const RESPONSES_TABLE = "responses";
 const LEADS_TABLE = "leads";
 
 const SURVEY_SOURCE: ResponseSource = "user-survey";
+const SURVEY_TRIAL_SOURCE: ResponseSource = "user-survey-trial";
 
 interface ResponseRow {
   source: string;
@@ -33,6 +35,12 @@ interface LeadRow {
   email: string;
   band: string;
   score: number;
+  created_at: string;
+}
+
+interface TrialLeadRow {
+  source: string;
+  email: string;
   created_at: string;
 }
 
@@ -57,6 +65,12 @@ const toLead = (row: LeadRow): DashboardLead => ({
   createdAt: row.created_at,
 });
 
+const toTrialRequest = (row: TrialLeadRow): DashboardSurveyTrialRequest => ({
+  source: row.source as ResponseSource,
+  email: row.email,
+  createdAt: row.created_at,
+});
+
 export const createSupabaseDashboardRepository = (
   client = supabase,
 ): DashboardRepository => ({
@@ -69,11 +83,21 @@ export const createSupabaseDashboardRepository = (
       if (surveyQuery.error) {
         throw new Error(surveyQuery.error.message);
       }
+      const trialQuery = await client
+        .from(LEADS_TABLE)
+        .select("source,email,created_at")
+        .eq("source", SURVEY_TRIAL_SOURCE);
+      if (trialQuery.error) {
+        throw new Error(trialQuery.error.message);
+      }
       return {
         responses: [],
         leads: [],
         surveyResponses: (surveyQuery.data ?? []).map((row) =>
           toSurveyResponse(row as SurveyResponseRow),
+        ),
+        surveyTrialRequests: (trialQuery.data ?? []).map((row) =>
+          toTrialRequest(row as TrialLeadRow),
         ),
       };
     }
