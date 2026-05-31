@@ -9,11 +9,47 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { BAND_NAMES, type DashboardSummary } from "../core/dashboardSummary";
+import type { SurveySummary } from "@/features/survey/core/summarizeSurvey";
 
 interface AdminDashboardProps {
   summary: DashboardSummary;
+  surveySummary?: SurveySummary;
   onSignOut: () => void;
 }
+
+const SurveyView = ({ surveySummary }: { surveySummary: SurveySummary }) => (
+  <Card data-testid="dashboard-survey">
+    <CardHeader>
+      <CardTitle className="text-xl">Survey responses</CardTitle>
+    </CardHeader>
+    <CardContent className="space-y-6">
+      <p className="text-sm text-muted-foreground">
+        {surveySummary.totalResponses} anonymous responses collected
+      </p>
+      {surveySummary.questions.map((question) => (
+        <div key={question.id} className="space-y-2">
+          <p className="font-semibold">{question.prompt}</p>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Answer</TableHead>
+                <TableHead>Responses</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {question.options.map((option) => (
+                <TableRow key={option.id}>
+                  <TableCell>{option.label}</TableCell>
+                  <TableCell>{option.count}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ))}
+    </CardContent>
+  </Card>
+);
 
 const formatDate = (iso: string): string =>
   new Date(iso).toLocaleDateString(undefined, {
@@ -22,7 +58,11 @@ const formatDate = (iso: string): string =>
     day: "numeric",
   });
 
-export const AdminDashboard = ({ summary, onSignOut }: AdminDashboardProps) => (
+export const AdminDashboard = ({
+  summary,
+  surveySummary,
+  onSignOut,
+}: AdminDashboardProps) => (
   <div className="mx-auto w-full max-w-4xl space-y-6">
     <div className="flex items-center justify-between">
       <h1 className="text-2xl font-bold">Assessment results</h1>
@@ -30,6 +70,8 @@ export const AdminDashboard = ({ summary, onSignOut }: AdminDashboardProps) => (
         Sign out
       </Button>
     </div>
+
+    {surveySummary ? <SurveyView surveySummary={surveySummary} /> : null}
 
     <div data-testid="dashboard-totals" className="grid gap-4 sm:grid-cols-2">
       <Card>

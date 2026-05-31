@@ -48,9 +48,16 @@ export interface DashboardLead {
   readonly createdAt: string;
 }
 
+export interface DashboardSurveyResponse {
+  readonly source: ResponseSource;
+  readonly answers: SurveyAnswers;
+  readonly createdAt: string;
+}
+
 export interface DashboardData {
   readonly responses: readonly DashboardResponse[];
   readonly leads: readonly DashboardLead[];
+  readonly surveyResponses: readonly DashboardSurveyResponse[];
 }
 
 export interface DashboardRepository {

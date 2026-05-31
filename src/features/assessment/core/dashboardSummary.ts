@@ -48,6 +48,12 @@ export const summarizeDashboard = (
   const responses = data.responses.filter(
     (response) => response.source === source,
   );
+  const unscored = responses.find((response) => !BAND_NAMES.includes(response.band));
+  if (unscored) {
+    throw new Error(
+      "summarizeDashboard cannot tally a band-less response; use summarizeSurvey",
+    );
+  }
   const leads = data.leads.filter((lead) => lead.source === source);
 
   const bandDistribution = responses.reduce(
