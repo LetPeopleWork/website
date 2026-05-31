@@ -12,6 +12,7 @@ type Tier = {
   price: string;
   cta: { label: string; href: string };
   recommended?: boolean;
+  comingSoon?: boolean;
 };
 
 const TIERS: Tier[] = [
@@ -22,14 +23,15 @@ const TIERS: Tier[] = [
     duration: "Free",
     headline: "See where you stand today.",
     description:
-      "Start with your real data, not a generic playbook. A focused assessment that shows you the constraints in your flow and the one or two things worth changing first.",
+      "Answer a handful of honest questions and get a clear read on how you measure flow and how you forecast, with the one or two things worth changing first.",
     highlights: [
-      "Built on your historical data, not interviews and opinions",
-      "A clear read on team or portfolio health",
-      "No cost, no commitment, no sales pitch",
+      "A few questions, a straight answer in a couple of minutes",
+      "Grounded in flow metrics and probabilistic forecasting",
+      "A concrete next step, no cost and no sales pitch",
     ],
     price: "Free",
-    cta: { label: "Get your free assessment", href: "/assessment" },
+    cta: { label: "Coming soon", href: "" },
+    comingSoon: true,
   },
   {
     id: "implement",
@@ -125,20 +127,26 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
         <div className="text-3xl md:text-4xl font-semibold text-foreground tracking-tight">
           {tier.price}
         </div>
-        <a
-          href={tier.cta.href}
-          className={`
-            inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-sm
-            transition-all duration-200 no-underline group
-            ${tier.recommended
-              ? "bg-primary text-primary-foreground hover:bg-primary-hover shadow-soft hover:shadow-medium hover:-translate-y-0.5"
-              : "bg-foreground/5 text-foreground hover:bg-foreground/10"
-            }
-          `}
-        >
-          {tier.cta.label}
-          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-        </a>
+        {tier.comingSoon ? (
+          <span className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-sm bg-foreground/5 text-muted-foreground cursor-default">
+            {tier.cta.label}
+          </span>
+        ) : (
+          <a
+            href={tier.cta.href}
+            className={`
+              inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-sm
+              transition-all duration-200 no-underline group
+              ${tier.recommended
+                ? "bg-primary text-primary-foreground hover:bg-primary-hover shadow-soft hover:shadow-medium hover:-translate-y-0.5"
+                : "bg-foreground/5 text-foreground hover:bg-foreground/10"
+              }
+            `}
+          >
+            {tier.cta.label}
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+          </a>
+        )}
       </div>
     </div>
   );
@@ -166,7 +174,7 @@ export default function EngagementPath() {
             <span className="text-primary font-light">All grounded in your real flow.</span>
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed mt-6">
-            Start with a free assessment and go as far as you need. Every path starts with your data, not our slides.
+            A free assessment to get you started is on the way. From there, go as far as you need. The further you go, the more it runs on your own delivery data, not our slides.
           </p>
         </div>
 

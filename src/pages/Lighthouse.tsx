@@ -1021,9 +1021,14 @@ const Lighthouse = () => {
 					</div>
 
 					{/* Pre-launch notice */}
-					<div className="max-w-3xl mx-auto mb-16 rounded-2xl border border-primary/20 bg-white/70 backdrop-blur-sm px-6 py-5 text-sm md:text-base text-muted-foreground text-center">
-						<span className="font-semibold text-foreground">New pricing starts in August 2026.</span>{" "}
-						The paid editions below take effect then. Want a license before that? Just write to us.
+					<div className="max-w-3xl mx-auto mb-16 rounded-2xl border border-primary/20 bg-accent/40 px-6 py-6 text-center">
+						<span className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground text-[11px] font-bold uppercase tracking-[0.12em] px-3 py-1 mb-3">
+							Until August 2026
+						</span>
+						<p className="text-sm md:text-base text-foreground leading-relaxed">
+							<span className="font-semibold">Book now and keep today's price.</span>{" "}
+							A Self-Service license is still <span className="font-semibold text-primary">CHF 999 / year</span> and stays at that rate for your term. From August 2026, Self-Service moves to CHF 2,000.
+						</p>
 					</div>
 
 					{/* 3-tier card grid */}
@@ -1060,10 +1065,10 @@ const Lighthouse = () => {
 							</span>
 							<div className="text-xs font-semibold uppercase tracking-[0.15em] text-primary mb-3">Self-Service</div>
 							<div className="flex items-baseline gap-2 mb-1">
-								<div className="text-4xl md:text-5xl font-semibold text-foreground tracking-tight">CHF 2,000</div>
+								<div className="text-4xl md:text-5xl font-semibold text-foreground tracking-tight">CHF 999</div>
 								<div className="text-sm text-muted-foreground">/ year</div>
 							</div>
-							<div className="text-xs font-medium text-primary mb-1">From August 2026</div>
+							<span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-accent text-primary text-xs font-semibold px-3 py-1 mb-3">Current rate · CHF 2,000 from August 2026</span>
 								<div className="text-sm text-muted-foreground mb-6">Annual license. Self-hosted.</div>
 							<p className="text-base text-foreground/80 leading-relaxed mb-6">
 								The full product, your way. Run it, configure it, and scale it, with the community at your back.
@@ -1093,22 +1098,21 @@ const Lighthouse = () => {
 								<div className="text-4xl md:text-5xl font-semibold text-foreground tracking-tight">CHF 10,000</div>
 								<div className="text-sm text-muted-foreground">/ year</div>
 							</div>
-							<div className="text-xs font-medium text-primary mb-1">From August 2026</div>
-								<div className="text-sm text-muted-foreground mb-6">For teams that want us prioritised.</div>
+							<span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-accent text-primary text-xs font-semibold px-3 py-1 mb-3">Launching August 2026</span>
+								<div className="text-sm text-muted-foreground mb-6">For teams that want priority.</div>
 							<p className="text-base text-foreground/80 leading-relaxed mb-6">
-								Everything in Self-Service, plus direct access to the people who build the tool, fast, when you need it.
+								Everything in Self-Service, plus a faster, prioritised line to support when you need it.
 							</p>
 							<ul className="space-y-2.5 mb-8 flex-1 text-sm text-foreground/80">
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span><span className="font-semibold">Everything in Self-Service</span></span></li>
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span><span className="font-semibold">Prioritised support.</span> Your questions and feature requests jump the queue</span></li>
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>24h acknowledgement on async requests</span></li>
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>2 × 60-min onboarding calls in your first 90 days</span></li>
-								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Named contacts: Peter (flow/coaching) &amp; Benjamin (technical)</span></li>
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Named contacts for flow, coaching, and technical questions</span></li>
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>10% off any LetPeopleWork workshop or training</span></li>
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Data Processing Agreement (minimal, since you self-host)</span></li>
 							</ul>
-							<p className="text-xs text-muted-foreground mb-4 italic">Capacity capped at 5 to 8 customers so we can actually deliver on this.</p>
-							<a
+														<a
 								href="mailto:licensing@letpeople.work?subject=Lighthouse%20Enterprise%20enquiry"
 								className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-sm border border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-colors no-underline"
 							>
@@ -1256,7 +1260,7 @@ const Lighthouse = () => {
 													{ feature: "Prioritised support queue", community: false, self: false, enterprise: true },
 													{ feature: "24h acknowledgement (async)", community: false, self: false, enterprise: true },
 													{ feature: "Onboarding calls (2×60 min in first 90 days)", community: false, self: false, enterprise: true },
-													{ feature: "Named contacts (Peter & Benjamin)", community: false, self: false, enterprise: true },
+													{ feature: "Named contacts for support", community: false, self: false, enterprise: true },
 													{ feature: "10% workshop / training discount", community: false, self: false, enterprise: true },
 												],
 											},
@@ -1340,12 +1344,12 @@ const Lighthouse = () => {
 									<div className="mb-6">
 										<div className="flex items-baseline gap-3">
 											<div className="text-4xl font-bold text-foreground">
-												CHF 2,000
+												CHF 999
 											</div>
 											<div className="text-lg text-muted-foreground">/ year</div>
 										</div>
-										<p className="text-xs text-muted-foreground mt-2">
-											This is the new rate, in effect from August 2026. Want a license before then? Write to us first.
+										<p className="text-xs text-primary font-medium mt-2">
+											Current rate, locked in for your term. From August 2026, this license is CHF 2,000.
 										</p>
 									</div>
 
@@ -1559,13 +1563,10 @@ const Lighthouse = () => {
 									Enterprise
 								</span>
 								<h3 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight leading-tight mb-4">
-									Want us prioritised?
+									Want to be first in line?
 								</h3>
 								<p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-2">
-									Enterprise gets you the same product as Self-Service plus direct access to Peter and Benjamin: a prioritised queue, 24h acknowledgement, onboarding calls, and a 10% workshop discount.
-								</p>
-								<p className="text-sm text-muted-foreground italic">
-									Capped at 5 to 8 customers so we can actually deliver on it.
+									Enterprise gives you the same product as Self-Service, plus a prioritised support queue, a 24h acknowledgement on async requests, onboarding calls, and a 10% workshop discount.
 								</p>
 							</div>
 							<div className="flex flex-col gap-4">
