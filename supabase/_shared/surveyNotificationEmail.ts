@@ -6,12 +6,16 @@ export interface SurveyNotificationEmail {
 
 export interface RenderSurveyNotificationEmailOptions {
   readonly answers: Record<string, string>;
+  readonly trialEmail?: string | null;
 }
 
 export const TEAM_NOTIFICATION_RECIPIENT = "survey.answer@letpeople.work";
 
 const SUBJECT = "New Lighthouse survey response";
 const NO_TRIAL_LINE = "No trial requested.";
+
+const trialLine = (trialEmail: string | null | undefined): string =>
+  trialEmail ? `Trial requested — ${trialEmail}` : NO_TRIAL_LINE;
 
 export const QUESTION_LABELS: Readonly<Record<string, string>> = {
   "team-count": "How many teams are using Lighthouse in your organisation?",
@@ -69,22 +73,22 @@ const rowText = (row: SummaryRow): string => `- ${row.question}: ${row.answer}`;
 const rowHtml = (row: SummaryRow): string =>
   `<li><strong>${escapeHtml(row.question)}</strong>: ${escapeHtml(row.answer)}</li>`;
 
-const renderText = (rows: readonly SummaryRow[]): string => `${SUBJECT}
+const renderText = (rows: readonly SummaryRow[], trial: string): string => `${SUBJECT}
 
 A visitor submitted the Lighthouse user survey.
 
 ${rows.map(rowText).join("\n")}
 
-${NO_TRIAL_LINE}`;
+${trial}`;
 
-const renderHtml = (rows: readonly SummaryRow[]): string => `<html>
+const renderHtml = (rows: readonly SummaryRow[], trial: string): string => `<html>
   <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
     <h2>${SUBJECT}</h2>
     <p>A visitor submitted the Lighthouse user survey.</p>
     <ul>
       ${rows.map(rowHtml).join("\n      ")}
     </ul>
-    <p>${NO_TRIAL_LINE}</p>
+    <p>${escapeHtml(trial)}</p>
   </body>
 </html>`;
 
@@ -92,10 +96,11 @@ export const renderSurveyNotificationEmail = (
   options: RenderSurveyNotificationEmailOptions,
 ): SurveyNotificationEmail => {
   const rows = summaryRows(options.answers);
+  const trial = trialLine(options.trialEmail);
   return {
     subject: SUBJECT,
-    html: renderHtml(rows),
-    text: renderText(rows),
+    html: renderHtml(rows, trial),
+    text: renderText(rows, trial),
   };
 };
 

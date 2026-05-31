@@ -73,13 +73,16 @@ describe("surveyMachine (one question per screen)", () => {
     expect(jumped.currentIndex).toBe(2);
   });
 
-  it("submit after every answer moves to submitting with a full answer vector", () => {
+  it("submit after every answer moves to the exchange step, then to submitting, keeping the full answer vector", () => {
     fc.assert(
       fc.property(optionStrings(), (values) => {
-        const state = reduceSurvey(answerInOrder(values), { type: "submit" });
-        expect(state.phase).toBe("submitting");
-        expect(canSubmitSurvey(state)).toBe(true);
-        expect(state.answers).toEqual(values);
+        const exchange = reduceSurvey(answerInOrder(values), { type: "submit" });
+        expect(exchange.phase).toBe("exchange");
+
+        const submitting = reduceSurvey(exchange, { type: "submit" });
+        expect(submitting.phase).toBe("submitting");
+        expect(canSubmitSurvey(submitting)).toBe(true);
+        expect(submitting.answers).toEqual(values);
       }),
     );
   });

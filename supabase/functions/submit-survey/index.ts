@@ -14,10 +14,17 @@ const corsHeaders = {
 };
 
 const SURVEY_SOURCE = "user-survey";
+const TRIAL_LEAD_SOURCE = "user-survey-trial";
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+interface TrialOptIn {
+  readonly email: string;
+}
 
 interface SurveyPayload {
   source: string;
   answers: Record<string, string>;
+  trial: TrialOptIn | null;
 }
 
 const isStringMap = (value: unknown): value is Record<string, string> => {
@@ -28,13 +35,22 @@ const isStringMap = (value: unknown): value is Record<string, string> => {
 const carriesScoreOrBand = (candidate: Record<string, unknown>): boolean =>
   "score" in candidate || "band" in candidate || "raw_sum" in candidate;
 
+const parseTrial = (candidate: Record<string, unknown>): TrialOptIn | null | false => {
+  if (candidate.wantsTrial !== true) return null;
+  const email = candidate.email;
+  if (typeof email !== "string" || !EMAIL_PATTERN.test(email)) return false;
+  return { email };
+};
+
 const parsePayload = (body: unknown): SurveyPayload | null => {
   if (typeof body !== "object" || body === null) return null;
   const candidate = body as Record<string, unknown>;
   if (candidate.source !== SURVEY_SOURCE) return null;
   if (carriesScoreOrBand(candidate)) return null;
   if (!isStringMap(candidate.answers)) return null;
-  return { source: SURVEY_SOURCE, answers: candidate.answers };
+  const trial = parseTrial(candidate);
+  if (trial === false) return null;
+  return { source: SURVEY_SOURCE, answers: candidate.answers, trial };
 };
 
 const refuse = (reason: string) =>
@@ -47,7 +63,10 @@ const notifyTeam = (payload: SurveyPayload): Promise<void> =>
   notifyTeamDegradeOpen(async () => {
     const config = readMailgunConfig((key) => Deno.env.get(key));
     if (!config) return;
-    const email = renderSurveyNotificationEmail({ answers: payload.answers });
+    const email = renderSurveyNotificationEmail({
+      answers: payload.answers,
+      trialEmail: payload.trial?.email ?? null,
+    });
     await sendViaMailgun(config, {
       to: TEAM_NOTIFICATION_RECIPIENT,
       subject: email.subject,
@@ -55,6 +74,26 @@ const notifyTeam = (payload: SurveyPayload): Promise<void> =>
       html: email.html,
     });
   });
+
+type SupabaseClient = ReturnType<typeof createClient>;
+
+const insertTrialLead = async (
+  supabase: SupabaseClient,
+  trial: TrialOptIn,
+): Promise<boolean> => {
+  const { error } = await supabase.from("leads").insert({
+    source: TRIAL_LEAD_SOURCE,
+    email: trial.email,
+    score: null,
+    band: null,
+    wants_trial: true,
+  });
+  if (error) {
+    console.error("Trial lead insert failed (response still recorded):", error);
+    return false;
+  }
+  return true;
+};
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -80,9 +119,13 @@ serve(async (req) => {
     });
     if (error) throw new Error(error.message);
 
+    const trialRecorded = payload.trial
+      ? await insertTrialLead(supabase, payload.trial)
+      : null;
+
     await notifyTeam(payload);
 
-    return new Response(JSON.stringify({ recorded: true }), {
+    return new Response(JSON.stringify({ recorded: true, trialRecorded }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     });

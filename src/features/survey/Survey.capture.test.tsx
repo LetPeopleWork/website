@@ -64,13 +64,9 @@ const stepThroughEveryQuestion = async (
   user: ReturnType<typeof userEvent.setup>,
 ) => {
   await user.click(screen.getByRole("button", { name: /start/i }));
-  for (let i = 0; i < SURVEY_QUESTIONS.length; i += 1) {
-    const question = SURVEY_QUESTIONS[i];
+  for (const question of SURVEY_QUESTIONS) {
     await user.click(screen.getByText(question.options[0].label));
-    const last = i === SURVEY_QUESTIONS.length - 1;
-    if (!last) {
-      await user.click(advanceButton(false));
-    }
+    await user.click(advanceButton(false));
   }
 };
 
@@ -101,6 +97,7 @@ describe("Survey capture (US-02: anonymous store, success-only thank-you, retry,
     expect(screen.queryByText(/thank you/i)).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: /submit/i })).toBeEnabled();
 
+    await user.click(screen.getByRole("button", { name: /back/i }));
     const lastQuestion = SURVEY_QUESTIONS[SURVEY_QUESTIONS.length - 1];
     const checked = screen
       .getAllByRole("radio")
@@ -145,6 +142,7 @@ describe("Survey capture (US-02: anonymous store, success-only thank-you, retry,
     await user.click(screen.getByText(SURVEY_QUESTIONS[2].options[0].label));
     await user.click(advanceButton(false));
     await user.click(screen.getByText(SURVEY_QUESTIONS[3].options[0].label));
+    await user.click(advanceButton(false));
     await user.click(advanceButton(true));
 
     await screen.findByText(/thank you/i);

@@ -17,8 +17,20 @@ export interface ResponseRepository {
 
 export type SurveyAnswers = Readonly<Record<string, string>>;
 
+export interface SurveyTrialOptIn {
+  readonly wantsTrial: true;
+  readonly email: string;
+}
+
+export class TrialRequestFailedError extends Error {
+  constructor() {
+    super("Trial request did not go through");
+    this.name = "TrialRequestFailedError";
+  }
+}
+
 export interface SurveySubmission {
-  submit(answers: SurveyAnswers): Promise<void>;
+  submit(answers: SurveyAnswers, trial?: SurveyTrialOptIn): Promise<void>;
 }
 
 export interface LeadSubmission {

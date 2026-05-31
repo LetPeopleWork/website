@@ -1,6 +1,11 @@
 export const SURVEY_QUESTION_COUNT = 4;
 
-export type SurveyPhase = "intro" | "question" | "submitting" | "done";
+export type SurveyPhase =
+  | "intro"
+  | "question"
+  | "exchange"
+  | "submitting"
+  | "done";
 
 export type SurveyAnswer = string | null;
 
@@ -69,6 +74,9 @@ const next = (state: SurveyState): SurveyState => {
 };
 
 const back = (state: SurveyState): SurveyState => {
+  if (state.phase === "exchange") {
+    return { ...state, phase: "question" };
+  }
   if (state.currentIndex === 0) {
     return { ...state, phase: "intro" };
   }
@@ -76,8 +84,11 @@ const back = (state: SurveyState): SurveyState => {
 };
 
 const submit = (state: SurveyState): SurveyState => {
-  if (canSubmitSurvey(state)) {
+  if (state.phase === "exchange") {
     return { ...state, phase: "submitting" };
+  }
+  if (canSubmitSurvey(state)) {
+    return { ...state, phase: "exchange" };
   }
   return {
     ...state,
@@ -104,7 +115,7 @@ export const reduceSurvey = (
     case "submitted":
       return { ...state, phase: "done" };
     case "retry":
-      return { ...state, phase: "question" };
+      return { ...state, phase: "exchange" };
     default:
       return state;
   }
