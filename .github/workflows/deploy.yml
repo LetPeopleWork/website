@@ -56,8 +56,10 @@ jobs:
 
       - name: Create SPA route fallbacks for GitHub Pages
         run: |
-          mkdir -p dist/lighthouse
+          mkdir -p dist/lighthouse dist/assessment dist/admin/assessment
           cp dist/index.html dist/lighthouse/index.html
+          cp dist/index.html dist/assessment/index.html
+          cp dist/index.html dist/admin/assessment/index.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

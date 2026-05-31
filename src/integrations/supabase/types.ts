@@ -14,7 +14,69 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      responses: {
+        Row: {
+          id: string
+          source: string
+          kind: string | null
+          answers: Json
+          raw_sum: number | null
+          score: number | null
+          band: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          source: string
+          kind?: string | null
+          answers: Json
+          raw_sum?: number | null
+          score?: number | null
+          band?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          source?: string
+          kind?: string | null
+          answers?: Json
+          raw_sum?: number | null
+          score?: number | null
+          band?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      leads: {
+        Row: {
+          id: string
+          source: string
+          email: string
+          score: number | null
+          band: string | null
+          wants_trial: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          source: string
+          email: string
+          score?: number | null
+          band?: string | null
+          wants_trial?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          source?: string
+          email?: string
+          score?: number | null
+          band?: string | null
+          wants_trial?: boolean
+          created_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
