@@ -29,7 +29,7 @@ const TIERS: Tier[] = [
       "No cost, no commitment, no sales pitch",
     ],
     price: "Free",
-    cta: { label: "Get your free assessment", href: "mailto:contact@letpeople.work?subject=Free%20Flow%20Assessment" },
+    cta: { label: "Get your free assessment", href: "/assessment" },
   },
   {
     id: "implement",
