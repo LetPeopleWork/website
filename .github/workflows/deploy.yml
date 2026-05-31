@@ -56,10 +56,11 @@ jobs:
 
       - name: Create SPA route fallbacks for GitHub Pages
         run: |
-          mkdir -p dist/lighthouse dist/assessment dist/admin/assessment dist/survey
+          mkdir -p dist/lighthouse dist/assessment dist/admin/assessment dist/admin/dashboard dist/survey
           cp dist/index.html dist/lighthouse/index.html
           cp dist/index.html dist/assessment/index.html
           cp dist/index.html dist/admin/assessment/index.html
+          cp dist/index.html dist/admin/dashboard/index.html
           cp dist/index.html dist/survey/index.html
 
       - name: Upload artifact

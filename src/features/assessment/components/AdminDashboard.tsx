@@ -75,11 +75,9 @@ const SurveyRangeFilter = ({
 const SurveyView = ({
   surveySummary,
   filter,
-  showCharts,
 }: {
   surveySummary: SurveySummary;
   filter?: React.ReactNode;
-  showCharts: boolean;
 }) => (
   <Card data-testid="dashboard-survey">
     <CardHeader className="flex flex-row items-center justify-between gap-4">
@@ -90,30 +88,7 @@ const SurveyView = ({
       <p className="text-sm text-muted-foreground">
         {surveySummary.totalResponses} anonymous responses collected
       </p>
-      {showCharts ? <SurveyCharts questions={surveySummary.questions} /> : null}
-      {surveySummary.questions.map((question) => (
-        <div key={question.id} className="space-y-2">
-          {showCharts ? null : (
-            <p className="font-semibold">{question.prompt}</p>
-          )}
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Answer</TableHead>
-                <TableHead>Responses</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {question.options.map((option) => (
-                <TableRow key={option.id}>
-                  <TableCell>{option.label}</TableCell>
-                  <TableCell>{option.count}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-      ))}
+      <SurveyCharts questions={surveySummary.questions} />
     </CardContent>
   </Card>
 );
@@ -198,7 +173,7 @@ export const AdminDashboard = ({
   return (
     <div className="mx-auto w-full max-w-4xl space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Assessment results</h1>
+        <h1 className="text-2xl font-bold">Admin dashboard</h1>
         <Button variant="outline" onClick={onSignOut}>
           Sign out
         </Button>
@@ -207,7 +182,6 @@ export const AdminDashboard = ({
       {scopedSummary ? (
         <SurveyView
           surveySummary={scopedSummary}
-          showCharts={filtersEnabled}
           filter={
             filtersEnabled ? (
               <SurveyRangeFilter range={range} onChange={setRange} />

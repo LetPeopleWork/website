@@ -89,8 +89,8 @@ const AdminAssessment = ({
   return (
     <main className="min-h-screen bg-background px-4 py-12">
       <SEO
-        title="Assessment results"
-        description="Internal forecasting readiness assessment results."
+        title="Admin dashboard"
+        description="Internal admin dashboard for forecasting readiness assessment and survey results."
       />
       {session && summary ? (
         <AdminDashboard

@@ -182,7 +182,10 @@ describe("Admin assessment dashboard", () => {
     expect(
       within(surveyView).getByText(/anonymous responses collected/i),
     ).toHaveTextContent("2 anonymous responses collected");
-    expect(within(surveyView).getByText("Scrum Master / Agile Coach")).toBeInTheDocument();
+    expect(
+      within(surveyView).getByTestId("dashboard-survey-charts"),
+    ).toBeInTheDocument();
+    expect(within(surveyView).queryByRole("table")).not.toBeInTheDocument();
 
     const trials = screen.getByTestId("dashboard-survey-trials");
     expect(

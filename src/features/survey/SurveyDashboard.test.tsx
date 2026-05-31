@@ -42,7 +42,7 @@ const renderSurveyView = async (repository: DashboardRepository) => {
 };
 
 describe("Maintainer survey view on the internal dashboard (US-05, slice-01)", () => {
-  it("lists the responses with per-question tallies, all anonymous", async () => {
+  it("visualizes each question as a chart with no per-question text tally table, all anonymous", async () => {
     const repository = inMemoryRepository({
       responses: [],
       leads: [],
@@ -63,20 +63,13 @@ describe("Maintainer survey view on the internal dashboard (US-05, slice-01)", (
     expect(
       within(surveyView).getByText(/2 anonymous responses collected/i),
     ).toBeInTheDocument();
-    expect(
-      within(surveyView).getByText(SURVEY_QUESTIONS[0].prompt),
-    ).toBeInTheDocument();
 
-    const firstOptionRow = within(surveyView)
-      .getByText(SURVEY_QUESTIONS[0].options[0].label)
-      .closest("tr");
-    const secondOptionRow = within(surveyView)
-      .getByText(SURVEY_QUESTIONS[0].options[1].label)
-      .closest("tr");
-    expect(firstOptionRow).not.toBeNull();
-    expect(secondOptionRow).not.toBeNull();
-    expect(within(firstOptionRow as HTMLElement).getByText("1")).toBeInTheDocument();
-    expect(within(secondOptionRow as HTMLElement).getByText("1")).toBeInTheDocument();
+    const charts = within(surveyView).getByTestId("dashboard-survey-charts");
+    expect(within(charts).getByText(SURVEY_QUESTIONS[0].prompt)).toBeInTheDocument();
+    expect(
+      within(charts).getAllByTestId("survey-question-chart"),
+    ).toHaveLength(SURVEY_QUESTIONS.length);
+    expect(within(surveyView).queryByRole("table")).not.toBeInTheDocument();
     expect(within(surveyView).queryByText(/@/)).not.toBeInTheDocument();
   });
 

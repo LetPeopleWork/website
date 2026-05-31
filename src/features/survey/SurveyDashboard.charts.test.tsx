@@ -57,7 +57,8 @@ describe("Maintainer filters the survey view by date range and sees answer visua
 
     renderDashboard(data, NOW);
 
-    const charts = screen.getByTestId("dashboard-survey-charts");
+    const survey = screen.getByTestId("dashboard-survey");
+    const charts = within(survey).getByTestId("dashboard-survey-charts");
     for (const question of SURVEY_QUESTIONS) {
       expect(
         within(charts).getByText(question.prompt),
@@ -66,6 +67,7 @@ describe("Maintainer filters the survey view by date range and sees answer visua
     expect(within(charts).getAllByTestId("survey-question-chart")).toHaveLength(
       SURVEY_QUESTIONS.length,
     );
+    expect(within(survey).queryByRole("table")).not.toBeInTheDocument();
   });
 
   it("offers a date-range control and defaults to the last 30 days", () => {
@@ -83,7 +85,7 @@ describe("Maintainer filters the survey view by date range and sees answer visua
     expect(active).toHaveTextContent(/30 days/i);
   });
 
-  it("rescopes tallies and trial requests when a shorter range is selected", () => {
+  it("rescopes the response count and trial requests when a shorter range is selected", () => {
     const data: DashboardData = {
       responses: [],
       leads: [],
