@@ -1022,8 +1022,8 @@ const Lighthouse = () => {
 
 					{/* Pre-launch notice */}
 					<div className="max-w-3xl mx-auto mb-16 rounded-2xl border border-primary/20 bg-white/70 backdrop-blur-sm px-6 py-5 text-sm md:text-base text-muted-foreground text-center">
-						<span className="font-semibold text-foreground">Heads up:</span>{" "}
-						prices change after August 2026.
+						<span className="font-semibold text-foreground">New pricing starts in August 2026.</span>{" "}
+						The paid editions below take effect then. Want a license before that? Just write to us.
 					</div>
 
 					{/* 3-tier card grid */}
@@ -1063,7 +1063,8 @@ const Lighthouse = () => {
 								<div className="text-4xl md:text-5xl font-semibold text-foreground tracking-tight">CHF 2,000</div>
 								<div className="text-sm text-muted-foreground">/ year</div>
 							</div>
-							<div className="text-sm text-muted-foreground mb-6">Annual license. Self-hosted.</div>
+							<div className="text-xs font-medium text-primary mb-1">From August 2026</div>
+								<div className="text-sm text-muted-foreground mb-6">Annual license. Self-hosted.</div>
 							<p className="text-base text-foreground/80 leading-relaxed mb-6">
 								The full product, your way. Run it, configure it, and scale it, with the community at your back.
 							</p>
@@ -1092,7 +1093,8 @@ const Lighthouse = () => {
 								<div className="text-4xl md:text-5xl font-semibold text-foreground tracking-tight">CHF 10,000</div>
 								<div className="text-sm text-muted-foreground">/ year</div>
 							</div>
-							<div className="text-sm text-muted-foreground mb-6">For teams that want us prioritised.</div>
+							<div className="text-xs font-medium text-primary mb-1">From August 2026</div>
+								<div className="text-sm text-muted-foreground mb-6">For teams that want us prioritised.</div>
 							<p className="text-base text-foreground/80 leading-relaxed mb-6">
 								Everything in Self-Service, plus direct access to the people who build the tool, fast, when you need it.
 							</p>
@@ -1343,7 +1345,7 @@ const Lighthouse = () => {
 											<div className="text-lg text-muted-foreground">/ year</div>
 										</div>
 										<p className="text-xs text-muted-foreground mt-2">
-											Prices change after August 2026.
+											This is the new rate, in effect from August 2026. Want a license before then? Write to us first.
 										</p>
 									</div>
 
