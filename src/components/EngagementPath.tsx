@@ -10,6 +10,7 @@ type Tier = {
   description: string;
   highlights: string[];
   price: string;
+  priceFrom?: boolean;
   cta: { label: string; href: string };
   recommended?: boolean;
   comingSoon?: boolean;
@@ -64,6 +65,7 @@ const TIERS: Tier[] = [
       "Built for portfolios, with one coherent view",
     ],
     price: "CHF 10,000",
+    priceFrom: true,
     cta: { label: "Design your rollout", href: "mailto:contact@letpeople.work?subject=Flow%20Transformation%20Package" },
   },
 ];
@@ -124,8 +126,15 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
       </ul>
 
       <div className="border-t border-border pt-6 flex flex-col gap-4">
-        <div className="text-3xl md:text-4xl font-semibold text-foreground tracking-tight">
-          {tier.price}
+        <div>
+          {tier.priceFrom && (
+            <div className="text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground mb-0.5">
+              From
+            </div>
+          )}
+          <div className="text-3xl md:text-4xl font-semibold text-foreground tracking-tight">
+            {tier.price}
+          </div>
         </div>
         {tier.comingSoon ? (
           <span className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-sm bg-foreground/5 text-muted-foreground cursor-default">

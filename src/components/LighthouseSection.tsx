@@ -62,7 +62,7 @@ const LighthouseSection = () => {
   ];
 
   return (
-    <section id="lighthouse" className="py-20 bg-background">
+    <section id="lighthouse" className="py-24 md:py-32 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">

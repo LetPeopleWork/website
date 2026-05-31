@@ -20,7 +20,7 @@ const prompts = [
 
 const AIIntegrationSection = () => {
   return (
-    <section id="ai-integration" className="py-20 bg-gradient-hero">
+    <section id="ai-integration" className="py-24 md:py-32 bg-gradient-hero">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}

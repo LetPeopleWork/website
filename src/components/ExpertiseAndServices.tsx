@@ -281,7 +281,7 @@ export default function ExpertiseAndServices() {
       <EngagementPath />
 
       {/* ── Full Catalogue (Depth view) ── */}
-      <div id="workshops" className="max-w-5xl mx-auto px-4 pt-20 md:pt-28 pb-10 md:pb-14">
+      <div id="workshops" className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 md:pt-28 pb-10 md:pb-14">
         <div className="text-center mb-10 md:mb-14">
           <span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-4 block">
             The full catalogue
@@ -317,7 +317,7 @@ export default function ExpertiseAndServices() {
       </div>
 
       {/* ── Custom / Tailored ── */}
-      <div id="custom-events" className="max-w-5xl mx-auto px-4 pb-20 md:pb-28">
+      <div id="custom-events" className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 md:pb-28">
         <div className="rounded-xl border border-border bg-white p-8 md:p-12 text-center">
           <div className="w-14 h-14 rounded-full bg-accent flex items-center justify-center mx-auto mb-5">
             <MessageSquare className="w-6 h-6 text-primary" />
@@ -347,7 +347,7 @@ export default function ExpertiseAndServices() {
         </div>
       </div>
       {/* ── About Us ── */}
-      <div className="max-w-5xl mx-auto px-4 pb-20 md:pb-28">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 md:pb-28">
         <div className="text-center bg-background/80 backdrop-blur-sm rounded-2xl p-12 border border-border">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">
             The practitioners behind the tools

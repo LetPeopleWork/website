@@ -28,7 +28,7 @@ const StayConnected = () => {
   ];
 
   return (
-    <section id="stay-connected" className="py-20 bg-gradient-subtle">
+    <section id="stay-connected" className="py-24 md:py-32 bg-gradient-subtle">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
