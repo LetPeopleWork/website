@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { ChevronDown, MessageSquare, GraduationCap, Zap, Search as SearchIcon, CheckCircle2 } from "lucide-react";
+import { ChevronDown, MessageSquare, GraduationCap, Zap, Search as SearchIcon } from "lucide-react";
 import PeterImage from '../assets/Peter.png';
 import BenjiImage from '../assets/Benji.png';
+import EngagementPath from './EngagementPath';
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -141,32 +142,6 @@ const CATEGORIES: Record<string, Category> = {
   },
 };
 
-const PACKAGE = {
-  name: "Complete Flow Transformation Package",
-  subtitle: "End-to-End: Assessment + Implementation + Sustaining Capability",
-  description: "The complete journey from understanding your delivery system's current state to implementing a working solution that provides ongoing visibility. This package combines diagnostic assessment with hands-on implementation and sustained capability through Lighthouse Premium.",
-  savings: "You get the strategic insight of the Flow Clarity Assessment combined with the practical implementation of the BYOD Workshop, plus the ongoing capability to maintain visibility into your delivery system. This is 25% less than purchasing separately, the most comprehensive and cost-effective way to transform your delivery predictability.",
-  scope: [
-    "Two-phase engagement: Assessment followed by Implementation",
-    "Remote or on-site delivery options",
-    "Analysis of your historical data (3–6 months)",
-    "Private 1-day implementation workshop with your team",
-    "Uses your actual business data and workflows",
-  ],
-  deliverables: [
-    { title: "Complete diagnostic report", detail: "Flow constraints, WIP patterns, aging trends, and predictability indicators from your historical data" },
-    { title: "Lighthouse Premium configured to your workflows", detail: "Custom configuration matching your team structures and processes" },
-    { title: "Your historical data integrated and validated", detail: "Real data from your systems, cleaned and ready for ongoing analysis" },
-    { title: "Immediate visibility into flow metrics", detail: "Answer the questions you're constantly being asked with live data" },
-    { title: "A production-ready system your teams can use immediately", detail: "Walk away with both understanding and capability to sustain it" },
-    { title: "60-minute diagnostic debrief + full-day implementation workshop", detail: "Comprehensive engagement from assessment to working solution" },
-  ],
-  priceOnsite: "CHF 7,000",
-  priceRemote: "CHF 6,000",
-  includes: "Flow Clarity Assessment + BYOD Workshop + 1 Annual Lighthouse Premium License (Save 25%)",
-};
-
-
 // ─── COMPONENTS ──────────────────────────────────────────────────────────────
 
 function CategoryAccordion({
@@ -302,29 +277,20 @@ export default function ExpertiseAndServices() {
 
   return (
     <section id="services" className="bg-background">
-      {/* ── Section Header ── */}
-      <div className="text-center max-w-4xl mx-auto px-4 pt-20 pb-8 md:pt-28 md:pb-10">
-        <span className="text-xs font-semibold uppercase tracking-[0.15em] text-primary mb-5 block">
-          How we help
-        </span>
-        <h2 className="text-3xl md:text-4xl lg:text-[44px] font-bold leading-tight tracking-tight">
-          <span className="text-foreground">Your team shouldn't have to guess.</span>
-          <br />
-          <span className="text-primary">We replace gut feel with flow data and help you identify improvements you can actually measure.</span>
-        </h2>
-        <p className="text-base md:text-lg text-muted-foreground mt-5 leading-relaxed max-w-xl mx-auto">
-          We bring both the tool and the expertise to make it work — from official certifications to deep diagnostic assessments.
-        </p>
-      </div>
+      {/* ── Quick-start: 3-tier engagement path ── */}
+      <EngagementPath />
 
-      {/* ── Full Catalogue ── */}
-      <div id="workshops" className="max-w-5xl mx-auto px-4 py-10 md:py-14">
+      {/* ── Full Catalogue (Depth view) ── */}
+      <div id="workshops" className="max-w-5xl mx-auto px-4 pt-20 md:pt-28 pb-10 md:pb-14">
         <div className="text-center mb-10 md:mb-14">
-          <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
-            Where to Start
+          <span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-4 block">
+            The full catalogue
+          </span>
+          <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-tight">
+            Workshops, certifications, consulting.
           </h3>
-          <p className="text-sm md:text-base text-muted-foreground mt-3 max-w-lg mx-auto">
-            Every engagement delivered by two practitioners, two perspectives, one coherent outcome.
+          <p className="text-base md:text-lg text-muted-foreground mt-4 max-w-xl mx-auto font-light leading-relaxed">
+            Every engagement delivered by two practitioners. Two perspectives, one coherent outcome.
           </p>
         </div>
 
@@ -347,111 +313,6 @@ export default function ExpertiseAndServices() {
           >
             Book a Workshop →
           </a>
-        </div>
-      </div>
-
-      {/* ── Divider ── */}
-      <div className="max-w-5xl mx-auto px-4">
-        <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-      </div>
-
-      {/* ── Featured Package ── */}
-      <div className="max-w-5xl mx-auto px-4 py-16 md:py-20">
-        <div className="rounded-2xl border-2 border-primary/20 bg-gradient-to-br from-white to-accent/30 p-6 md:p-10 lg:p-12 relative overflow-hidden">
-          {/* Subtle glow */}
-          <div className="absolute -top-20 -right-20 w-60 h-60 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="relative">
-            {/* Badges */}
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-[11px] font-bold uppercase tracking-wider bg-primary text-primary-foreground px-3 py-1 rounded-full">
-                Best Value
-              </span>
-              <span className="text-[11px] font-semibold uppercase tracking-wider bg-accent text-primary px-3 py-1 rounded-full">
-                Save 25%
-              </span>
-              <span className="text-[11px] font-medium uppercase tracking-wider bg-muted text-muted-foreground px-3 py-1 rounded-full">
-                Popular
-              </span>
-            </div>
-
-            <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-1">
-              {PACKAGE.name}
-            </h3>
-            <div className="text-sm md:text-base font-medium text-primary mb-5">
-              {PACKAGE.subtitle}
-            </div>
-
-            <p className="text-sm md:text-[15px] text-muted-foreground leading-relaxed max-w-2xl mb-4">
-              Six months from now, your team walks into any steering committee meeting with a forecast range built from real data, not gut feeling. And you'll know which parts of your delivery system to fix to make the next one even better. This package is how you get there.
-            </p>
-            <p className="text-sm md:text-[15px] text-muted-foreground leading-relaxed max-w-2xl mb-8">
-              {PACKAGE.savings}
-            </p>
-
-            {/* Scope & Deliverables */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
-              <div>
-                <h4 className="text-xs font-semibold uppercase tracking-wider text-primary mb-4">
-                  Scope
-                </h4>
-                <div className="space-y-2.5">
-                  {PACKAGE.scope.map((item, i) => (
-                    <div key={i} className="flex items-start gap-2.5 text-sm text-muted-foreground">
-                      <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                      <span>{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <h4 className="text-xs font-semibold uppercase tracking-wider text-primary mb-4">
-                  What You Receive
-                </h4>
-                <div className="space-y-3">
-                  {PACKAGE.deliverables.map((item, i) => (
-                    <div key={i} className="flex items-start gap-2.5">
-                      <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                      <div>
-                        <div className="text-sm font-semibold text-foreground">{item.title}</div>
-                        <div className="text-[13px] text-muted-foreground">{item.detail}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Pricing + CTA */}
-            <div className="border-t border-border pt-8">
-              <div className="text-xs font-semibold uppercase tracking-wider text-primary mb-4">
-                Investment
-              </div>
-              <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6">
-                <div className="flex items-end gap-6 md:gap-10">
-                  <div>
-                    <div className="text-xs text-muted-foreground uppercase tracking-wider mb-1">On-Site</div>
-                    <div className="text-3xl md:text-4xl font-bold text-foreground">{PACKAGE.priceOnsite}</div>
-                  </div>
-                  <div>
-                    <div className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Remote</div>
-                    <div className="text-3xl md:text-4xl font-bold text-foreground">{PACKAGE.priceRemote}</div>
-                  </div>
-                </div>
-
-                <a
-                  href={`mailto:contact@letpeople.work?subject=Request for ${encodeURIComponent(PACKAGE.name)}`}
-                  className="bg-primary hover:bg-primary-hover text-primary-foreground font-semibold text-sm md:text-base px-7 py-3.5 rounded-lg shadow-soft hover:shadow-medium transition-all duration-200 hover:-translate-y-0.5 cursor-pointer whitespace-nowrap no-underline"
-                >
-                  Schedule Workshop →
-                </a>
-              </div>
-              <div className="text-[13px] text-muted-foreground mt-3">
-                {PACKAGE.includes}
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 

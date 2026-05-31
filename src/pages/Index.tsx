@@ -67,7 +67,7 @@ const Index = () => {
         "itemOffered": {
           "@type": "SoftwareApplication",
           "name": "Lighthouse",
-          "description": "Open-source flow metrics and forecasting tool. Connects to Jira, Azure DevOps, and Linear. AI integration via MCP. Community and Premium editions.",
+          "description": "Open-source flow metrics and forecasting tool. Connects to Jira, Azure DevOps, and Linear. AI integration via MCP. Community, Self-Service, and Enterprise editions.",
           "applicationCategory": "DeveloperApplication",
           "operatingSystem": "Cross-platform",
           "offers": [
@@ -76,25 +76,33 @@ const Index = () => {
               "name": "Lighthouse Community Edition",
               "price": "0",
               "priceCurrency": "CHF",
-              "description": "Free open-source version with core flow metrics and forecasting features"
+              "description": "Free open-source edition with core flow metrics and forecasting features. Capped to 3 teams and 1 portfolio."
             },
             {
               "@type": "Offer",
-              "name": "Lighthouse Premium Edition",
-              "price": "999",
+              "name": "Lighthouse Self-Service",
+              "price": "2000",
               "priceCurrency": "CHF",
               "priceSpecification": {
                 "@type": "UnitPriceSpecification",
-                "price": "999",
+                "price": "2000",
                 "priceCurrency": "CHF",
                 "unitText": "year"
               },
-              "description": "Premium version with unlimited users and advanced features",
-              "eligibleQuantity": {
-                "@type": "QuantitativeValue",
-                "value": "unlimited",
-                "unitText": "users"
-              }
+              "description": "Annual self-hosted license. Unlimited teams, portfolios, and all paid-tier features. Community Slack support."
+            },
+            {
+              "@type": "Offer",
+              "name": "Lighthouse Enterprise",
+              "price": "10000",
+              "priceCurrency": "CHF",
+              "priceSpecification": {
+                "@type": "UnitPriceSpecification",
+                "price": "10000",
+                "priceCurrency": "CHF",
+                "unitText": "year"
+              },
+              "description": "Annual self-hosted license with prioritised support, named contacts, onboarding calls, and workshop discounts."
             }
           ]
         }
