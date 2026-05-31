@@ -1,6 +1,11 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.95.3";
-import { bandMatchesScore } from "../../_shared/bands.ts";
+import { bandMatchesScore, bandOfScore } from "../../_shared/bands.ts";
+import {
+  REPLY_TO_ADDRESS,
+  renderResultsEmail,
+} from "../../_shared/resultsEmail.ts";
+import { readMailgunConfig, sendViaMailgun } from "../../_shared/mailgun.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -46,6 +51,25 @@ const refuse = (reason: string) =>
     status: 400,
   });
 
+const sendResultsEmail = async (payload: LeadPayload): Promise<void> => {
+  try {
+    const config = readMailgunConfig((key) => Deno.env.get(key));
+    if (!config) return;
+    const band = bandOfScore(payload.score);
+    if (!band) return;
+    const email = renderResultsEmail(band, { score: payload.score });
+    await sendViaMailgun(config, {
+      to: payload.email,
+      subject: email.subject,
+      text: email.text,
+      html: email.html,
+      replyTo: REPLY_TO_ADDRESS,
+    });
+  } catch (error) {
+    console.error("Results email send failed (lead still captured):", error);
+  }
+};
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -72,6 +96,8 @@ serve(async (req) => {
       wants_trial: payload.wantsTrial,
     });
     if (error) throw new Error(error.message);
+
+    await sendResultsEmail(payload);
 
     return new Response(JSON.stringify({ recorded: true }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
