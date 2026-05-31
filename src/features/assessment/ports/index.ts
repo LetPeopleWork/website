@@ -1,6 +1,6 @@
 import type { Answers, BandName } from "../core/scoring";
 
-export type ResponseSource = "readiness-assessment";
+export type ResponseSource = "readiness-assessment" | "user-survey";
 
 export interface CapturedResponse {
   readonly source: ResponseSource;
@@ -13,6 +13,12 @@ export interface CapturedResponse {
 
 export interface ResponseRepository {
   save(response: CapturedResponse): Promise<void>;
+}
+
+export type SurveyAnswers = Readonly<Record<string, string>>;
+
+export interface SurveySubmission {
+  submit(answers: SurveyAnswers): Promise<void>;
 }
 
 export interface LeadSubmission {
@@ -42,9 +48,16 @@ export interface DashboardLead {
   readonly createdAt: string;
 }
 
+export interface DashboardSurveyResponse {
+  readonly source: ResponseSource;
+  readonly answers: SurveyAnswers;
+  readonly createdAt: string;
+}
+
 export interface DashboardData {
   readonly responses: readonly DashboardResponse[];
   readonly leads: readonly DashboardLead[];
+  readonly surveyResponses: readonly DashboardSurveyResponse[];
 }
 
 export interface DashboardRepository {

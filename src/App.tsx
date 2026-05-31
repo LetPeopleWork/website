@@ -8,7 +8,17 @@ import Index from "./pages/Index";
 import Lighthouse from "./pages/Lighthouse";
 import Assessment from "./pages/Assessment";
 import AdminAssessment from "./pages/AdminAssessment";
+import { SurveyForm } from "./features/survey/components/SurveyForm";
+import { createEdgeFunctionSurveySubmission } from "./features/survey/adapters/edgeFunctionSurveySubmission";
 import NotFound from "./pages/NotFound";
+
+const surveySubmission = createEdgeFunctionSurveySubmission();
+
+const survey = (
+  <main className="min-h-screen bg-background px-4 py-12">
+    <SurveyForm submission={surveySubmission} />
+  </main>
+);
 
 const queryClient = new QueryClient();
 
@@ -24,6 +34,7 @@ const App = () => (
             <Route path="/lighthouse" element={<Lighthouse />} />
             <Route path="/assessment" element={<Assessment />} />
             <Route path="/admin/assessment" element={<AdminAssessment />} />
+            <Route path="/survey" element={survey} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
