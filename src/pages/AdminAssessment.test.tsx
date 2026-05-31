@@ -11,8 +11,11 @@ import type {
   DashboardLead,
   DashboardRepository,
   DashboardResponse,
+  DashboardSurveyResponse,
+  DashboardSurveyTrialRequest,
   SignInResult,
 } from "@/features/assessment/ports";
+import { getMockSurveyAnswers } from "@/features/survey/core/answers";
 
 const getMockResponse = (
   overrides: Partial<DashboardResponse> = {},
@@ -74,6 +77,24 @@ const getFakeAuthGateway = (options: FakeAuthOptions = {}): AuthGateway => {
   };
 };
 
+const getMockSurveyResponse = (
+  overrides: Partial<DashboardSurveyResponse> = {},
+): DashboardSurveyResponse => ({
+  source: "user-survey",
+  answers: getMockSurveyAnswers(),
+  createdAt: "2026-05-01T00:00:00.000Z",
+  ...overrides,
+});
+
+const getMockTrialRequest = (
+  overrides: Partial<DashboardSurveyTrialRequest> = {},
+): DashboardSurveyTrialRequest => ({
+  source: "user-survey-trial",
+  email: "trial@example.com",
+  createdAt: "2026-05-01T00:00:00.000Z",
+  ...overrides,
+});
+
 const getFakeDashboardRepository = (
   data: DashboardData,
 ): DashboardRepository => ({
@@ -81,6 +102,12 @@ const getFakeDashboardRepository = (
     return {
       responses: data.responses.filter((r) => r.source === source),
       leads: data.leads.filter((l) => l.source === source),
+      surveyResponses: (data.surveyResponses ?? []).filter(
+        () => source === "user-survey",
+      ),
+      surveyTrialRequests: (data.surveyTrialRequests ?? []).filter(
+        () => source === "user-survey",
+      ),
     };
   },
 });
@@ -127,6 +154,45 @@ describe("Admin assessment dashboard", () => {
 
     const leadsTable = screen.getByTestId("dashboard-leads");
     expect(within(leadsTable).getByText("ada@example.com")).toBeInTheDocument();
+  });
+
+  it("surfaces the survey view alongside the assessment for a signed-in member", async () => {
+    const recent = new Date().toISOString();
+    const data: DashboardData = {
+      responses: [getMockResponse({ band: "Probabilistic" })],
+      leads: [getMockLead({ email: "assessment-lead@example.com" })],
+      surveyResponses: [
+        getMockSurveyResponse({
+          createdAt: recent,
+          answers: getMockSurveyAnswers({ role: "other" }),
+        }),
+        getMockSurveyResponse({ createdAt: recent }),
+      ],
+      surveyTrialRequests: [
+        getMockTrialRequest({ email: "wants-trial@example.com", createdAt: recent }),
+      ],
+    };
+    const authGateway = getFakeAuthGateway({
+      initialSession: { email: "benjamin@letpeople.work" },
+    });
+
+    renderDashboard(authGateway, getFakeDashboardRepository(data));
+
+    const surveyView = await screen.findByTestId("dashboard-survey");
+    expect(
+      within(surveyView).getByText(/anonymous responses collected/i),
+    ).toHaveTextContent("2 anonymous responses collected");
+    expect(within(surveyView).getByText("Scrum Master / Agile Coach")).toBeInTheDocument();
+
+    const trials = screen.getByTestId("dashboard-survey-trials");
+    expect(
+      within(trials).getByText("wants-trial@example.com"),
+    ).toBeInTheDocument();
+
+    const leadsTable = screen.getByTestId("dashboard-leads");
+    expect(
+      within(leadsTable).getByText("assessment-lead@example.com"),
+    ).toBeInTheDocument();
   });
 
   it("counts and lists only readiness-assessment responses", async () => {

@@ -12,6 +12,8 @@ import type {
   AuthGateway,
   AuthSession,
   DashboardRepository,
+  DashboardSurveyResponse,
+  DashboardSurveyTrialRequest,
 } from "@/features/assessment/ports";
 
 interface AdminAssessmentProps {
@@ -20,6 +22,7 @@ interface AdminAssessmentProps {
 }
 
 const DASHBOARD_SOURCE = "readiness-assessment" as const;
+const SURVEY_SOURCE = "user-survey" as const;
 
 const AdminAssessment = ({
   authGateway,
@@ -36,6 +39,13 @@ const AdminAssessment = ({
 
   const [session, setSession] = useState<AuthSession | null>(null);
   const [summary, setSummary] = useState<DashboardSummary | null>(null);
+  const [surveyResponses, setSurveyResponses] = useState<
+    readonly DashboardSurveyResponse[]
+  >([]);
+  const [surveyTrialRequests, setSurveyTrialRequests] = useState<
+    readonly DashboardSurveyTrialRequest[]
+  >([]);
+  const now = useMemo(() => new Date().toISOString(), []);
 
   useEffect(() => {
     let active = true;
@@ -65,6 +75,12 @@ const AdminAssessment = ({
         setSummary(summarizeDashboard(data, DASHBOARD_SOURCE));
       }
     });
+    void repository.load(SURVEY_SOURCE).then((data) => {
+      if (active) {
+        setSurveyResponses(data.surveyResponses);
+        setSurveyTrialRequests(data.surveyTrialRequests ?? []);
+      }
+    });
     return () => {
       active = false;
     };
@@ -77,7 +93,13 @@ const AdminAssessment = ({
         description="Internal forecasting readiness assessment results."
       />
       {session && summary ? (
-        <AdminDashboard summary={summary} onSignOut={() => void auth.signOut()} />
+        <AdminDashboard
+          summary={summary}
+          surveyResponses={surveyResponses}
+          surveyTrialRequests={surveyTrialRequests}
+          now={now}
+          onSignOut={() => void auth.signOut()}
+        />
       ) : session ? null : (
         <AdminLoginForm onSignIn={auth.signIn} />
       )}
