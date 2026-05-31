@@ -23,7 +23,7 @@ export interface RenderResultsEmailOptions {
   readonly score: number;
 }
 
-export const REPLY_TO_ADDRESS = "hello@letpeople.work";
+export const REPLY_TO_ADDRESS = "contact@letpeople.work";
 
 const SUBJECT = "Your Flow & Forecasting Readiness results";
 const GREETING = "Hi there,";
