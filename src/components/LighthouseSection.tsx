@@ -106,7 +106,9 @@ const LighthouseSection = () => {
               Simple to Install. Simple to Use.
             </h3>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              From download to first forecast in under ten minutes. Here's what that looks like.
+              From download to first forecast in under ten minutes.
+              <br />
+              Here's what that looks like.
             </p>
           </div>
           <div className="max-w-4xl mx-auto">

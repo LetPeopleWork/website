@@ -64,7 +64,9 @@ const HowItWorks = () => {
             <span className="bg-gradient-hero bg-clip-text text-transparent font-light">In three steps.</span>
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed">
-            Most teams use Lighthouse to stop defending estimates. Then they realise they're delivering faster too.
+            Most teams use Lighthouse to stop defending estimates.
+            <br />
+            Then they realise they're delivering faster too.
           </p>
         </div>
 

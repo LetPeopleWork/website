@@ -17,7 +17,7 @@ const ACTIONS: Action[] = [
     icon: CalendarDays,
     title: "Book a demo",
     description:
-      "Want a guided tour with your own questions answered? We'll walk you through Lighthouse on a quick call.",
+      "Want a guided tour with your own questions answered?\nWe'll walk you through Lighthouse on a quick call.",
     cta: "Request a demo",
     href: "mailto:contact@letpeople.work?subject=Book%20a%20Lighthouse%20demo",
   },
@@ -25,7 +25,7 @@ const ACTIONS: Action[] = [
     icon: PlayCircle,
     title: "Watch a walkthrough",
     description:
-      "Prefer to see it first? Watch a recorded session and see Lighthouse work on real delivery data.",
+      "Prefer to see it first?\nWatch a recorded session and see Lighthouse work on real delivery data.",
     cta: "Watch the recording",
     href: "https://www.youtube.com/watch?v=-yemS7Us_lQ",
     external: true,
@@ -62,7 +62,7 @@ function ActionCard({ action, index }: { action: Action; index: number }) {
       <h3 className="text-xl font-bold text-foreground tracking-tight mb-2">
         {action.title}
       </h3>
-      <p className="text-base text-muted-foreground leading-relaxed mb-6 flex-1">
+      <p className="text-base text-muted-foreground leading-relaxed mb-6 flex-1 whitespace-pre-line">
         {action.description}
       </p>
       <span className="inline-flex items-center gap-2 text-sm font-semibold text-primary">
@@ -92,7 +92,9 @@ export default function LighthouseLearnMore() {
             Three easy ways in.
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed mt-5">
-            Download it and play, see it in action, or just talk to us first. Whatever suits you.
+            Download it and play, see it in action, or just talk to us first.
+            <br />
+            Whatever suits you.
           </p>
         </div>
 

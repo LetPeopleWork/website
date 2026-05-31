@@ -1016,7 +1016,7 @@ const Lighthouse = () => {
 							<span className="text-primary font-light">Same product. Different access.</span>
 						</h2>
 						<p className="text-lg md:text-xl text-muted-foreground font-light max-w-2xl mx-auto leading-relaxed">
-							Lighthouse stays open source and self-hosted across every edition. Paid tiers unlock unlimited usage and choose how much of us you want alongside it.
+							Lighthouse stays open source and self-hosted across every edition.<br />Paid tiers unlock unlimited usage and choose how much of us you want alongside it.
 						</p>
 					</div>
 
@@ -1071,7 +1071,7 @@ const Lighthouse = () => {
 							<span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-accent text-primary text-xs font-semibold px-3 py-1 mb-3">Current rate · CHF 2,000 from August 2026</span>
 								<div className="text-sm text-muted-foreground mb-6">Annual license. Self-hosted.</div>
 							<p className="text-base text-foreground/80 leading-relaxed mb-6">
-								The full product, your way. Run it, configure it, and scale it, with the community at your back.
+								The full product, your way.<br />Run it, configure it, and scale it, with the community at your back.
 							</p>
 							<ul className="space-y-2.5 mb-8 flex-1 text-sm text-foreground/80">
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span><span className="font-semibold">Everything in Community</span>, no caps</span></li>
@@ -1313,7 +1313,7 @@ const Lighthouse = () => {
 							<span className="text-primary font-light">Enterprise when you're ready.</span>
 						</h2>
 						<p className="text-lg md:text-xl text-muted-foreground font-light max-w-2xl mx-auto">
-							Pick the path that fits. You can move up later, just write to us.
+							Pick the path that fits.<br />You can move up later, just write to us.
 						</p>
 					</div>
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, MessageSquare, GraduationCap, Zap, Search as SearchIcon } from "lucide-react";
+import { ChevronDown, GraduationCap, Zap, Search as SearchIcon } from "lucide-react";
 import PeterImage from '../assets/Peter.png';
 import BenjiImage from '../assets/Benji.png';
 import EngagementPath from './EngagementPath';
@@ -316,36 +316,6 @@ export default function ExpertiseAndServices() {
         </div>
       </div>
 
-      {/* ── Custom / Tailored ── */}
-      <div id="custom-events" className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 md:pb-28">
-        <div className="rounded-xl border border-border bg-white p-8 md:p-12 text-center">
-          <div className="w-14 h-14 rounded-full bg-accent flex items-center justify-center mx-auto mb-5">
-            <MessageSquare className="w-6 h-6 text-primary" />
-          </div>
-
-          <h3 className="text-xl md:text-2xl font-bold text-foreground mb-3">
-            Your context is unique. Let's design something that fits.
-          </h3>
-
-          <p className="text-sm md:text-base text-muted-foreground max-w-lg mx-auto leading-relaxed mb-2">
-            We believe in the power of collaboration. All our trainings, workshops,
-            and consulting services are designed together with you to match your needs.
-            We always deliver them in pairs, so you get the best insights and diverse perspectives.
-          </p>
-
-          <p className="text-sm text-muted-foreground/70 mb-7">
-            Private events start at CHF 1,000 per event (not per attendee).
-            Perfect for teams of up to 30.
-          </p>
-
-          <a
-            href="mailto:contact@letpeople.work"
-            className="inline-block border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold text-sm px-7 py-3 rounded-lg transition-all duration-200 cursor-pointer no-underline"
-          >
-            Reach Out To Talk About How We Can Support →
-          </a>
-        </div>
-      </div>
       {/* ── About Us ── */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 md:pb-28">
         <div className="text-center bg-background/80 backdrop-blur-sm rounded-2xl p-12 border border-border">

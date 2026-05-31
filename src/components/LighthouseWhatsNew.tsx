@@ -90,7 +90,9 @@ export default function LighthouseWhatsNew() {
               Lighthouse keeps moving.
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed mt-5">
-              A steady stream of releases, shaped by what practitioners actually ask for. Here's a sample from the last few months.
+              A steady stream of releases, shaped by what practitioners actually ask for.
+              <br />
+              Here's a sample from the last few months.
             </p>
           </div>
           <a

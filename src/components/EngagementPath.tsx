@@ -41,7 +41,7 @@ const TIERS: Tier[] = [
     duration: "1 to 2 weeks",
     headline: "Run the pilot. Get the first forecast.",
     description:
-      "We work with your team on your real data. We set up Lighthouse, configure your flow metrics, and run forecasts your team can stand behind. You walk away with a working pilot, not slides.",
+      "We work with your team on your real data.\nWe set up Lighthouse, configure your flow metrics, and run forecasts your team can stand behind.\nYou walk away with a working pilot, not slides.",
     highlights: [
       "Bring-Your-Own-Data workshop with your actual delivery history",
       "Lighthouse configured to your workflow and tracker",
@@ -58,7 +58,7 @@ const TIERS: Tier[] = [
     duration: "1 quarter and up",
     headline: "Roll it out. Make it stick.",
     description:
-      "Assessment, implementation, and the time it takes to embed the change for good. We pair with you across the quarter, from the first forecast to a predictable delivery cadence across your teams.",
+      "Assessment, implementation, and the time it takes to embed the change for good.\nWe pair with you across the quarter, from the first forecast to a predictable delivery cadence across your teams.",
     highlights: [
       "Full assessment and workshop programme bundled",
       "Lighthouse rolled out across multiple teams",
@@ -112,7 +112,7 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
         {tier.headline}
       </h3>
 
-      <p className="text-base text-muted-foreground leading-relaxed mb-6">
+      <p className="text-base text-muted-foreground leading-relaxed mb-6 whitespace-pre-line">
         {tier.description}
       </p>
 
