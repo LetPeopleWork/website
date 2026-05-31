@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import SEO from "@/components/SEO";
 import { AdminDashboard } from "@/features/assessment/components/AdminDashboard";
 import { AdminLoginForm } from "@/features/assessment/components/AdminLoginForm";
@@ -46,6 +46,20 @@ const AdminAssessment = ({
     readonly DashboardSurveyTrialRequest[]
   >([]);
   const now = useMemo(() => new Date().toISOString(), []);
+
+  const reloadSurvey = useCallback(async () => {
+    const data = await repository.load(SURVEY_SOURCE);
+    setSurveyResponses(data.surveyResponses);
+    setSurveyTrialRequests(data.surveyTrialRequests ?? []);
+  }, [repository]);
+
+  const handleMarkTrialFulfilled = useCallback(
+    async (id: string) => {
+      await repository.markTrialFulfilled(id);
+      await reloadSurvey();
+    },
+    [repository, reloadSurvey],
+  );
 
   useEffect(() => {
     let active = true;
@@ -99,6 +113,7 @@ const AdminAssessment = ({
           surveyTrialRequests={surveyTrialRequests}
           now={now}
           onSignOut={() => void auth.signOut()}
+          onMarkTrialFulfilled={handleMarkTrialFulfilled}
         />
       ) : session ? null : (
         <AdminLoginForm onSignIn={auth.signIn} />

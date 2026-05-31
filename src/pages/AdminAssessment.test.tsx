@@ -89,9 +89,11 @@ const getMockSurveyResponse = (
 const getMockTrialRequest = (
   overrides: Partial<DashboardSurveyTrialRequest> = {},
 ): DashboardSurveyTrialRequest => ({
+  id: "11111111-1111-1111-1111-111111111111",
   source: "user-survey-trial",
   email: "trial@example.com",
   createdAt: "2026-05-01T00:00:00.000Z",
+  fulfilledAt: null,
   ...overrides,
 });
 
@@ -110,6 +112,7 @@ const getFakeDashboardRepository = (
       ),
     };
   },
+  markTrialFulfilled: () => Promise.resolve(),
 });
 
 const renderDashboard = (

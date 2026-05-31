@@ -28,14 +28,17 @@ const getMockSurveyResponse = (
 const getMockTrialRequest = (
   overrides: Partial<DashboardSurveyTrialRequest> = {},
 ): DashboardSurveyTrialRequest => ({
+  id: "11111111-1111-1111-1111-111111111111",
   source: "user-survey-trial",
   email: "volunteer@example.com",
   createdAt: "2026-05-02T00:00:00.000Z",
+  fulfilledAt: null,
   ...overrides,
 });
 
 const inMemoryRepository = (data: DashboardData): DashboardRepository => ({
   load: () => Promise.resolve(data),
+  markTrialFulfilled: () => Promise.resolve(),
 });
 
 const renderSurveyView = async (repository: DashboardRepository) => {
@@ -57,8 +60,8 @@ describe("Maintainer trial-requests view on the internal dashboard (US-05, slice
       leads: [],
       surveyResponses: [getMockSurveyResponse(), getMockSurveyResponse()],
       surveyTrialRequests: [
-        getMockTrialRequest({ email: "first@example.com" }),
-        getMockTrialRequest({ email: "second@example.com" }),
+        getMockTrialRequest({ id: "first", email: "first@example.com" }),
+        getMockTrialRequest({ id: "second", email: "second@example.com" }),
       ],
     });
 

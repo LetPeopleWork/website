@@ -39,9 +39,11 @@ interface LeadRow {
 }
 
 interface TrialLeadRow {
+  id: string;
   source: string;
   email: string;
   created_at: string;
+  fulfilled_at: string | null;
 }
 
 const toResponse = (row: ResponseRow): DashboardResponse => ({
@@ -66,9 +68,11 @@ const toLead = (row: LeadRow): DashboardLead => ({
 });
 
 const toTrialRequest = (row: TrialLeadRow): DashboardSurveyTrialRequest => ({
+  id: row.id,
   source: row.source as ResponseSource,
   email: row.email,
   createdAt: row.created_at,
+  fulfilledAt: row.fulfilled_at ?? null,
 });
 
 export const createSupabaseDashboardRepository = (
@@ -85,7 +89,7 @@ export const createSupabaseDashboardRepository = (
       }
       const trialQuery = await client
         .from(LEADS_TABLE)
-        .select("source,email,created_at")
+        .select("id,source,email,created_at,fulfilled_at")
         .eq("source", SURVEY_TRIAL_SOURCE);
       if (trialQuery.error) {
         throw new Error(trialQuery.error.message);
@@ -125,5 +129,15 @@ export const createSupabaseDashboardRepository = (
       leads: (leadsQuery.data ?? []).map((row) => toLead(row as LeadRow)),
       surveyResponses: [],
     };
+  },
+
+  async markTrialFulfilled(id: string): Promise<void> {
+    const { error } = await client
+      .from(LEADS_TABLE)
+      .update({ fulfilled_at: new Date().toISOString() })
+      .eq("id", id);
+    if (error) {
+      throw new Error(error.message);
+    }
   },
 });

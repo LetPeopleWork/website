@@ -32,6 +32,7 @@ interface AdminDashboardProps {
   surveyTrialRequests?: readonly DashboardSurveyTrialRequest[];
   now?: string;
   onSignOut: () => void;
+  onMarkTrialFulfilled?: (id: string) => Promise<void>;
 }
 
 const DEFAULT_RANGE: DateRange = "30d";
@@ -95,37 +96,79 @@ const SurveyView = ({
 
 const SurveyTrialRequestsView = ({
   trialRequests,
+  onMarkTrialFulfilled,
 }: {
   trialRequests: readonly DashboardSurveyTrialRequest[];
-}) => (
-  <Card data-testid="dashboard-survey-trials">
-    <CardHeader>
-      <CardTitle className="text-xl">Trial requests</CardTitle>
-    </CardHeader>
-    <CardContent>
-      <p className="mb-4 text-sm text-muted-foreground">
-        Members who volunteered their email for a premium trial. Action each
-        trial by hand.
-      </p>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Email</TableHead>
-            <TableHead>Date</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {trialRequests.map((request) => (
-            <TableRow key={`${request.email}-${request.createdAt}`}>
-              <TableCell>{request.email}</TableCell>
-              <TableCell>{formatDate(request.createdAt)}</TableCell>
+  onMarkTrialFulfilled?: (id: string) => Promise<void>;
+}) => {
+  const [fulfilledIds, setFulfilledIds] = useState<readonly string[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const activeRequests = trialRequests.filter(
+    (request) =>
+      request.fulfilledAt === null && !fulfilledIds.includes(request.id),
+  );
+
+  const handleMarkSent = async (id: string): Promise<void> => {
+    if (!onMarkTrialFulfilled) {
+      return;
+    }
+    try {
+      await onMarkTrialFulfilled(id);
+      setErrorMessage(null);
+      setFulfilledIds((current) => [...current, id]);
+    } catch {
+      setErrorMessage("Could not mark the trial request as sent. Try again.");
+    }
+  };
+
+  return (
+    <Card data-testid="dashboard-survey-trials">
+      <CardHeader>
+        <CardTitle className="text-xl">Trial requests</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="mb-4 text-sm text-muted-foreground">
+          Members who volunteered their email for a premium trial. Mark each one
+          as sent once you have shipped them a license.
+        </p>
+        {errorMessage ? (
+          <p role="alert" className="mb-4 text-sm text-destructive">
+            {errorMessage}
+          </p>
+        ) : null}
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Email</TableHead>
+              <TableHead>Date</TableHead>
+              <TableHead>Action</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </CardContent>
-  </Card>
-);
+          </TableHeader>
+          <TableBody>
+            {activeRequests.map((request) => (
+              <TableRow key={request.id}>
+                <TableCell>{request.email}</TableCell>
+                <TableCell>{formatDate(request.createdAt)}</TableCell>
+                <TableCell>
+                  {onMarkTrialFulfilled ? (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => void handleMarkSent(request.id)}
+                    >
+                      Mark as sent
+                    </Button>
+                  ) : null}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </CardContent>
+    </Card>
+  );
+};
 
 const formatDate = (iso: string): string =>
   new Date(iso).toLocaleDateString(undefined, {
@@ -141,6 +184,7 @@ export const AdminDashboard = ({
   surveyTrialRequests,
   now,
   onSignOut,
+  onMarkTrialFulfilled,
 }: AdminDashboardProps) => {
   const [range, setRange] = useState<DateRange>(DEFAULT_RANGE);
   const filtersEnabled = surveyResponses !== undefined;
@@ -191,7 +235,10 @@ export const AdminDashboard = ({
       ) : null}
 
       {scopedTrialRequests ? (
-        <SurveyTrialRequestsView trialRequests={scopedTrialRequests} />
+        <SurveyTrialRequestsView
+          trialRequests={scopedTrialRequests}
+          onMarkTrialFulfilled={onMarkTrialFulfilled}
+        />
       ) : null}
 
     <div data-testid="dashboard-totals" className="grid gap-4 sm:grid-cols-2">

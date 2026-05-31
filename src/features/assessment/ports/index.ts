@@ -70,9 +70,11 @@ export interface DashboardSurveyResponse {
 }
 
 export interface DashboardSurveyTrialRequest {
+  readonly id: string;
   readonly source: ResponseSource;
   readonly email: string;
   readonly createdAt: string;
+  readonly fulfilledAt: string | null;
 }
 
 export interface DashboardData {
@@ -84,6 +86,7 @@ export interface DashboardData {
 
 export interface DashboardRepository {
   load(source: ResponseSource): Promise<DashboardData>;
+  markTrialFulfilled(id: string): Promise<void>;
 }
 
 export interface AuthSession {

@@ -26,9 +26,11 @@ const getMockSurveyResponse = (
 const getMockTrialRequest = (
   overrides: Partial<DashboardSurveyTrialRequest> = {},
 ): DashboardSurveyTrialRequest => ({
+  id: "11111111-1111-1111-1111-111111111111",
   source: "user-survey-trial",
   email: "volunteer@example.com",
   createdAt: "2026-05-30T12:00:00.000Z",
+  fulfilledAt: null,
   ...overrides,
 });
 
