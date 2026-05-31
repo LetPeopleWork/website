@@ -9,11 +9,14 @@ import Lighthouse from "./pages/Lighthouse";
 import Assessment from "./pages/Assessment";
 import AdminAssessment from "./pages/AdminAssessment";
 import { SurveyForm } from "./features/survey/components/SurveyForm";
+import { createEdgeFunctionSurveySubmission } from "./features/survey/adapters/edgeFunctionSurveySubmission";
 import NotFound from "./pages/NotFound";
+
+const surveySubmission = createEdgeFunctionSurveySubmission();
 
 const survey = (
   <main className="min-h-screen bg-background px-4 py-12">
-    <SurveyForm onSubmit={() => undefined} />
+    <SurveyForm submission={surveySubmission} />
   </main>
 );
 

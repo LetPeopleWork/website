@@ -3,8 +3,11 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { SurveyForm } from "./components/SurveyForm";
 import { SURVEY_QUESTIONS } from "./content/surveyContent";
+import type { SurveySubmission } from "../assessment/ports";
 
-const noopSubmit = () => undefined;
+const noopSubmission: SurveySubmission = {
+  submit: () => Promise.resolve(),
+};
 
 const renderAt = (path: string) =>
   render(
@@ -12,7 +15,7 @@ const renderAt = (path: string) =>
       <Routes>
         <Route
           path="/survey"
-          element={<SurveyForm onSubmit={noopSubmit} />}
+          element={<SurveyForm submission={noopSubmission} />}
         />
       </Routes>
     </MemoryRouter>,
@@ -46,7 +49,9 @@ describe("Survey page renders questions from config with no login", () => {
         <Routes>
           <Route
             path="/survey"
-            element={<SurveyForm onSubmit={noopSubmit} questions={null} />}
+            element={
+              <SurveyForm submission={noopSubmission} questions={null} />
+            }
           />
         </Routes>
       </MemoryRouter>,
