@@ -36,11 +36,11 @@ describe("summarizeDashboard", () => {
     const data = getMockData({
       responses: [
         getMockResponse({ band: "Flying blind", score: 10 }),
-        getMockResponse({ band: "Probabilistic", score: 90 }),
+        getMockResponse({ band: "Predictable", score: 90 }),
         getMockResponse({ band: "Flow-aware", score: 60 }),
       ],
       leads: [
-        getMockLead({ email: "a@example.com", band: "Probabilistic", score: 90 }),
+        getMockLead({ email: "a@example.com", band: "Predictable", score: 90 }),
         getMockLead({ email: "b@example.com", band: "Flow-aware", score: 60 }),
       ],
     });
@@ -60,7 +60,7 @@ describe("summarizeDashboard", () => {
       responses: [
         getMockResponse({ band: "Flying blind" }),
         getMockResponse({ band: "Flying blind" }),
-        getMockResponse({ band: "Probabilistic" }),
+        getMockResponse({ band: "Predictable" }),
       ],
       leads: [],
     });
@@ -69,9 +69,9 @@ describe("summarizeDashboard", () => {
 
     expect(summary.bandDistribution).toEqual({
       "Flying blind": 2,
-      "Output-focused": 0,
+      "Drifting": 0,
       "Flow-aware": 0,
-      Probabilistic: 1,
+      Predictable: 1,
     });
     expect(Object.keys(summary.bandDistribution)).toHaveLength(4);
   });

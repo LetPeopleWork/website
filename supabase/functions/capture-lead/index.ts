@@ -20,7 +20,6 @@ interface LeadPayload {
   email: string;
   score: number;
   band: string;
-  wantsTrial: boolean;
 }
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -41,7 +40,6 @@ const parsePayload = (body: unknown): LeadPayload | null => {
     email,
     score,
     band,
-    wantsTrial: candidate.wantsTrial === true,
   };
 };
 
@@ -93,7 +91,7 @@ serve(async (req) => {
       email: payload.email,
       score: payload.score,
       band: payload.band,
-      wants_trial: payload.wantsTrial,
+      wants_trial: false,
     });
     if (error) throw new Error(error.message);
 

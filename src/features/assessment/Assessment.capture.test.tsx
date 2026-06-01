@@ -60,7 +60,7 @@ describe("Assessment capture (#22 captured completion, #23 single row, degrade-o
     expect(response.answers).toEqual([1, 1, 1, 1, 1, 1]);
     expect(response.rawSum).toBe(6);
     expect(response.score).toBe(33);
-    expect(response.band).toBe("Output-focused");
+    expect(response.band).toBe("Drifting");
   });
 
   it("#22 a completion with no email is still captured (the row needs no lead)", async () => {

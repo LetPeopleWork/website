@@ -7,9 +7,9 @@ import type { BandName } from "./scoring";
 
 export const BAND_NAMES: readonly BandName[] = [
   "Flying blind",
-  "Output-focused",
+  "Drifting",
   "Flow-aware",
-  "Probabilistic",
+  "Predictable",
 ];
 
 export type BandDistribution = Record<BandName, number>;

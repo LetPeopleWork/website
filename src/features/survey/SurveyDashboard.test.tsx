@@ -3,16 +3,20 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import { AdminDashboard } from "../assessment/components/AdminDashboard";
 import { summarizeDashboard } from "../assessment/core/dashboardSummary";
 import { summarizeSurvey } from "./core/summarizeSurvey";
-import { SURVEY_QUESTIONS } from "./content/surveyContent";
+import { SURVEY_CHOICE_QUESTIONS } from "./content/surveyContent";
 import type {
   DashboardData,
   DashboardRepository,
   DashboardSurveyResponse,
+  SurveyAnswers,
 } from "../assessment/ports";
 
-const allFirstOptions = (): Readonly<Record<string, string>> =>
+const allFirstOptions = (): SurveyAnswers =>
   Object.fromEntries(
-    SURVEY_QUESTIONS.map((question) => [question.id, question.options[0].id]),
+    SURVEY_CHOICE_QUESTIONS.map((question) => [
+      question.id,
+      question.multiple ? [question.options[0].id] : question.options[0].id,
+    ]),
   );
 
 const getMockSurveyResponse = (
@@ -42,7 +46,7 @@ const renderSurveyView = async (repository: DashboardRepository) => {
 };
 
 describe("Maintainer survey view on the internal dashboard (US-05, slice-01)", () => {
-  it("visualizes each question as a chart with no per-question text tally table, all anonymous", async () => {
+  it("visualizes each choice question as a chart with no per-question text tally table, all anonymous", async () => {
     const repository = inMemoryRepository({
       responses: [],
       leads: [],
@@ -51,7 +55,8 @@ describe("Maintainer survey view on the internal dashboard (US-05, slice-01)", (
         getMockSurveyResponse({
           answers: {
             ...allFirstOptions(),
-            [SURVEY_QUESTIONS[0].id]: SURVEY_QUESTIONS[0].options[1].id,
+            [SURVEY_CHOICE_QUESTIONS[0].id]:
+              SURVEY_CHOICE_QUESTIONS[0].options[1].id,
           },
         }),
       ],
@@ -65,10 +70,12 @@ describe("Maintainer survey view on the internal dashboard (US-05, slice-01)", (
     ).toBeInTheDocument();
 
     const charts = within(surveyView).getByTestId("dashboard-survey-charts");
-    expect(within(charts).getByText(SURVEY_QUESTIONS[0].prompt)).toBeInTheDocument();
+    expect(
+      within(charts).getByText(SURVEY_CHOICE_QUESTIONS[0].prompt),
+    ).toBeInTheDocument();
     expect(
       within(charts).getAllByTestId("survey-question-chart"),
-    ).toHaveLength(SURVEY_QUESTIONS.length);
+    ).toHaveLength(SURVEY_CHOICE_QUESTIONS.length);
     expect(within(surveyView).queryByRole("table")).not.toBeInTheDocument();
     expect(within(surveyView).queryByText(/@/)).not.toBeInTheDocument();
   });

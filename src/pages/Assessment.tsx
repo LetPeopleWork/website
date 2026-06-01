@@ -117,7 +117,6 @@ const Assessment = ({
           email,
           score: result.score,
           band: result.band,
-          wantsTrial: false,
         }),
       { onFailure: () => toast(LEAD_FAILED_NOTICE) },
     );

@@ -11,9 +11,9 @@ export type Answers = readonly [
 
 export type BandName =
   | "Flying blind"
-  | "Output-focused"
+  | "Drifting"
   | "Flow-aware"
-  | "Probabilistic";
+  | "Predictable";
 
 export interface ScoreResult {
   readonly rawSum: number;
@@ -29,9 +29,9 @@ interface BandRange {
 
 const BAND_RANGES: readonly BandRange[] = [
   { min: 0, max: 25, name: "Flying blind" },
-  { min: 26, max: 50, name: "Output-focused" },
+  { min: 26, max: 50, name: "Drifting" },
   { min: 51, max: 75, name: "Flow-aware" },
-  { min: 76, max: 100, name: "Probabilistic" },
+  { min: 76, max: 100, name: "Predictable" },
 ];
 
 export const QUESTION_COUNT = 6;

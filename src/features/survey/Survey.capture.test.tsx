@@ -3,12 +3,19 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { SurveyForm } from "./components/SurveyForm";
-import { SURVEY_QUESTIONS } from "./content/surveyContent";
+import {
+  SURVEY_QUESTIONS,
+  SURVEY_CHOICE_QUESTIONS,
+  type SurveyQuestion,
+} from "./content/surveyContent";
 import type { SurveyAnswers, SurveySubmission } from "../assessment/ports";
 
 const firstOptionSelections = (): SurveyAnswers =>
   Object.fromEntries(
-    SURVEY_QUESTIONS.map((question) => [question.id, question.options[0].id]),
+    SURVEY_CHOICE_QUESTIONS.map((question) => [
+      question.id,
+      question.multiple ? [question.options[0].id] : question.options[0].id,
+    ]),
   );
 
 const recordingSubmission = () => {
@@ -55,20 +62,39 @@ const renderForm = (submission: SurveySubmission) =>
     </MemoryRouter>,
   );
 
-const advanceButton = (last: boolean) =>
-  last
-    ? screen.getByRole("button", { name: /submit/i })
-    : screen.getByRole("button", { name: /^next$/i });
+const next = async (user: ReturnType<typeof userEvent.setup>) =>
+  user.click(screen.getByRole("button", { name: /^next$/i }));
+
+const exchangeSubmit = async (user: ReturnType<typeof userEvent.setup>) =>
+  user.click(screen.getByRole("button", { name: /submit/i }));
+
+const answerStep = async (
+  user: ReturnType<typeof userEvent.setup>,
+  question: SurveyQuestion,
+) => {
+  if (question.kind === "text") return;
+  if (question.multiple) {
+    await user.click(screen.getByLabelText(question.options[0].label));
+  } else {
+    await user.click(screen.getByText(question.options[0].label));
+  }
+};
 
 const stepThroughEveryQuestion = async (
   user: ReturnType<typeof userEvent.setup>,
 ) => {
   await user.click(screen.getByRole("button", { name: /start/i }));
   for (const question of SURVEY_QUESTIONS) {
-    await user.click(screen.getByText(question.options[0].label));
-    await user.click(advanceButton(false));
+    await answerStep(user, question);
+    await next(user);
   }
 };
+
+const checkedRadioValues = (): (string | null)[] =>
+  screen
+    .getAllByRole("radio")
+    .filter((radio) => radio.getAttribute("aria-checked") === "true")
+    .map((radio) => radio.getAttribute("value"));
 
 describe("Survey capture (US-02: anonymous store, success-only thank-you, retry, dedup)", () => {
   it("shows the thank-you confirmation only after a recording succeeds", async () => {
@@ -79,7 +105,7 @@ describe("Survey capture (US-02: anonymous store, success-only thank-you, retry,
     await stepThroughEveryQuestion(user);
     expect(screen.queryByText(/thank you/i)).not.toBeInTheDocument();
 
-    await user.click(advanceButton(true));
+    await exchangeSubmit(user);
 
     await screen.findByText(/thank you/i);
     expect(submitted).toEqual([firstOptionSelections()]);
@@ -91,19 +117,16 @@ describe("Survey capture (US-02: anonymous store, success-only thank-you, retry,
     renderForm(submission);
 
     await stepThroughEveryQuestion(user);
-    await user.click(advanceButton(true));
+    await exchangeSubmit(user);
 
     await screen.findByRole("alert");
     expect(screen.queryByText(/thank you/i)).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: /submit/i })).toBeEnabled();
 
     await user.click(screen.getByRole("button", { name: /back/i }));
-    const lastQuestion = SURVEY_QUESTIONS[SURVEY_QUESTIONS.length - 1];
-    const checked = screen
-      .getAllByRole("radio")
-      .filter((radio) => radio.getAttribute("aria-checked") === "true")
-      .map((radio) => radio.getAttribute("value"));
-    expect(checked).toEqual([lastQuestion.options[0].id]);
+    const lastQuestion =
+      SURVEY_CHOICE_QUESTIONS[SURVEY_CHOICE_QUESTIONS.length - 1];
+    expect(checkedRadioValues()).toEqual([lastQuestion.options[0].id]);
   });
 
   it("records one logical response when submitted twice in quick succession", async () => {
@@ -112,8 +135,8 @@ describe("Survey capture (US-02: anonymous store, success-only thank-you, retry,
     renderForm(submission);
 
     await stepThroughEveryQuestion(user);
-    await user.click(advanceButton(true));
-    await user.click(advanceButton(true));
+    await exchangeSubmit(user);
+    await exchangeSubmit(user);
     release();
 
     await screen.findByText(/thank you/i);
@@ -125,30 +148,33 @@ describe("Survey capture (US-02: anonymous store, success-only thank-you, retry,
     const { submission, submitted } = recordingSubmission();
     renderForm(submission);
 
+    const recommend = SURVEY_CHOICE_QUESTIONS[0];
+    const primaryUse = SURVEY_CHOICE_QUESTIONS[1];
+    const teamCount = SURVEY_CHOICE_QUESTIONS[2];
+    const role = SURVEY_CHOICE_QUESTIONS[3];
+    const discovery = SURVEY_CHOICE_QUESTIONS[4];
+
     await user.click(screen.getByRole("button", { name: /start/i }));
-    await user.click(screen.getByText(SURVEY_QUESTIONS[0].options[1].label));
-    await user.click(advanceButton(false));
-    await user.click(screen.getByText(SURVEY_QUESTIONS[1].options[0].label));
+    await user.click(screen.getByText(recommend.options[1].label));
+    await next(user);
+    await user.click(screen.getByLabelText(primaryUse.options[0].label));
     await user.click(screen.getByRole("button", { name: /back/i }));
 
-    const checkedAfterBack = screen
-      .getAllByRole("radio")
-      .filter((radio) => radio.getAttribute("aria-checked") === "true")
-      .map((radio) => radio.getAttribute("value"));
-    expect(checkedAfterBack).toEqual([SURVEY_QUESTIONS[0].options[1].id]);
+    expect(checkedRadioValues()).toEqual([recommend.options[1].id]);
 
-    await user.click(advanceButton(false));
-    await user.click(advanceButton(false));
-    await user.click(screen.getByText(SURVEY_QUESTIONS[2].options[0].label));
-    await user.click(advanceButton(false));
-    await user.click(screen.getByText(SURVEY_QUESTIONS[3].options[0].label));
-    await user.click(advanceButton(false));
-    await user.click(advanceButton(true));
+    await next(user); // back onto primary-use (already answered)
+    await next(user); // free text (optional)
+    await next(user); // free text -> team-count
+    await user.click(screen.getByText(teamCount.options[0].label));
+    await next(user);
+    await user.click(screen.getByText(role.options[0].label));
+    await next(user);
+    await user.click(screen.getByText(discovery.options[0].label));
+    await next(user);
+    await exchangeSubmit(user);
 
     await screen.findByText(/thank you/i);
-    expect(submitted[0][SURVEY_QUESTIONS[0].id]).toBe(
-      SURVEY_QUESTIONS[0].options[1].id,
-    );
+    expect(submitted[0][recommend.id]).toBe(recommend.options[1].id);
   });
 });
 
@@ -175,7 +201,7 @@ describe("Assessment CapturedResponse keeps its non-null scored shape (5123 regr
       answers: [1, 1, 1, 1, 1, 1],
       rawSum: 6,
       score: 50,
-      band: "Output-focused",
+      band: "Drifting",
     };
 
     expect(typeof captured.score).toBe("number");

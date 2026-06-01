@@ -7,13 +7,13 @@ describe("anti-forgery band re-validation (#27 forged, #28 out-of-range, #29 hon
   });
 
   it("#27 rejects a forged band the score does not earn", () => {
-    expect(bandMatchesScore(4, "Probabilistic")).toBe(false);
+    expect(bandMatchesScore(4, "Predictable")).toBe(false);
   });
 
   it.each([
     [-1, "Flying blind"],
-    [101, "Probabilistic"],
-    [50.5, "Output-focused"],
+    [101, "Predictable"],
+    [50.5, "Drifting"],
   ])("#28 rejects an out-of-range score %d", (score, band) => {
     expect(bandMatchesScore(score, band)).toBe(false);
   });
@@ -21,12 +21,12 @@ describe("anti-forgery band re-validation (#27 forged, #28 out-of-range, #29 hon
   it.each([
     [0, "Flying blind"],
     [25, "Flying blind"],
-    [26, "Output-focused"],
-    [50, "Output-focused"],
+    [26, "Drifting"],
+    [50, "Drifting"],
     [51, "Flow-aware"],
     [75, "Flow-aware"],
-    [76, "Probabilistic"],
-    [100, "Probabilistic"],
+    [76, "Predictable"],
+    [100, "Predictable"],
   ])("accepts boundary score %d in its earned band", (score, band) => {
     expect(bandMatchesScore(score, band)).toBe(true);
   });

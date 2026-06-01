@@ -16,7 +16,13 @@ interface SubmitSurveyResponse {
 }
 
 const trialBody = (trial: SurveyTrialOptIn | undefined) =>
-  trial ? { wantsTrial: true, email: trial.email } : {};
+  trial
+    ? {
+        wantsTrial: true,
+        email: trial.email,
+        organization: trial.organization,
+      }
+    : {};
 
 export const createEdgeFunctionSurveySubmission = (
   client = supabase,

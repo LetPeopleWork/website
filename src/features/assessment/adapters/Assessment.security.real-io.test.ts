@@ -21,7 +21,7 @@ describe.skip(`Assessment security boundaries against live Supabase — ${SKIP_R
       answers: [1, 1, 1, 1, 1, 1],
       rawSum: 6,
       score: 33,
-      band: "Output-focused",
+      band: "Drifting",
     });
 
     const { data } = await anonClient()
@@ -38,7 +38,7 @@ describe.skip(`Assessment security boundaries against live Supabase — ${SKIP_R
         source: "readiness-assessment",
         email: "forged@example.com",
         score: 4,
-        band: "Probabilistic",
+        band: "Predictable",
         wantsTrial: false,
       }),
     ).rejects.toThrow();
@@ -51,7 +51,7 @@ describe.skip(`Assessment security boundaries against live Supabase — ${SKIP_R
         source: "readiness-assessment",
         email: "outofrange@example.com",
         score: 250,
-        band: "Probabilistic",
+        band: "Predictable",
         wantsTrial: false,
       }),
     ).rejects.toThrow();

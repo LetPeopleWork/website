@@ -3,17 +3,21 @@ import { render, screen, within } from "@testing-library/react";
 import { AdminDashboard } from "../assessment/components/AdminDashboard";
 import { summarizeDashboard } from "../assessment/core/dashboardSummary";
 import { summarizeSurvey } from "./core/summarizeSurvey";
-import { SURVEY_QUESTIONS } from "./content/surveyContent";
+import { SURVEY_CHOICE_QUESTIONS } from "./content/surveyContent";
 import type {
   DashboardData,
   DashboardRepository,
   DashboardSurveyResponse,
   DashboardSurveyTrialRequest,
+  SurveyAnswers,
 } from "../assessment/ports";
 
-const allFirstOptions = (): Readonly<Record<string, string>> =>
+const allFirstOptions = (): SurveyAnswers =>
   Object.fromEntries(
-    SURVEY_QUESTIONS.map((question) => [question.id, question.options[0].id]),
+    SURVEY_CHOICE_QUESTIONS.map((question) => [
+      question.id,
+      question.multiple ? [question.options[0].id] : question.options[0].id,
+    ]),
   );
 
 const getMockSurveyResponse = (
@@ -31,6 +35,7 @@ const getMockTrialRequest = (
   id: "11111111-1111-1111-1111-111111111111",
   source: "user-survey-trial",
   email: "volunteer@example.com",
+  organization: "Acme Inc.",
   createdAt: "2026-05-02T00:00:00.000Z",
   fulfilledAt: null,
   ...overrides,

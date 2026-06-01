@@ -4,11 +4,12 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { SurveyForm } from "./components/SurveyForm";
 import { summarizeSurvey } from "./core/summarizeSurvey";
-import { SURVEY_QUESTIONS } from "./content/surveyContent";
+import { SURVEY_QUESTIONS, SURVEY_CHOICE_QUESTIONS } from "./content/surveyContent";
 import type { SurveyQuestion } from "./content/surveyContent";
 import type {
   DashboardData,
   DashboardSurveyResponse,
+  SurveyAnswers,
 } from "../assessment/ports";
 
 const SURVEY_ROUTE = "/survey";
@@ -19,6 +20,8 @@ const editedQuestions: readonly SurveyQuestion[] = [
   {
     id: "favourite-cadence",
     prompt: "Which planning cadence fits your team best?",
+    kind: "choice",
+    multiple: false,
     options: [
       { id: "weekly", label: "Weekly" },
       { id: "fortnightly", label: "Fortnightly" },
@@ -40,14 +43,17 @@ const renderSurveyAtRoute = (questions: readonly SurveyQuestion[]) =>
     </MemoryRouter>,
   );
 
-const allFirstOptions = (): Readonly<Record<string, string>> =>
+const allFirstOptions = (): SurveyAnswers =>
   Object.fromEntries(
-    SURVEY_QUESTIONS.map((question) => [question.id, question.options[0].id]),
+    SURVEY_CHOICE_QUESTIONS.map((question) => [
+      question.id,
+      question.multiple ? [question.options[0].id] : question.options[0].id,
+    ]),
   );
 
-const historicalAnswers = (): Readonly<Record<string, string>> => ({
+const historicalAnswers = (): SurveyAnswers => ({
   "retired-question": "retired-option",
-  [SURVEY_QUESTIONS[0].id]: "decommissioned-choice",
+  [SURVEY_CHOICE_QUESTIONS[0].id]: "decommissioned-choice",
 });
 
 const getMockSurveyResponse = (
@@ -116,10 +122,10 @@ describe("Old and new survey responses both stay readable on the dashboard", () 
     expect(summary.totalResponses).toBe(2);
 
     const firstQuestion = summary.questions.find(
-      (question) => question.id === SURVEY_QUESTIONS[0].id,
+      (question) => question.id === SURVEY_CHOICE_QUESTIONS[0].id,
     );
     const firstConfiguredOption = firstQuestion?.options.find(
-      (option) => option.id === SURVEY_QUESTIONS[0].options[0].id,
+      (option) => option.id === SURVEY_CHOICE_QUESTIONS[0].options[0].id,
     );
     expect(firstConfiguredOption?.count).toBe(1);
 

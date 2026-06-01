@@ -13,17 +13,32 @@ describe("survey answers core (no scoring)", () => {
     expect(surveyAnswersSchema.safeParse(answers).success).toBe(true);
   });
 
-  it("carries one selected option per question and no scoring fields", () => {
+  it("carries an answer per required question and no scoring fields", () => {
     const answers = getMockSurveyAnswers();
     expect(Object.keys(answers).sort()).toEqual([
-      "assessmentInterest",
       "discoveryChannel",
+      "primaryUse",
+      "recommend",
       "role",
       "teamCount",
     ]);
   });
 
-  it("rejects an unknown option value for a question", () => {
+  it("accepts multiple selections for the multiselect question", () => {
+    const answers = getMockSurveyAnswers({
+      primaryUse: ["forecasting", "flow-metrics"],
+    });
+    expect(answers.primaryUse).toEqual(["forecasting", "flow-metrics"]);
+    expect(surveyAnswersSchema.safeParse(answers).success).toBe(true);
+  });
+
+  it("rejects an empty multiselect and an unknown option value", () => {
+    expect(
+      surveyAnswersSchema.safeParse({
+        ...getMockSurveyAnswers(),
+        primaryUse: [],
+      }).success,
+    ).toBe(false);
     const broken = { ...getMockSurveyAnswers(), teamCount: "not-an-option" };
     expect(surveyAnswersSchema.safeParse(broken).success).toBe(false);
   });

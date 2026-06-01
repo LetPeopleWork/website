@@ -105,7 +105,7 @@ describe("Assessment flow integration (#3 back, #4 resume, #5 restart, #19 tease
 
     const result = await screen.findByTestId("assessment-result");
     expect(within(result).getByText(/\/ 100/)).toBeInTheDocument();
-    expect(within(result).getByText(/Output-focused/)).toBeInTheDocument();
+    expect(within(result).getByText(/Drifting/)).toBeInTheDocument();
     expect(within(result).getByText(/Vacanti \/ ProKanban/)).toBeInTheDocument();
     expect(screen.queryByTestId("assessment-breakdown")).not.toBeInTheDocument();
   });

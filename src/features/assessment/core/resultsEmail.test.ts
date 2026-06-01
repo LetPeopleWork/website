@@ -24,7 +24,6 @@ describe("renderResultsEmail builds the branded results email from a band", () =
         expect(body).toContain(copy.tagline);
         expect(body).toContain(copy.measureRead);
         expect(body).toContain(copy.forecastRead);
-        expect(body).toContain(copy.nextRung);
         expect(body).toContain(String(score));
         expect(body).toContain("Hi there,");
         expect(body).toContain("reply to this email");

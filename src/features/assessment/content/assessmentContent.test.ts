@@ -9,9 +9,9 @@ import type { BandName } from "../core/scoring";
 
 const ALL_BANDS: readonly BandName[] = [
   "Flying blind",
-  "Output-focused",
+  "Drifting",
   "Flow-aware",
-  "Probabilistic",
+  "Predictable",
 ];
 
 describe("assessment content (#20, #21 + load-time invariants)", () => {
@@ -44,7 +44,6 @@ describe("assessment content (#20, #21 + load-time invariants)", () => {
       const content = bandContent(band);
       expect(content.measureRead.trim().length).toBeGreaterThan(0);
       expect(content.forecastRead.trim().length).toBeGreaterThan(0);
-      expect(content.nextRung.trim().length).toBeGreaterThan(0);
       expect(content.ctas.length).toBeGreaterThan(0);
     }
   });
@@ -57,18 +56,20 @@ describe("assessment content (#20, #21 + load-time invariants)", () => {
     }
   });
 
-  it("#20 low and top bands offer their documented secondary next step", () => {
-    expect(
-      bandContent("Flying blind").ctas.some((cta) =>
-        cta.label.toLowerCase().includes("consulting"),
-      ),
-    ).toBe(true);
-    expect(
-      bandContent("Probabilistic").ctas.some(
-        (cta) =>
-          cta.label.toLowerCase().includes("paid") ||
-          cta.label.toLowerCase().includes("portfolio"),
-      ),
-    ).toBe(true);
+  it("#20 the sweet-spot and top bands offer a workshop as their secondary next step", () => {
+    for (const band of ["Flow-aware", "Predictable"] as const) {
+      expect(
+        bandContent(band).ctas.some((cta) =>
+          cta.label.toLowerCase().includes("workshop"),
+        ),
+      ).toBe(true);
+    }
+  });
+
+  it("#20 the entry bands keep a single Community-only next step", () => {
+    for (const band of ["Flying blind", "Drifting"] as const) {
+      expect(bandContent(band).ctas).toHaveLength(1);
+      expect(bandContent(band).ctas[0].isCommunity).toBe(true);
+    }
   });
 });

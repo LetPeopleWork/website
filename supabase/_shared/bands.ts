@@ -1,8 +1,8 @@
 export type BandName =
   | "Flying blind"
-  | "Output-focused"
+  | "Drifting"
   | "Flow-aware"
-  | "Probabilistic";
+  | "Predictable";
 
 export interface BandRange {
   readonly name: BandName;
@@ -12,9 +12,9 @@ export interface BandRange {
 
 export const BAND_RANGES: readonly BandRange[] = [
   { name: "Flying blind", min: 0, max: 25 },
-  { name: "Output-focused", min: 26, max: 50 },
+  { name: "Drifting", min: 26, max: 50 },
   { name: "Flow-aware", min: 51, max: 75 },
-  { name: "Probabilistic", min: 76, max: 100 },
+  { name: "Predictable", min: 76, max: 100 },
 ];
 
 export const bandOfScore = (value: number): BandName | null => {

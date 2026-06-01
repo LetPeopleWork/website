@@ -13,7 +13,6 @@ export const createEdgeFunctionLeadCapture = (
         email: lead.email,
         score: lead.score,
         band: lead.band,
-        wantsTrial: lead.wantsTrial,
       },
     });
     if (error) {

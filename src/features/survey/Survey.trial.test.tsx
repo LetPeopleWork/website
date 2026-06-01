@@ -3,7 +3,10 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { SurveyForm } from "./components/SurveyForm";
-import { SURVEY_QUESTIONS } from "./content/surveyContent";
+import {
+  SURVEY_QUESTIONS,
+  type SurveyQuestion,
+} from "./content/surveyContent";
 import {
   TrialRequestFailedError,
   type SurveyAnswers,
@@ -45,16 +48,40 @@ const renderForm = (submission: SurveySubmission) =>
     </MemoryRouter>,
   );
 
-const advance = (last: boolean) =>
-  last
-    ? screen.getByRole("button", { name: /^next$/i })
-    : screen.getByRole("button", { name: /^next$/i });
+const answerStep = async (
+  user: ReturnType<typeof userEvent.setup>,
+  question: SurveyQuestion,
+) => {
+  if (question.kind === "text") return;
+  if (question.multiple) {
+    await user.click(screen.getByLabelText(question.options[0].label));
+  } else {
+    await user.click(screen.getByText(question.options[0].label));
+  }
+};
 
 const reachExchange = async (user: ReturnType<typeof userEvent.setup>) => {
   await user.click(screen.getByRole("button", { name: /start/i }));
   for (const question of SURVEY_QUESTIONS) {
-    await user.click(screen.getByText(question.options[0].label));
-    await user.click(advance(false));
+    await answerStep(user, question);
+    await user.click(screen.getByRole("button", { name: /^next$/i }));
+  }
+};
+
+const optIntoTrial = async (
+  user: ReturnType<typeof userEvent.setup>,
+  email: string,
+  organization?: string,
+) => {
+  await user.click(
+    screen.getByRole("checkbox", { name: /free.*premium trial/i }),
+  );
+  await user.type(screen.getByRole("textbox", { name: /email/i }), email);
+  if (organization !== undefined) {
+    await user.type(
+      screen.getByRole("textbox", { name: /organization/i }),
+      organization,
+    );
   }
 };
 
@@ -63,17 +90,13 @@ const submitFromExchange = async (user: ReturnType<typeof userEvent.setup>) => {
 };
 
 describe("Survey trial opt-in (US-04 / US-08)", () => {
-  it("records a trial request with the volunteered email when opted in with a valid email", async () => {
+  it("records a trial request with the volunteered email and organization", async () => {
     const user = userEvent.setup();
     const { submission, calls } = recordingSubmission();
     renderForm(submission);
 
     await reachExchange(user);
-    await user.click(screen.getByRole("checkbox", { name: /free premium trial/i }));
-    await user.type(
-      screen.getByRole("textbox", { name: /email/i }),
-      "member@example.com",
-    );
+    await optIntoTrial(user, "member@example.com", "Acme Inc.");
     await submitFromExchange(user);
 
     await screen.findByText(/thank you/i);
@@ -81,6 +104,7 @@ describe("Survey trial opt-in (US-04 / US-08)", () => {
     expect(calls[0].trial).toEqual({
       wantsTrial: true,
       email: "member@example.com",
+      organization: "Acme Inc.",
     });
   });
 
@@ -103,16 +127,29 @@ describe("Survey trial opt-in (US-04 / US-08)", () => {
     renderForm(submission);
 
     await reachExchange(user);
-    await user.click(screen.getByRole("checkbox", { name: /free premium trial/i }));
-    await user.type(screen.getByRole("textbox", { name: /email/i }), "not-an-email");
+    await optIntoTrial(user, "not-an-email", "Acme Inc.");
     await submitFromExchange(user);
 
     await screen.findByRole("alert");
     expect(calls).toHaveLength(0);
     expect(screen.queryByText(/thank you/i)).not.toBeInTheDocument();
-    expect((screen.getByRole("textbox", { name: /email/i }) as HTMLInputElement).value).toBe(
-      "not-an-email",
-    );
+    expect(
+      (screen.getByRole("textbox", { name: /email/i }) as HTMLInputElement).value,
+    ).toBe("not-an-email");
+  });
+
+  it("requires an organization before a trial can be requested", async () => {
+    const user = userEvent.setup();
+    const { submission, calls } = recordingSubmission();
+    renderForm(submission);
+
+    await reachExchange(user);
+    await optIntoTrial(user, "member@example.com");
+    await submitFromExchange(user);
+
+    await screen.findByRole("alert");
+    expect(calls).toHaveLength(0);
+    expect(screen.queryByText(/thank you/i)).not.toBeInTheDocument();
   });
 
   it("tells the member the trial request specifically failed and lets them retry", async () => {
@@ -121,11 +158,7 @@ describe("Survey trial opt-in (US-04 / US-08)", () => {
     renderForm(submission);
 
     await reachExchange(user);
-    await user.click(screen.getByRole("checkbox", { name: /free premium trial/i }));
-    await user.type(
-      screen.getByRole("textbox", { name: /email/i }),
-      "member@example.com",
-    );
+    await optIntoTrial(user, "member@example.com", "Acme Inc.");
     await submitFromExchange(user);
 
     const alert = await screen.findByRole("alert");

@@ -18,11 +18,12 @@ export interface ResponseRepository {
   save(response: CapturedResponse): Promise<void>;
 }
 
-export type SurveyAnswers = Readonly<Record<string, string>>;
+export type SurveyAnswers = Readonly<Record<string, string | readonly string[]>>;
 
 export interface SurveyTrialOptIn {
   readonly wantsTrial: true;
   readonly email: string;
+  readonly organization: string;
 }
 
 export class TrialRequestFailedError extends Error {
@@ -41,7 +42,6 @@ export interface LeadSubmission {
   readonly email: string;
   readonly score: number;
   readonly band: BandName;
-  readonly wantsTrial: boolean;
 }
 
 export interface LeadCapture {
@@ -73,6 +73,7 @@ export interface DashboardSurveyTrialRequest {
   readonly id: string;
   readonly source: ResponseSource;
   readonly email: string;
+  readonly organization: string | null;
   readonly createdAt: string;
   readonly fulfilledAt: string | null;
 }

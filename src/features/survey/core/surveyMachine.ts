@@ -1,4 +1,23 @@
-export const SURVEY_QUESTION_COUNT = 4;
+import { SURVEY_QUESTIONS } from "../content/surveyContent";
+
+export const SURVEY_QUESTION_COUNT = SURVEY_QUESTIONS.length;
+
+interface QuestionMeta {
+  readonly required: boolean;
+  readonly multiple: boolean;
+  readonly text: boolean;
+}
+
+const QUESTION_META: readonly QuestionMeta[] = SURVEY_QUESTIONS.map(
+  (question) => ({
+    required: question.kind === "choice",
+    multiple: question.kind === "choice" && question.multiple,
+    text: question.kind === "text",
+  }),
+);
+
+export type SurveyAnswerValue = string | readonly string[];
+export type SurveyAnswer = SurveyAnswerValue | null;
 
 export type SurveyPhase =
   | "intro"
@@ -6,8 +25,6 @@ export type SurveyPhase =
   | "exchange"
   | "submitting"
   | "done";
-
-export type SurveyAnswer = string | null;
 
 export interface SurveyState {
   readonly phase: SurveyPhase;
@@ -17,7 +34,7 @@ export interface SurveyState {
 
 export type SurveyMachineAction =
   | { type: "start" }
-  | { type: "answer"; value: string }
+  | { type: "answer"; value: SurveyAnswerValue }
   | { type: "next" }
   | { type: "back" }
   | { type: "submit" }
@@ -25,7 +42,11 @@ export type SurveyMachineAction =
   | { type: "retry" };
 
 const emptyAnswers = (): readonly SurveyAnswer[] =>
-  Array.from({ length: SURVEY_QUESTION_COUNT }, () => null);
+  QUESTION_META.map((meta) => {
+    if (meta.multiple) return [] as readonly string[];
+    if (meta.text) return "";
+    return null;
+  });
 
 export const initialSurveyState = (): SurveyState => ({
   phase: "intro",
@@ -33,11 +54,24 @@ export const initialSurveyState = (): SurveyState => ({
   answers: emptyAnswers(),
 });
 
+const isAnswered = (
+  answers: readonly SurveyAnswer[],
+  index: number,
+): boolean => {
+  const meta = QUESTION_META[index];
+  const value = answers[index];
+  if (meta.text || !meta.required) return true;
+  if (meta.multiple) return Array.isArray(value) && value.length > 0;
+  return typeof value === "string" && value.length > 0;
+};
+
 export const canSubmitSurvey = (state: SurveyState): boolean =>
-  state.answers.every((answer) => answer !== null);
+  state.answers.every((_, index) => isAnswered(state.answers, index));
 
 const firstUnansweredIndex = (state: SurveyState): number => {
-  const index = state.answers.findIndex((answer) => answer === null);
+  const index = state.answers.findIndex(
+    (_, position) => !isAnswered(state.answers, position),
+  );
   return index === -1 ? SURVEY_QUESTION_COUNT - 1 : index;
 };
 
@@ -46,7 +80,7 @@ export const surveyProgressLabel = (state: SurveyState): string =>
 
 const withAnswer = (
   state: SurveyState,
-  value: string,
+  value: SurveyAnswerValue,
 ): readonly SurveyAnswer[] =>
   state.answers.map((answer, index) =>
     index === state.currentIndex ? value : answer,
@@ -58,13 +92,13 @@ const start = (state: SurveyState): SurveyState => ({
   currentIndex: 0,
 });
 
-const answer = (state: SurveyState, value: string): SurveyState => ({
+const answer = (state: SurveyState, value: SurveyAnswerValue): SurveyState => ({
   ...state,
   answers: withAnswer(state, value),
 });
 
 const next = (state: SurveyState): SurveyState => {
-  if (state.answers[state.currentIndex] === null) {
+  if (!isAnswered(state.answers, state.currentIndex)) {
     return state;
   }
   if (state.currentIndex >= SURVEY_QUESTION_COUNT - 1) {

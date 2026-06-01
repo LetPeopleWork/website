@@ -2,16 +2,20 @@ import { describe, it, expect } from "vitest";
 import { render, screen, within, fireEvent } from "@testing-library/react";
 import { AdminDashboard } from "../assessment/components/AdminDashboard";
 import { summarizeDashboard } from "../assessment/core/dashboardSummary";
-import { SURVEY_QUESTIONS } from "./content/surveyContent";
+import { SURVEY_CHOICE_QUESTIONS } from "./content/surveyContent";
 import type {
   DashboardData,
   DashboardSurveyResponse,
   DashboardSurveyTrialRequest,
+  SurveyAnswers,
 } from "../assessment/ports";
 
-const allFirstOptions = (): Readonly<Record<string, string>> =>
+const allFirstOptions = (): SurveyAnswers =>
   Object.fromEntries(
-    SURVEY_QUESTIONS.map((question) => [question.id, question.options[0].id]),
+    SURVEY_CHOICE_QUESTIONS.map((question) => [
+      question.id,
+      question.multiple ? [question.options[0].id] : question.options[0].id,
+    ]),
   );
 
 const getMockSurveyResponse = (
@@ -29,6 +33,7 @@ const getMockTrialRequest = (
   id: "11111111-1111-1111-1111-111111111111",
   source: "user-survey-trial",
   email: "volunteer@example.com",
+  organization: "Acme Inc.",
   createdAt: "2026-05-30T12:00:00.000Z",
   fulfilledAt: null,
   ...overrides,
@@ -49,7 +54,7 @@ const renderDashboard = (data: DashboardData, now: string) => {
 const NOW = "2026-05-31T12:00:00.000Z";
 
 describe("Maintainer filters the survey view by date range and sees answer visualizations", () => {
-  it("renders a per-question answer chart for every survey question", () => {
+  it("renders a per-question answer chart for every choice question", () => {
     const data: DashboardData = {
       responses: [],
       leads: [],
@@ -61,13 +66,11 @@ describe("Maintainer filters the survey view by date range and sees answer visua
 
     const survey = screen.getByTestId("dashboard-survey");
     const charts = within(survey).getByTestId("dashboard-survey-charts");
-    for (const question of SURVEY_QUESTIONS) {
-      expect(
-        within(charts).getByText(question.prompt),
-      ).toBeInTheDocument();
+    for (const question of SURVEY_CHOICE_QUESTIONS) {
+      expect(within(charts).getByText(question.prompt)).toBeInTheDocument();
     }
     expect(within(charts).getAllByTestId("survey-question-chart")).toHaveLength(
-      SURVEY_QUESTIONS.length,
+      SURVEY_CHOICE_QUESTIONS.length,
     );
     expect(within(survey).queryByRole("table")).not.toBeInTheDocument();
   });

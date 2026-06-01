@@ -4,9 +4,14 @@ export interface SurveyNotificationEmail {
   readonly text: string;
 }
 
+export interface NotificationTrial {
+  readonly email: string;
+  readonly organization: string;
+}
+
 export interface RenderSurveyNotificationEmailOptions {
-  readonly answers: Record<string, string>;
-  readonly trialEmail?: string | null;
+  readonly answers: Record<string, string | readonly string[]>;
+  readonly trial?: NotificationTrial | null;
 }
 
 export const TEAM_NOTIFICATION_RECIPIENT = "survey.answer@letpeople.work";
@@ -14,25 +19,39 @@ export const TEAM_NOTIFICATION_RECIPIENT = "survey.answer@letpeople.work";
 const SUBJECT = "New Lighthouse survey response";
 const NO_TRIAL_LINE = "No trial requested.";
 
-const trialLine = (trialEmail: string | null | undefined): string =>
-  trialEmail ? `Trial requested — ${trialEmail}` : NO_TRIAL_LINE;
+const trialLine = (trial: NotificationTrial | null | undefined): string =>
+  trial
+    ? `Trial requested: ${trial.email} (${trial.organization})`
+    : NO_TRIAL_LINE;
 
 export const QUESTION_LABELS: Readonly<Record<string, string>> = {
+  recommend: "How likely are you to recommend Lighthouse to a colleague?",
+  "primary-use": "What do you use Lighthouse for? (select all that apply)",
+  improvement: "What would most improve Lighthouse for you?",
   "team-count": "How many teams are using Lighthouse in your organisation?",
   role: "What's your role?",
   "discovery-channel": "How did you hear about Lighthouse?",
-  "assessment-interest": "Would you be interested in a service like this?",
 };
 
 export const ANSWER_LABELS: Readonly<Record<string, string>> = {
+  "very-likely": "Very likely",
+  likely: "Likely",
+  neutral: "Neutral",
+  unlikely: "Unlikely",
+  forecasting: "Forecasting",
+  "flow-metrics": "Flow Metrics",
+  "portfolio-overview": "Portfolio Overview",
+  "stakeholder-reporting": "Stakeholder Reporting",
+  "still-exploring": "Still Exploring",
   "just-mine": "Just mine (1)",
-  "two-to-five": "2–5",
-  "six-to-ten": "6–10",
+  "two-to-five": "2-5",
+  "six-to-ten": "6-10",
   "more-than-ten": "More than 10",
   "scrum-master-agile-coach": "Scrum Master / Agile Coach",
   "engineering-manager-delivery-lead": "Engineering Manager / Delivery Lead",
   "product-manager-owner": "Product Manager / Product Owner",
   "engineering-developer": "Engineering / Developer",
+  "consultant-trainer": "Consultant / Trainer",
   "leadership-director": "Leadership / Director+",
   other: "Other",
   linkedin: "LinkedIn",
@@ -40,9 +59,8 @@ export const ANSWER_LABELS: Readonly<Record<string, string>> = {
   "colleague-word-of-mouth": "Colleague / Word of mouth",
   "google-search": "Google / Search",
   github: "GitHub",
-  yes: "Yes",
-  maybe: "Maybe",
-  no: "No",
+  "youtube-podcast": "YouTube / Podcast",
+  "blog-article": "Blog / Article",
 };
 
 const escapeHtml = (value: string): string =>
@@ -57,15 +75,22 @@ const labelForQuestion = (questionId: string): string =>
 const labelForAnswer = (optionId: string): string =>
   ANSWER_LABELS[optionId] ?? optionId;
 
+const answerText = (value: string | readonly string[]): string =>
+  Array.isArray(value)
+    ? value.map(labelForAnswer).join(", ")
+    : labelForAnswer(value as string);
+
 interface SummaryRow {
   readonly question: string;
   readonly answer: string;
 }
 
-const summaryRows = (answers: Record<string, string>): readonly SummaryRow[] =>
-  Object.entries(answers).map(([questionId, optionId]) => ({
+const summaryRows = (
+  answers: Record<string, string | readonly string[]>,
+): readonly SummaryRow[] =>
+  Object.entries(answers).map(([questionId, value]) => ({
     question: labelForQuestion(questionId),
-    answer: labelForAnswer(optionId),
+    answer: answerText(value),
   }));
 
 const rowText = (row: SummaryRow): string => `- ${row.question}: ${row.answer}`;
@@ -96,7 +121,7 @@ export const renderSurveyNotificationEmail = (
   options: RenderSurveyNotificationEmailOptions,
 ): SurveyNotificationEmail => {
   const rows = summaryRows(options.answers);
-  const trial = trialLine(options.trialEmail);
+  const trial = trialLine(options.trial);
   return {
     subject: SUBJECT,
     html: renderHtml(rows, trial),
@@ -110,6 +135,9 @@ export const notifyTeamDegradeOpen = async (
   try {
     await send();
   } catch (error) {
-    console.error("Survey team notification send failed (response still recorded):", error);
+    console.error(
+      "Survey team notification send failed (response still recorded):",
+      error,
+    );
   }
 };

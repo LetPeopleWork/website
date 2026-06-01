@@ -48,7 +48,7 @@ describe("Assessment email gate (#14/#15 teaser, #16 unlock+record, #17 invalid,
 
     const teaser = screen.getByTestId("assessment-result");
     expect(within(teaser).getByText(/\/ 100/)).toBeInTheDocument();
-    expect(within(teaser).getByText(/Output-focused/)).toBeInTheDocument();
+    expect(within(teaser).getByText(/Drifting/)).toBeInTheDocument();
     expect(within(teaser).getByText(/Vacanti \/ ProKanban/)).toBeInTheDocument();
     expect(screen.queryByTestId("assessment-breakdown")).not.toBeInTheDocument();
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
@@ -72,7 +72,7 @@ describe("Assessment email gate (#14/#15 teaser, #16 unlock+record, #17 invalid,
       source: "readiness-assessment",
       email: "maria.santos@acme.example",
       score: 33,
-      band: "Output-focused",
+      band: "Drifting",
     });
   });
 

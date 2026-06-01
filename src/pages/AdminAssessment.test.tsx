@@ -135,11 +135,11 @@ describe("Admin assessment dashboard", () => {
     const data = getMockData({
       responses: [
         getMockResponse({ band: "Flying blind" }),
-        getMockResponse({ band: "Probabilistic" }),
-        getMockResponse({ band: "Probabilistic" }),
+        getMockResponse({ band: "Predictable" }),
+        getMockResponse({ band: "Predictable" }),
       ],
       leads: [
-        getMockLead({ email: "ada@example.com", band: "Probabilistic", score: 90 }),
+        getMockLead({ email: "ada@example.com", band: "Predictable", score: 90 }),
       ],
     });
     const authGateway = getFakeAuthGateway({
@@ -153,7 +153,7 @@ describe("Admin assessment dashboard", () => {
     expect(within(totals).getByText(/1/)).toBeInTheDocument();
 
     const distribution = screen.getByTestId("dashboard-bands");
-    expect(within(distribution).getByText(/Probabilistic/)).toBeInTheDocument();
+    expect(within(distribution).getByText(/Predictable/)).toBeInTheDocument();
 
     const leadsTable = screen.getByTestId("dashboard-leads");
     expect(within(leadsTable).getByText("ada@example.com")).toBeInTheDocument();
@@ -162,7 +162,7 @@ describe("Admin assessment dashboard", () => {
   it("surfaces the survey view alongside the assessment for a signed-in member", async () => {
     const recent = new Date().toISOString();
     const data: DashboardData = {
-      responses: [getMockResponse({ band: "Probabilistic" })],
+      responses: [getMockResponse({ band: "Predictable" })],
       leads: [getMockLead({ email: "assessment-lead@example.com" })],
       surveyResponses: [
         getMockSurveyResponse({

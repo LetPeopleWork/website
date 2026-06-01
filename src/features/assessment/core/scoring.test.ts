@@ -4,9 +4,9 @@ import { score, bandOfScore } from "./scoring";
 
 const BAND_RANGES: ReadonlyArray<[number, number, string]> = [
   [0, 25, "Flying blind"],
-  [26, 50, "Output-focused"],
+  [26, 50, "Drifting"],
   [51, 75, "Flow-aware"],
-  [76, 100, "Probabilistic"],
+  [76, 100, "Predictable"],
 ];
 
 const answerVector = () =>
@@ -52,12 +52,12 @@ describe("scoring (#8, #9, #10, #11, #12, #13)", () => {
   it.each([
     [0, "Flying blind"],
     [25, "Flying blind"],
-    [26, "Output-focused"],
-    [50, "Output-focused"],
+    [26, "Drifting"],
+    [50, "Drifting"],
     [51, "Flow-aware"],
     [75, "Flow-aware"],
-    [76, "Probabilistic"],
-    [100, "Probabilistic"],
+    [76, "Predictable"],
+    [100, "Predictable"],
   ])("#10 score %i lands in band %s", (target, expected) => {
     expect(bandOfScore(target)).toBe(expected);
   });
@@ -71,13 +71,13 @@ describe("scoring (#8, #9, #10, #11, #12, #13)", () => {
   it("#12 all-three answers map to the highest band", () => {
     const result = score([3, 3, 3, 3, 3, 3]);
     expect(result.score).toBe(100);
-    expect(result.band).toBe("Probabilistic");
+    expect(result.band).toBe("Predictable");
   });
 
-  it("#13 a raw total of 9 normalizes to 50 in the Output-focused band", () => {
+  it("#13 a raw total of 9 normalizes to 50 in the Drifting band", () => {
     const result = score([2, 2, 2, 1, 1, 1]);
     expect(result.rawSum).toBe(9);
     expect(result.score).toBe(50);
-    expect(result.band).toBe("Output-focused");
+    expect(result.band).toBe("Drifting");
   });
 });

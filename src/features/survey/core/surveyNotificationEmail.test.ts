@@ -5,13 +5,15 @@ import {
   notifyTeamDegradeOpen,
   renderSurveyNotificationEmail,
 } from "@shared/surveyNotificationEmail";
-import { SURVEY_QUESTIONS } from "../content/surveyContent";
+import { SURVEY_CHOICE_QUESTIONS } from "../content/surveyContent";
 
-const sampleAnswers = (): Record<string, string> => ({
+const sampleAnswers = (): Record<string, string | readonly string[]> => ({
+  recommend: "likely",
+  "primary-use": ["forecasting", "flow-metrics"],
+  improvement: "More integrations please",
   "team-count": "two-to-five",
   role: "engineering-manager-delivery-lead",
   "discovery-channel": "github",
-  "assessment-interest": "maybe",
 });
 
 afterEach(() => {
@@ -26,10 +28,12 @@ describe("renderSurveyNotificationEmail builds a team alert from the answers", (
     expect(email.subject).toContain("survey");
 
     for (const body of [email.text, email.html]) {
-      expect(body).toContain("2–5");
+      expect(body).toContain("Likely");
+      expect(body).toContain("Forecasting, Flow Metrics");
+      expect(body).toContain("More integrations please");
+      expect(body).toContain("2-5");
       expect(body).toContain("Engineering Manager / Delivery Lead");
       expect(body).toContain("GitHub");
-      expect(body).toContain("Maybe");
     }
   });
 
@@ -41,11 +45,24 @@ describe("renderSurveyNotificationEmail builds a team alert from the answers", (
       expect(body).not.toMatch(/@(?!letpeople\.work)/);
     }
   });
+
+  it("carries the volunteered email and organization when a trial is opted into", () => {
+    const email = renderSurveyNotificationEmail({
+      answers: sampleAnswers(),
+      trial: { email: "member@example.com", organization: "Acme Inc." },
+    });
+
+    for (const body of [email.text, email.html]) {
+      expect(body).toContain("member@example.com");
+      expect(body).toContain("Acme Inc.");
+      expect(body.toLowerCase()).toContain("trial requested");
+    }
+  });
 });
 
 describe("survey answer labels mirror the canonical surveyContent", () => {
-  it.each(SURVEY_QUESTIONS)(
-    "keeps every option label for %s byte-identical to surveyContent",
+  it.each(SURVEY_CHOICE_QUESTIONS)(
+    "keeps every option label for $id byte-identical to surveyContent",
     (question) => {
       for (const option of question.options) {
         expect(ANSWER_LABELS[option.id]).toBe(option.label);

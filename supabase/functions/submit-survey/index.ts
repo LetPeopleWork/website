@@ -19,27 +19,40 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 interface TrialOptIn {
   readonly email: string;
+  readonly organization: string;
 }
+
+type AnswerValue = string | readonly string[];
 
 interface SurveyPayload {
   source: string;
-  answers: Record<string, string>;
+  answers: Record<string, AnswerValue>;
   trial: TrialOptIn | null;
 }
 
-const isStringMap = (value: unknown): value is Record<string, string> => {
+const isAnswerValue = (entry: unknown): entry is AnswerValue =>
+  typeof entry === "string" ||
+  (Array.isArray(entry) && entry.every((item) => typeof item === "string"));
+
+const isAnswerMap = (value: unknown): value is Record<string, AnswerValue> => {
   if (typeof value !== "object" || value === null) return false;
-  return Object.values(value).every((entry) => typeof entry === "string");
+  return Object.values(value).every(isAnswerValue);
 };
 
 const carriesScoreOrBand = (candidate: Record<string, unknown>): boolean =>
   "score" in candidate || "band" in candidate || "raw_sum" in candidate;
 
-const parseTrial = (candidate: Record<string, unknown>): TrialOptIn | null | false => {
+const parseTrial = (
+  candidate: Record<string, unknown>,
+): TrialOptIn | null | false => {
   if (candidate.wantsTrial !== true) return null;
   const email = candidate.email;
+  const organization = candidate.organization;
   if (typeof email !== "string" || !EMAIL_PATTERN.test(email)) return false;
-  return { email };
+  if (typeof organization !== "string" || organization.trim().length === 0) {
+    return false;
+  }
+  return { email, organization };
 };
 
 const parsePayload = (body: unknown): SurveyPayload | null => {
@@ -47,7 +60,7 @@ const parsePayload = (body: unknown): SurveyPayload | null => {
   const candidate = body as Record<string, unknown>;
   if (candidate.source !== SURVEY_SOURCE) return null;
   if (carriesScoreOrBand(candidate)) return null;
-  if (!isStringMap(candidate.answers)) return null;
+  if (!isAnswerMap(candidate.answers)) return null;
   const trial = parseTrial(candidate);
   if (trial === false) return null;
   return { source: SURVEY_SOURCE, answers: candidate.answers, trial };
@@ -65,7 +78,7 @@ const notifyTeam = (payload: SurveyPayload): Promise<void> =>
     if (!config) return;
     const email = renderSurveyNotificationEmail({
       answers: payload.answers,
-      trialEmail: payload.trial?.email ?? null,
+      trial: payload.trial,
     });
     await sendViaMailgun(config, {
       to: TEAM_NOTIFICATION_RECIPIENT,
@@ -84,6 +97,7 @@ const insertTrialLead = async (
   const { error } = await supabase.from("leads").insert({
     source: TRIAL_LEAD_SOURCE,
     email: trial.email,
+    organization: trial.organization,
     score: null,
     band: null,
     wants_trial: true,

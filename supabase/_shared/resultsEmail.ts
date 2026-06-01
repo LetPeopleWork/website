@@ -5,12 +5,18 @@ export interface EmailCta {
   readonly href: string;
 }
 
+export interface EmailLink {
+  readonly label: string;
+  readonly href: string;
+}
+
 export interface BandEmailCopy {
   readonly tagline: string;
   readonly measureRead: string;
   readonly forecastRead: string;
-  readonly nextRung: string;
   readonly ctas: readonly EmailCta[];
+  readonly starterKit: readonly EmailLink[];
+  readonly workshops: readonly EmailLink[];
 }
 
 export interface ResultsEmail {
@@ -32,77 +38,164 @@ const REPLY_OFFER =
 const LOGO_URL =
   "https://raw.githubusercontent.com/LetPeopleWork/website/refs/heads/main/src/assets/logo.png";
 
+const COMMUNITY_HREF = "https://letpeople.work/lighthouse";
+const WORKSHOPS_HREF = "https://letpeople.work/#workshops";
+const SERVICES_HREF = "https://letpeople.work/#services";
+
+const workshop = (label: string): EmailLink => ({
+  label,
+  href: WORKSHOPS_HREF,
+});
+
+export const CONSULTING_OFFERS: readonly EmailLink[] = [
+  {
+    label:
+      "Flow Clarity Assessment: a data-driven diagnostic of how work really flows",
+    href: SERVICES_HREF,
+  },
+  {
+    label:
+      "Flow Health Check: a fast snapshot of your team or portfolio delivery health",
+    href: SERVICES_HREF,
+  },
+  {
+    label:
+      "Lighthouse Setup & Introduction: we configure Lighthouse and onboard your team",
+    href: SERVICES_HREF,
+  },
+];
+
 export const BAND_EMAIL_COPY: Readonly<Record<BandName, BandEmailCopy>> = {
   "Flying blind": {
-    tagline: "Dates are gut-feel.",
+    tagline: "Start measuring flow and run your first forecast.",
     measureRead:
-      "You're not yet measuring flow — there's no cycle time, throughput or WIP signal to lean on, so the team can't see how work actually moves.",
+      "You're not measuring flow yet, so you can't see how work moves. Add your team in Lighthouse and start watching your flow metrics. It's easy to get the data flowing and learn from it.",
     forecastRead:
-      "And there's no probabilistic forecasting — commitments are gut-feel dates with no honest read on whether you'll hit them.",
-    nextRung:
-      "The next rung is simply to start measuring flow and run one honest forecast instead of guessing.",
+      "Forecasting is gut feel today. Run a forecast for your next iteration and see how it performs. The goal right now is to experiment, not to overhaul how you work.",
     ctas: [
+      { label: "Start with Lighthouse Community (free)", href: COMMUNITY_HREF },
+    ],
+    starterKit: [
       {
-        label: "Start with Lighthouse Community (free)",
-        href: "https://letpeople.work/lighthouse",
+        label: "Connect your work tracking system",
+        href: "https://docs.lighthouse.letpeople.work/concepts/worktrackingsystems/worktrackingsystems.html",
       },
       {
-        label: "Book a consulting call",
-        href: "https://letpeople.work/#stay-connected",
+        label: "Create a team and open the Metrics Dashboard",
+        href: "https://docs.lighthouse.letpeople.work/metrics/dashboard.html",
+      },
+      {
+        label: "How Lighthouse forecasts",
+        href: "https://blog.letpeople.work/p/how-lighthouse-forecasts",
+      },
+      {
+        label: "LetPeopleWork on YouTube",
+        href: "https://www.youtube.com/@LetPeopleWork",
       },
     ],
+    workshops: [
+      workshop("Flow Metrics & Little's Law"),
+      workshop("Introduction to Probabilistic Forecasting"),
+    ],
   },
-  "Output-focused": {
-    tagline: "Counting output, not measuring flow.",
+  Drifting: {
+    tagline: "Swap guesses for real data and start steering.",
     measureRead:
-      "You're counting output — points or items closed — rather than measuring flow, so you can see how much got done but not how predictably it flows.",
+      "You're tracking output like Velocity or Story Points, not the flow metrics that show how predictably work moves. Start watching Throughput and Cycle Time, and set improvement goals like a Service Level Expectation (SLE) or WIP limits.",
     forecastRead:
-      "And you forecast with estimates rather than probabilities, so a single date hides the real range of outcomes.",
-    nextRung:
-      "The next rung is to shift from output to flow metrics and run your first probabilistic forecast.",
+      "You forecast by adding up estimates, betting on what you thought would happen rather than what actually does, and a single date leaves no room to manage risk. Compare your estimates against what really happened (Cycle Time), and backtest a Monte Carlo forecast to see how it would have performed.",
     ctas: [
+      { label: "Start with Lighthouse Community (free)", href: COMMUNITY_HREF },
+    ],
+    starterKit: [
       {
-        label: "Start with Lighthouse Community (free)",
-        href: "https://letpeople.work/lighthouse",
+        label: "The hidden cost of noise in your predictions",
+        href: "https://blog.letpeople.work/p/the-hidden-cost-of-noise-in-your",
       },
       {
-        label: "Get light coaching",
-        href: "https://letpeople.work/#stay-connected",
+        label: "Dear stakeholder: a range instead of a date",
+        href: "https://blog.letpeople.work/p/dear-stakeholder-heres-why-im-giving",
       },
+      {
+        label: "How Lighthouse forecasts: run one, then backtest",
+        href: "https://docs.lighthouse.letpeople.work/concepts/howlighthouseforecasts.html",
+      },
+      {
+        label: "Metrics and widgets (Cycle Time, Throughput)",
+        href: "https://docs.lighthouse.letpeople.work/metrics/widgets.html",
+      },
+    ],
+    workshops: [
+      workshop("Visualization & Interpretation of Flow Metrics"),
+      workshop("Actively Manage Items in a Workflow"),
     ],
   },
   "Flow-aware": {
-    tagline: "Watching flow, starting to forecast.",
+    tagline: "Start acting to get more predictable.",
     measureRead:
-      "You're watching real flow metrics — cycle time, throughput and WIP are on your radar and informing conversations.",
+      "You're already watching flow metrics. Now sharpen predictability: act on leading indicators like Work Item Age, use your Service Level Expectation to drive improvements, and analyse how stable your delivery is with Process Behaviour Charts.",
     forecastRead:
-      "And you're starting to forecast beyond single-date estimates — the instinct for probability is there, it just isn't operationalised yet.",
-    nextRung:
-      "The next rung is to operationalise forecasting so every commitment carries an explicit, defensible probability.",
+      "Your forecasting works at team level. Now extend it to the portfolio, and keep checking the trend of your deliveries over time rather than a single date.",
     ctas: [
       {
         label: "Use Community to operationalize forecasting (free)",
-        href: "https://letpeople.work/lighthouse",
+        href: COMMUNITY_HREF,
+      },
+      { label: "Book a workshop", href: WORKSHOPS_HREF },
+    ],
+    starterKit: [
+      {
+        label: "A diner breakfast on Flow, Kanban and SLEs",
+        href: "https://blog.letpeople.work/p/what-breakfast-at-a-diner-taught",
+      },
+      {
+        label: "How Lighthouse changed the way I work",
+        href: "https://blog.letpeople.work/p/how-lighthouse-changed-the-way-i",
+      },
+      {
+        label: "Portfolios: forecast across teams",
+        href: "https://docs.lighthouse.letpeople.work/portfolios/portfolios.html",
       },
     ],
+    workshops: [
+      workshop("SLE & Right Sizing"),
+      workshop("Workflow Definition & Visualization"),
+    ],
   },
-  Probabilistic: {
-    tagline: "Forecasting by percentiles and steering by them.",
+  Predictable: {
+    tagline: "Fine-tune the details and scale across your portfolio.",
     measureRead:
-      "You measure flow as a matter of course — cycle time, throughput, WIP and flow health are live inputs to how you work.",
+      "Flow metrics are second nature. Now fine-tune: study your workflow to find bottlenecks, set more ambitious Service Level Expectations and bring your percentiles closer together, and use Process Behaviour Charts to keep improving.",
     forecastRead:
-      "And you forecast probabilistically and steer by it — Monte Carlo / percentile forecasts drive your commitments and re-planning.",
-    nextRung:
-      "The next rung is to scale this across teams and portfolios and keep validating your forecasts against reality.",
+      "You forecast probabilistically and steer by it. Sharpen it further by right-sizing your features and accounting for feature WIP, then scale forecasting across teams and your portfolio.",
     ctas: [
       {
-        label: "Explore Lighthouse paid / portfolio tiers",
-        href: "https://letpeople.work/lighthouse#lighthouse-premium",
+        label: "Use Community to scale your forecasting (free)",
+        href: COMMUNITY_HREF,
+      },
+      { label: "Book a workshop", href: WORKSHOPS_HREF },
+    ],
+    starterKit: [
+      {
+        label: "Low WIP, small features, high freedom",
+        href: "https://blog.letpeople.work/p/low-wip-small-features-high-freedom",
       },
       {
-        label: "Use Community to validate your forecasts (free)",
-        href: "https://letpeople.work/lighthouse",
+        label: "Lighthouse advanced features",
+        href: "https://blog.letpeople.work/p/lighthouse-advanced-features",
       },
+      {
+        label: "Scale and edit your portfolios",
+        href: "https://docs.lighthouse.letpeople.work/portfolios/edit.html",
+      },
+      {
+        label: "AI and automation",
+        href: "https://docs.lighthouse.letpeople.work/aiintegration.html",
+      },
+    ],
+    workshops: [
+      workshop("Epic Right Sizing & Slicing"),
+      workshop("Signal & Noise"),
     ],
   },
 };
@@ -113,10 +206,20 @@ const escapeHtml = (value: string): string =>
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;");
 
-const ctaHtml = (cta: EmailCta): string =>
-  `<li style="margin-bottom: 8px;"><a href="${cta.href}" style="color: #007bff;">${escapeHtml(cta.label)}</a></li>`;
+const linkHtml = (link: EmailLink): string =>
+  `<li style="margin-bottom: 8px;"><a href="${link.href}" style="color: #007bff;">${escapeHtml(link.label)}</a></li>`;
 
-const ctaText = (cta: EmailCta): string => `- ${cta.label}: ${cta.href}`;
+const linkText = (link: EmailLink): string => `- ${link.label}: ${link.href}`;
+
+const sectionHtml = (heading: string, links: readonly EmailLink[]): string =>
+  `<h3 style="color: #495057;">${escapeHtml(heading)}</h3>
+      <ul>
+        ${links.map(linkHtml).join("\n        ")}
+      </ul>`;
+
+const sectionText = (heading: string, links: readonly EmailLink[]): string =>
+  `${heading}
+${links.map(linkText).join("\n")}`;
 
 const renderHtml = (
   band: BandName,
@@ -129,10 +232,10 @@ const renderHtml = (
 
       <p>${GREETING}</p>
 
-      <p>Here's where your team stands on flow &amp; forecasting — keep this for yourself or forward it to your team.</p>
+      <p>Here's where you stand on flow and forecasting. Keep this for yourself, or forward it to your team.</p>
 
       <div style="background-color: #f8f9fa; border: 1px solid #e9ecef; border-radius: 5px; padding: 15px; margin: 20px 0;">
-        <h3 style="margin-top: 0; color: #495057;">Your result: ${score} / 100 — ${escapeHtml(band)}</h3>
+        <h3 style="margin-top: 0; color: #495057;">Your result: ${score} / 100 &middot; ${escapeHtml(band)}</h3>
         <p style="margin-bottom: 0;">${escapeHtml(copy.tagline)}</p>
       </div>
 
@@ -146,11 +249,15 @@ const renderHtml = (
         <p style="margin-bottom: 0;">${escapeHtml(copy.forecastRead)}</p>
       </div>
 
-      <h3 style="color: #495057;">Your next rung</h3>
-      <p>${escapeHtml(copy.nextRung)}</p>
+      ${sectionHtml("Your starter kit", copy.starterKit)}
 
+      ${sectionHtml("Workshops for where you are", copy.workshops)}
+
+      ${sectionHtml("Want hands-on help?", CONSULTING_OFFERS)}
+
+      <h3 style="color: #495057;">Your next step</h3>
       <ul>
-        ${copy.ctas.map(ctaHtml).join("\n        ")}
+        ${copy.ctas.map(linkHtml).join("\n        ")}
       </ul>
 
       <p style="background-color: #fff3cd; border: 1px solid #ffeaa7; border-radius: 5px; padding: 10px; margin: 20px 0;">
@@ -166,8 +273,8 @@ const renderHtml = (
             <td style="vertical-align: top;">
               <div style="color: #2c3e50; font-weight: bold; font-size: 16px;">LetPeopleWork</div>
               <div style="margin-top: 8px;">
-                <div style="color: #34495e; font-size: 13px;">📧 ${REPLY_TO_ADDRESS}</div>
-                <div style="color: #34495e; font-size: 13px;">🌐 https://letpeople.work</div>
+                <div style="color: #34495e; font-size: 13px;">${REPLY_TO_ADDRESS}</div>
+                <div style="color: #34495e; font-size: 13px;">https://letpeople.work</div>
               </div>
             </td>
           </tr>
@@ -185,9 +292,9 @@ const renderText = (
 
 ${GREETING}
 
-Here's where your team stands on flow & forecasting — keep this for yourself or forward it to your team.
+Here's where you stand on flow and forecasting. Keep this for yourself, or forward it to your team.
 
-Your result: ${score} / 100 — ${band}
+Your result: ${score} / 100 · ${band}
 ${copy.tagline}
 
 How you measure flow:
@@ -196,17 +303,21 @@ ${copy.measureRead}
 How you forecast:
 ${copy.forecastRead}
 
-Your next rung:
-${copy.nextRung}
+${sectionText("Your starter kit:", copy.starterKit)}
 
-${copy.ctas.map(ctaText).join("\n")}
+${sectionText("Workshops for where you are:", copy.workshops)}
+
+${sectionText("Want hands-on help?", CONSULTING_OFFERS)}
+
+Your next step:
+${copy.ctas.map(linkText).join("\n")}
 
 ${REPLY_OFFER}
 
 --
 LetPeopleWork
-📧 ${REPLY_TO_ADDRESS}
-🌐 https://letpeople.work`;
+${REPLY_TO_ADDRESS}
+https://letpeople.work`;
 
 export const renderResultsEmail = (
   band: BandName,

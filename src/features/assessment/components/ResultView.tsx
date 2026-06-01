@@ -41,8 +41,16 @@ export const ResultView = ({
 
       {!unlocked && (
         <Card data-testid="assessment-gate">
-          <CardHeader>
-            <CardTitle className="text-xl">Unlock your full breakdown</CardTitle>
+          <CardHeader className="space-y-2">
+            <CardTitle className="text-xl">
+              Want the full picture? Get your starter kit
+            </CardTitle>
+            <p className="text-sm text-muted-foreground">
+              Leave your email and we'll send your Flow &amp; Forecasting starter
+              kit: your complete breakdown across both pillars, plus hand-picked
+              articles, Lighthouse how-tos, and the workshops that match where you
+              are right now. No spam, just the kit.
+            </p>
           </CardHeader>
           <CardContent>
             <EmailGate onUnlock={onUnlock} />
@@ -59,7 +67,6 @@ export const ResultView = ({
             <CardContent className="space-y-4 text-base text-muted-foreground">
               <p>{band.measureRead}</p>
               <p>{band.forecastRead}</p>
-              <p className="font-medium text-foreground">{band.nextRung}</p>
             </CardContent>
           </Card>
 

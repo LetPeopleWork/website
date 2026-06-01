@@ -13,7 +13,6 @@ describe("results-email band copy mirrors the canonical assessmentContent", () =
       expect(mirror.tagline).toBe(canonical?.tagline);
       expect(mirror.measureRead).toBe(canonical?.measureRead);
       expect(mirror.forecastRead).toBe(canonical?.forecastRead);
-      expect(mirror.nextRung).toBe(canonical?.nextRung);
       expect(mirror.ctas).toEqual(
         canonical?.ctas.map((cta) => ({ label: cta.label, href: cta.href })),
       );
