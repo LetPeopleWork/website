@@ -42,6 +42,7 @@ interface TrialLeadRow {
   id: string;
   source: string;
   email: string;
+  organization: string | null;
   created_at: string;
   fulfilled_at: string | null;
 }
@@ -71,6 +72,7 @@ const toTrialRequest = (row: TrialLeadRow): DashboardSurveyTrialRequest => ({
   id: row.id,
   source: row.source as ResponseSource,
   email: row.email,
+  organization: row.organization ?? null,
   createdAt: row.created_at,
   fulfilledAt: row.fulfilled_at ?? null,
 });
@@ -89,7 +91,7 @@ export const createSupabaseDashboardRepository = (
       }
       const trialQuery = await client
         .from(LEADS_TABLE)
-        .select("id,source,email,created_at,fulfilled_at")
+        .select("id,source,email,organization,created_at,fulfilled_at")
         .eq("source", SURVEY_TRIAL_SOURCE);
       if (trialQuery.error) {
         throw new Error(trialQuery.error.message);
