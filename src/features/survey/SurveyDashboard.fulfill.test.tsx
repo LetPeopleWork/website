@@ -39,11 +39,15 @@ const renderDashboard = (
   );
 };
 
-describe("Maintainer marks a trial request as sent and it clears from the active list", () => {
-  it("shows only unfulfilled trial requests in the active list", () => {
+const rowFor = (email: string): HTMLElement => {
+  const trialView = screen.getByTestId("dashboard-survey-trials");
+  return within(trialView).getByText(email).closest("tr") as HTMLElement;
+};
+
+describe("Sent trial requests stay listed with a sent checkmark", () => {
+  it("shows a sent indicator and no button for an already fulfilled request", () => {
     renderDashboard(
       [
-        getMockTrialRequest({ id: "active-1", email: "active@example.com" }),
         getMockTrialRequest({
           id: "done-1",
           email: "alreadysent@example.com",
@@ -53,36 +57,49 @@ describe("Maintainer marks a trial request as sent and it clears from the active
       vi.fn().mockResolvedValue(undefined),
     );
 
-    const trialView = screen.getByTestId("dashboard-survey-trials");
+    const row = rowFor("alreadysent@example.com");
+    expect(within(row).getByLabelText("Sent")).toBeInTheDocument();
     expect(
-      within(trialView).getByText("active@example.com"),
-    ).toBeInTheDocument();
-    expect(
-      within(trialView).queryByText("alreadysent@example.com"),
+      within(row).queryByRole("button", { name: /mark as sent/i }),
     ).not.toBeInTheDocument();
   });
 
-  it("calls the callback with the request id and removes the row on success", async () => {
+  it("shows the mark-as-sent button for an unfulfilled request", () => {
+    renderDashboard(
+      [getMockTrialRequest({ id: "active-1", email: "active@example.com" })],
+      vi.fn().mockResolvedValue(undefined),
+    );
+
+    const row = rowFor("active@example.com");
+    expect(
+      within(row).getByRole("button", { name: /mark as sent/i }),
+    ).toBeInTheDocument();
+  });
+
+  it("flips the clicked row to a sent indicator while keeping it listed", async () => {
     const onMarkTrialFulfilled = vi.fn().mockResolvedValue(undefined);
     renderDashboard(
       [getMockTrialRequest({ id: "active-1", email: "active@example.com" })],
       onMarkTrialFulfilled,
     );
 
-    const trialView = screen.getByTestId("dashboard-survey-trials");
     await userEvent.click(
-      within(trialView).getByRole("button", { name: /mark as sent/i }),
+      within(rowFor("active@example.com")).getByRole("button", {
+        name: /mark as sent/i,
+      }),
     );
 
     expect(onMarkTrialFulfilled).toHaveBeenCalledWith("active-1");
     await waitFor(() => {
+      const row = rowFor("active@example.com");
+      expect(within(row).getByLabelText("Sent")).toBeInTheDocument();
       expect(
-        within(trialView).queryByText("active@example.com"),
+        within(row).queryByRole("button", { name: /mark as sent/i }),
       ).not.toBeInTheDocument();
     });
   });
 
-  it("shows a non-blocking error and keeps the row when the update fails", async () => {
+  it("keeps the row unfulfilled with an error when the update fails", async () => {
     const onMarkTrialFulfilled = vi
       .fn()
       .mockRejectedValue(new Error("update failed"));
@@ -93,12 +110,15 @@ describe("Maintainer marks a trial request as sent and it clears from the active
 
     const trialView = screen.getByTestId("dashboard-survey-trials");
     await userEvent.click(
-      within(trialView).getByRole("button", { name: /mark as sent/i }),
+      within(rowFor("active@example.com")).getByRole("button", {
+        name: /mark as sent/i,
+      }),
     );
 
     expect(await within(trialView).findByRole("alert")).toBeInTheDocument();
+    const row = rowFor("active@example.com");
     expect(
-      within(trialView).getByText("active@example.com"),
+      within(row).getByRole("button", { name: /mark as sent/i }),
     ).toBeInTheDocument();
   });
 });

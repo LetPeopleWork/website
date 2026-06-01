@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -94,6 +95,26 @@ const SurveyView = ({
   </Card>
 );
 
+const SentIndicator = ({ fulfilledAt }: { fulfilledAt: string }) => (
+  <span
+    className="inline-flex items-center gap-1 text-sm text-emerald-600"
+    aria-label="Sent"
+  >
+    <Check className="size-4" aria-hidden="true" />
+    <span>Sent {formatDate(fulfilledAt)}</span>
+  </span>
+);
+
+const sortActionableFirst = (
+  requests: readonly DashboardSurveyTrialRequest[],
+): readonly DashboardSurveyTrialRequest[] =>
+  [...requests].sort((left, right) => {
+    if (left.fulfilledAt === right.fulfilledAt) {
+      return 0;
+    }
+    return left.fulfilledAt === null ? -1 : 1;
+  });
+
 const SurveyTrialRequestsView = ({
   trialRequests,
   onMarkTrialFulfilled,
@@ -101,23 +122,29 @@ const SurveyTrialRequestsView = ({
   trialRequests: readonly DashboardSurveyTrialRequest[];
   onMarkTrialFulfilled?: (id: string) => Promise<void>;
 }) => {
-  const [fulfilledIds, setFulfilledIds] = useState<readonly string[]>([]);
+  const [optimisticFulfilledAt, setOptimisticFulfilledAt] = useState<
+    Readonly<Record<string, string>>
+  >({});
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const activeRequests = trialRequests.filter(
-    (request) =>
-      request.fulfilledAt === null && !fulfilledIds.includes(request.id),
-  );
+  const resolveFulfilledAt = (
+    request: DashboardSurveyTrialRequest,
+  ): string | null => optimisticFulfilledAt[request.id] ?? request.fulfilledAt;
 
   const handleMarkSent = async (id: string): Promise<void> => {
     if (!onMarkTrialFulfilled) {
       return;
     }
+    const markedAt = new Date().toISOString();
+    setOptimisticFulfilledAt((current) => ({ ...current, [id]: markedAt }));
+    setErrorMessage(null);
     try {
       await onMarkTrialFulfilled(id);
-      setErrorMessage(null);
-      setFulfilledIds((current) => [...current, id]);
     } catch {
+      setOptimisticFulfilledAt((current) => {
+        const { [id]: _removed, ...rest } = current;
+        return rest;
+      });
       setErrorMessage("Could not mark the trial request as sent. Try again.");
     }
   };
@@ -142,27 +169,37 @@ const SurveyTrialRequestsView = ({
             <TableRow>
               <TableHead>Email</TableHead>
               <TableHead>Date</TableHead>
-              <TableHead>Action</TableHead>
+              <TableHead>Status</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {activeRequests.map((request) => (
-              <TableRow key={request.id}>
-                <TableCell>{request.email}</TableCell>
-                <TableCell>{formatDate(request.createdAt)}</TableCell>
-                <TableCell>
-                  {onMarkTrialFulfilled ? (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => void handleMarkSent(request.id)}
-                    >
-                      Mark as sent
-                    </Button>
-                  ) : null}
-                </TableCell>
-              </TableRow>
-            ))}
+            {sortActionableFirst(trialRequests).map((request) => {
+              const fulfilledAt = resolveFulfilledAt(request);
+              const renderStatus = () => {
+                if (fulfilledAt !== null) {
+                  return <SentIndicator fulfilledAt={fulfilledAt} />;
+                }
+                if (!onMarkTrialFulfilled) {
+                  return null;
+                }
+                return (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => void handleMarkSent(request.id)}
+                  >
+                    Mark as sent
+                  </Button>
+                );
+              };
+              return (
+                <TableRow key={request.id}>
+                  <TableCell>{request.email}</TableCell>
+                  <TableCell>{formatDate(request.createdAt)}</TableCell>
+                  <TableCell>{renderStatus()}</TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </CardContent>
