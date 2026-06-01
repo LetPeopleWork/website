@@ -74,6 +74,36 @@ const SurveyRangeFilter = ({
   </ToggleGroup>
 );
 
+const SurveyFreeText = ({
+  freeText,
+}: {
+  freeText: SurveySummary["freeText"];
+}) => {
+  const answered = freeText.filter((entry) => entry.responses.length > 0);
+  if (answered.length === 0) {
+    return null;
+  }
+  return (
+    <div data-testid="dashboard-survey-freetext" className="space-y-6">
+      {answered.map((entry) => (
+        <div key={entry.id} className="space-y-2">
+          <p className="font-semibold">{entry.prompt}</p>
+          <ul className="space-y-2">
+            {entry.responses.map((response, index) => (
+              <li
+                key={`${entry.id}-${index}`}
+                className="rounded-md border bg-muted/30 p-3 text-sm"
+              >
+                {response}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const SurveyView = ({
   surveySummary,
   filter,
@@ -91,6 +121,7 @@ const SurveyView = ({
         {surveySummary.totalResponses} anonymous responses collected
       </p>
       <SurveyCharts questions={surveySummary.questions} />
+      <SurveyFreeText freeText={surveySummary.freeText} />
     </CardContent>
   </Card>
 );

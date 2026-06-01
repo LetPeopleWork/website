@@ -75,6 +75,35 @@ describe("Maintainer filters the survey view by date range and sees answer visua
     expect(within(survey).queryByRole("table")).not.toBeInTheDocument();
   });
 
+  it("lists the open-ended answers so the free-text question is not lost", () => {
+    const data: DashboardData = {
+      responses: [],
+      leads: [],
+      surveyResponses: [
+        getMockSurveyResponse({
+          answers: { ...allFirstOptions(), improvement: "Add Jira Cloud sync" },
+        }),
+        getMockSurveyResponse({
+          answers: { ...allFirstOptions(), improvement: "Dark mode please" },
+        }),
+        getMockSurveyResponse(),
+      ],
+      surveyTrialRequests: [],
+    };
+
+    renderDashboard(data, NOW);
+
+    const survey = screen.getByTestId("dashboard-survey");
+    const freeText = within(survey).getByTestId("dashboard-survey-freetext");
+    expect(
+      within(freeText).getByText(
+        /one thing that would make Lighthouse even better/i,
+      ),
+    ).toBeInTheDocument();
+    expect(within(freeText).getByText("Add Jira Cloud sync")).toBeInTheDocument();
+    expect(within(freeText).getByText("Dark mode please")).toBeInTheDocument();
+  });
+
   it("offers a date-range control and defaults to the last 30 days", () => {
     const data: DashboardData = {
       responses: [],
