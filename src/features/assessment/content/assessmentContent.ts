@@ -30,7 +30,6 @@ const bandSchema = z.object({
 });
 
 const contentSchema = z.object({
-  credibilityAnchor: z.string().min(1),
   questions: z.array(questionSchema).length(6),
   bands: z.array(bandSchema).length(4),
 });
@@ -56,8 +55,6 @@ const workshopCta: Cta = {
 };
 
 const rawContent = {
-  credibilityAnchor:
-    "Based on Kanban flow metrics and probabilistic forecasting principles (Vacanti / ProKanban).",
   questions: [
     {
       id: "forecasting-method",

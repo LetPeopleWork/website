@@ -25,10 +25,6 @@ describe("assessment content (#20, #21 + load-time invariants)", () => {
     }
   });
 
-  it("exposes a non-empty credibility anchor", () => {
-    expect(assessmentContent.credibilityAnchor.trim().length).toBeGreaterThan(0);
-  });
-
   it("covers all four bands with contiguous, exhaustive ranges over 0-100", () => {
     expect(BANDS).toHaveLength(4);
     const sorted = [...BANDS].sort((a, b) => a.min - b.min);

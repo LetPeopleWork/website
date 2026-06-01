@@ -41,7 +41,7 @@ describe("Assessment email gate (#14/#15 teaser, #16 unlock+record, #17 invalid,
     sessionStorage.clear();
   });
 
-  it("#14/#15 the teaser shows the score, band and anchor and gates the breakdown behind email", async () => {
+  it("#14/#15 the teaser shows the score and band and gates the breakdown behind email", async () => {
     const user = userEvent.setup();
     renderGate({ capture: vi.fn().mockResolvedValue(undefined) });
     await reachTeaser(user);
@@ -49,7 +49,6 @@ describe("Assessment email gate (#14/#15 teaser, #16 unlock+record, #17 invalid,
     const teaser = screen.getByTestId("assessment-result");
     expect(within(teaser).getByText(/\/ 100/)).toBeInTheDocument();
     expect(within(teaser).getByText(/Drifting/)).toBeInTheDocument();
-    expect(within(teaser).getByText(/Vacanti \/ ProKanban/)).toBeInTheDocument();
     expect(screen.queryByTestId("assessment-breakdown")).not.toBeInTheDocument();
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
   });

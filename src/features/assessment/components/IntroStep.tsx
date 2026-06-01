@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { assessmentContent } from "../content/assessmentContent";
 
 interface IntroStepProps {
   onStart: () => void;
@@ -15,12 +14,9 @@ export const IntroStep = ({ onStart }: IntroStepProps) => (
     </CardHeader>
     <CardContent className="space-y-6">
       <p className="text-base text-muted-foreground">
-        An honest, ~5-minute read on how mature your delivery really is — across
+        An honest, ~5-minute read on how mature your delivery really is, across
         both what you measure and how you forecast. Six questions, one memorable
         score, and a concrete next step. No email required to see your result.
-      </p>
-      <p className="text-sm text-muted-foreground">
-        {assessmentContent.credibilityAnchor}
       </p>
       <Button size="lg" className="w-full sm:w-auto" onClick={onStart}>
         Start the assessment

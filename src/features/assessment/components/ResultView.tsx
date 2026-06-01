@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { assessmentContent, bandContent } from "../content/assessmentContent";
+import { bandContent } from "../content/assessmentContent";
 import type { ScoreResult } from "../core/scoring";
 import { EmailGate } from "./EmailGate";
 
@@ -32,11 +32,6 @@ export const ResultView = ({
           <p className="text-2xl font-semibold text-primary">{result.band}</p>
           <p className="text-base text-muted-foreground">{band.tagline}</p>
         </CardHeader>
-        <CardContent>
-          <p className="text-center text-xs text-muted-foreground">
-            {assessmentContent.credibilityAnchor}
-          </p>
-        </CardContent>
       </Card>
 
       {!unlocked && (
