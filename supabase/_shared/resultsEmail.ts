@@ -73,7 +73,7 @@ export const BAND_EMAIL_COPY: Readonly<Record<BandName, BandEmailCopy>> = {
     forecastRead:
       "Forecasting is gut feel today. Run a forecast for your next iteration and see how it performs. The goal right now is to experiment, not to overhaul how you work.",
     ctas: [
-      { label: "Start with Lighthouse Community (free)", href: COMMUNITY_HREF },
+      { label: "Start with Lighthouse (free)", href: COMMUNITY_HREF },
     ],
     starterKit: [
       {
@@ -105,7 +105,7 @@ export const BAND_EMAIL_COPY: Readonly<Record<BandName, BandEmailCopy>> = {
     forecastRead:
       "You forecast by adding up estimates, betting on what you thought would happen rather than what actually does, and a single date leaves no room to manage risk. Compare your estimates against what really happened (Cycle Time), and backtest a Monte Carlo forecast to see how it would have performed.",
     ctas: [
-      { label: "Start with Lighthouse Community (free)", href: COMMUNITY_HREF },
+      { label: "Start with Lighthouse (free)", href: COMMUNITY_HREF },
     ],
     starterKit: [
       {
@@ -138,7 +138,7 @@ export const BAND_EMAIL_COPY: Readonly<Record<BandName, BandEmailCopy>> = {
       "Your forecasting works at team level. Now extend it to the portfolio, and keep checking the trend of your deliveries over time rather than a single date.",
     ctas: [
       {
-        label: "Use Community to operationalize forecasting (free)",
+        label: "Use Lighthouse to operationalize forecasting (free)",
         href: COMMUNITY_HREF,
       },
       { label: "Book a workshop", href: WORKSHOPS_HREF },
@@ -170,7 +170,7 @@ export const BAND_EMAIL_COPY: Readonly<Record<BandName, BandEmailCopy>> = {
       "You forecast probabilistically and steer by it. Sharpen it further by right-sizing your features and accounting for feature WIP, then scale forecasting across teams and your portfolio.",
     ctas: [
       {
-        label: "Use Community to scale your forecasting (free)",
+        label: "Use Lighthouse to scale your forecasting (free)",
         href: COMMUNITY_HREF,
       },
       { label: "Book a workshop", href: WORKSHOPS_HREF },

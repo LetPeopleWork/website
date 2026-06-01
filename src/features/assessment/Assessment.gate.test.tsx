@@ -33,15 +33,15 @@ const submitEmail = async (
   value: string,
 ) => {
   await user.type(screen.getByLabelText(/email/i), value);
-  await user.click(screen.getByRole("button", { name: /unlock/i }));
+  await user.click(screen.getByRole("button", { name: /starter kit/i }));
 };
 
-describe("Assessment email gate (#14/#15 teaser, #16 unlock+record, #17 invalid, #18 degrade-open)", () => {
+describe("Assessment results teaser + starter-kit email (#14/#15, #16, #17, #18)", () => {
   beforeEach(() => {
     sessionStorage.clear();
   });
 
-  it("#14/#15 the teaser shows the score and band and gates the breakdown behind email", async () => {
+  it("#14/#15 shows the score, band and breakdown immediately and invites an email for the starter kit", async () => {
     const user = userEvent.setup();
     renderGate({ capture: vi.fn().mockResolvedValue(undefined) });
     await reachTeaser(user);
@@ -49,11 +49,12 @@ describe("Assessment email gate (#14/#15 teaser, #16 unlock+record, #17 invalid,
     const teaser = screen.getByTestId("assessment-result");
     expect(within(teaser).getByText(/\/ 100/)).toBeInTheDocument();
     expect(within(teaser).getByText(/Drifting/)).toBeInTheDocument();
-    expect(screen.queryByTestId("assessment-breakdown")).not.toBeInTheDocument();
+    expect(screen.getByTestId("assessment-breakdown")).toBeInTheDocument();
+    expect(screen.getByTestId("assessment-gate")).toBeInTheDocument();
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
   });
 
-  it("#16 a valid email unlocks the breakdown in place and records the lead", async () => {
+  it("#16 a valid email records the lead and confirms the starter kit is on its way", async () => {
     const user = userEvent.setup();
     const captured: LeadSubmission[] = [];
     renderGate({
@@ -65,7 +66,8 @@ describe("Assessment email gate (#14/#15 teaser, #16 unlock+record, #17 invalid,
     await reachTeaser(user);
     await submitEmail(user, "maria.santos@acme.example");
 
-    expect(await screen.findByTestId("assessment-breakdown")).toBeInTheDocument();
+    expect(await screen.findByTestId("assessment-kit-sent")).toBeInTheDocument();
+    expect(screen.queryByTestId("assessment-gate")).not.toBeInTheDocument();
     expect(captured).toHaveLength(1);
     expect(captured[0]).toMatchObject({
       source: "readiness-assessment",
@@ -75,7 +77,7 @@ describe("Assessment email gate (#14/#15 teaser, #16 unlock+record, #17 invalid,
     });
   });
 
-  it("#17 an invalid email shows an inline error, keeps the breakdown gated, and records nothing", async () => {
+  it("#17 an invalid email shows an inline error and records nothing", async () => {
     const user = userEvent.setup();
     const capture = vi.fn().mockResolvedValue(undefined);
     renderGate({ capture });
@@ -83,11 +85,12 @@ describe("Assessment email gate (#14/#15 teaser, #16 unlock+record, #17 invalid,
     await submitEmail(user, "tomas@");
 
     expect(await screen.findByText(/valid email/i)).toBeInTheDocument();
-    expect(screen.queryByTestId("assessment-breakdown")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("assessment-kit-sent")).not.toBeInTheDocument();
+    expect(screen.getByTestId("assessment-gate")).toBeInTheDocument();
     expect(capture).not.toHaveBeenCalled();
   });
 
-  it("#18 a capture failure still unlocks the breakdown, retries once, and shows a non-blocking notice", async () => {
+  it("#18 a capture failure still confirms, retries once, and shows a non-blocking notice", async () => {
     const user = userEvent.setup();
     const capture = vi
       .fn<LeadCapture["capture"]>()
@@ -97,7 +100,7 @@ describe("Assessment email gate (#14/#15 teaser, #16 unlock+record, #17 invalid,
     await reachTeaser(user);
     await submitEmail(user, "priya@acme.example");
 
-    expect(await screen.findByTestId("assessment-breakdown")).toBeInTheDocument();
+    expect(await screen.findByTestId("assessment-kit-sent")).toBeInTheDocument();
     await waitFor(() => expect(capture).toHaveBeenCalledTimes(2));
   });
 });

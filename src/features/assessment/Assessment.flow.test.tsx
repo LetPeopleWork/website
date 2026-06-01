@@ -90,7 +90,7 @@ describe("Assessment flow integration (#3 back, #4 resume, #5 restart, #19 tease
     expect(screen.queryByText(/restored your answers/i)).not.toBeInTheDocument();
   });
 
-  it("#19 the teaser shows score and band with the breakdown gated below", async () => {
+  it("#19 the teaser shows score, band and the breakdown immediately", async () => {
     const user = userEvent.setup();
     renderAssessment();
     await user.click(
@@ -106,6 +106,6 @@ describe("Assessment flow integration (#3 back, #4 resume, #5 restart, #19 tease
     const result = await screen.findByTestId("assessment-result");
     expect(within(result).getByText(/\/ 100/)).toBeInTheDocument();
     expect(within(result).getByText(/Drifting/)).toBeInTheDocument();
-    expect(screen.queryByTestId("assessment-breakdown")).not.toBeInTheDocument();
+    expect(screen.getByTestId("assessment-breakdown")).toBeInTheDocument();
   });
 });

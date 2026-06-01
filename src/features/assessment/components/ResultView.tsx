@@ -34,56 +34,60 @@ export const ResultView = ({
         </CardHeader>
       </Card>
 
-      {!unlocked && (
+      <div data-testid="assessment-breakdown" className="space-y-6">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-xl">What your score means</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4 text-base text-muted-foreground">
+            <p>{band.measureRead}</p>
+            <p>{band.forecastRead}</p>
+          </CardContent>
+        </Card>
+
+        <Card data-testid="assessment-next-steps">
+          <CardHeader>
+            <CardTitle className="text-xl">Your next step</CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-3">
+            {band.ctas.map((cta) => (
+              <Button
+                key={cta.label}
+                asChild
+                variant={cta.isCommunity ? "default" : "outline"}
+              >
+                <a href={cta.href} target="_blank" rel="noreferrer">
+                  {cta.label}
+                </a>
+              </Button>
+            ))}
+          </CardContent>
+        </Card>
+      </div>
+
+      {unlocked ? (
+        <Card data-testid="assessment-kit-sent">
+          <CardContent className="py-6 text-center text-base text-muted-foreground">
+            Your starter kit is on its way. Check your inbox for hand-picked
+            resources matched to your result.
+          </CardContent>
+        </Card>
+      ) : (
         <Card data-testid="assessment-gate">
           <CardHeader className="space-y-2">
             <CardTitle className="text-xl">
-              Want the full picture? Get your starter kit
+              Want a starter kit to go further?
             </CardTitle>
             <p className="text-sm text-muted-foreground">
-              Leave your email and we'll send your Flow &amp; Forecasting starter
-              kit: your complete breakdown across both pillars, plus hand-picked
-              articles, Lighthouse how-tos, and the workshops that match where you
-              are right now. No spam, just the kit.
+              Leave your email and we'll send hand-picked articles, Lighthouse
+              how-tos, and the workshops that match where you are right now. No
+              spam, just the kit.
             </p>
           </CardHeader>
           <CardContent>
             <EmailGate onUnlock={onUnlock} />
           </CardContent>
         </Card>
-      )}
-
-      {unlocked && (
-        <div data-testid="assessment-breakdown" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-xl">What your score means</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 text-base text-muted-foreground">
-              <p>{band.measureRead}</p>
-              <p>{band.forecastRead}</p>
-            </CardContent>
-          </Card>
-
-          <Card data-testid="assessment-next-steps">
-            <CardHeader>
-              <CardTitle className="text-xl">Your next step</CardTitle>
-            </CardHeader>
-            <CardContent className="flex flex-col gap-3">
-              {band.ctas.map((cta) => (
-                <Button
-                  key={cta.label}
-                  asChild
-                  variant={cta.isCommunity ? "default" : "outline"}
-                >
-                  <a href={cta.href} target="_blank" rel="noreferrer">
-                    {cta.label}
-                  </a>
-                </Button>
-              ))}
-            </CardContent>
-          </Card>
-        </div>
       )}
 
       <div className="text-center">

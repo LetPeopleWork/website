@@ -30,10 +30,10 @@ interface AssessmentProps {
 }
 
 const CAPTURE_FAILED_NOTICE =
-  "We couldn't save your result just now — your breakdown is still here.";
+  "We couldn't save your result just now, but your breakdown is right here.";
 
 const LEAD_FAILED_NOTICE =
-  "We couldn't record your email just now — your breakdown is unlocked anyway.";
+  "We couldn't send your starter kit just now. Please try again in a moment.";
 
 const Assessment = ({
   persistence,

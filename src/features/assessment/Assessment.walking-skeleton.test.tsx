@@ -40,11 +40,11 @@ describe("Assessment walking skeleton (#1)", () => {
     expect(within(result).getByText(/Predictable/)).toBeInTheDocument();
 
     await user.type(screen.getByLabelText(/email/i), "visitor@example.com");
-    await user.click(screen.getByRole("button", { name: /unlock/i }));
+    await user.click(screen.getByRole("button", { name: /starter kit/i }));
 
     const nextSteps = await screen.findByTestId("assessment-next-steps");
     expect(
-      within(nextSteps).getByRole("link", { name: /community/i }),
+      within(nextSteps).getByRole("link", { name: /lighthouse/i }),
     ).toBeInTheDocument();
   });
 });

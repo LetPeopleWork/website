@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const emailGateSchema = z.object({
-  email: z.string().email("Enter a valid email to unlock your breakdown."),
+  email: z.string().email("Enter a valid email to get your starter kit."),
 });
 
 type EmailGateValues = z.infer<typeof emailGateSchema>;
@@ -31,7 +31,7 @@ export const EmailGate = ({ onUnlock }: EmailGateProps) => {
 
   return (
     <form onSubmit={submit} className="space-y-3" noValidate>
-      <Label htmlFor={fieldId}>Email to unlock your full breakdown</Label>
+      <Label htmlFor={fieldId}>Email for your starter kit</Label>
       <Input
         id={fieldId}
         type="email"
@@ -45,7 +45,7 @@ export const EmailGate = ({ onUnlock }: EmailGateProps) => {
         </p>
       )}
       <Button type="submit" className="w-full">
-        Unlock my breakdown
+        Send me the starter kit
       </Button>
     </form>
   );

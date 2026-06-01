@@ -44,11 +44,14 @@ describe("assessment content (#20, #21 + load-time invariants)", () => {
     }
   });
 
-  it("#21 the free Lighthouse Community next step is present in every band", () => {
+  it("#21 the free Lighthouse next step is present in every band", () => {
     for (const band of ALL_BANDS) {
-      const community = bandContent(band).ctas.filter((cta) => cta.isCommunity);
-      expect(community).toHaveLength(1);
-      expect(community[0].label.toLowerCase()).toContain("community");
+      const free = bandContent(band).ctas.filter((cta) => cta.isCommunity);
+      expect(free).toHaveLength(1);
+      const label = free[0].label.toLowerCase();
+      expect(label).toContain("lighthouse");
+      expect(label).toContain("free");
+      expect(label).not.toContain("community");
     }
   });
 
@@ -62,7 +65,7 @@ describe("assessment content (#20, #21 + load-time invariants)", () => {
     }
   });
 
-  it("#20 the entry bands keep a single Community-only next step", () => {
+  it("#20 the entry bands keep a single free-Lighthouse-only next step", () => {
     for (const band of ["Flying blind", "Drifting"] as const) {
       expect(bandContent(band).ctas).toHaveLength(1);
       expect(bandContent(band).ctas[0].isCommunity).toBe(true);

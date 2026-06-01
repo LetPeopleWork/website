@@ -166,7 +166,7 @@ const rawContent = {
         "You're not measuring flow yet, so you can't see how work moves. Add your team in Lighthouse and start watching your flow metrics. It's easy to get the data flowing and learn from it.",
       forecastRead:
         "Forecasting is gut feel today. Run a forecast for your next iteration and see how it performs. The goal right now is to experiment, not to overhaul how you work.",
-      ctas: [communityCta("Start with Lighthouse Community (free)")],
+      ctas: [communityCta("Start with Lighthouse (free)")],
     },
     {
       name: "Drifting",
@@ -177,7 +177,7 @@ const rawContent = {
         "You're tracking output like Velocity or Story Points, not the flow metrics that show how predictably work moves. Start watching Throughput and Cycle Time, and set improvement goals like a Service Level Expectation (SLE) or WIP limits.",
       forecastRead:
         "You forecast by adding up estimates, betting on what you thought would happen rather than what actually does, and a single date leaves no room to manage risk. Compare your estimates against what really happened (Cycle Time), and backtest a Monte Carlo forecast to see how it would have performed.",
-      ctas: [communityCta("Start with Lighthouse Community (free)")],
+      ctas: [communityCta("Start with Lighthouse (free)")],
     },
     {
       name: "Flow-aware",
@@ -189,7 +189,7 @@ const rawContent = {
       forecastRead:
         "Your forecasting works at team level. Now extend it to the portfolio, and keep checking the trend of your deliveries over time rather than a single date.",
       ctas: [
-        communityCta("Use Community to operationalize forecasting (free)"),
+        communityCta("Use Lighthouse to operationalize forecasting (free)"),
         workshopCta,
       ],
     },
@@ -203,7 +203,7 @@ const rawContent = {
       forecastRead:
         "You forecast probabilistically and steer by it. Sharpen it further by right-sizing your features and accounting for feature WIP, then scale forecasting across teams and your portfolio.",
       ctas: [
-        communityCta("Use Community to scale your forecasting (free)"),
+        communityCta("Use Lighthouse to scale your forecasting (free)"),
         workshopCta,
       ],
     },
