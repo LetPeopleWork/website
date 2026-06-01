@@ -10,6 +10,7 @@ describe("results-email band copy mirrors the canonical assessmentContent", () =
       const canonical = BANDS.find((entry) => entry.name === band);
       const mirror = BAND_EMAIL_COPY[band];
 
+      expect(mirror.kitName).toBe(canonical?.kitName);
       expect(mirror.tagline).toBe(canonical?.tagline);
       expect(mirror.measureRead).toBe(canonical?.measureRead);
       expect(mirror.forecastRead).toBe(canonical?.forecastRead);

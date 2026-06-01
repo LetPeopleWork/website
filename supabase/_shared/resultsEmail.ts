@@ -11,12 +11,14 @@ export interface EmailLink {
 }
 
 export interface BandEmailCopy {
+  readonly kitName: string;
   readonly tagline: string;
   readonly measureRead: string;
   readonly forecastRead: string;
   readonly ctas: readonly EmailCta[];
-  readonly starterKit: readonly EmailLink[];
+  readonly kitLinks: readonly EmailLink[];
   readonly workshops: readonly EmailLink[];
+  readonly consulting: readonly EmailLink[];
 }
 
 export interface ResultsEmail {
@@ -39,6 +41,7 @@ const LOGO_URL =
   "https://raw.githubusercontent.com/LetPeopleWork/website/refs/heads/main/src/assets/logo.png";
 
 const COMMUNITY_HREF = "https://letpeople.work/lighthouse";
+const PREMIUM_HREF = "https://letpeople.work/lighthouse#lighthouse-premium";
 const WORKSHOPS_HREF = "https://letpeople.work/#workshops";
 const SERVICES_HREF = "https://letpeople.work/#services";
 
@@ -47,35 +50,36 @@ const workshop = (label: string): EmailLink => ({
   href: WORKSHOPS_HREF,
 });
 
-export const CONSULTING_OFFERS: readonly EmailLink[] = [
-  {
-    label:
-      "Flow Clarity Assessment: a data-driven diagnostic of how work really flows",
-    href: SERVICES_HREF,
-  },
-  {
-    label:
-      "Flow Health Check: a fast snapshot of your team or portfolio delivery health",
-    href: SERVICES_HREF,
-  },
-  {
-    label:
-      "Lighthouse Setup & Introduction: we configure Lighthouse and onboard your team",
-    href: SERVICES_HREF,
-  },
-];
+const PREMIUM_CTA: EmailCta = {
+  label: "Explore Lighthouse Premium",
+  href: PREMIUM_HREF,
+};
+
+const service = (label: string): EmailLink => ({ label, href: SERVICES_HREF });
+
+const FLOW_CLARITY = service(
+  "Flow Clarity Assessment: a data-driven diagnostic of how work really flows",
+);
+const FLOW_HEALTH = service(
+  "Flow Health Check: a fast snapshot of your team or portfolio delivery health",
+);
+const LIGHTHOUSE_SETUP = service(
+  "Lighthouse Setup & Introduction: we configure Lighthouse and onboard your team",
+);
 
 export const BAND_EMAIL_COPY: Readonly<Record<BandName, BandEmailCopy>> = {
   "Flying blind": {
+    kitName: "Starter Kit",
     tagline: "Start measuring flow and run your first forecast.",
     measureRead:
-      "You're not measuring flow yet, so you can't see how work moves. Add your team in Lighthouse and start watching your flow metrics. It's easy to get the data flowing and learn from it.",
+      "You're not measuring flow yet, so you can't see how work moves. Add your team in Lighthouse and start watching your flow metrics. Within a day of connecting your data, you'll see things about your flow you've never seen before.",
     forecastRead:
       "Forecasting is gut feel today. Run a forecast for your next iteration and see how it performs. The goal right now is to experiment, not to overhaul how you work.",
     ctas: [
       { label: "Start with Lighthouse (free)", href: COMMUNITY_HREF },
     ],
-    starterKit: [
+    consulting: [LIGHTHOUSE_SETUP, FLOW_CLARITY],
+    kitLinks: [
       {
         label: "Connect your work tracking system",
         href: "https://docs.lighthouse.letpeople.work/concepts/worktrackingsystems/worktrackingsystems.html",
@@ -99,6 +103,7 @@ export const BAND_EMAIL_COPY: Readonly<Record<BandName, BandEmailCopy>> = {
     ],
   },
   Drifting: {
+    kitName: "Steering Kit",
     tagline: "Swap guesses for real data and start steering.",
     measureRead:
       "You're tracking output like Velocity or Story Points, not the flow metrics that show how predictably work moves. Start watching Throughput and Cycle Time, and set improvement goals like a Service Level Expectation (SLE) or WIP limits.",
@@ -107,7 +112,8 @@ export const BAND_EMAIL_COPY: Readonly<Record<BandName, BandEmailCopy>> = {
     ctas: [
       { label: "Start with Lighthouse (free)", href: COMMUNITY_HREF },
     ],
-    starterKit: [
+    consulting: [FLOW_CLARITY, FLOW_HEALTH],
+    kitLinks: [
       {
         label: "The hidden cost of noise in your predictions",
         href: "https://blog.letpeople.work/p/the-hidden-cost-of-noise-in-your",
@@ -131,6 +137,7 @@ export const BAND_EMAIL_COPY: Readonly<Record<BandName, BandEmailCopy>> = {
     ],
   },
   "Flow-aware": {
+    kitName: "Level-Up Kit",
     tagline: "Start acting to get more predictable.",
     measureRead:
       "You're already watching flow metrics. Now sharpen predictability: act on leading indicators like Work Item Age, use your Service Level Expectation to drive improvements, and analyse how stable your delivery is with Process Behaviour Charts.",
@@ -141,9 +148,11 @@ export const BAND_EMAIL_COPY: Readonly<Record<BandName, BandEmailCopy>> = {
         label: "Use Lighthouse to operationalize forecasting (free)",
         href: COMMUNITY_HREF,
       },
+      PREMIUM_CTA,
       { label: "Book a workshop", href: WORKSHOPS_HREF },
     ],
-    starterKit: [
+    consulting: [FLOW_HEALTH, FLOW_CLARITY],
+    kitLinks: [
       {
         label: "A diner breakfast on Flow, Kanban and SLEs",
         href: "https://blog.letpeople.work/p/what-breakfast-at-a-diner-taught",
@@ -163,19 +172,22 @@ export const BAND_EMAIL_COPY: Readonly<Record<BandName, BandEmailCopy>> = {
     ],
   },
   Predictable: {
+    kitName: "Mastery Kit",
     tagline: "Fine-tune the details and scale across your portfolio.",
     measureRead:
       "Flow metrics are second nature. Now fine-tune: study your workflow to find bottlenecks, set more ambitious Service Level Expectations and bring your percentiles closer together, and use Process Behaviour Charts to keep improving.",
     forecastRead:
       "You forecast probabilistically and steer by it. Sharpen it further by right-sizing your features and accounting for feature WIP, then scale forecasting across teams and your portfolio.",
     ctas: [
+      PREMIUM_CTA,
       {
         label: "Use Lighthouse to scale your forecasting (free)",
         href: COMMUNITY_HREF,
       },
       { label: "Book a workshop", href: WORKSHOPS_HREF },
     ],
-    starterKit: [
+    consulting: [FLOW_HEALTH, LIGHTHOUSE_SETUP],
+    kitLinks: [
       {
         label: "Low WIP, small features, high freedom",
         href: "https://blog.letpeople.work/p/low-wip-small-features-high-freedom",
@@ -249,11 +261,11 @@ const renderHtml = (
         <p style="margin-bottom: 0;">${escapeHtml(copy.forecastRead)}</p>
       </div>
 
-      ${sectionHtml("Your starter kit", copy.starterKit)}
+      ${sectionHtml(`Your ${copy.kitName}`, copy.kitLinks)}
 
       ${sectionHtml("Workshops for where you are", copy.workshops)}
 
-      ${sectionHtml("Want hands-on help?", CONSULTING_OFFERS)}
+      ${sectionHtml("Want hands-on help?", copy.consulting)}
 
       <h3 style="color: #495057;">Your next step</h3>
       <ul>
@@ -303,11 +315,11 @@ ${copy.measureRead}
 How you forecast:
 ${copy.forecastRead}
 
-${sectionText("Your starter kit:", copy.starterKit)}
+${sectionText(`Your ${copy.kitName}:`, copy.kitLinks)}
 
 ${sectionText("Workshops for where you are:", copy.workshops)}
 
-${sectionText("Want hands-on help?", CONSULTING_OFFERS)}
+${sectionText("Want hands-on help?", copy.consulting)}
 
 Your next step:
 ${copy.ctas.map(linkText).join("\n")}

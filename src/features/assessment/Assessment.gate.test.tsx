@@ -33,7 +33,7 @@ const submitEmail = async (
   value: string,
 ) => {
   await user.type(screen.getByLabelText(/email/i), value);
-  await user.click(screen.getByRole("button", { name: /starter kit/i }));
+  await user.click(screen.getByRole("button", { name: /send me/i }));
 };
 
 describe("Assessment results teaser + starter-kit email (#14/#15, #16, #17, #18)", () => {

@@ -71,4 +71,34 @@ describe("assessment content (#20, #21 + load-time invariants)", () => {
       expect(bandContent(band).ctas[0].isCommunity).toBe(true);
     }
   });
+
+  it("the mature bands surface a Lighthouse Premium next step", () => {
+    for (const band of ["Flow-aware", "Predictable"] as const) {
+      const premium = bandContent(band).ctas.filter((cta) =>
+        cta.href.includes("#lighthouse-premium"),
+      );
+      expect(premium).toHaveLength(1);
+      expect(premium[0].label).toContain("Premium");
+    }
+  });
+
+  it("the entry bands do not push Premium", () => {
+    for (const band of ["Flying blind", "Drifting"] as const) {
+      expect(
+        bandContent(band).ctas.some((cta) =>
+          cta.href.includes("#lighthouse-premium"),
+        ),
+      ).toBe(false);
+    }
+  });
+
+  it("names a band-specific kit for every band", () => {
+    const kitNames = ALL_BANDS.map((band) => bandContent(band).kitName);
+    expect(kitNames).toEqual([
+      "Starter Kit",
+      "Steering Kit",
+      "Level-Up Kit",
+      "Mastery Kit",
+    ]);
+  });
 });

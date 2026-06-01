@@ -21,6 +21,7 @@ const ctaSchema = z.object({
 
 const bandSchema = z.object({
   name: z.string().min(1),
+  kitName: z.string().min(1),
   min: z.number().int().min(0).max(100),
   max: z.number().int().min(0).max(100),
   tagline: z.string().min(1),
@@ -40,6 +41,7 @@ export type Cta = z.infer<typeof ctaSchema>;
 export type BandCopy = z.infer<typeof bandSchema>;
 
 const COMMUNITY_HREF = "https://letpeople.work/lighthouse";
+const PREMIUM_HREF = "https://letpeople.work/lighthouse#lighthouse-premium";
 const WORKSHOPS_HREF = "https://letpeople.work/#workshops";
 
 const communityCta = (label: string): Cta => ({
@@ -47,6 +49,12 @@ const communityCta = (label: string): Cta => ({
   href: COMMUNITY_HREF,
   isCommunity: true,
 });
+
+const premiumCta: Cta = {
+  label: "Explore Lighthouse Premium",
+  href: PREMIUM_HREF,
+  isCommunity: false,
+};
 
 const workshopCta: Cta = {
   label: "Book a workshop",
@@ -159,17 +167,19 @@ const rawContent = {
   bands: [
     {
       name: "Flying blind",
+      kitName: "Starter Kit",
       min: 0,
       max: 25,
       tagline: "Start measuring flow and run your first forecast.",
       measureRead:
-        "You're not measuring flow yet, so you can't see how work moves. Add your team in Lighthouse and start watching your flow metrics. It's easy to get the data flowing and learn from it.",
+        "You're not measuring flow yet, so you can't see how work moves. Add your team in Lighthouse and start watching your flow metrics. Within a day of connecting your data, you'll see things about your flow you've never seen before.",
       forecastRead:
         "Forecasting is gut feel today. Run a forecast for your next iteration and see how it performs. The goal right now is to experiment, not to overhaul how you work.",
       ctas: [communityCta("Start with Lighthouse (free)")],
     },
     {
       name: "Drifting",
+      kitName: "Steering Kit",
       min: 26,
       max: 50,
       tagline: "Swap guesses for real data and start steering.",
@@ -181,6 +191,7 @@ const rawContent = {
     },
     {
       name: "Flow-aware",
+      kitName: "Level-Up Kit",
       min: 51,
       max: 75,
       tagline: "Start acting to get more predictable.",
@@ -190,11 +201,13 @@ const rawContent = {
         "Your forecasting works at team level. Now extend it to the portfolio, and keep checking the trend of your deliveries over time rather than a single date.",
       ctas: [
         communityCta("Use Lighthouse to operationalize forecasting (free)"),
+        premiumCta,
         workshopCta,
       ],
     },
     {
       name: "Predictable",
+      kitName: "Mastery Kit",
       min: 76,
       max: 100,
       tagline: "Fine-tune the details and scale across your portfolio.",
@@ -203,6 +216,7 @@ const rawContent = {
       forecastRead:
         "You forecast probabilistically and steer by it. Sharpen it further by right-sizing your features and accounting for feature WIP, then scale forecasting across teams and your portfolio.",
       ctas: [
+        premiumCta,
         communityCta("Use Lighthouse to scale your forecasting (free)"),
         workshopCta,
       ],

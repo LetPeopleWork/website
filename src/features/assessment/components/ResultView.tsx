@@ -50,11 +50,11 @@ export const ResultView = ({
             <CardTitle className="text-xl">Your next step</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-3">
-            {band.ctas.map((cta) => (
+            {band.ctas.map((cta, index) => (
               <Button
                 key={cta.label}
                 asChild
-                variant={cta.isCommunity ? "default" : "outline"}
+                variant={index === 0 ? "default" : "outline"}
               >
                 <a href={cta.href} target="_blank" rel="noreferrer">
                   {cta.label}
@@ -68,7 +68,7 @@ export const ResultView = ({
       {unlocked ? (
         <Card data-testid="assessment-kit-sent">
           <CardContent className="py-6 text-center text-base text-muted-foreground">
-            Your starter kit is on its way. Check your inbox for hand-picked
+            Your {band.kitName} is on its way. Check your inbox for hand-picked
             resources matched to your result.
           </CardContent>
         </Card>
@@ -76,7 +76,7 @@ export const ResultView = ({
         <Card data-testid="assessment-gate">
           <CardHeader className="space-y-2">
             <CardTitle className="text-xl">
-              Want a starter kit to go further?
+              Want your {band.kitName} to go further?
             </CardTitle>
             <p className="text-sm text-muted-foreground">
               Leave your email and we'll send hand-picked articles, Lighthouse
@@ -85,7 +85,7 @@ export const ResultView = ({
             </p>
           </CardHeader>
           <CardContent>
-            <EmailGate onUnlock={onUnlock} />
+            <EmailGate kitName={band.kitName} onUnlock={onUnlock} />
           </CardContent>
         </Card>
       )}

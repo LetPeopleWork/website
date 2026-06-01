@@ -74,7 +74,8 @@ const rawContent = {
     },
     {
       id: "improvement",
-      prompt: "What would most improve Lighthouse for you?",
+      prompt:
+        "What is one thing that would make Lighthouse even better that is missing today?",
       kind: "text",
       maxLength: 500,
     },
