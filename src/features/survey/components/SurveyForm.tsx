@@ -114,12 +114,14 @@ const Exchange = ({ errorMessage, onSubmit, onBack }: ExchangeProps) => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<ExchangeValues>({
     resolver: zodResolver(exchangeSchema),
     mode: "onSubmit",
     defaultValues: { wantsTrial: false, email: "", organization: "" },
   });
+  const wantsTrial = watch("wantsTrial");
   const submit = handleSubmit((values) => onSubmit(trialFrom(values)));
 
   return (
@@ -136,35 +138,41 @@ const Exchange = ({ errorMessage, onSubmit, onBack }: ExchangeProps) => {
             <input type="checkbox" {...register("wantsTrial")} />
             I'd like a free one-month Premium trial
           </Label>
-          <div className="space-y-2">
-            <Label htmlFor={emailId}>Email for your free premium trial</Label>
-            <Input
-              id={emailId}
-              type="email"
-              placeholder="you@example.com"
-              aria-invalid={errors.email ? "true" : "false"}
-              {...register("email")}
-            />
-          </div>
-          {errors.email ? (
-            <p role="alert" className="text-sm text-destructive">
-              {errors.email.message}
-            </p>
-          ) : null}
-          <div className="space-y-2">
-            <Label htmlFor={organizationId}>Organization</Label>
-            <Input
-              id={organizationId}
-              type="text"
-              placeholder="Acme Inc."
-              aria-invalid={errors.organization ? "true" : "false"}
-              {...register("organization")}
-            />
-          </div>
-          {errors.organization ? (
-            <p role="alert" className="text-sm text-destructive">
-              {errors.organization.message}
-            </p>
+          {wantsTrial ? (
+            <>
+              <div className="space-y-2">
+                <Label htmlFor={emailId}>
+                  Email for your free premium trial
+                </Label>
+                <Input
+                  id={emailId}
+                  type="email"
+                  placeholder="you@example.com"
+                  aria-invalid={errors.email ? "true" : "false"}
+                  {...register("email")}
+                />
+              </div>
+              {errors.email ? (
+                <p role="alert" className="text-sm text-destructive">
+                  {errors.email.message}
+                </p>
+              ) : null}
+              <div className="space-y-2">
+                <Label htmlFor={organizationId}>Organization</Label>
+                <Input
+                  id={organizationId}
+                  type="text"
+                  placeholder="Acme Inc."
+                  aria-invalid={errors.organization ? "true" : "false"}
+                  {...register("organization")}
+                />
+              </div>
+              {errors.organization ? (
+                <p role="alert" className="text-sm text-destructive">
+                  {errors.organization.message}
+                </p>
+              ) : null}
+            </>
           ) : null}
           {errorMessage ? (
             <p role="alert" className="text-sm text-destructive">
