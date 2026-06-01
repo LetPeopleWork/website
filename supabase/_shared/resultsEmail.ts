@@ -31,7 +31,7 @@ export interface RenderResultsEmailOptions {
 
 export const REPLY_TO_ADDRESS = "contact@letpeople.work";
 
-const SUBJECT = "Your Flow & Forecasting Readiness results";
+const SUBJECT = "Your Delivery Predictability results";
 const GREETING = "Hi there,";
 const REPLY_OFFER =
   "Just reply to this email and we'll point you to the right next step.";
@@ -228,7 +228,7 @@ const renderHtml = (
 ): string => `<html>
   <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
     <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-      <h2 style="color: #2c3e50;">Your Flow &amp; Forecasting Readiness results</h2>
+      <h2 style="color: #2c3e50;">Your Delivery Predictability results</h2>
 
       <p>${GREETING}</p>
 
@@ -288,7 +288,7 @@ const renderText = (
   band: BandName,
   score: number,
   copy: BandEmailCopy,
-): string => `Your Flow & Forecasting Readiness results
+): string => `Your Delivery Predictability results
 
 ${GREETING}
 

@@ -9,7 +9,7 @@ export const IntroStep = ({ onStart }: IntroStepProps) => (
   <Card className="mx-auto w-full max-w-2xl">
     <CardHeader>
       <CardTitle className="text-2xl sm:text-3xl">
-        Forecasting Readiness Assessment
+        Delivery Predictability Assessment
       </CardTitle>
     </CardHeader>
     <CardContent className="space-y-6">

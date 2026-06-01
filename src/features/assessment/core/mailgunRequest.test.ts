@@ -17,7 +17,7 @@ const getMessage = (
   overrides: Partial<MailgunMessage> = {},
 ): MailgunMessage => ({
   to: "visitor@example.com",
-  subject: "Your Flow & Forecasting Readiness results",
+  subject: "Your Delivery Predictability results",
   text: "plain body",
   html: "<p>html body</p>",
   replyTo: "hello@letpeople.work",
@@ -44,7 +44,7 @@ describe("buildMailgunRequest assembles the Mailgun HTTP API call", () => {
     );
     expect(form.get("to")).toBe("visitor@example.com");
     expect(form.get("subject")).toBe(
-      "Your Flow & Forecasting Readiness results",
+      "Your Delivery Predictability results",
     );
     expect(form.get("text")).toBe("plain body");
     expect(form.get("html")).toBe("<p>html body</p>");

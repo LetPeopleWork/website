@@ -127,7 +127,7 @@ const Assessment = ({
   return (
     <main className="min-h-screen bg-background px-4 py-12">
       <SEO
-        title="Forecasting Readiness Assessment"
+        title="Delivery Predictability Assessment"
         description="An honest, framework-backed read on your delivery maturity across what you measure and how you forecast."
       />
       {state.phase === "intro" && (

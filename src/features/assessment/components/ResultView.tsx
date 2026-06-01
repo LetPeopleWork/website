@@ -24,7 +24,7 @@ export const ResultView = ({
       <Card data-testid="assessment-result">
         <CardHeader className="space-y-2 text-center">
           <p className="text-sm uppercase tracking-wide text-muted-foreground">
-            Your forecasting readiness
+            Your delivery predictability
           </p>
           <CardTitle className="text-5xl font-bold">
             {result.score} / 100

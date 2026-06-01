@@ -33,7 +33,7 @@ describe("renderResultsEmail builds the branded results email from a band", () =
         }
       }
 
-      expect(email.subject).toBe("Your Flow & Forecasting Readiness results");
+      expect(email.subject).toBe("Your Delivery Predictability results");
     },
   );
 
