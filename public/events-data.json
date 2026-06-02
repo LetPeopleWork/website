@@ -12,6 +12,19 @@
       "ctaText": "RSVP on Meetup",
       "ctaLink": "https://www.meetup.com/lighthouselive/events/313097190/",
       "source": "meetup"
+    },
+    {
+      "type": "Meetup",
+      "title": "Lighthouse - Office Hours",
+      "date": null,
+      "displayDate": "TBD",
+      "time": "",
+      "location": "Online",
+      "price": "Free",
+      "description": "**Description:**\nWe've done talks. We've done deep dives. We've watched community members show how they use Lighthouse. Now we're trying something new, and a little more open.\n\nWelcome to Lighthouse Office Hours.\n\nThis is exactly what it sounds like: Benji and Peter, live, answering your questions a...",
+      "ctaText": "RSVP on Meetup",
+      "ctaLink": "https://www.meetup.com/lighthouselive/events/315056974/",
+      "source": "meetup"
     }
   ]
 }
