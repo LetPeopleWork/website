@@ -2,19 +2,6 @@
   "events": [
     {
       "type": "Meetup",
-      "title": "Managing Delivery Risk with Goal-Based Planning",
-      "date": null,
-      "displayDate": "TBD",
-      "time": "",
-      "location": "Online",
-      "price": "Free",
-      "description": "Hear and learn from our Lighthouse user Anoop.\n\n**Managing Delivery Risk with Goal-Based Planning**\nWhat if you could actually see the risk of missing a deadline...and do something about it?\nIn this Lighthouse Live Session, Anoop Parapurath will share how his team transformed their planning approach...",
-      "ctaText": "RSVP on Meetup",
-      "ctaLink": "https://www.meetup.com/lighthouselive/events/313097190/",
-      "source": "meetup"
-    },
-    {
-      "type": "Meetup",
       "title": "Lighthouse - Office Hours",
       "date": null,
       "displayDate": "TBD",
