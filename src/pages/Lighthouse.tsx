@@ -1098,8 +1098,7 @@ const Lighthouse = () => {
 								<div className="text-4xl md:text-5xl font-semibold text-foreground tracking-tight">CHF 10,000</div>
 								<div className="text-sm text-muted-foreground">/ year</div>
 							</div>
-							<span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-accent text-primary text-xs font-semibold px-3 py-1 mb-3">Launching August 2026</span>
-								<div className="text-sm text-muted-foreground mb-6">For teams that want priority.</div>
+								<div className="text-sm text-muted-foreground mb-6 mt-3">For teams that want priority.</div>
 							<p className="text-base text-foreground/80 leading-relaxed mb-6">
 								Everything in Self-Service, plus a faster, prioritised line to support when you need it.
 							</p>
@@ -1563,7 +1562,7 @@ const Lighthouse = () => {
 									Enterprise
 								</span>
 								<h3 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight leading-tight mb-4">
-									Want to be first in line?
+										Want priority support?
 								</h3>
 								<p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-2">
 									Enterprise gives you the same product as Self-Service, plus a prioritised support queue, a 24h acknowledgement on async requests, onboarding calls, and a 10% workshop discount.

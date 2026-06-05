@@ -69,9 +69,11 @@ const Hero = () => {
           </div>
 
           <p className="text-sm text-muted-foreground mb-20">
-            Not sure where to start? A{" "}
-            <span className="text-foreground/80 font-medium">free Flow Assessment</span>{" "}
-            to help you see where you stand is coming soon.
+            Not sure where to start? Take our{" "}
+            <a href="/assessment" className="text-primary font-medium underline-offset-4 hover:underline">
+              free Flow Assessment
+            </a>{" "}
+            and see where you stand.
           </p>
 
           {/* Stats with scroll reveal */}

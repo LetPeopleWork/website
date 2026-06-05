@@ -31,8 +31,7 @@ const TIERS: Tier[] = [
       "A concrete next step, no cost and no sales pitch",
     ],
     price: "Free",
-    cta: { label: "Coming soon", href: "" },
-    comingSoon: true,
+    cta: { label: "Start your assessment", href: "/assessment" },
   },
   {
     id: "implement",
@@ -183,7 +182,7 @@ export default function EngagementPath() {
             <span className="text-primary font-light">All grounded in your real flow.</span>
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed mt-6">
-            A free assessment to get you started is on the way. From there, go as far as you need. The further you go, the more it runs on your own delivery data, not our slides.
+            Start with a free assessment. From there, go as far as you need. The further you go, the more it runs on your own delivery data, not our slides.
           </p>
         </div>
 
