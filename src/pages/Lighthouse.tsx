@@ -377,7 +377,7 @@ const Lighthouse = () => {
 			extendedDescription: `Whether it's on team or on portfolio level, you can't have easier access to a complete overview over your Flow than with Lighthouse.
       Whether you want to see the impact of a recent change, analyze how the last weeks went together with the team, or look for outliers to learn from - Lighthouse is making it easy for you!
 
-      You get the full set: Cycle Time, Throughput, Work In Progress, Work Item Aging with pace bands, Arrivals, and a Flow Overview that flags stale and blocked work at a glance. Newer additions like the Load Balance Matrix help you control WIP, while Time in State shows how long each item has been sitting right now. Filter the date range, drill down to specific items, and jump straight to your connected system.
+      You get the full set: Cycle Time, Throughput, Work In Progress, Work Item Aging with pace bands, Arrivals, and a Flow Overview that flags stale and blocked work at a glance. Newer additions like the Load Balance Matrix help you control WIP, while Time in State shows how long each item has been sitting right now. Premium teams can even define their own named cycle times — measure any start-to-end window, such as a full lead time from backlog to done, right alongside the default Cycle Time on the scatterplot and the Cumulative Time per State chart. Filter the date range, drill down to specific items, and jump straight to your connected system.
 
       If you want to work data-driven, these are the metrics you need. And Lighthouse is the tool you want to visualize them!`,
 			callToAction: "Miss some specific Metric or Chart? Reach out!",
