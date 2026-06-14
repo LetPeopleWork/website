@@ -74,16 +74,11 @@ import FAQSection from "@/components/FAQSection";
 import LighthouseLearnMore from "@/components/LighthouseLearnMore";
 import LighthouseWhatsNew from "@/components/LighthouseWhatsNew";
 import { format } from "date-fns";
-import metricsTeam1 from "@/assets/screenshots/Metrics_Team_1.png";
-import metricsProject1 from "@/assets/screenshots/Metrics_Project_1.png";
-import forecastsTeamManual from "@/assets/screenshots/Forecasts_Team_Manual.png";
-import forecastsProject from "@/assets/screenshots/Forecasts_Project.png";
+import { lighthouseAsset } from "@/lib/lighthouseAsset";
 import metricsTeamVideo from "@/assets/videos/Metrics_Team.mp4";
 import metricsProjectVideo from "@/assets/videos/Metrics_Projects.mp4";
 import forecastsTeamVideo from "@/assets/videos/Forecasts_Team.mp4";
 import forecastsProjectVideo from "@/assets/videos/Forecasts_Project.mp4";
-import almConnectionImage from "@/assets/screenshots/ALM_Connection.png";
-import queryConfigurationImage from "@/assets/screenshots/Query_Configuration.png";
 import gitHubImage from "@/assets/screenshots/GitHub.png";
 import {
 	findAssetByPattern,
@@ -384,12 +379,12 @@ const Lighthouse = () => {
 			mediaItems: [
 				{
 					type: "image" as const,
-					src: metricsTeam1,
+					src: lighthouseAsset("features/metrics/metricsoverview.png"),
 					alt: "Team Metrics",
 				},
 				{
 					type: "image" as const,
-					src: metricsProject1,
+					src: lighthouseAsset("features/metrics/portfoliometricsoverview.png"),
 					alt: "Projects Metrics",
 				},
 				{
@@ -414,12 +409,12 @@ const Lighthouse = () => {
 			mediaItems: [
 				{
 					type: "image" as const,
-					src: forecastsTeamManual,
+					src: lighthouseAsset("features/teamdetail.png"),
 					alt: "Team Forecasts",
 				},
 				{
 					type: "image" as const,
-					src: forecastsProject,
+					src: lighthouseAsset("features/portfoliodetail.png"),
 					alt: "Projects Forecasts",
 				},
 				{
@@ -441,12 +436,12 @@ const Lighthouse = () => {
 			mediaItems: [
 				{
 					type: "image" as const,
-					src: almConnectionImage,
+					src: lighthouseAsset("concepts/worktrackingsystem_AzureDevOps.png"),
 					alt: "ALM Connection",
 				},
 				{
 					type: "image" as const,
-					src: queryConfigurationImage,
+					src: lighthouseAsset("concepts/azuredevops_team_wizard.png"),
 					alt: "Query Configuration",
 				},
 			],

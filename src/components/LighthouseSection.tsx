@@ -8,7 +8,6 @@ import {
 import MediaCarousel from "@/components/MediaCarousel";
 import lighthouseLogo from "@/assets/LighthouseLogo.png";
 import { lighthouseAsset } from "@/lib/lighthouseAsset";
-import forecastsTeamManual from "@/assets/screenshots/Forecasts_Team_Manual.png";
 import forecastsProjectVideo from "@/assets/videos/Forecasts_Project.mp4";
 import LighthouseTestimonials from "@/components/LighthouseTestimonials";
 import QuickDownloadBar from "@/components/QuickDownloadBar";
@@ -22,7 +21,7 @@ const LighthouseSection = () => {
     },
     {
       type: "image" as const,
-      src: forecastsTeamManual,
+      src: lighthouseAsset("features/teamdetail.png"),
       alt: "Team Forecasts Manual"
     },
     {
