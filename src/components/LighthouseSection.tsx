@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 import MediaCarousel from "@/components/MediaCarousel";
 import lighthouseLogo from "@/assets/LighthouseLogo.png";
-import metricsTeam1 from "@/assets/screenshots/Metrics_Team_1.png";
+import { lighthouseAsset } from "@/lib/lighthouseAsset";
 import forecastsTeamManual from "@/assets/screenshots/Forecasts_Team_Manual.png";
 import forecastsProjectVideo from "@/assets/videos/Forecasts_Project.mp4";
 import LighthouseTestimonials from "@/components/LighthouseTestimonials";
@@ -17,7 +17,7 @@ const LighthouseSection = () => {
   const mediaItems = [
     {
       type: "image" as const,
-      src: metricsTeam1,
+      src: lighthouseAsset("features/metrics/metricsoverview.png"),
       alt: "Team Metrics Overview"
     },
     {
