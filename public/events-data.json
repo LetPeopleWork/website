@@ -12,6 +12,19 @@
       "ctaText": "RSVP on Meetup",
       "ctaLink": "https://www.meetup.com/lighthouselive/events/315056974/",
       "source": "meetup"
+    },
+    {
+      "type": "Meetup",
+      "title": "Beyond Burnups with Nick Brown",
+      "date": null,
+      "displayDate": "TBD",
+      "time": "",
+      "location": "Online",
+      "price": "Free",
+      "description": "Burnup and burndown charts have been the default way teams forecast delivery for decades. But in modern software/product development, with high variability, multi-team initiatives, and shifting scope, these deterministic charts give a false sense of certainty and, at best, a 50% chance of being righ...",
+      "ctaText": "RSVP on Meetup",
+      "ctaLink": "https://www.meetup.com/lighthouselive/events/315253019/",
+      "source": "meetup"
     }
   ]
 }
