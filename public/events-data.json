@@ -15,6 +15,19 @@
     },
     {
       "type": "Meetup",
+      "title": "Agentic AI Meets Flow with Liz Rettig",
+      "date": null,
+      "displayDate": "TBD",
+      "time": "",
+      "location": "Online",
+      "price": "Free",
+      "description": "Everyone is talking about agentic AI. Few teams are using it as the actual way work gets done.\n\nIn this Lighthouse Live session, [Liz Rettig](https://www.linkedin.com/in/lizrettig-agilecoach/), a trainer with ProKanban.org, shares what she's learned from being embedded inside an insurance technology...",
+      "ctaText": "RSVP on Meetup",
+      "ctaLink": "https://www.meetup.com/lighthouselive/events/315253705/",
+      "source": "meetup"
+    },
+    {
+      "type": "Meetup",
       "title": "Beyond Burnups with Nick Brown",
       "date": null,
       "displayDate": "TBD",
