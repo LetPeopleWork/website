@@ -94,7 +94,7 @@ const LighthouseSection = () => {
             No credit card. No account. No hassle.
           </p>
           <QuickDownloadBar additionalLink={{ name: "All Downloads", url: "/lighthouse#downloads" }} />
-          <p className="text-xs text-muted-foreground mt-4">Community Version free forever • 100% open source • Runs on your infrastructure. Nothing sent to the cloud.</p>
+          <p className="text-xs text-muted-foreground mt-4">Community Version free forever • 100% open source • Self-hosted, so your data and the tool stay with you.</p>
         </div>
 
         {/* Main Content Grid */}

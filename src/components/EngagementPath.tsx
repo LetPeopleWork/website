@@ -45,6 +45,7 @@ const TIERS: Tier[] = [
       "Bring-Your-Own-Data workshop with your actual delivery history",
       "Lighthouse configured to your workflow and tracker",
       "Your team knows how to maintain and extend it",
+      "A forecast you can stand behind, or we keep working until you have one",
     ],
     price: "CHF 2,000",
     cta: { label: "Plan your pilot", href: "mailto:contact@letpeople.work?subject=BYOD%20Workshop%20%2B%20Lighthouse%20Pilot" },

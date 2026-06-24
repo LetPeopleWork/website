@@ -132,7 +132,7 @@ const standaloneDownloads: DownloadEntry[] = [
 		os: "windows",
 		label: "Windows Installer (.msi)",
 		tooltip:
-			"MSI installer for Windows — useful for enterprise deployment. Code signed.",
+			"MSI installer for Windows, useful for enterprise deployment. Code signed.",
 		assetPattern: "installer.msi",
 	},
 	{
@@ -152,7 +152,7 @@ const standaloneDownloads: DownloadEntry[] = [
 		os: "linux",
 		label: "Linux App (.AppImage)",
 		tooltip:
-			"Portable AppImage — runs on most Linux distributions without installation.",
+			"Portable AppImage that runs on most Linux distributions without installation.",
 		assetPattern: ".appimage",
 	},
 ];
@@ -372,7 +372,7 @@ const Lighthouse = () => {
 			extendedDescription: `Whether it's on team or on portfolio level, you can't have easier access to a complete overview over your Flow than with Lighthouse.
       Whether you want to see the impact of a recent change, analyze how the last weeks went together with the team, or look for outliers to learn from - Lighthouse is making it easy for you!
 
-      You get the full set: Cycle Time, Throughput, Work In Progress, Work Item Aging with pace bands, Arrivals, and a Flow Overview that flags stale and blocked work at a glance. Newer additions like the Load Balance Matrix help you control WIP, while Time in State shows how long each item has been sitting right now. Premium teams can even define their own named cycle times — measure any start-to-end window, such as a full lead time from backlog to done, right alongside the default Cycle Time on the scatterplot and the Cumulative Time per State chart. Filter the date range, drill down to specific items, and jump straight to your connected system.
+      You get the full set: Cycle Time, Throughput, Work In Progress, Work Item Aging with pace bands, Arrivals, and a Flow Overview that flags stale and blocked work at a glance. Newer additions like the Load Balance Matrix help you control WIP, while Time in State shows how long each item has been sitting right now. Premium teams can even define their own named cycle times: measure any start-to-end window, such as a full lead time from backlog to done, right alongside the default Cycle Time on the scatterplot and the Cumulative Time per State chart. Filter the date range, drill down to specific items, and jump straight to your connected system.
 
       If you want to work data-driven, these are the metrics you need. And Lighthouse is the tool you want to visualize them!`,
 			callToAction: "Miss some specific Metric or Chart? Reach out!",
@@ -546,7 +546,7 @@ const Lighthouse = () => {
 			},
 		],
 		description:
-			"Open-source flow metrics and probabilistic forecasting tool. Connects to Jira, Azure DevOps, and Linear. AI integration via MCP — ask your AI assistant questions about your delivery data directly. Self-hosted, no cloud dependency.",
+			"Open-source flow metrics and probabilistic forecasting tool. Connects to Jira, Azure DevOps, and Linear. AI integration via MCP, so you can ask your AI assistant questions about your delivery data directly. Self-hosted, no cloud dependency.",
 		featureList: [
 			"Flow Metrics Visualization",
 			"Monte Carlo Probabilistic Forecasting",
@@ -724,7 +724,7 @@ const Lighthouse = () => {
 		<div className="min-h-screen bg-background">
 			<SEO
 				title="Lighthouse - Flow Metrics & Forecasting Tool for Agile Teams"
-				description="Lighthouse is an open-source tool for visualizing flow metrics and forecasting delivery dates using Monte Carlo simulations. Connects to Jira, Azure DevOps, and Linear. AI integration via MCP — ask Claude or Copilot questions about your delivery data. Free community version available."
+				description="Lighthouse is an open-source tool for visualizing flow metrics and forecasting delivery dates using Monte Carlo simulations. Connects to Jira, Azure DevOps, and Linear. AI integration via MCP, so you can ask Claude or Copilot questions about your delivery data. Free community version available."
 				keywords="lighthouse flow metrics, agile forecasting tool, Monte Carlo simulation, delivery forecasting, when will it be done, how much can we do, Jira flow metrics, Azure DevOps metrics, Linear integration, AI integration, MCP, Model Context Protocol, agile AI assistant, throughput, cycle time, lead time, WIP, work in progress, team velocity, sprint forecasting, agile metrics dashboard, kanban metrics, scrum metrics, project forecasting, portfolio forecasting, open source agile, predictability, self-hosted forecasting, agile analytics"
 				ogImage="https://letpeople.work/forecasts-project.png"
 				ogType="website"
@@ -758,10 +758,11 @@ const Lighthouse = () => {
 							</span>
 						</h1>
 						<p className="text-xl text-muted-foreground max-w-4xl mx-auto mb-12">
-							Make your Flow transparent from team to portfolio level. Get
-							data-driven insights instead of gut feelings. Forecast delivery
-							dates in seconds based on your real performance and drive
-							actionable improvements.
+							You're being asked when it'll be done. Right now, your honest
+							answer is a guess. Lighthouse turns your real history from Jira,
+							Azure DevOps, or Linear into forecasts you can defend, from team
+							to portfolio, and shows you where delivery is losing speed so you
+							can fix it.
 						</p>
 
 						{/* Download CTA */}
@@ -945,8 +946,8 @@ const Lighthouse = () => {
 							See Lighthouse in Action
 						</h2>
 						<p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-							Discover how Lighthouse can transform your flow metrics and
-							forecasting
+							See how teams go from defending guessed dates to forecasts they
+							can stand behind
 						</p>
 					</div>
 
@@ -1021,8 +1022,8 @@ const Lighthouse = () => {
 							Until August 2026
 						</span>
 						<p className="text-sm md:text-base text-foreground leading-relaxed">
-							<span className="font-semibold">Book now and keep today's price.</span>{" "}
-							A Self-Service license is still <span className="font-semibold text-primary">CHF 999 / year</span> and stays at that rate for your term. From August 2026, Self-Service moves to CHF 2,000.
+							<span className="font-semibold">Self-Service is</span> <span className="font-semibold text-primary">CHF 999 / year</span> <span className="font-semibold">today. In August 2026 it becomes CHF 2,000.</span>{" "}
+							Start before then and you lock CHF 999 for your full term. We're telling you early so the choice is yours, no countdown.
 						</p>
 					</div>
 
@@ -1114,6 +1115,11 @@ const Lighthouse = () => {
 							</a>
 						</div>
 					</div>
+
+					{/* No lock-in reassurance */}
+					<p className="text-center text-sm md:text-base text-muted-foreground max-w-2xl mx-auto mb-16">
+						Self-hosted and open source. If you ever stop paying, your data and the tool stay with you.
+					</p>
 
 					{/* Full feature comparison table */}
 					<div className="bg-background rounded-2xl p-8 shadow-soft border border-border">
@@ -1308,6 +1314,9 @@ const Lighthouse = () => {
 						</h2>
 						<p className="text-lg md:text-xl text-muted-foreground font-light max-w-2xl mx-auto">
 							Pick the path that fits.<br />You can move up later, just write to us.
+						</p>
+						<p className="text-sm text-muted-foreground/80 font-light max-w-2xl mx-auto mt-4">
+							Self-hosted and open source. If you ever stop paying, your data and the tool stay with you.
 						</p>
 					</div>
 
@@ -1621,8 +1630,8 @@ const Lighthouse = () => {
 							Connect Your AI Assistant
 						</h2>
 						<p className="text-xl text-primary-foreground/80 max-w-3xl mx-auto leading-relaxed">
-							Lighthouse exposes your flow data through three integration points
-							— pick the one that fits your setup. Works with any AI that
+							Lighthouse exposes your flow data through three integration points.
+							Pick the one that fits your setup. Works with any AI that
 							supports tool calling. No vendor lock-in.
 						</p>
 					</div>
@@ -1657,7 +1666,7 @@ const Lighthouse = () => {
 								Connect VS Code, GitHub Copilot, Claude Code, or any local AI
 								tool via the MCP stdio package. Or drop the{" "}
 								<span className="text-green-300 font-mono">.mcpb</span> bundle
-								directly into your client — no npm required.
+								directly into your client, no npm required.
 							</p>
 							<code className="block text-xs bg-black/30 text-green-300 rounded-lg px-3 py-2 font-mono">
 								@letpeoplework/lighthouse-mcp-stdio

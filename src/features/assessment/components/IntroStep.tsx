@@ -15,8 +15,9 @@ export const IntroStep = ({ onStart }: IntroStepProps) => (
     <CardContent className="space-y-6">
       <p className="text-base text-muted-foreground">
         An honest, ~5-minute read on how mature your delivery really is, across
-        both what you measure and how you forecast. Six questions, one clear
-        score, and a concrete next step. No email required to see your result.
+        both what you measure and how you forecast. Six questions surface the one
+        or two gaps quietly costing you predictability, with one clear score and a
+        concrete next step. No email required to see your result.
       </p>
       <Button size="lg" className="w-full sm:w-auto" onClick={onStart}>
         Start the assessment

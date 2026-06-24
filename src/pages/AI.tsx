@@ -218,7 +218,7 @@ const AI = () => {
           <Reveal className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
             <Eyebrow>Our approach</Eyebrow>
             <h2 className="text-4xl md:text-6xl font-bold text-foreground tracking-[-0.02em] leading-[1.02] text-balance mb-6">
-              Not hype. Practice.
+              Practice over promises.
             </h2>
             <p className="text-lg md:text-2xl text-muted-foreground font-light leading-relaxed text-pretty">
               We work with AI the same way we work with delivery: small steps, real
@@ -321,7 +321,8 @@ const AI = () => {
               Two toolkits we built and use ourselves.
             </h2>
             <p className="text-lg md:text-2xl text-muted-foreground font-light leading-relaxed text-pretty">
-              Free, open source, and shaped by how we actually work.
+              Free, open source, and shaped by how we actually work. Read them,
+              run them, and verify them before you trust them.
             </p>
           </Reveal>
 

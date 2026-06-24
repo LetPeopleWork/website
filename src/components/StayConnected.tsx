@@ -7,7 +7,7 @@ const StayConnected = () => {
     {
       icon: <MessageSquare className="h-8 w-8" />,
       title: "Slack Community",
-      description: "Join our vibrant community for discussions, questions, and direct access to our experts and other practitioners.",
+      description: "Join the community for real discussions, quick answers, and direct access to us and other practitioners.",
       cta: "Join Slack",
       link: "https://join.slack.com/t/let-people-work/shared_invite/zt-38df4z4sy-iqJEo6S8kmIgIfsgsV0J1A"
     },

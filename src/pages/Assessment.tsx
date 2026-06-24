@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import SEO from "@/components/SEO";
+import Navigation from "@/components/Navigation";
+import SimpleFooter from "@/components/SimpleFooter";
 import { IntroStep } from "@/features/assessment/components/IntroStep";
 import { QuestionStep } from "@/features/assessment/components/QuestionStep";
 import { ResultView } from "@/features/assessment/components/ResultView";
@@ -125,11 +127,13 @@ const Assessment = ({
   const currentAnswer = state.answers[state.currentIndex] ?? null;
 
   return (
-    <main className="min-h-screen bg-background px-4 py-12">
+    <div className="flex min-h-screen flex-col bg-background">
       <SEO
         title="Delivery Predictability Assessment"
         description="An honest, framework-backed read on your delivery maturity across what you measure and how you forecast."
       />
+      <Navigation />
+      <main className="flex-1 px-4 pt-28 pb-16">
       {state.phase === "intro" && (
         <IntroStep onStart={() => dispatch({ type: "start" })} />
       )}
@@ -168,7 +172,9 @@ const Assessment = ({
           onRestart={() => dispatch({ type: "restart" })}
         />
       )}
-    </main>
+      </main>
+      <SimpleFooter />
+    </div>
   );
 };
 
