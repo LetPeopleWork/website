@@ -226,7 +226,7 @@ const AI = () => {
             </p>
           </Reveal>
 
-          <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
             <Reveal variant="scale">
               <div className="group h-full rounded-[1.75rem] border border-border bg-white p-9 md:p-11 transition-all duration-500 ease-out-expo hover:border-primary/20 hover:shadow-medium hover:-translate-y-1">
                 <div className="w-14 h-14 rounded-2xl bg-accent flex items-center justify-center mb-7 transition-transform duration-500 ease-out-expo group-hover:scale-110">
@@ -325,7 +325,7 @@ const AI = () => {
             </p>
           </Reveal>
 
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
             {PLUGINS.map((plugin, i) => (
               <Reveal key={plugin.name} variant="scale" delay={i * 120}>
                 <div className="group h-full flex flex-col rounded-[1.75rem] border border-border bg-white overflow-hidden transition-all duration-500 ease-out-expo hover:border-primary/20 hover:shadow-medium hover:-translate-y-1">
@@ -339,7 +339,7 @@ const AI = () => {
                       loading="lazy"
                     />
                   </div>
-                  <div className="flex flex-col flex-1 p-8 md:p-10">
+                  <div className="flex flex-col flex-1 min-w-0 p-8 md:p-10">
                     <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-3">
                       {plugin.name}
                     </h3>
@@ -407,7 +407,7 @@ const AI = () => {
             </p>
           </Reveal>
 
-          <div className="grid sm:grid-cols-2 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
             {WORKSHOPS.map((workshop, i) => (
               <Reveal key={workshop.title} variant="scale" delay={i * 90}>
                 <a
