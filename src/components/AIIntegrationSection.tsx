@@ -126,6 +126,21 @@ const AIIntegrationSection = () => {
             Learn how to connect
             <ArrowRight className="w-4 h-4" />
           </a>
+
+          {/* Bridge to the broader AI page */}
+          <div className="mt-14 pt-10 border-t border-white/10 max-w-2xl mx-auto">
+            <p className="text-primary-foreground/70 text-base mb-4 leading-relaxed">
+              That's AI inside Lighthouse. We also work with AI more broadly: our own
+              obAIa way of working, two open-source plugins, and hands-on workshops.
+            </p>
+            <a
+              href="/ai"
+              className="group inline-flex items-center gap-2 text-primary-foreground font-semibold no-underline"
+            >
+              See how we work with AI
+              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+            </a>
+          </div>
         </div>
 
       </div>

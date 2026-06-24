@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+  <defs>
+    <style>
+      .name { fill: #2F5647; font-weight: 700; }
+      .url { fill: #8A9691; }
+      .h1 { fill: #2E3A45; font-weight: 700; }
+      .sub { fill: #5C6B6F; }
+      .label { fill: #2E3A45; font-weight: 700; letter-spacing: .04em; }
+      .body { fill: #6B777B; }
+      .pill { fill: #2F5647; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 600; }
+      .foot { fill: #8A9691; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="675" fill="#F4F7F5"/>
+  <rect width="1200" height="10" fill="#2F5647"/>
+
+  <!-- Header -->
+  <text x="72" y="92" class="name" font-size="34">obAIa</text>
+  <text x="72" y="118" class="url" font-size="15">letpeople.work</text>
+
+  <text x="72" y="178" class="h1" font-size="40">Run your business as one big room.</text>
+  <text x="72" y="212" class="sub" font-size="18">Decisions, work, pipeline and dates in one place. AI in the loop.</text>
+
+  <line x1="72" y1="240" x2="1128" y2="240" stroke="#E0E6E2" stroke-width="1"/>
+
+  <!-- Cards -->
+  <!-- row 1 -->
+  <g>
+    <rect x="72" y="266" width="336" height="170" rx="16" fill="#FFFFFF" stroke="#E3E8E5"/>
+    <circle cx="106" cy="312" r="15" fill="none" stroke="#2F5647" stroke-width="2.5"/><circle cx="106" cy="312" r="5.5" fill="#2F5647"/>
+    <text x="134" y="318" class="label" font-size="17">VISIBILITY</text>
+    <text x="100" y="368" class="body" font-size="15">Everything in flight, at a glance</text>
+    <rect x="100" y="388" width="92" height="30" rx="8" fill="#E8F0EB"/>
+    <text x="114" y="408" class="pill" font-size="14">/board</text>
+  </g>
+  <g>
+    <rect x="432" y="266" width="336" height="170" rx="16" fill="#FFFFFF" stroke="#E3E8E5"/>
+    <circle cx="466" cy="312" r="15" fill="none" stroke="#2F5647" stroke-width="2.5"/><circle cx="466" cy="312" r="5.5" fill="#2F5647"/>
+    <text x="494" y="318" class="label" font-size="17">ATTENTION</text>
+    <text x="460" y="368" class="body" font-size="15">What needs attention now</text>
+    <rect x="460" y="388" width="118" height="30" rx="8" fill="#E8F0EB"/>
+    <text x="474" y="408" class="pill" font-size="14">/whats-up</text>
+  </g>
+  <g>
+    <rect x="792" y="266" width="336" height="170" rx="16" fill="#FFFFFF" stroke="#E3E8E5"/>
+    <circle cx="826" cy="312" r="15" fill="none" stroke="#2F5647" stroke-width="2.5"/><circle cx="826" cy="312" r="5.5" fill="#2F5647"/>
+    <text x="854" y="318" class="label" font-size="17">PIPELINE</text>
+    <text x="820" y="368" class="body" font-size="15">Leads, trials, customers, lost</text>
+    <rect x="820" y="388" width="112" height="30" rx="8" fill="#E8F0EB"/>
+    <text x="834" y="408" class="pill" font-size="14">/pipeline</text>
+  </g>
+  <!-- row 2 -->
+  <g>
+    <rect x="72" y="456" width="336" height="170" rx="16" fill="#FFFFFF" stroke="#E3E8E5"/>
+    <circle cx="106" cy="502" r="15" fill="none" stroke="#2F5647" stroke-width="2.5"/><circle cx="106" cy="502" r="5.5" fill="#2F5647"/>
+    <text x="134" y="508" class="label" font-size="17">CAPTURE</text>
+    <text x="100" y="558" class="body" font-size="15">A thought, routed to the right lane</text>
+    <rect x="100" y="578" width="104" height="30" rx="8" fill="#E8F0EB"/>
+    <text x="114" y="598" class="pill" font-size="14">/capture</text>
+  </g>
+  <g>
+    <rect x="432" y="456" width="336" height="170" rx="16" fill="#FFFFFF" stroke="#E3E8E5"/>
+    <circle cx="466" cy="502" r="15" fill="none" stroke="#2F5647" stroke-width="2.5"/><circle cx="466" cy="502" r="5.5" fill="#2F5647"/>
+    <text x="494" y="508" class="label" font-size="17">DECISIONS</text>
+    <text x="460" y="558" class="body" font-size="15">A 3-lens panel, then a record</text>
+    <rect x="460" y="578" width="132" height="30" rx="8" fill="#E8F0EB"/>
+    <text x="474" y="598" class="pill" font-size="14">/org-discuss</text>
+  </g>
+  <g>
+    <rect x="792" y="456" width="336" height="170" rx="16" fill="#FFFFFF" stroke="#E3E8E5"/>
+    <circle cx="826" cy="502" r="15" fill="none" stroke="#2F5647" stroke-width="2.5"/><circle cx="826" cy="502" r="5.5" fill="#2F5647"/>
+    <text x="854" y="508" class="label" font-size="17">DIRECTION</text>
+    <text x="820" y="558" class="body" font-size="15">Pace to goal and momentum</text>
+    <rect x="820" y="578" width="88" height="30" rx="8" fill="#E8F0EB"/>
+    <text x="834" y="598" class="pill" font-size="14">/trends</text>
+  </g>
+
+  <text x="72" y="656" class="foot" font-size="14">obAIa · the AI-augmented big room for our business</text>
+</svg>

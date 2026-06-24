@@ -155,6 +155,14 @@ const Navigation = () => {
                 </div>
               )}
             </div>
+
+            {/* AI page link */}
+            <a
+              href="/ai"
+              className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
+            >
+              AI
+            </a>
           </div>
 
           {/* Mobile menu button */}
@@ -201,6 +209,15 @@ const Navigation = () => {
                   </button>
                 ))}
               </div>
+
+              {/* Mobile AI link */}
+              <a
+                href="/ai"
+                className="block px-3 py-2 rounded-md text-foreground hover:text-primary hover:bg-accent transition-colors font-medium"
+                onClick={() => setIsOpen(false)}
+              >
+                AI
+              </a>
             </div>
           </div>
         )}

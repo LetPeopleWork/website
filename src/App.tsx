@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import Lighthouse from "./pages/Lighthouse";
+import AI from "./pages/AI";
 import Assessment from "./pages/Assessment";
 import AdminAssessment from "./pages/AdminAssessment";
 import { SurveyForm } from "./features/survey/components/SurveyForm";
@@ -32,6 +33,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/lighthouse" element={<Lighthouse />} />
+            <Route path="/ai" element={<AI />} />
             <Route path="/assessment" element={<Assessment />} />
             <Route path="/admin/dashboard" element={<AdminAssessment />} />
             <Route

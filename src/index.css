@@ -114,4 +114,34 @@ All colors MUST be HSL.
     min-height: 100vh;
     min-height: -webkit-fill-available;
   }
+
+  /* Editorial line-wrapping (Apple-style headline balance) */
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  /* Refined, Apple-like easing for reveals and hovers */
+  .ease-out-expo { transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+
+  /* Layered glow mesh for the teal hero / CTA bands */
+  .hero-mesh {
+    background-image:
+      radial-gradient(55% 45% at 18% 12%, hsl(158 34% 44% / 0.55) 0%, transparent 60%),
+      radial-gradient(45% 45% at 88% 18%, hsl(160 42% 48% / 0.40) 0%, transparent 55%),
+      radial-gradient(60% 60% at 72% 108%, hsl(158 30% 14% / 0.55) 0%, transparent 60%);
+  }
+
+  /* Faint grid overlay for dark sections */
+  .bg-grid-faint {
+    background-image:
+      linear-gradient(hsl(0 0% 100% / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(0 0% 100% / 0.05) 1px, transparent 1px);
+    background-size: 46px 46px;
+    -webkit-mask-image: radial-gradient(80% 70% at 50% 40%, #000 0%, transparent 100%);
+    mask-image: radial-gradient(80% 70% at 50% 40%, #000 0%, transparent 100%);
+  }
+
+  /* Soft spotlight behind product shots on light sections */
+  .spotlight-soft {
+    background: radial-gradient(60% 55% at 50% 45%, hsl(158 29% 26% / 0.10) 0%, transparent 70%);
+  }
 }
