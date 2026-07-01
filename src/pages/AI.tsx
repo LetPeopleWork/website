@@ -11,6 +11,7 @@ import {
   GraduationCap,
   Github,
   Sparkles,
+  Users,
 } from "lucide-react";
 import obaiaGraphic from "@/assets/ai/obaia.svg";
 import workshopGraphic from "@/assets/ai/letpeopleworkshop.svg";
@@ -55,6 +56,21 @@ const PLUGINS: Plugin[] = [
     practices:
       "Conversation-practices library: GROW, SBI, NVC, career conversations.",
     repo: "https://github.com/LetPeopleWork/LetPeopleGrow",
+  },
+];
+
+const FOUNDERS = [
+  {
+    name: "Peter Zylka-Greger",
+    role: "Flow, coaching, and the people side",
+    brings:
+      "Peter makes AI land with the people who run the work. Years of coaching teams means he turns the technical into something non-technical people actually adopt, so it still works after we leave.",
+  },
+  {
+    name: "Benjamin Huser-Berta",
+    role: "Engineering and the tools",
+    brings:
+      "Benjamin builds the agents, plugins, and tooling we teach. What you learn is technically real and safe to rely on, because the person teaching it is the person who writes it.",
   },
 ];
 
@@ -406,6 +422,59 @@ const AI = () => {
         </div>
       </section>
 
+      {/* ── Why learn AI with us ── */}
+      <section
+        id="why-us"
+        className="py-28 md:py-40 bg-background border-t border-border/60"
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Reveal className="text-center max-w-3xl mx-auto mb-14 md:mb-16">
+            <span className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary bg-accent px-4 py-1.5 rounded-full mb-6">
+              <Users className="w-3.5 h-3.5" />
+              Why us
+            </span>
+            <h2 className="text-4xl md:text-6xl font-bold text-foreground tracking-[-0.02em] leading-[1.02] text-balance mb-6">
+              Why learn AI with us?
+            </h2>
+            <p className="text-lg md:text-2xl text-muted-foreground font-light leading-relaxed text-pretty">
+              Most AI training is someone reading the docs back to you. We teach it
+              the way we use it every day, to run our own business with obAIa and to
+              ship our own product. You learn from people who live with the results,
+              not from a slide deck.
+            </p>
+          </Reveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+            {FOUNDERS.map((f, i) => (
+              <Reveal key={f.name} variant="scale" delay={i * 120}>
+                <div className="h-full rounded-[1.75rem] border border-border bg-white p-8 md:p-10">
+                  <div className="mb-6">
+                    <div className="text-lg font-bold text-foreground tracking-tight">
+                      {f.name}
+                    </div>
+                    <div className="text-sm font-medium text-primary">
+                      {f.role}
+                    </div>
+                  </div>
+                  <p className="text-base md:text-lg text-muted-foreground leading-relaxed text-pretty">
+                    {f.brings}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal delay={120} className="max-w-3xl mx-auto mt-10 md:mt-12">
+            <p className="text-center text-base md:text-lg text-foreground leading-relaxed text-pretty">
+              Together you get both sides in one room, the business view and the
+              engineering view, so the non-technical leader and the builder both
+              leave with an answer. As always, we deliver in pairs: two
+              practitioners, two perspectives.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ── AI workshops (the journey) ── */}
       <section
         id="ai-workshops"
@@ -422,8 +491,8 @@ const AI = () => {
             </h2>
             <p className="text-lg md:text-2xl text-muted-foreground font-light leading-relaxed text-pretty">
               Everyone has AI open in a tab. Almost none of it becomes work. This is
-              the path from "huh, neat" to AI doing real work across your business,
-              four steps, at pilot pricing while it lasts.
+              the path from "huh, neat" to AI doing real work across your business.
+              Four steps, each bookable on its own, at pilot pricing while it lasts.
             </p>
           </Reveal>
 
@@ -449,7 +518,7 @@ const AI = () => {
                           {step.kicker}
                         </span>
                         <span className="inline-flex items-center rounded-full bg-accent text-primary text-[11px] font-semibold px-3 py-1">
-                          Pilot price · {PILOT_PRICE}
+                          Pilot price · {PILOT_PRICE} per team
                         </span>
                       </div>
                       <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight text-balance mb-3">
@@ -461,6 +530,15 @@ const AI = () => {
                       <p className="text-base md:text-lg text-muted-foreground leading-relaxed text-pretty">
                         {step.change}
                       </p>
+                      <a
+                        href={`${CONTACT_URL}?subject=${encodeURIComponent(
+                          `Workshop booking: ${step.title}`,
+                        )}`}
+                        className="group mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary no-underline"
+                      >
+                        Book this workshop
+                        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                      </a>
                     </div>
                   </div>
                 </Reveal>
@@ -471,17 +549,18 @@ const AI = () => {
           {/* Booking */}
           <Reveal className="text-center max-w-2xl mx-auto mt-16 md:mt-20">
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed text-pretty mb-8">
-              Every workshop is {PILOT_PRICE} at pilot pricing, subject to change once
-              the pilot cohorts fill up. Start anywhere, or build the whole journey
-              with us.
+              Every workshop is {PILOT_PRICE} at pilot pricing, and that covers your
+              entire team, not a seat. Pricing is subject to change once the pilot
+              cohorts fill up. Each one stands on its own: book a single workshop,
+              or design the whole journey with us.
             </p>
             <a
               href={`${CONTACT_URL}?subject=${encodeURIComponent(
-                "AI workshops (pilot cohort)",
+                "Design our AI journey",
               )}`}
               className="group inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-semibold text-base px-8 py-4 rounded-full shadow-soft hover:shadow-medium hover:bg-primary-hover transition-all duration-300 ease-out-expo hover:-translate-y-0.5 no-underline"
             >
-              Book a 30-minute conversation
+              Design your AI journey
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
             </a>
           </Reveal>
