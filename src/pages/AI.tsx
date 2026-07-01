@@ -58,35 +58,53 @@ const PLUGINS: Plugin[] = [
   },
 ];
 
-type Workshop = {
+const PILOT_PRICE = "CHF 2,500";
+
+type JourneyStep = {
+  n: string;
+  kicker: string;
   title: string;
-  description: string;
-  audience: string;
+  loss: string;
+  change: string;
 };
 
-const WORKSHOPS: Workshop[] = [
+// One progressive AI journey. Every step is equal, all at pilot price.
+const JOURNEY: JourneyStep[] = [
   {
-    title: "AI for Engineers",
-    description:
-      "Proper software engineering with agents: skills, commands, pipelines, the dangers, and the tooling.",
-    audience: "Engineers and tech leads",
+    n: "01",
+    kicker: "Literacy",
+    title: "The bAsIcs",
+    loss:
+      "Most of your people think AI is the chat box. Agents, commands, and skills, the parts that actually do work, are invisible to them. Nobody can use, buy, or ask for what they cannot see.",
+    change:
+      "Everyone leaves with the vocabulary and the mental model, and stops treating the chat window as the whole of AI.",
   },
   {
+    n: "02",
+    kicker: "Your first build",
+    title: "BIYA: Build It Yourself Agent",
+    loss:
+      "You have heard \"agent\" a hundred times and built exactly zero. Reading about it is not the same as watching one run your work, and every month it stays abstract is a month you do not get back.",
+    change:
+      "You build your first working agent with your own hands. The idea stops being a slide and becomes something you own.",
+  },
+  {
+    n: "03",
+    kicker: "Ship something real",
     title: "From Prototype to Product",
-    description:
-      "Build a working digital product as a non-technical person, with tools like Lovable and Claude Code.",
-    audience: "Non-technical builders",
+    loss:
+      "The tool your team actually needs dies in a backlog because \"we would need a developer.\" That queue is quietly costing you the thing you could have shipped this week.",
+    change:
+      "Build a real, working product yourself with Lovable and Claude Code, and stop waiting in line for it.",
   },
   {
-    title: "Use AI to Automate",
-    description:
-      "Automate real, repetitive work safely with Claude Code commands, MCP, and n8n.",
-    audience: "Ops and power users",
-  },
-  {
-    title: "The AI-Powered Business",
-    description: "Run parts of your business with AI, the obAIa way.",
-    audience: "Founders and leaders",
+    n: "04",
+    kicker: "Run on it",
+    title: "Filling the Gap: The AI-Powered Business",
+    loss:
+      "Everyone has AI open in a tab; almost none of it becomes work. That gap, between having AI and AI actually doing your work, is the most expensive thing in your building.",
+    change:
+      "Run your business the obAIa way, with agents doing real work across marketing and operations, connected to the tools you already use.",
   },
 ];
 
@@ -388,7 +406,7 @@ const AI = () => {
         </div>
       </section>
 
-      {/* ── AI workshops ── */}
+      {/* ── AI workshops (the journey) ── */}
       <section
         id="ai-workshops"
         className="py-28 md:py-40 bg-gradient-subtle border-y border-border/60"
@@ -397,46 +415,104 @@ const AI = () => {
           <Reveal className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
             <span className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary bg-accent px-4 py-1.5 rounded-full mb-6">
               <GraduationCap className="w-3.5 h-3.5" />
-              Coming soon
+              AI workshops
             </span>
             <h2 className="text-4xl md:text-6xl font-bold text-foreground tracking-[-0.02em] leading-[1.02] text-balance mb-6">
-              AI workshops.
+              An AI journey we build with you.
             </h2>
             <p className="text-lg md:text-2xl text-muted-foreground font-light leading-relaxed text-pretty">
-              Dates are not set yet. Register your interest and we will let you know
-              the moment a session opens.
+              Everyone has AI open in a tab. Almost none of it becomes work. This is
+              the path from "huh, neat" to AI doing real work across your business,
+              four steps, at pilot pricing while it lasts.
             </p>
           </Reveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
-            {WORKSHOPS.map((workshop, i) => (
-              <Reveal key={workshop.title} variant="scale" delay={i * 90}>
-                <a
-                  href={`${CONTACT_URL}?subject=${encodeURIComponent(
-                    `AI workshop interest: ${workshop.title}`,
-                  )}`}
-                  className="group h-full flex flex-col rounded-[1.75rem] border border-border bg-white p-9 md:p-11 no-underline transition-all duration-500 ease-out-expo hover:border-primary/20 hover:shadow-medium hover:-translate-y-1"
-                >
-                  <span className="text-sm font-mono font-semibold text-primary/70 tracking-widest mb-6">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="text-2xl font-bold text-foreground tracking-tight mb-3 text-balance">
-                    {workshop.title}
-                  </h3>
-                  <p className="text-lg text-muted-foreground leading-relaxed text-pretty flex-1 mb-6">
-                    {workshop.description}
-                  </p>
-                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground/80 mb-5">
-                    For {workshop.audience}
-                  </span>
-                  <span className="inline-flex items-center gap-2 text-base font-semibold text-primary">
-                    Register interest
-                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                  </span>
-                </a>
-              </Reveal>
-            ))}
+          {/* The journey: four equal steps */}
+          <div className="relative max-w-4xl mx-auto">
+            <div
+              className="absolute left-6 top-8 bottom-8 w-px bg-border hidden md:block"
+              aria-hidden="true"
+            />
+            <div className="space-y-6 md:space-y-8">
+              {JOURNEY.map((step, i) => (
+                <Reveal key={step.n} variant="scale" delay={i * 80}>
+                  <div className="relative md:pl-20">
+                    <div className="hidden md:flex absolute left-0 top-1 items-center justify-center w-12 h-12 rounded-full bg-accent text-primary font-mono font-semibold ring-1 ring-primary/20">
+                      {step.n}
+                    </div>
+                    <div className="rounded-2xl border border-border bg-white p-7 md:p-9 transition-all duration-500 ease-out-expo hover:border-primary/20 hover:shadow-soft">
+                      <div className="flex flex-wrap items-center gap-3 mb-3">
+                        <span className="md:hidden font-mono font-semibold text-primary/70">
+                          {step.n}
+                        </span>
+                        <span className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+                          {step.kicker}
+                        </span>
+                        <span className="inline-flex items-center rounded-full bg-accent text-primary text-[11px] font-semibold px-3 py-1">
+                          Pilot price · {PILOT_PRICE}
+                        </span>
+                      </div>
+                      <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight text-balance mb-3">
+                        {step.title}
+                      </h3>
+                      <p className="text-base md:text-lg text-foreground/80 leading-relaxed text-pretty mb-3">
+                        {step.loss}
+                      </p>
+                      <p className="text-base md:text-lg text-muted-foreground leading-relaxed text-pretty">
+                        {step.change}
+                      </p>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
           </div>
+
+          {/* Booking */}
+          <Reveal className="text-center max-w-2xl mx-auto mt-16 md:mt-20">
+            <p className="text-base md:text-lg text-muted-foreground leading-relaxed text-pretty mb-8">
+              Every workshop is {PILOT_PRICE} at pilot pricing, subject to change once
+              the pilot cohorts fill up. Start anywhere, or build the whole journey
+              with us.
+            </p>
+            <a
+              href={`${CONTACT_URL}?subject=${encodeURIComponent(
+                "AI workshops (pilot cohort)",
+              )}`}
+              className="group inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-semibold text-base px-8 py-4 rounded-full shadow-soft hover:shadow-medium hover:bg-primary-hover transition-all duration-300 ease-out-expo hover:-translate-y-0.5 no-underline"
+            >
+              Book a 30-minute conversation
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </a>
+          </Reveal>
+
+          {/* Separate track: AI for Engineers */}
+          <Reveal className="max-w-4xl mx-auto mt-16 md:mt-20">
+            <div className="rounded-2xl border border-dashed border-border bg-background/40 p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+              <div>
+                <span className="block text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground/70 mb-2">
+                  Separate track · coming soon
+                </span>
+                <h3 className="text-xl font-bold text-foreground tracking-tight mb-2">
+                  AI for Engineers
+                </h3>
+                <p className="text-base text-muted-foreground leading-relaxed text-pretty">
+                  Proper software engineering with agents: skills, commands,
+                  pipelines, and the dangers. Built for engineering teams, not part
+                  of the journey above.
+                </p>
+              </div>
+              <a
+                href={`${CONTACT_URL}?subject=${encodeURIComponent(
+                  "AI for Engineers workshop interest",
+                )}`}
+                className="group inline-flex items-center gap-2 text-sm font-semibold text-primary no-underline whitespace-nowrap"
+              >
+                Register interest
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </a>
+            </div>
+          </Reveal>
         </div>
       </section>
 

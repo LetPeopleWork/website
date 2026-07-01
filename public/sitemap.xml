@@ -5,15 +5,15 @@
   <!-- Homepage -->
   <url>
     <loc>https://letpeople.work/</loc>
-    <lastmod>2026-05-03</lastmod>
+    <lastmod>2026-06-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-  
+
   <!-- Lighthouse Product Page -->
   <url>
     <loc>https://letpeople.work/lighthouse</loc>
-    <lastmod>2026-05-03</lastmod>
+    <lastmod>2026-06-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -28,11 +28,27 @@
     </video:video>
   </url>
 
+  <!-- AI Services and Plugins -->
+  <url>
+    <loc>https://letpeople.work/ai</loc>
+    <lastmod>2026-06-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Delivery Predictability Assessment -->
+  <url>
+    <loc>https://letpeople.work/assessment</loc>
+    <lastmod>2026-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- LLM-Friendly Resources -->
   <url>
     <loc>https://letpeople.work/llms.txt</loc>
-    <lastmod>2026-05-03</lastmod>
+    <lastmod>2026-06-29</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
 </urlset>
