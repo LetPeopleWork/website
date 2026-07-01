@@ -51,17 +51,11 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
         
+      # Build runs prerender-meta.mjs, which writes a per-route index.html
+      # (with each route's own <head> meta) into dist, replacing the old
+      # manual "cp index.html" SPA fallbacks and covering /ai as well.
       - name: Build
         run: bun run build
-
-      - name: Create SPA route fallbacks for GitHub Pages
-        run: |
-          mkdir -p dist/lighthouse dist/assessment dist/admin/assessment dist/admin/dashboard dist/survey
-          cp dist/index.html dist/lighthouse/index.html
-          cp dist/index.html dist/assessment/index.html
-          cp dist/index.html dist/admin/assessment/index.html
-          cp dist/index.html dist/admin/dashboard/index.html
-          cp dist/index.html dist/survey/index.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
