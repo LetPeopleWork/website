@@ -305,7 +305,7 @@ const AI = () => {
               How we run ourselves
             </Eyebrow>
             <h2 className="text-4xl md:text-6xl font-bold text-foreground tracking-[-0.02em] leading-[1.02] text-balance mb-7">
-              We run our own company with AI.
+              We run our own company with AI.{" "}
               <br className="hidden sm:block" />
               We call it obAIa.
             </h2>
