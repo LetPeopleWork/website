@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
   workflow_run:
-    workflows: ["Sync Events from APIs"]
+    workflows: ["Sync Events from APIs", "Sync Blog from Substack"]
     types:
       - completed
 

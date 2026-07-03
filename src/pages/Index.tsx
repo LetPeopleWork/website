@@ -4,6 +4,7 @@ import HowItWorks from "@/components/HowItWorks";
 import LighthouseSection from "@/components/LighthouseSection";
 import AIIntegrationSection from "@/components/AIIntegrationSection";
 import ExpertiseAndServices from "@/components/ExpertiseAndServices";
+import BlogSection from "@/components/BlogSection";
 import StayConnected from "@/components/StayConnected";
 import SimpleFooter from "@/components/SimpleFooter";
 import SEO from "@/components/SEO";
@@ -127,6 +128,7 @@ const Index = () => {
       <LighthouseSection />
       <AIIntegrationSection />
       <ExpertiseAndServices />
+      <BlogSection />
       <StayConnected />
       <SimpleFooter />
     </div>

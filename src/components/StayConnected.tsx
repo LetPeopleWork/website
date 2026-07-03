@@ -1,4 +1,4 @@
-import { MessageSquare, Linkedin, BookOpen, Users } from "lucide-react";
+import { MessageSquare, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -19,11 +19,11 @@ const StayConnected = () => {
       link: "https://www.linkedin.com/company/let-people-work/"
     },
     {
-      icon: <BookOpen className="h-8 w-8" />,
-      title: "Blog",
-      description: "Read our free blog for in-depth articles, insights, and practical tips on Flow and Obeya methodologies.",
-      cta: "Read Blog",
-      link: "https://blog.letpeople.work"
+      icon: <Mail className="h-8 w-8" />,
+      title: "Newsletter",
+      description: "Get our essays and experiments straight to your inbox. Free, on Substack, unsubscribe anytime.",
+      cta: "Subscribe on Substack",
+      link: "https://blog.letpeople.work/subscribe"
     }
   ];
 
