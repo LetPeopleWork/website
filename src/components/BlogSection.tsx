@@ -42,22 +42,13 @@ function PostCard({ post, index }: { post: BlogPost; index: number }) {
   );
 }
 
-const BlogSection = () => {
-  const [posts, setPosts] = useState<BlogPost[]>([]);
+// Separate component so every useScrollReveal mounts only once the posts are
+// loaded and the elements exist. Wiring the observers in the data-less parent
+// would register them against null and the header would never reveal.
+function BlogContent({ posts }: { posts: BlogPost[] }) {
   const { ref, revealed } = useScrollReveal<HTMLDivElement>();
-
-  useEffect(() => {
-    fetch("/blog-data.json")
-      .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
-      .then((data) => setPosts((data.posts ?? []).slice(0, 3)))
-      .catch(() => setPosts([]));
-  }, []);
-
-  // No data, no section. The homepage should never show an empty shell.
-  if (posts.length === 0) return null;
-
   return (
-    <section id="blog" className="py-24 md:py-32 bg-background">
+    <section id="blog" className="pt-8 md:pt-10 pb-24 md:pb-32 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           ref={ref}
@@ -92,6 +83,22 @@ const BlogSection = () => {
       </div>
     </section>
   );
+}
+
+const BlogSection = () => {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+
+  useEffect(() => {
+    fetch("/blog-data.json")
+      .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+      .then((data) => setPosts((data.posts ?? []).slice(0, 3)))
+      .catch(() => setPosts([]));
+  }, []);
+
+  // No data, no section. The homepage should never show an empty shell.
+  if (posts.length === 0) return null;
+
+  return <BlogContent posts={posts} />;
 };
 
 export default BlogSection;
