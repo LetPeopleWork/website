@@ -17,7 +17,9 @@ We build the tools we recommend. Our founders have 15+ years of hands-on experie
 ## Core Pages
 
 - [Homepage](https://letpeople.work/): Overview of LetPeopleWork services, Lighthouse tool, and company mission
-- [Lighthouse Product Page](https://letpeople.work/lighthouse): Full details on Lighthouse features, pricing, downloads, and AI integration
+- [Lighthouse Product Page](https://letpeople.work/lighthouse/): Full details on Lighthouse features, pricing, downloads, and AI integration
+- [AI at LetPeopleWork](https://letpeople.work/ai/): obAIa, open-source Claude Code plugins, and the AI workshop journey
+- [Delivery Predictability Assessment](https://letpeople.work/assessment/): Free five-minute self-assessment of how predictable your delivery is
 
 ## Lighthouse - Flow Metrics & Forecasting Tool
 
@@ -32,7 +34,7 @@ Lighthouse is an open-source flow metrics and probabilistic forecasting tool. It
 5. AI integration via MCP (Model Context Protocol) — let your AI assistant query Lighthouse data directly
 6. CLI integration for use in shell scripts, CI/CD pipelines, and automated workflows
 7. 100% open-source and self-hosted
-8. Community Edition is free forever; Premium Edition is CHF 999/year
+8. Community Edition is free forever; paid tiers unlock unlimited usage (see licensing below)
 
 **What is AI integration in Lighthouse?**
 Lighthouse exposes your flow data to AI assistants through three integration methods:
@@ -53,8 +55,10 @@ AI integration is available as a downloadable skill for compatible clients and w
 - Full setup guide: https://docs.lighthouse.letpeople.work/aiintegration.html
 
 **What are Lighthouse's licensing options?**
-- Community Edition: Free forever, includes all core flow metrics and forecasting features
-- Premium Edition: CHF 999/year, adds unlimited teams and projects, advanced features, and AI/MCP integration. One flat rate — no per-seat pricing.
+Three editions, same product, different access. All editions are open source and self-hosted; if you ever stop paying, your data and the tool stay with you.
+- Community Edition: Free forever. All core flow metrics and Monte Carlo forecasts, up to 3 teams, 1 portfolio, 1 delivery.
+- Self-Service: CHF 999/year today; from August 2026 the price becomes CHF 2,000/year (existing licenses keep their rate for their term). Unlimited teams, portfolios, and deliveries, all paid features, community Slack support. One flat rate, no per-seat pricing.
+- Enterprise: CHF 10,000/year. Everything in Self-Service plus prioritised support, 24h acknowledgement on async requests, onboarding calls, named contacts, and a 10% workshop discount.
 
 **How do I install Lighthouse?**
 Available for:
@@ -67,6 +71,24 @@ Download from GitHub releases: https://github.com/LetPeopleWork/Lighthouse/relea
 
 **What systems does Lighthouse integrate with?**
 Jira, Azure DevOps, and Linear. AI assistants via MCP (any tool-calling compatible AI including Claude and GitHub Copilot).
+
+## AI at LetPeopleWork
+
+**How does LetPeopleWork use AI?**
+We run our own company with AI and call the setup obAIa: an AI-augmented "big room" where decisions get pressure-tested by three perspectives (commercial, marketing, go-to-market) and are kept with their reasoning. It holds our work, pipeline, and dates in one place and surfaces what needs attention. We teach AI the way we use it every day, not from a slide deck.
+
+**What open-source AI plugins does LetPeopleWork provide?**
+Two Claude-Code-native plugins, free and open source:
+- LetPeopleWorkShop (https://github.com/LetPeopleWork/LetPeopleWorkShop): Design, prepare, and learn from workshops, all in markdown. Agents: designer, executor, feedback. Includes a facilitation-practices library (Liberating Structures, Training from the BACK of the Room). Install: `/plugin marketplace add LetPeopleWork/LetPeopleWorkShop` then `/plugin install let-people-workshop@letpeoplework`.
+- LetPeopleGrow (https://github.com/LetPeopleWork/LetPeopleGrow): Prepare for, capture, and learn from 1:1s. Coaching support, never a performance dossier. Agents: prep, capture, growth, patterns. Includes a conversation-practices library (GROW, SBI, NVC, career conversations).
+
+**What AI workshops does LetPeopleWork offer?**
+A four-step AI journey for businesses. Each workshop is a private 1-day session for one organisation, on-site or remote, bookable on its own or as the full journey. Pilot price: CHF 2,500 per team (covers the entire team, not a seat), subject to change once the pilot cohorts fill up.
+1. The bAsIcs (literacy): what agents, commands, and skills are, and why the chat box is not the whole of AI
+2. BIYA: Build It Yourself Agent: build your first working agent hands-on
+3. From Prototype to Product: build a real, working product yourself with tools like Lovable and Claude Code
+4. Filling the Gap: The AI-Powered Business: run parts of your business with AI, the obAIa way
+A separate "AI for Engineers" track (software engineering with agents) is coming soon.
 
 ## Services
 
@@ -90,6 +112,7 @@ Practical workshops focused on your team's real work and data:
 
 ### Consulting & Assessment
 Expert guidance tailored to your organization:
+- Free Delivery Predictability Assessment (https://letpeople.work/assessment/): a five-minute, six-question self-assessment that scores how you measure flow and how you forecast, with a concrete next step. No email required.
 - Flow Assessment — Diagnose where and why work gets stuck
 - Lighthouse Setup — Starting at CHF 500 · 3 teams + 1 portfolio. Get Lighthouse running, connected, and generating insights.
 - Executive Coaching — Help leaders shift from output-based to outcome-based thinking
@@ -134,7 +157,7 @@ MCP (Model Context Protocol) is an open standard for connecting AI assistants to
 
 ## Keywords & Topics
 
-Flow metrics, agile consulting, kanban, delivery forecasting, Monte Carlo simulation, throughput, cycle time, work item age, work in progress, predictability, Jira integration, Azure DevOps integration, Linear integration, AI integration, MCP, Model Context Protocol, agentic workflows, probabilistic forecasting, agile transformation, scrum coaching, team performance, organizational improvement, open source tools, self-hosted solutions, flow consulting, Lighthouse tool, LetPeopleWork.
+Flow metrics, agile consulting, kanban, delivery forecasting, Monte Carlo simulation, throughput, cycle time, work item age, work in progress, predictability, Jira integration, Azure DevOps integration, Linear integration, AI integration, MCP, Model Context Protocol, agentic workflows, probabilistic forecasting, agile transformation, scrum coaching, team performance, organizational improvement, open source tools, self-hosted solutions, flow consulting, Lighthouse tool, LetPeopleWork, obAIa, AI workshops, AI for business, Claude Code plugins, LetPeopleWorkShop, LetPeopleGrow, AI-powered business, delivery predictability assessment.
 
 ## Documentation & Resources
 
@@ -142,3 +165,5 @@ Flow metrics, agile consulting, kanban, delivery forecasting, Monte Carlo simula
 - [GitHub Repository](https://github.com/LetPeopleWork/Lighthouse): Source code, issues, release notes
 - [GitHub Releases](https://github.com/LetPeopleWork/Lighthouse/releases): Latest downloads for all platforms
 - [AI Integration Guide](https://docs.lighthouse.letpeople.work/aiintegration.html): How to connect Lighthouse to Claude, Copilot, and other AI tools
+- [LetPeopleWorkShop Plugin](https://github.com/LetPeopleWork/LetPeopleWorkShop): Open-source Claude Code plugin for designing and running workshops
+- [LetPeopleGrow Plugin](https://github.com/LetPeopleWork/LetPeopleGrow): Open-source Claude Code plugin for 1:1s and people development

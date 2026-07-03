@@ -30,12 +30,16 @@ const seoRoutes = [
     title: "Less Hype. More Working AI. | LetPeopleWork",
     description:
       "Practical AI from LetPeopleWork: obAIa, our open-source Claude Code plugins, and a hands-on AI workshop journey that turns AI from an open browser tab into real work.",
+    image: `${SITE}/og/ai.png`,
+    imageAlt: "Less hype. More working AI. AI at LetPeopleWork.",
   },
   {
     path: "assessment",
     title: "Delivery Predictability Assessment | LetPeopleWork",
     description:
       "A free, honest, five-minute read on how predictable your delivery really is, across what you measure and how you forecast. Six questions, one clear score, no email required.",
+    image: `${SITE}/og/assessment.png`,
+    imageAlt: "How predictable is your delivery? Free five-minute assessment.",
   },
 ];
 
@@ -49,7 +53,7 @@ const escapeAttr = (s) =>
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
 
-function applyMeta(html, { title, description, url }) {
+function applyMeta(html, { title, description, url, image, imageAlt }) {
   const t = escapeAttr(title);
   const d = escapeAttr(description);
   const swaps = [
@@ -63,6 +67,27 @@ function applyMeta(html, { title, description, url }) {
     [/(<meta name="twitter:url" content=")[\s\S]*?(")/, `$1${url}$2`],
     [/(<link rel="canonical" href=")[\s\S]*?(")/, `$1${url}$2`],
   ];
+  if (image) {
+    swaps.push(
+      [/(<meta property="og:image" content=")[\s\S]*?(")/, `$1${image}$2`],
+      [/(<meta name="twitter:image" content=")[\s\S]*?(")/, `$1${image}$2`],
+    );
+  }
+  if (imageAlt) {
+    const a = escapeAttr(imageAlt);
+    // The static template has no image:alt tags, so inject them next to the
+    // image tags rather than swapping.
+    swaps.push(
+      [
+        /(<meta property="og:image" content="[^"]*" \/>)/,
+        `$1\n    <meta property="og:image:alt" content="${a}" />`,
+      ],
+      [
+        /(<meta name="twitter:image" content="[^"]*" \/>)/,
+        `$1\n    <meta name="twitter:image:alt" content="${a}" />`,
+      ],
+    );
+  }
   let out = html;
   for (const [re, rep] of swaps) {
     if (!re.test(out)) console.warn(`[prerender-meta] pattern not found: ${re}`);
@@ -77,7 +102,9 @@ function writeRoute(routePath, html) {
 }
 
 for (const r of seoRoutes) {
-  writeRoute(r.path, applyMeta(template, { ...r, url: `${SITE}/${r.path}` }));
+  // GitHub Pages 301s /route to /route/, so canonical/og URLs use the
+  // trailing-slash form to match what is actually served.
+  writeRoute(r.path, applyMeta(template, { ...r, url: `${SITE}/${r.path}/` }));
   console.log(`[prerender-meta] wrote /${r.path} with page meta`);
 }
 for (const p of fallbackRoutes) {

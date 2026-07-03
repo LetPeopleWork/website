@@ -12,7 +12,7 @@
 
   <!-- Lighthouse Product Page -->
   <url>
-    <loc>https://letpeople.work/lighthouse</loc>
+    <loc>https://letpeople.work/lighthouse/</loc>
     <lastmod>2026-06-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -30,7 +30,7 @@
 
   <!-- AI Services and Plugins -->
   <url>
-    <loc>https://letpeople.work/ai</loc>
+    <loc>https://letpeople.work/ai/</loc>
     <lastmod>2026-06-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -38,7 +38,7 @@
 
   <!-- Delivery Predictability Assessment -->
   <url>
-    <loc>https://letpeople.work/assessment</loc>
+    <loc>https://letpeople.work/assessment/</loc>
     <lastmod>2026-06-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

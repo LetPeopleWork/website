@@ -168,18 +168,43 @@ const AI = () => {
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  const provider = {
+    "@type": "Organization",
+    name: "LetPeopleWork GmbH",
+    url: "https://letpeople.work",
+  };
+
   const structuredData = {
     "@context": "https://schema.org",
-    "@type": "Service",
-    name: "AI Services and Workshops",
-    provider: {
-      "@type": "Organization",
-      name: "LetPeopleWork GmbH",
-      url: "https://letpeople.work",
-    },
-    serviceType: "AI consulting and training",
-    description:
-      "Practical AI from LetPeopleWork: our obAIa way of working, the open-source LetPeopleWorkShop and LetPeopleGrow plugins for Claude Code, and hands-on AI workshops.",
+    "@graph": [
+      {
+        "@type": "Service",
+        name: "AI Services and Workshops",
+        provider,
+        serviceType: "AI consulting and training",
+        description:
+          "Practical AI from LetPeopleWork: our obAIa way of working, the open-source LetPeopleWorkShop and LetPeopleGrow plugins for Claude Code, and hands-on AI workshops.",
+      },
+      ...JOURNEY.map((step) => ({
+        "@type": "Course",
+        name: step.title,
+        description: step.change,
+        provider,
+        offers: {
+          "@type": "Offer",
+          price: "2500",
+          priceCurrency: "CHF",
+          description:
+            "Pilot price per team, covering the entire team. Subject to change once the pilot cohorts fill up.",
+          url: "https://letpeople.work/ai/#ai-workshops",
+        },
+        hasCourseInstance: {
+          "@type": "CourseInstance",
+          courseMode: ["Onsite", "Online"],
+          courseWorkload: "P1D",
+        },
+      })),
+    ],
   };
 
   return (

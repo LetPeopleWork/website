@@ -12,10 +12,37 @@ const SimpleFooter = () => {
     setDialogOpen(true);
   };
   
+  const siteLinks = [
+    { name: "Home", href: "/" },
+    { name: "Lighthouse", href: "/lighthouse" },
+    { name: "AI", href: "/ai" },
+    { name: "Flow Assessment", href: "/assessment" },
+    { name: "Blog", href: "https://blog.letpeople.work", external: true },
+    { name: "GitHub", href: "https://github.com/LetPeopleWork", external: true },
+  ];
+
   return (
     <>
       <footer className="bg-background border-t border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          {/* Site links */}
+          <nav
+            aria-label="Footer"
+            className="flex flex-wrap justify-center gap-x-6 gap-y-2 pb-6 mb-6 border-b border-border"
+          >
+            {siteLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                target={link.external ? "_blank" : undefined}
+                rel={link.external ? "noopener noreferrer" : undefined}
+                className="text-muted-foreground hover:text-primary transition-colors duration-200 text-sm no-underline"
+              >
+                {link.name}
+              </a>
+            ))}
+          </nav>
+
           {/* Desktop Layout */}
           <div className="hidden md:flex items-center justify-between">
             {/* Copyright - Left */}
@@ -61,9 +88,9 @@ const SimpleFooter = () => {
           <div className="md:hidden space-y-4">
             {/* Logo */}
             <div className="flex justify-center">
-              <img 
-                src="/src/assets/LPW_Banner_White.png" 
-                alt="LetPeopleWork Logo" 
+              <img
+                src={logo}
+                alt="LetPeopleWork Logo"
                 className="h-10 w-auto"
                 width="180"
                 height="40"
