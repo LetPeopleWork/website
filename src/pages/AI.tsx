@@ -419,6 +419,32 @@ const AI = () => {
               </Reveal>
             ))}
           </div>
+
+          {/* Compact tile: Lighthouse AI integration */}
+          <Reveal delay={120} className="mt-8 lg:mt-10">
+            <div className="rounded-[1.75rem] border border-primary/15 bg-accent/50 p-8 md:p-9 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+              <div>
+                <span className="block text-[11px] font-semibold uppercase tracking-[0.16em] text-primary mb-2">
+                  From our product · Lighthouse
+                </span>
+                <h3 className="text-xl font-bold text-foreground tracking-tight mb-2">
+                  Ask your delivery data anything.
+                </h3>
+                <p className="text-base text-muted-foreground leading-relaxed text-pretty max-w-2xl">
+                  Lighthouse, our flow metrics and forecasting tool, speaks AI too.
+                  Connect the assistant you already use and ask which team needs
+                  attention or run a forecast, no exports, no dashboard tab.
+                </p>
+              </div>
+              <a
+                href="/lighthouse#lighthouse-ai"
+                className="group inline-flex items-center gap-2 text-sm font-semibold text-primary no-underline whitespace-nowrap"
+              >
+                See the AI integration
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </a>
+            </div>
+          </Reveal>
         </div>
       </section>
 
