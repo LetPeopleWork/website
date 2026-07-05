@@ -73,9 +73,8 @@ if (posts.length === 0 || posts.some((p) => !p.title || !p.link)) {
   process.exit(1);
 }
 
-writeFileSync(
-  OUT_FILE,
-  `${JSON.stringify({ generatedAt: new Date().toISOString(), posts }, null, 2)}\n`,
-);
+// Deliberately no timestamp in the file: the content must be byte-identical
+// when the posts have not changed, so the daily sync only commits real changes.
+writeFileSync(OUT_FILE, `${JSON.stringify({ posts }, null, 2)}\n`);
 console.log(`Wrote ${posts.length} posts to public/blog-data.json`);
 for (const p of posts) console.log(`  - ${p.displayDate}: ${p.title}`);
