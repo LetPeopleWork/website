@@ -120,8 +120,14 @@ const LegalInfoDialog: React.FC<LegalInfoDialogProps> = ({
                 </div>
 
                 <div>
-                  <h2 className="text-lg font-semibold mb-2 text-foreground">5. Cookies & Tracking</h2>
-                  <p className="mb-2">We do not use any cookies, analytics, advertising or tracking services.</p>
+                  <h2 className="text-lg font-semibold mb-2 text-foreground">5. Cookies & Analytics</h2>
+                  <p className="mb-2">We set no cookies of our own, and we use no advertising or cross-site tracking.</p>
+                  <p className="mb-2">
+                    To understand how our website is used, we use Plausible Analytics, a privacy-friendly, cookieless web analytics service hosted in the European Union. Plausible sets no cookies, stores no personal data, and does not track visitors across websites or devices. It collects only aggregated, anonymous statistics such as page views, referring sources, and country (derived from the IP address, which is never stored). The legal basis is our legitimate interest (Art. 6(1)(f) GDPR) in understanding and improving our website. A data processing agreement is in place with the provider.{" "}
+                    <a href="https://plausible.io/data-policy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                      plausible.io/data-policy
+                    </a>
+                  </p>
                   <p>
                     Although Stripe may deploy cookies when customers complete checkout, we neither control nor place them from our site.{" "}
                     <a href="https://stripe.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
