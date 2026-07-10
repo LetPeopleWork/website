@@ -9,6 +9,7 @@ import {
 	type ClientOs,
 	type ReleaseAsset,
 } from "@/lib/lighthouseDownloads";
+import { trackDownload, trackEvent } from "@/lib/plausible";
 
 interface AdditionalLink {
 	name: string;
@@ -18,6 +19,8 @@ interface AdditionalLink {
 
 interface QuickDownloadBarProps {
 	additionalLink: AdditionalLink;
+	/** Where this bar sits, sent to analytics (e.g. "lighthouse-hero", "home"). */
+	source?: string;
 }
 
 const WindowsIcon = ({ className }: { className?: string }) => (
@@ -35,7 +38,7 @@ const OsChip = ({ os, ext }: { os: ClientOs; ext: string }) => (
 	</span>
 );
 
-const QuickDownloadBar = ({ additionalLink }: QuickDownloadBarProps) => {
+const QuickDownloadBar = ({ additionalLink, source }: QuickDownloadBarProps) => {
 	const [latestVersion, setLatestVersion] = useState("");
 	const [releaseAssets, setReleaseAssets] = useState<ReleaseAsset[]>([]);
 	const [isLoadingVersion, setIsLoadingVersion] = useState(false);
@@ -89,6 +92,7 @@ const QuickDownloadBar = ({ additionalLink }: QuickDownloadBarProps) => {
 	};
 
 	const openQuickDownload = (edition: "standalone" | "server") => {
+		trackDownload({ edition, platform: clientOs, source });
 		const url = getQuickDownloadUrlFromAssets(edition, clientOs, releaseAssets);
 		window.open(url ?? LIGHTHOUSE_GITHUB_RELEASES_URL, "_blank");
 	};
@@ -132,7 +136,10 @@ const QuickDownloadBar = ({ additionalLink }: QuickDownloadBarProps) => {
 			<Button
 				variant="outline"
 				size="lg"
-				onClick={() => copyToClipboard(LIGHTHOUSE_DOCKER_COMMAND)}
+				onClick={() => {
+					trackEvent("Docker command copied", { source: source ?? "unknown" });
+					copyToClipboard(LIGHTHOUSE_DOCKER_COMMAND);
+				}}
 				aria-label="Copy Docker command"
 			>
 				<Container className="mr-2 h-4 w-4" />

@@ -87,6 +87,7 @@ import {
 	type ReleaseAsset,
 } from "@/lib/lighthouseDownloads";
 import QuickDownloadBar from "@/components/QuickDownloadBar";
+import { trackDownload, trackEvent } from "@/lib/plausible";
 
 const WindowsIcon = ({ className }: { className?: string }) => (
 	<svg
@@ -768,6 +769,7 @@ const Lighthouse = () => {
 						{/* Download CTA */}
 						<div className="mb-8">
 							<QuickDownloadBar
+								source="lighthouse-hero"
 								additionalLink={{
 									name: "View Documentation",
 									url: "https://docs.lighthouse.letpeople.work",
@@ -825,6 +827,11 @@ const Lighthouse = () => {
 													<button
 														className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent/60 transition-colors text-left group"
 														onClick={() => {
+															trackDownload({
+																edition: "standalone",
+																platform: item.os,
+																source: "downloads-section",
+															});
 															const url =
 																findAssetByPattern(
 																	releaseAssets,
@@ -882,8 +889,16 @@ const Lighthouse = () => {
 															className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent/60 transition-colors text-left group"
 															onClick={() => {
 																if (isDocker) {
+																	trackEvent("Docker command copied", {
+																		source: "downloads-section",
+																	});
 																	copyToClipboard(LIGHTHOUSE_DOCKER_COMMAND);
 																} else {
+																	trackDownload({
+																		edition: "server",
+																		platform: item.os,
+																		source: "downloads-section",
+																	});
 																	const url =
 																		findAssetByPattern(
 																			releaseAssets,

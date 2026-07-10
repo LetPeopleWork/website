@@ -20,4 +20,27 @@ const plausible = Plausible({
 // Track the first load and every client-side route change in this SPA.
 plausible.enableAutoPageviews();
 
+// Custom events are still cookieless and carry no personal data, so they stay
+// banner-free. Only send non-personal properties (edition, platform, placement)
+// here, never anything that could identify a visitor.
+export function trackEvent(
+  name: string,
+  props?: Record<string, string | number | boolean>,
+) {
+  plausible.trackEvent(name, props ? { props } : undefined);
+}
+
+// Fires a single "Download" goal, tagged so the dashboard can break it down by
+// edition, platform, and where on the site the click happened.
+export function trackDownload(data: {
+  edition: string;
+  platform?: string;
+  source?: string;
+}) {
+  const props: Record<string, string> = { edition: data.edition };
+  if (data.platform) props.platform = data.platform;
+  if (data.source) props.source = data.source;
+  plausible.trackEvent("Download", { props });
+}
+
 export default plausible;
