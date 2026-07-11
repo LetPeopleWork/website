@@ -1622,6 +1622,7 @@ const Lighthouse = () => {
 						<div className="mt-4">
 							<a
 								href="/Lighthouse_Pitch_Deck.pdf"
+									onClick={() => trackDownload({ edition: "pitch-deck", source: "convince" })}
 								className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-white hover:opacity-90 transition-opacity"
 								target="_blank"
 								rel="noopener noreferrer"
@@ -1748,6 +1749,7 @@ const Lighthouse = () => {
 								</p>
 								<a
 									href="https://github.com/LetPeopleWork/lighthouse-clients/releases/latest/download/lighthouse-skill.zip"
+										onClick={() => trackDownload({ edition: "ai-skill", source: "ai-integration" })}
 									className="inline-flex items-center gap-2 text-sm font-medium text-green-300 hover:text-green-200 transition-colors"
 								>
 									Download lighthouse-skill.zip
@@ -1765,6 +1767,7 @@ const Lighthouse = () => {
 								</p>
 								<a
 									href="https://github.com/LetPeopleWork/lighthouse-clients/releases/latest/download/lighthouse-mcp-stdio.mcpb"
+										onClick={() => trackDownload({ edition: "ai-mcpb", source: "ai-integration" })}
 									className="inline-flex items-center gap-2 text-sm font-medium text-green-300 hover:text-green-200 transition-colors"
 								>
 									Download lighthouse-mcp-stdio.mcpb
