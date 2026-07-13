@@ -1,6 +1,13 @@
 {
   "posts": [
     {
+      "title": "Your Status Report Is Green Because Everyone Is Scared",
+      "link": "https://blog.letpeople.work/p/your-status-report-is-green-because",
+      "date": "2026-07-12T17:02:55.000Z",
+      "displayDate": "12 Jul 2026",
+      "excerpt": "I have sat in the meeting where everything was green until the week it was red."
+    },
+    {
       "title": "I Still Don't Understand What's Happening. And I'm Building Things Anyway.",
       "link": "https://blog.letpeople.work/p/i-still-dont-understand-whats-happening",
       "date": "2026-06-24T10:16:09.000Z",
@@ -13,13 +20,6 @@
       "date": "2026-06-21T15:39:53.000Z",
       "displayDate": "21 Jun 2026",
       "excerpt": "One Month With Claude Code"
-    },
-    {
-      "title": "Still Using AI to Develop a Software Product",
-      "link": "https://blog.letpeople.work/p/still-using-ai-to-develop-a-software",
-      "date": "2026-06-12T09:48:47.000Z",
-      "displayDate": "12 Jun 2026",
-      "excerpt": "An Experience Report, One Year On (v26.6)"
     }
   ]
 }
