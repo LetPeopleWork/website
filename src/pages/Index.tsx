@@ -27,7 +27,9 @@ const Index = () => {
     },
     "sameAs": [
       "https://www.linkedin.com/company/let-people-work/",
-      "https://github.com/LetPeopleWork"
+      "https://github.com/LetPeopleWork",
+      "https://www.youtube.com/@LetPeopleWork",
+      "https://www.meetup.com/lighthouselive/"
     ],
     "contactPoint": {
       "@type": "ContactPoint",

@@ -18,6 +18,8 @@ const SimpleFooter = () => {
     { name: "AI", href: "/ai" },
     { name: "Flow Assessment", href: "/assessment" },
     { name: "Blog", href: "https://blog.letpeople.work", external: true },
+    { name: "YouTube", href: "https://www.youtube.com/@LetPeopleWork/videos", external: true },
+    { name: "Meetup", href: "https://www.meetup.com/lighthouselive/", external: true },
     { name: "GitHub", href: "https://github.com/LetPeopleWork", external: true },
   ];
 

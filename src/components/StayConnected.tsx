@@ -1,4 +1,4 @@
-import { MessageSquare, Linkedin, Mail } from "lucide-react";
+import { MessageSquare, Linkedin, Mail, Youtube, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -24,6 +24,20 @@ const StayConnected = () => {
       description: "Get our essays and experiments straight to your inbox. Free, on Substack, unsubscribe anytime.",
       cta: "Subscribe on Substack",
       link: "https://blog.letpeople.work/subscribe"
+    },
+    {
+      icon: <Youtube className="h-8 w-8" />,
+      title: "YouTube",
+      description: "Watch Lighthouse Live and practical sessions on flow metrics, forecasting, and delivery.",
+      cta: "Watch on YouTube",
+      link: "https://www.youtube.com/@LetPeopleWork/videos"
+    },
+    {
+      icon: <Users className="h-8 w-8" />,
+      title: "Meetup",
+      description: "Join our free community sessions and Lighthouse Live, online and open to everyone.",
+      cta: "Join on Meetup",
+      link: "https://www.meetup.com/lighthouselive/"
     }
   ];
 
@@ -41,7 +55,7 @@ const StayConnected = () => {
         </div>
 
         {/* Connection Options */}
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {connections.map((connection, index) => (
             <Card key={index} className="group hover:shadow-medium transition-all duration-300 border-0 bg-background/80 backdrop-blur-sm flex flex-col h-full">
               <CardHeader className="text-center pb-4 flex-shrink-0">

@@ -135,6 +135,8 @@ LetPeopleWork GmbH, Mühlackerstrasse 108, 8046 Zürich, Switzerland.
 - Website: https://letpeople.work
 - LinkedIn: https://www.linkedin.com/company/let-people-work/
 - GitHub: https://github.com/LetPeopleWork
+- YouTube (Lighthouse Live and sessions): https://www.youtube.com/@LetPeopleWork/videos
+- Meetup (community events): https://www.meetup.com/lighthouselive/
 - Community Slack: https://join.slack.com/t/let-people-work/shared_invite/zt-38df4z4sy-iqJEo6S8kmIgIfsgsV0J1A
 - Lighthouse Documentation: https://docs.lighthouse.letpeople.work
 

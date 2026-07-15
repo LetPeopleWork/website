@@ -10,8 +10,6 @@ type Action = {
   external?: boolean;
 };
 
-// TODO(peter): swap the "Watch a walkthrough" link for the canonical Lighthouse
-// recording / YouTube channel once you've picked the one you want to feature.
 const ACTIONS: Action[] = [
   {
     icon: CalendarDays,
@@ -23,11 +21,11 @@ const ACTIONS: Action[] = [
   },
   {
     icon: PlayCircle,
-    title: "Watch a walkthrough",
+    title: "Watch Lighthouse Live",
     description:
-      "Prefer to see it first?\nWatch a recorded session and see Lighthouse work on real delivery data.",
-    cta: "Watch the recording",
-    href: "https://www.youtube.com/watch?v=-yemS7Us_lQ",
+      "Prefer to see it first?\nWatch our recorded sessions and see Lighthouse work on real delivery data.",
+    cta: "Watch on YouTube",
+    href: "https://www.youtube.com/@LetPeopleWork/videos",
     external: true,
   },
   {
