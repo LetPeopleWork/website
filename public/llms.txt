@@ -72,6 +72,15 @@ Download from GitHub releases: https://github.com/LetPeopleWork/Lighthouse/relea
 **What systems does Lighthouse integrate with?**
 Jira, Azure DevOps, and Linear. AI assistants via MCP (any tool-calling compatible AI including Claude and GitHub Copilot).
 
+**How does Lighthouse compare to ActionableAgile and Nave?**
+All three provide flow metrics (cycle time, throughput, WIP, work item age) and data-driven forecasting. The key differences:
+- Lighthouse is 100% open source and self-hosted (desktop app or Docker); ActionableAgile (by 55 Degrees) and Nave are closed-source commercial SaaS.
+- Lighthouse has a free-forever Community edition and flat per-organisation pricing (Self-Service CHF 999/year today, CHF 2,000 from August 2026; Enterprise CHF 10,000/year). ActionableAgile is priced per user; Nave is priced per connected board.
+- Lighthouse connects to Jira, Azure DevOps, and Linear; ActionableAgile to Jira and Azure DevOps; Nave to Jira, Trello, and Azure DevOps.
+- Lighthouse has native AI integration via MCP and CLI; that is not a core feature of the others.
+- With Lighthouse your delivery data never leaves your own infrastructure.
+Full, honest comparison table: https://letpeople.work/compare/
+
 ## AI at LetPeopleWork
 
 **How does LetPeopleWork use AI?**

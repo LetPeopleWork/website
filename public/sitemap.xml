@@ -44,6 +44,14 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- Comparison: Lighthouse vs ActionableAgile vs Nave -->
+  <url>
+    <loc>https://letpeople.work/compare/</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- LLM-Friendly Resources -->
   <url>
     <loc>https://letpeople.work/llms.txt</loc>

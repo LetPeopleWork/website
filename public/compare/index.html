@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lighthouse vs ActionableAgile vs Nave: Flow Metrics Tools Compared | LetPeopleWork</title>
+  <meta name="description" content="An honest, factual comparison of Lighthouse, ActionableAgile, and Nave for flow metrics and Monte Carlo forecasting: hosting model, open source, pricing, and integrations. Lighthouse is the open-source, self-hosted alternative." />
+  <link rel="canonical" href="https://letpeople.work/compare/" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://letpeople.work/compare/" />
+  <meta property="og:title" content="Lighthouse vs ActionableAgile vs Nave: Flow Metrics Tools Compared" />
+  <meta property="og:description" content="Honest comparison of the three flow metrics and forecasting tools: hosting, open source, pricing model, and integrations." />
+  <meta property="og:image" content="https://letpeople.work/forecasts-project.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is there an open-source alternative to ActionableAgile and Nave?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Lighthouse by LetPeopleWork is an open-source, self-hosted flow metrics and Monte Carlo forecasting tool. It connects to Jira, Azure DevOps, and Linear, has a free Community edition, and flat-rate paid tiers instead of per-user pricing. Your delivery data stays on your own infrastructure."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does Lighthouse compare to ActionableAgile?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Both provide flow metrics (cycle time, throughput, WIP, work item age) and Monte Carlo forecasting. ActionableAgile is a commercial product from 55 Degrees, offered as a SaaS and as marketplace apps for Jira and Azure DevOps, priced per user. Lighthouse is open source and self-hosted, with a free Community edition and flat-rate licenses, plus AI integration over MCP."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does Lighthouse compare to Nave?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Nave is a commercial SaaS offering kanban analytics dashboards for Jira, Trello, and Azure DevOps, priced by the number of connected boards. Lighthouse covers similar flow metrics plus Monte Carlo forecasting at team and portfolio level, is open source, runs on your own infrastructure, and uses flat-rate pricing with a free edition."
+        }
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      --primary: hsl(158, 29%, 26%);
+      --primary-light: hsl(158, 29%, 95%);
+      --fg: hsl(215, 25%, 27%);
+      --muted: hsl(215, 16%, 47%);
+      --border: hsl(214, 32%, 91%);
+      --bg: #ffffff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--fg); background: var(--bg); line-height: 1.65; }
+    .top { background: var(--primary); color: #fff; padding: 0.8rem 1.5rem; font-size: 0.9rem; }
+    .top a { color: #fff; }
+    main { max-width: 860px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+    h1 { font-size: 2rem; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 1rem; }
+    h2 { font-size: 1.35rem; margin: 2.5rem 0 0.75rem; letter-spacing: -0.01em; }
+    p { margin-bottom: 1rem; }
+    .lede { font-size: 1.1rem; color: var(--muted); }
+    table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.95rem; }
+    th, td { text-align: left; padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    thead th { background: var(--primary-light); color: var(--primary); }
+    tbody th { font-weight: 600; width: 24%; }
+    .note { font-size: 0.85rem; color: var(--muted); }
+    a { color: var(--primary); }
+    .cta { display: inline-block; background: var(--primary); color: #fff; text-decoration: none; padding: 0.8rem 1.5rem; border-radius: 999px; font-weight: 600; margin-top: 0.5rem; }
+    .wrap { overflow-x: auto; }
+    footer { border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; padding: 1.5rem; text-align: center; }
+    footer a { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="top"><a href="https://letpeople.work/">&larr; letpeople.work</a> &middot; LetPeopleWork GmbH</div>
+  <main>
+    <h1>Lighthouse vs ActionableAgile vs Nave</h1>
+    <p class="lede">An honest comparison of three flow metrics and forecasting tools. All three help software delivery teams see cycle time, throughput, WIP, and work item age, and forecast delivery with data instead of estimates. They differ most in hosting model, licensing, and pricing.</p>
+
+    <p><strong>The short version:</strong> ActionableAgile and Nave are established commercial SaaS products. Lighthouse is the open-source, self-hosted alternative: free to start, flat-rate instead of per-user pricing, and your delivery data never leaves your own infrastructure. We build Lighthouse, so judge our framing accordingly; the facts below are checkable.</p>
+
+    <h2>Side by side</h2>
+    <div class="wrap">
+    <table>
+      <thead>
+        <tr><th>&nbsp;</th><th>Lighthouse</th><th>ActionableAgile</th><th>Nave</th></tr>
+      </thead>
+      <tbody>
+        <tr><th>Made by</th><td>LetPeopleWork GmbH (Switzerland)</td><td>55 Degrees AB (Sweden)</td><td>Nave (getnave.com)</td></tr>
+        <tr><th>Category</th><td>Flow metrics and Monte Carlo forecasting</td><td>Flow metrics and Monte Carlo forecasting</td><td>Kanban analytics dashboards</td></tr>
+        <tr><th>Hosting</th><td>Self-hosted: desktop app (Windows, macOS, Linux) or Docker on your own server</td><td>Cloud SaaS, plus marketplace apps for Jira and Azure DevOps</td><td>Cloud SaaS</td></tr>
+        <tr><th>Open source</th><td>Yes, 100% (GitHub)</td><td>No</td><td>No</td></tr>
+        <tr><th>Free tier</th><td>Community edition, free forever (up to 3 teams, 1 portfolio)</td><td>30-day trial</td><td>Trial</td></tr>
+        <tr><th>Paid pricing model</th><td>Flat per organisation: Self-Service CHF 999/year today (CHF 2,000 from August 2026), Enterprise CHF 10,000/year. No per-seat pricing.</td><td>Per user, volume-based subscription</td><td>Per connected board, tiered plans</td></tr>
+        <tr><th>Integrations</th><td>Jira, Azure DevOps, Linear</td><td>Jira, Azure DevOps, standalone with file import</td><td>Jira, Trello, Azure DevOps</td></tr>
+        <tr><th>Forecasting</th><td>Monte Carlo simulations at team and portfolio level, continuous and automatic</td><td>Monte Carlo simulations</td><td>Cycle time analytics and probabilistic charts</td></tr>
+        <tr><th>AI integration</th><td>Yes: MCP (Model Context Protocol) and CLI, so AI assistants can query your flow data directly</td><td>Not a core feature</td><td>Not a core feature</td></tr>
+        <tr><th>Data location</th><td>Your infrastructure only, nothing sent to a vendor cloud</td><td>Vendor / Atlassian cloud</td><td>Vendor cloud</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="note">Facts checked July 2026 against the vendors' public pages. Pricing and features change; verify details at <a href="https://actionableagile.com/pricing" rel="nofollow">actionableagile.com</a> and <a href="https://getnave.com/pricing" rel="nofollow">getnave.com</a>.</p>
+
+    <h2>When ActionableAgile or Nave might fit better</h2>
+    <p>If you want a fully managed SaaS with nothing to host, both are mature, respected products, and ActionableAgile in particular carries the legacy of Daniel Vacanti's work on flow metrics. If your work lives in Trello, Nave supports it and Lighthouse does not. Honest is honest.</p>
+
+    <h2>When Lighthouse fits better</h2>
+    <p>Choose Lighthouse when data must stay inside your network, when per-user pricing does not scale for your organisation, when you want to try the full core for free without a procurement cycle, or when you want your AI assistant to query flow data directly. Because it is open source, the tool survives budget cuts and vendor decisions: if you ever stop paying, your data and the tool stay with you.</p>
+
+    <p><a class="cta" href="https://letpeople.work/lighthouse">Explore Lighthouse, download free</a></p>
+
+    <h2>About this page</h2>
+    <p>Written and maintained by <a href="https://letpeople.work/">LetPeopleWork</a>, the makers of Lighthouse. Questions or corrections: <a href="mailto:contact@letpeople.work">contact@letpeople.work</a>. More context: <a href="https://letpeople.work/lighthouse">product page</a>, <a href="https://docs.lighthouse.letpeople.work">documentation</a>, <a href="https://github.com/LetPeopleWork/Lighthouse">source code</a>, <a href="https://letpeople.work/llms.txt">machine-readable summary</a>.</p>
+  </main>
+  <footer>&copy; 2026 LetPeopleWork GmbH &middot; <a href="https://letpeople.work/">letpeople.work</a></footer>
+</body>
+</html>
