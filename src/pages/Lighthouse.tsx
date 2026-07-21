@@ -950,6 +950,26 @@ const Lighthouse = () => {
 							</a>
 						</p>
 					)}
+
+					{/* Free onboarding offer */}
+					<div className="max-w-3xl mx-auto mt-12 rounded-2xl border border-primary/20 bg-accent/40 p-8 text-center">
+						<h3 className="text-xl font-bold text-foreground mb-3">
+							Rather not set it up alone?
+						</h3>
+						<p className="text-muted-foreground leading-relaxed mb-6">
+							We'll onboard you, free of charge. We help you get Lighthouse
+							running in your environment, connect Jira, Azure DevOps, or
+							Linear, and walk your team through the tool. No catch: an easy
+							start is the best pitch for Lighthouse we have.
+						</p>
+						<a
+							href="mailto:contact@letpeople.work?subject=Lighthouse%20onboarding"
+							onClick={() => trackEvent("Onboarding enquiry", { source: "downloads-section" })}
+							className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold text-sm px-7 py-3.5 rounded-full shadow-soft hover:shadow-medium hover:bg-primary-hover transition-all duration-200 hover:-translate-y-0.5 no-underline"
+						>
+							Get free onboarding
+						</a>
+					</div>
 				</div>
 			</section>
 
@@ -1134,6 +1154,7 @@ const Lighthouse = () => {
 					{/* No lock-in reassurance */}
 					<p className="text-center text-sm md:text-base text-muted-foreground max-w-2xl mx-auto mb-16">
 						Self-hosted and open source. If you ever stop paying, your data and the tool stay with you.
+						And guided onboarding is free for every edition, not just Enterprise: we help you get set up, no strings attached.
 					</p>
 
 					{/* Full feature comparison table */}

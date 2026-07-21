@@ -135,8 +135,9 @@ const CATEGORIES: Record<string, Category> = {
       },
       {
         name: "Lighthouse Setup & Introduction",
-        description: "Get Lighthouse configured and running in your environment. We set up 3 teams and 1 portfolio, connect your data sources, and walk your team through the tool so they can use it from day one.",
-        format: "Starting at CHF 500 · 3 teams + 1 portfolio",
+        description: "Get Lighthouse configured and running in your environment. We connect your data sources and walk your team through the tool so they can use it from day one. Free of charge, because an easy start is the best pitch for Lighthouse we have.",
+        format: "Free · every edition",
+        badge: "Free",
       },
     ],
   },

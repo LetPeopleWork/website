@@ -39,6 +39,11 @@ const faqs = [
       "Your first useful output is about thirty minutes from download. Pre-loaded sample data lets you see the shape of it before you connect anything. If you've ever opened Excel and built a pivot table, you're already past the hardest part.",
   },
   {
+    question: "Do you help with setup and onboarding?",
+    answer:
+      "Yes, and it's free. We help you get Lighthouse running, connect Jira, Azure DevOps, or Linear, and walk your team through the tool, at no cost and for every edition. Write to contact@letpeople.work with the subject \"Lighthouse onboarding\". If you want to go deeper, the BYOD pilot workshop puts your team on your own data, and Enterprise licenses include structured onboarding calls.",
+  },
+  {
     question: "I tried something like this before and it didn't stick.",
     answer:
       "Was it Actionable Agile, Nave, or Jira's native forecasting? Lighthouse is self-hosted, open source, and free to start, which removes most of the reasons these tools die in real orgs. IT blocks the SaaS, the budget gets cut, the champion leaves. None of those land the same way when the tool is free and runs on your laptop.",

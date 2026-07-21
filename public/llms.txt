@@ -123,7 +123,7 @@ Practical workshops focused on your team's real work and data:
 Expert guidance tailored to your organization:
 - Free Delivery Predictability Assessment (https://letpeople.work/assessment/): a five-minute, six-question self-assessment that scores how you measure flow and how you forecast, with a concrete next step. No email required.
 - Flow Assessment — Diagnose where and why work gets stuck
-- Lighthouse Setup — Starting at CHF 500 · 3 teams + 1 portfolio. Get Lighthouse running, connected, and generating insights.
+- Lighthouse Setup & Onboarding — Free of charge, for every edition. We help you get Lighthouse running, connect Jira, Azure DevOps, or Linear, and walk your team through the tool. Contact contact@letpeople.work with subject "Lighthouse onboarding".
 - Executive Coaching — Help leaders shift from output-based to outcome-based thinking
 
 **What is Flow consulting?**
