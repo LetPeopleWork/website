@@ -11,22 +11,28 @@ type Item = {
 // https://github.com/LetPeopleWork/Lighthouse/releases
 const ITEMS: Item[] = [
   {
+    tag: "Predictability",
+    title: "Percentiles Over Time",
+    description:
+      "Every percentile widget tells you where you stand today. This chart records your 50th to 95th percentiles daily and shows whether they are tightening or drifting, for teams and portfolios.",
+  },
+  {
+    tag: "Predictability",
+    title: "PBC Over Time",
+    description:
+      "Process Behaviour Charts tell you what is normal for your system. This chart shows whether normal itself is drifting, plotting your process limits daily across throughput, cycle time, WIP, and more.",
+  },
+  {
     tag: "Flow Signals",
-    title: "Time in State & stale items",
+    title: "Blocked work, first class",
     description:
-      "Every item now shows how long it has been sitting in its current state, with a staleness threshold that flags work that has stalled right now.",
+      "Define what blocked means for your workflow once, by rule. See how long each item has been stuck, watch Blocked Over Time for teams and portfolios, and let long-blocked work surface as stale.",
   },
   {
-    tag: "Metrics",
-    title: "Cumulative Time per State & pace bands",
+    tag: "Deployment",
+    title: "Official Kubernetes Helm chart",
     description:
-      "See where work actually spends its time, and read per-state pace percentile bands on the aging chart to spot items running hot.",
-  },
-  {
-    tag: "Forecasting",
-    title: "Exclude items for throughput",
-    description:
-      "Keep maintenance and unplanned work out of your numbers so forecasts reflect the work your team actually delivers.",
+      "Run the Server edition on any cluster with a single helm install. Optional OIDC login, MCP with OAuth auto-discovery, and horizontal scaling via Redis, all through values.yaml.",
   },
   {
     tag: "Access",
@@ -38,13 +44,7 @@ const ITEMS: Item[] = [
     tag: "AI & Automation",
     title: "CLI and MCP clients",
     description:
-      "Drive Lighthouse from the terminal, CI, or your AI assistant through a dedicated CLI and MCP servers.",
-  },
-  {
-    tag: "Less ceremony",
-    title: "Auto-save and auto-run",
-    description:
-      "Settings save the moment they are valid and forecasts run on their own. No more hunting for the Save or Forecast button.",
+      "Drive Lighthouse from the terminal, CI, or your AI assistant. Scripts and agents can query metrics, forecasts, and now the blocked trend directly.",
   },
 ];
 

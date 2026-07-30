@@ -35,6 +35,9 @@ Lighthouse is an open-source flow metrics and probabilistic forecasting tool. It
 6. CLI integration for use in shell scripts, CI/CD pipelines, and automated workflows
 7. 100% open-source and self-hosted
 8. Community Edition is free forever; paid tiers unlock unlimited usage (see licensing below)
+9. Predictability trends: Percentiles Over Time and Process Behaviour Charts (PBC) Over Time show whether your delivery is becoming more or less predictable
+10. Blocked work tracking: rule-based blocked definition, blocked duration per item, and a Blocked Over Time chart for teams and portfolios
+11. Kubernetes support: official public Helm chart for the Server edition, with optional OIDC login and horizontal scaling
 
 **What is AI integration in Lighthouse?**
 Lighthouse exposes your flow data to AI assistants through three integration methods:
@@ -66,6 +69,7 @@ Available for:
 - macOS: Disk image (.dmg) and App Bundle (.zip) — signed and notarized
 - Linux: AppImage and server binaries (.zip)
 - Docker: `ghcr.io/letpeoplework/lighthouse:latest`
+- Kubernetes: official Helm chart, see https://docs.lighthouse.letpeople.work/Installation/kubernetes.html
 
 Download from GitHub releases: https://github.com/LetPeopleWork/Lighthouse/releases
 

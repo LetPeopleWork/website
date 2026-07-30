@@ -1,6 +1,13 @@
 {
   "posts": [
     {
+      "title": "Our Obeya Lives in Git Now. And It Thinks Along.",
+      "link": "https://blog.letpeople.work/p/our-obeya-lives-in-git-now-and-it",
+      "date": "2026-07-30T12:04:00.000Z",
+      "displayDate": "30 Jul 2026",
+      "excerpt": "For a while, the business side of LetPeopleWork ran on a Miro board."
+    },
+    {
       "title": "Your Status Report Is Green Because Everyone Is Scared",
       "link": "https://blog.letpeople.work/p/your-status-report-is-green-because",
       "date": "2026-07-12T17:02:55.000Z",
@@ -13,13 +20,6 @@
       "date": "2026-06-24T10:16:09.000Z",
       "displayDate": "24 Jun 2026",
       "excerpt": "Let me start with a confession."
-    },
-    {
-      "title": "Dopamine, Discipline, and Anxiety",
-      "link": "https://blog.letpeople.work/p/dopamine-discipline-and-anxiety",
-      "date": "2026-06-21T15:39:53.000Z",
-      "displayDate": "21 Jun 2026",
-      "excerpt": "One Month With Claude Code"
     }
   ]
 }
