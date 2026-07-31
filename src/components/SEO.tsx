@@ -1,10 +1,11 @@
-import { Helmet } from 'react-helmet-async';
+import { useEffect } from "react";
 
 interface SEOProps {
   title?: string;
   description?: string;
   keywords?: string;
   ogImage?: string;
+  ogImageAlt?: string;
   ogType?: string;
   canonicalUrl?: string;
   structuredData?: object;
@@ -16,6 +17,7 @@ const SEO = ({
   description = "Unlock the full potential of your organization with Lighthouse - the leading open-source tool for flow metrics, Monte Carlo forecasting, and delivery predictions. Connect to Jira & Azure DevOps for data-driven insights.",
   keywords = "flow metrics, forecasting tool, Monte Carlo simulation, delivery forecasting, Jira integration, Azure DevOps, agile metrics, team metrics, project forecasting, throughput, cycle time, work in progress, WIP, lead time, scrum metrics, kanban metrics, agile delivery, predictability, open source agile tool",
   ogImage = "https://letpeople.work/forecasts-project.png",
+  ogImageAlt = "Lighthouse Flow Metrics Dashboard",
   ogType = "website",
   canonicalUrl,
   structuredData,
@@ -54,61 +56,98 @@ const SEO = ({
     }
   };
 
+  // Meta tags are updated in place rather than rendered as JSX. index.html
+  // already ships a full set of SEO tags (rewritten per route by
+  // scripts/prerender-meta.mjs for crawlers), so rendering them again would
+  // produce duplicate canonical, description and og tags. This keeps exactly
+  // one of each and keeps them correct across client-side navigation.
+  //
+  // react-helmet-async is deliberately not used: version 2.x silently injects
+  // nothing under React 19, which is why structured data never reached the DOM.
+  useEffect(() => {
+    document.title = fullTitle;
+
+    const upsert = (
+      selector: string,
+      create: () => HTMLElement,
+      apply: (el: HTMLElement) => void,
+    ) => {
+      let el = document.head.querySelector<HTMLElement>(selector);
+      if (!el) {
+        el = create();
+        document.head.appendChild(el);
+      }
+      apply(el);
+    };
+
+    const meta = (attr: "name" | "property", key: string, content: string) =>
+      upsert(
+        `meta[${attr}="${key}"]`,
+        () => {
+          const el = document.createElement("meta");
+          el.setAttribute(attr, key);
+          return el;
+        },
+        (el) => el.setAttribute("content", content),
+      );
+
+    meta("name", "title", fullTitle);
+    meta("name", "description", description);
+    meta("name", "keywords", keywords);
+    meta("property", "og:type", ogType);
+    meta("property", "og:url", canonical);
+    meta("property", "og:title", fullTitle);
+    meta("property", "og:description", description);
+    meta("property", "og:image", ogImage);
+    meta("property", "og:image:alt", ogImageAlt);
+    meta("name", "twitter:url", canonical);
+    meta("name", "twitter:title", fullTitle);
+    meta("name", "twitter:description", description);
+    meta("name", "twitter:image", ogImage);
+    meta("name", "twitter:image:alt", ogImageAlt);
+
+    upsert(
+      'link[rel="canonical"]',
+      () => {
+        const el = document.createElement("link");
+        el.setAttribute("rel", "canonical");
+        return el;
+      },
+      (el) => el.setAttribute("href", canonical),
+    );
+  }, [
+    fullTitle,
+    description,
+    keywords,
+    canonical,
+    ogType,
+    ogImage,
+    ogImageAlt,
+  ]);
+
+  // JSON-LD is rendered inline. React 19 does not hoist script tags, and it
+  // does not need to: Google reads JSON-LD anywhere in the document.
   return (
-    <Helmet prioritizeSeoTags>
-      {/* Primary Meta Tags */}
-      <title>{fullTitle}</title>
-      <meta name="title" content={fullTitle} />
-      <meta name="description" content={description} />
-      <meta name="keywords" content={keywords} />
-      <link rel="canonical" href={canonical} />
-
-      {/* Open Graph / Facebook */}
-      <meta property="og:type" content={ogType} />
-      <meta property="og:url" content={canonical} />
-      <meta property="og:title" content={fullTitle} />
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={ogImage} />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content="Lighthouse Flow Metrics Dashboard" />
-      <meta property="og:site_name" content="LetPeopleWork" />
-      <meta property="og:locale" content="en_US" />
-
-      {/* Twitter */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:url" content={canonical} />
-      <meta name="twitter:title" content={fullTitle} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={ogImage} />
-      <meta name="twitter:image:alt" content="Lighthouse Flow Metrics Dashboard" />
-
-      {/* Additional SEO tags */}
-      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-      <meta name="language" content="English" />
-      <meta name="author" content="LetPeopleWork GmbH" />
-      <meta name="revisit-after" content="7 days" />
-      <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-
-      {/* Structured Data */}
+    <>
       {structuredData && (
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
       )}
-      
-      {/* BreadcrumbList Structured Data */}
       {breadcrumbStructuredData && (
-        <script type="application/ld+json">
-          {JSON.stringify(breadcrumbStructuredData)}
-        </script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(breadcrumbStructuredData),
+          }}
+        />
       )}
-      
-      {/* WebSite Structured Data */}
-      <script type="application/ld+json">
-        {JSON.stringify(websiteStructuredData)}
-      </script>
-    </Helmet>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteStructuredData) }}
+      />
+    </>
   );
 };
 

@@ -63,6 +63,9 @@ Three editions, same product, different access. All editions are open source and
 - Self-Service: CHF 2,000/year. Unlimited teams, portfolios, and deliveries, all paid features, community Slack support. One flat rate, no per-seat pricing.
 - Enterprise: CHF 10,000/year. Everything in Self-Service plus prioritised support, 24h acknowledgement on async requests, onboarding calls, named contacts, and a 10% workshop discount.
 
+**How long does it take to set up Lighthouse?**
+Under ten minutes from download to first forecast. In a recorded live session, Scrum Master Gabor Bittera started a ten minute timer, downloaded Lighthouse, connected his Jira instance with an API token, added his team, and forecast the team's next ten work items, finishing with 1:25 left on the clock. The demo is on https://letpeople.work/lighthouse#first-forecast. Guided onboarding is also available free of charge for every edition.
+
 **How do I install Lighthouse?**
 Available for:
 - Windows: Installer (.exe, .msi) — code signed

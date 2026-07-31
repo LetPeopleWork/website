@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { Helmet } from "react-helmet-async";
 
 const faqs = [
   {
@@ -75,9 +74,12 @@ const FAQSection = () => {
 
   return (
     <>
-      <Helmet>
-        <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
-      </Helmet>
+      {/* JSON-LD rendered directly: react-helmet-async does not inject with
+          React 19, and Google reads JSON-LD anywhere in the document. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
 
       <section id="faq" className="py-24 sm:py-32 bg-background">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -91,12 +91,6 @@ const QuickDownloadBar = ({ additionalLink, source }: QuickDownloadBarProps) => 
 		}
 	};
 
-	const openQuickDownload = (edition: "standalone" | "server") => {
-		trackDownload({ edition, platform: clientOs, source });
-		const url = getQuickDownloadUrlFromAssets(edition, clientOs, releaseAssets);
-		window.open(url ?? LIGHTHOUSE_GITHUB_RELEASES_URL, "_blank");
-	};
-
 	let standaloneExt: string | null = null;
 	if (clientOs === "Windows") standaloneExt = ".exe";
 	else if (clientOs === "macOS") standaloneExt = ".dmg";
@@ -104,6 +98,20 @@ const QuickDownloadBar = ({ additionalLink, source }: QuickDownloadBarProps) => 
 
 	const serverOsLabel =
 		clientOs === "Windows" || clientOs === "Linux" ? { ext: ".zip" } : null;
+
+	const openQuickDownload = (edition: "standalone" | "server") => {
+		trackDownload({
+			edition,
+			platform: clientOs,
+			format:
+				edition === "server"
+					? serverOsLabel?.ext ?? undefined
+					: standaloneExt ?? undefined,
+			source,
+		});
+		const url = getQuickDownloadUrlFromAssets(edition, clientOs, releaseAssets);
+		window.open(url ?? LIGHTHOUSE_GITHUB_RELEASES_URL, "_blank");
+	};
 
 	return (
 		<div className="flex flex-col sm:flex-row gap-4 justify-center">

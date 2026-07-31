@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { trackEvent } from "@/lib/plausible";
 import {
   TrialRequestFailedError,
   type SurveyAnswers,
@@ -242,7 +243,11 @@ export const SurveyForm = ({
     inFlight.current = true;
     submission
       .submit(selectionsFrom(questions, state.answers), trial.current)
-      .then(() => dispatch({ type: "submitted" }))
+      .then(() => {
+        // No answers or email, just the fact that a survey was completed.
+        trackEvent("Survey completed");
+        dispatch({ type: "submitted" });
+      })
       .catch((error: unknown) => {
         setErrorMessage(
           error instanceof TrialRequestFailedError
@@ -265,7 +270,14 @@ export const SurveyForm = ({
   }
 
   if (state.phase === "intro") {
-    return <Intro onStart={() => dispatch({ type: "start" })} />;
+    return (
+      <Intro
+        onStart={() => {
+          trackEvent("Survey started");
+          dispatch({ type: "start" });
+        }}
+      />
+    );
   }
 
   if (state.phase === "exchange" || state.phase === "submitting") {

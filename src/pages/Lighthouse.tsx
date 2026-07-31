@@ -121,6 +121,7 @@ type DownloadEntry = {
 	label: string;
 	tooltip: string;
 	assetPattern?: string;
+	format?: string;
 };
 
 const standaloneDownloads: DownloadEntry[] = [
@@ -129,6 +130,7 @@ const standaloneDownloads: DownloadEntry[] = [
 		label: "Windows Installer (.exe)",
 		tooltip: "Recommended NSIS installer for Windows. Code signed.",
 		assetPattern: "installer.exe",
+		format: "exe",
 	},
 	{
 		os: "windows",
@@ -136,12 +138,14 @@ const standaloneDownloads: DownloadEntry[] = [
 		tooltip:
 			"MSI installer for Windows, useful for enterprise deployment. Code signed.",
 		assetPattern: "installer.msi",
+		format: "msi",
 	},
 	{
 		os: "macos",
 		label: "macOS Disk Image (.dmg)",
 		tooltip: "Standard macOS disk image. Signed and notarized by Apple.",
 		assetPattern: "osx.dmg",
+		format: "dmg",
 	},
 	{
 		os: "macos",
@@ -149,6 +153,7 @@ const standaloneDownloads: DownloadEntry[] = [
 		tooltip:
 			"The macOS app bundle as a zip archive. Signed and notarized by Apple.",
 		assetPattern: "osx.app.zip",
+		format: "app.zip",
 	},
 	{
 		os: "linux",
@@ -156,6 +161,7 @@ const standaloneDownloads: DownloadEntry[] = [
 		tooltip:
 			"Portable AppImage that runs on most Linux distributions without installation.",
 		assetPattern: ".appimage",
+		format: "appimage",
 	},
 ];
 
@@ -166,6 +172,7 @@ const serverDownloads: DownloadEntry[] = [
 		tooltip:
 			"Server binaries for Windows (x64). Extract and run as a background service.",
 		assetPattern: "server-win",
+		format: "server-zip",
 	},
 	{
 		os: "linux",
@@ -173,6 +180,7 @@ const serverDownloads: DownloadEntry[] = [
 		tooltip:
 			"Server binaries for Linux (x64). Extract and run as a background service.",
 		assetPattern: "server-linux",
+		format: "server-zip",
 	},
 	{
 		os: "docker",
@@ -253,6 +261,7 @@ const Lighthouse = () => {
 		const urlParams = new URLSearchParams(window.location.search);
 		const paymentStatus = urlParams.get("payment");
 		if (paymentStatus === "success") {
+			trackEvent("License purchased", { source: "stripe-return" });
 			// Show success dialog first
 			setPaymentResult({
 				show: true,
@@ -268,6 +277,7 @@ const Lighthouse = () => {
 				window.history.replaceState({}, document.title, newUrl);
 			}, 1000); // Increased delay to ensure dialog shows
 		} else if (paymentStatus === "canceled") {
+			trackEvent("Checkout canceled", { source: "stripe-return" });
 			// Show canceled dialog first
 			setPaymentResult({
 				show: true,
@@ -503,6 +513,10 @@ const Lighthouse = () => {
 
 			if (error) throw error;
 
+			// Non-personal: no name, email or organisation is ever sent to analytics.
+			trackEvent("Checkout started", { source: "license-purchase" });
+			trackEvent("Form: Submission", { source: "license-purchase" });
+
 			// Redirect to Stripe checkout in the same tab
 			window.location.href = data.url;
 		} catch (error) {
@@ -684,6 +698,17 @@ const Lighthouse = () => {
 		video: [
 			{
 				"@type": "VideoObject",
+				name: "From nothing to a Monte Carlo forecast in under ten minutes",
+				description:
+					"Live, unedited demo: Gabor Bittera downloads Lighthouse, connects Jira, adds a team, and forecasts the team's next ten work items, finishing with 1:25 left on a ten minute timer.",
+				thumbnailUrl:
+					"https://letpeople.work/lighthouse-first-forecast-poster.jpg",
+				contentUrl: "https://letpeople.work/lighthouse-first-forecast.mp4",
+				uploadDate: "2026-08-01T00:00:00Z",
+				duration: "PT1M30S",
+			},
+			{
+				"@type": "VideoObject",
 				name: "Lighthouse Team Metrics Visualization",
 				description:
 					"Visualize how well work flows through your system at the team level with Lighthouse flow metrics",
@@ -788,6 +813,54 @@ const Lighthouse = () => {
 				</div>
 			</section>
 
+			{/* Proof: live, unedited setup demo */}
+			<section id="first-forecast" className="py-20 bg-gradient-subtle border-y border-border">
+				<div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+					<div className="text-center mb-8">
+						<span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary bg-accent px-4 py-1.5 rounded-full mb-5">
+							Live demo, unedited
+						</span>
+						<h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight mb-4">
+							From nothing to a forecast, in under ten minutes.
+						</h2>
+						<p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+							Gabor Bittera set out to bust the myth that probabilistic
+							forecasting takes weeks to set up. He started a ten minute timer,
+							downloaded Lighthouse, connected his Jira, and forecast his team's
+							next ten items. Here are the final ninety seconds, with 1:25 still
+							on the clock.
+						</p>
+					</div>
+
+					<div className="rounded-2xl overflow-hidden border border-border shadow-medium bg-black">
+						<video
+							className="w-full block"
+							controls
+							preload="none"
+							poster="/lighthouse-first-forecast-poster.jpg"
+							aria-label="Live demo: setting up Lighthouse and running a first Monte Carlo forecast in under ten minutes"
+							onPlay={() => trackEvent("Video play", { video: "first-forecast" })}
+						>
+							<source src="/lighthouse-first-forecast.mp4" type="video/mp4" />
+							Your browser does not support the video tag.
+						</video>
+					</div>
+
+					<p className="text-center text-sm text-muted-foreground mt-5">
+						Clip from a Lighthouse Live session with Gabor Bittera, Scrum Master,
+						May 2026. Shared with his permission.{" "}
+						<a
+							href="https://www.youtube.com/@LetPeopleWork/videos"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-primary hover:underline"
+						>
+							Watch full sessions on YouTube
+						</a>
+					</p>
+				</div>
+			</section>
+
 			{/* Downloads */}
 			<section id="downloads" className="py-20 bg-background">
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -834,6 +907,7 @@ const Lighthouse = () => {
 															trackDownload({
 																edition: "standalone",
 																platform: item.os,
+																format: item.format,
 																source: "downloads-section",
 															});
 															const url =
@@ -901,6 +975,7 @@ const Lighthouse = () => {
 																	trackDownload({
 																		edition: "server",
 																		platform: item.os,
+																		format: item.format,
 																		source: "downloads-section",
 																	});
 																	const url =
@@ -1653,7 +1728,8 @@ const Lighthouse = () => {
 						<div className="mt-4">
 							<a
 								href="/Lighthouse_Pitch_Deck.pdf"
-									onClick={() => trackDownload({ edition: "pitch-deck", source: "convince" })}
+									onClick={() => trackDownload({ edition: "pitch-deck", format: "pdf", source: "convince" })}
+										data-skip-autotrack
 								className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-white hover:opacity-90 transition-opacity"
 								target="_blank"
 								rel="noopener noreferrer"
@@ -1780,7 +1856,8 @@ const Lighthouse = () => {
 								</p>
 								<a
 									href="https://github.com/LetPeopleWork/lighthouse-clients/releases/latest/download/lighthouse-skill.zip"
-										onClick={() => trackDownload({ edition: "ai-skill", source: "ai-integration" })}
+										onClick={() => trackDownload({ edition: "ai-skill", format: "zip", source: "ai-integration" })}
+										data-skip-autotrack
 									className="inline-flex items-center gap-2 text-sm font-medium text-green-300 hover:text-green-200 transition-colors"
 								>
 									Download lighthouse-skill.zip
@@ -1798,7 +1875,8 @@ const Lighthouse = () => {
 								</p>
 								<a
 									href="https://github.com/LetPeopleWork/lighthouse-clients/releases/latest/download/lighthouse-mcp-stdio.mcpb"
-										onClick={() => trackDownload({ edition: "ai-mcpb", source: "ai-integration" })}
+										onClick={() => trackDownload({ edition: "ai-mcpb", format: "mcpb", source: "ai-integration" })}
+										data-skip-autotrack
 									className="inline-flex items-center gap-2 text-sm font-medium text-green-300 hover:text-green-200 transition-colors"
 								>
 									Download lighthouse-mcp-stdio.mcpb

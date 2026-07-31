@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import SEO from "@/components/SEO";
 import Navigation from "@/components/Navigation";
 import SimpleFooter from "@/components/SimpleFooter";
+import { trackEvent } from "@/lib/plausible";
 import { IntroStep } from "@/features/assessment/components/IntroStep";
 import { QuestionStep } from "@/features/assessment/components/QuestionStep";
 import { ResultView } from "@/features/assessment/components/ResultView";
@@ -85,6 +86,8 @@ const Assessment = ({
     }
     captured.current = true;
     const result = score(state.answers as number[]);
+    // Score band only. Never answers, email or free text.
+    trackEvent("Assessment completed", { band: result.band });
     void runDegradeOpen(
       () =>
         repository.save({
@@ -135,7 +138,12 @@ const Assessment = ({
       <Navigation />
       <main className="flex-1 px-4 pt-28 pb-16">
       {state.phase === "intro" && (
-        <IntroStep onStart={() => dispatch({ type: "start" })} />
+        <IntroStep
+          onStart={() => {
+            trackEvent("Assessment started");
+            dispatch({ type: "start" });
+          }}
+        />
       )}
 
       {state.phase === "question" && (

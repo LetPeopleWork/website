@@ -19,6 +19,7 @@ const Navigation = () => {
 
   const lighthouseSubItems = [
     { name: "Downloads", href: "#downloads" },
+    { name: "See it in 10 minutes", href: "#first-forecast" },
     { name: "Overview", href: "#lighthouse-overview" },
     { name: "Testimonials", href: "#lighthouse-testimonials" },
     { name: "FAQ", href: "#faq" },
