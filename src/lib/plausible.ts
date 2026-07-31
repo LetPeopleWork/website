@@ -86,12 +86,12 @@ document.addEventListener(
     const href = anchor.getAttribute("href") ?? "";
     if (!href) return;
 
-    // Our own contact addresses, never a visitor's. The subject line tells us
-    // which CTA was used (onboarding, workshop booking, enterprise enquiry).
+    // Our own contact addresses, never a visitor's. The subject line is
+    // dropped so the property report groups all mail clicks per address
+    // instead of splintering into one row per subject.
     if (href.toLowerCase().startsWith("mailto:")) {
-      trackEvent("Email link: Click", {
-        url: decodeURIComponent(href.slice(7)),
-      });
+      const address = decodeURIComponent(href.slice(7)).split("?")[0];
+      trackEvent("Email link: Click", { url: address });
       return;
     }
     if (!/^https?:/i.test(anchor.href)) return;
