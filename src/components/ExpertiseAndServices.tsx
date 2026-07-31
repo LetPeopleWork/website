@@ -3,6 +3,7 @@ import { ChevronDown, GraduationCap, Zap, Search as SearchIcon } from "lucide-re
 import PeterImage from '../assets/Peter.png';
 import BenjiImage from '../assets/Benji.png';
 import EngagementPath from './EngagementPath';
+import { prices } from "@/lib/pricing";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -23,7 +24,10 @@ interface Category {
   items: OfferingItem[];
 }
 
-const CATEGORIES: Record<string, Category> = {
+// Built per render rather than at module load: the Flow Clarity Assessment price flips at the #5563
+// cutover instant, and a module-scope object would freeze whatever it was when the bundle evaluated.
+function buildCategories(): Record<string, Category> {
+  return {
   certifications: {
     label: "Official Certifications",
     tagline: "ProKanban.org accredited training. Leave with a credential and a skillset.",
@@ -123,7 +127,7 @@ const CATEGORIES: Record<string, Category> = {
         name: "Flow Clarity Assessment",
         description: "A standardized, data-driven diagnostic that cuts through assumptions and reveals what your historical data says about how work flows through your teams. No opinions, just objective analysis.",
         duration: "3–6 months of data analyzed",
-        format: "CHF 3,500 · Includes Lighthouse Premium License",
+        format: `${prices().assessment} · Includes Lighthouse Premium License`,
         badge: "Diagnostic",
       },
       {
@@ -141,7 +145,8 @@ const CATEGORIES: Record<string, Category> = {
       },
     ],
   },
-};
+  };
+}
 
 // ─── COMPONENTS ──────────────────────────────────────────────────────────────
 
@@ -296,7 +301,7 @@ export default function ExpertiseAndServices() {
         </div>
 
         <div className="flex flex-col gap-4">
-          {Object.entries(CATEGORIES).map(([id, data]) => (
+          {Object.entries(buildCategories()).map(([id, data]) => (
             <CategoryAccordion
               key={id}
               id={id}

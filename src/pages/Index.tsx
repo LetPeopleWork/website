@@ -8,8 +8,11 @@ import BlogSection from "@/components/BlogSection";
 import StayConnected from "@/components/StayConnected";
 import SimpleFooter from "@/components/SimpleFooter";
 import SEO from "@/components/SEO";
+import { prices } from "@/lib/pricing";
 
 const Index = () => {
+  const { selfServiceAmount } = prices();
+
   // Structured data for organization
   const structuredData = {
     "@context": "https://schema.org",
@@ -84,11 +87,11 @@ const Index = () => {
             {
               "@type": "Offer",
               "name": "Lighthouse Self-Service",
-              "price": "2000",
+              "price": selfServiceAmount,
               "priceCurrency": "CHF",
               "priceSpecification": {
                 "@type": "UnitPriceSpecification",
-                "price": "2000",
+                "price": selfServiceAmount,
                 "priceCurrency": "CHF",
                 "unitText": "year"
               },

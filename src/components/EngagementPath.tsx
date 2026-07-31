@@ -1,5 +1,6 @@
 import { ArrowRight, Compass, Wrench, TrendingUp } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { prices } from "@/lib/pricing";
 
 type Tier = {
   id: string;
@@ -16,7 +17,10 @@ type Tier = {
   comingSoon?: boolean;
 };
 
-const TIERS: Tier[] = [
+// Built per render rather than at module load: the pilot price flips at the #5563 cutover instant, and
+// a module-scope array would freeze whatever the price was when the bundle first evaluated.
+function buildTiers(): Tier[] {
+  return [
   {
     id: "assess",
     label: "Assess",
@@ -47,7 +51,7 @@ const TIERS: Tier[] = [
       "Your team knows how to maintain and extend it",
       "A forecast you can stand behind, or we keep working until you have one",
     ],
-    price: "CHF 2,000",
+    price: prices().pilot,
     cta: { label: "Plan your pilot", href: "mailto:contact@letpeople.work?subject=BYOD%20Workshop%20%2B%20Lighthouse%20Pilot" },
     recommended: true,
   },
@@ -68,7 +72,8 @@ const TIERS: Tier[] = [
     priceFrom: true,
     cta: { label: "Design your rollout", href: "mailto:contact@letpeople.work?subject=Flow%20Transformation%20Package" },
   },
-];
+  ];
+}
 
 function TierCard({ tier, index }: { tier: Tier; index: number }) {
   const { ref, revealed } = useScrollReveal<HTMLDivElement>();
@@ -188,7 +193,7 @@ export default function EngagementPath() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
-          {TIERS.map((tier, i) => (
+          {buildTiers().map((tier, i) => (
             <TierCard key={tier.id} tier={tier} index={i} />
           ))}
         </div>
