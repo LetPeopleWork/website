@@ -11,6 +11,12 @@ type Item = {
 // https://github.com/LetPeopleWork/Lighthouse/releases
 const ITEMS: Item[] = [
   {
+    tag: "Integrations",
+    title: "ServiceNow",
+    description:
+      "Point Lighthouse at incidents, change requests, problems, or catalog tasks and get the same flow metrics and forecasts your Jira and Azure DevOps teams already have. Pre-fill a team from a Visual Task Board instead of writing the query by hand.",
+  },
+  {
     tag: "Predictability",
     title: "Percentiles Over Time",
     description:

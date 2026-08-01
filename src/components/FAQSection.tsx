@@ -10,12 +10,12 @@ const faqs = [
   {
     question: "Our tracker is messy. I don't have clean data.",
     answer:
-      "Messy is normal. Lighthouse pulls from Jira, Azure DevOps, Linear, or CSV, and the math holds up against noisy data. The signal you need is when items started and when they finished, and that survives even in trackers that have been through three reorgs.",
+      "Messy is normal. Lighthouse pulls from Jira, Azure DevOps, Linear, ServiceNow, or CSV, and the math holds up against noisy data. The signal you need is when items started and when they finished, and that survives even in trackers that have been through three reorgs.",
   },
   {
     question: "I can't run this in my org. IT will block it.",
     answer:
-      "It runs on your laptop. Docker container or native .NET, with no external network calls by default. Your Jira, Azure DevOps, or Linear data never leaves your machine. You don't need to file a ticket to try it for two weeks.",
+      "It runs on your laptop. Docker container or native .NET, with no external network calls by default. Your Jira, Azure DevOps, Linear, or ServiceNow data never leaves your machine. You don't need to file a ticket to try it for two weeks.",
   },
   {
     question: "My team's not mature enough for this.",
@@ -40,7 +40,7 @@ const faqs = [
   {
     question: "Do you help with setup and onboarding?",
     answer:
-      "Yes, and it's free. We help you get Lighthouse running, connect Jira, Azure DevOps, or Linear, and walk your team through the tool, at no cost and for every edition. Write to contact@letpeople.work with the subject \"Lighthouse onboarding\". If you want to go deeper, the BYOD pilot workshop puts your team on your own data, and Enterprise licenses include structured onboarding calls.",
+      "Yes, and it's free. We help you get Lighthouse running, connect Jira, Azure DevOps, Linear, or ServiceNow, and walk your team through the tool, at no cost and for every edition. Write to contact@letpeople.work with the subject \"Lighthouse onboarding\". If you want to go deeper, the BYOD pilot workshop puts your team on your own data, and Enterprise licenses include structured onboarding calls.",
   },
   {
     question: "I tried something like this before and it didn't stick.",

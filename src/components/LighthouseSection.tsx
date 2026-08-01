@@ -49,8 +49,8 @@ const LighthouseSection = () => {
     },
     {
       icon: <ArrowRight className="h-6 w-6" />,
-      title: "Connects to Jira, Azure DevOps, and Linear",
-      description: "Three integrations, deeply built. No CSV exports, no parallel spreadsheets, no \"data engineering\" side project."
+      title: "Connects to Jira, Azure DevOps, Linear, and ServiceNow",
+      description: "Four integrations, deeply built. No CSV exports, no parallel spreadsheets, no \"data engineering\" side project."
     },
     {
       icon: <FileText className="h-6 w-6" />,
@@ -81,7 +81,7 @@ const LighthouseSection = () => {
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Most teams already have the data. They just can't see what it's telling them. Lighthouse connects to Jira, Azure DevOps, and Linear, turns your history into honest forecasts, and shows you exactly where your delivery system is losing speed.
+            Most teams already have the data. They just can't see what it's telling them. Lighthouse connects to Jira, Azure DevOps, Linear, and ServiceNow, turns your history into honest forecasts, and shows you exactly where your delivery system is losing speed.
           </p>
         </div>
 

@@ -23,7 +23,7 @@ const seoRoutes = [
     path: "lighthouse",
     title: "Lighthouse - Flow Metrics & Forecasting Tool | LetPeopleWork",
     description:
-      "Self-hosted, open-source flow metrics and probabilistic forecasting. Connects to Jira, Azure DevOps, and Linear. Turn your real delivery history into forecasts you can defend, from team to portfolio.",
+      "Self-hosted, open-source flow metrics and probabilistic forecasting. Connects to Jira, Azure DevOps, Linear, and ServiceNow. Turn your real delivery history into forecasts you can defend, from team to portfolio.",
   },
   {
     path: "ai",

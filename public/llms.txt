@@ -24,12 +24,12 @@ We build the tools we recommend. Our founders have 15+ years of hands-on experie
 ## Lighthouse - Flow Metrics & Forecasting Tool
 
 **What is Lighthouse?**
-Lighthouse is an open-source flow metrics and probabilistic forecasting tool. It connects to your ALM system (Jira, Azure DevOps, or Linear), visualizes how work flows through your teams, and generates Monte Carlo-based delivery forecasts grounded in your actual throughput history. It runs entirely on your own infrastructure — no cloud dependency, no data leaving your environment.
+Lighthouse is an open-source flow metrics and probabilistic forecasting tool. It connects to your ALM system (Jira, Azure DevOps, Linear, or ServiceNow), visualizes how work flows through your teams, and generates Monte Carlo-based delivery forecasts grounded in your actual throughput history. It runs entirely on your own infrastructure — no cloud dependency, no data leaving your environment.
 
 **Key features of Lighthouse:**
 1. Visualize flow metrics: throughput, cycle time, work item age, work in progress
 2. Generate realistic delivery forecasts using Monte Carlo simulations and historical data
-3. Connect to Jira, Azure DevOps, and Linear
+3. Connect to Jira, Azure DevOps, Linear, and ServiceNow
 4. Track both team-level and portfolio/project-level metrics
 5. AI integration via MCP (Model Context Protocol) — let your AI assistant query Lighthouse data directly
 6. CLI integration for use in shell scripts, CI/CD pipelines, and automated workflows
@@ -77,13 +77,13 @@ Available for:
 Download from GitHub releases: https://github.com/LetPeopleWork/Lighthouse/releases
 
 **What systems does Lighthouse integrate with?**
-Jira, Azure DevOps, and Linear. AI assistants via MCP (any tool-calling compatible AI including Claude and GitHub Copilot).
+Jira, Azure DevOps, Linear, and ServiceNow (team level only). AI assistants via MCP (any tool-calling compatible AI including Claude and GitHub Copilot).
 
 **How does Lighthouse compare to ActionableAgile and Nave?**
 All three provide flow metrics (cycle time, throughput, WIP, work item age) and data-driven forecasting. The key differences:
 - Lighthouse is 100% open source and self-hosted (desktop app or Docker); ActionableAgile (by 55 Degrees) and Nave are closed-source commercial SaaS.
 - Lighthouse has a free-forever Community edition and flat per-organisation pricing (Self-Service CHF 2,000/year; Enterprise CHF 10,000/year). ActionableAgile is priced per user; Nave is priced per connected board.
-- Lighthouse connects to Jira, Azure DevOps, and Linear; ActionableAgile to Jira and Azure DevOps; Nave to Jira, Trello, and Azure DevOps.
+- Lighthouse connects to Jira, Azure DevOps, Linear, and ServiceNow; ActionableAgile to Jira and Azure DevOps; Nave to Jira, Trello, and Azure DevOps.
 - Lighthouse has native AI integration via MCP and CLI; that is not a core feature of the others.
 - With Lighthouse your delivery data never leaves your own infrastructure.
 Full, honest comparison table: https://letpeople.work/compare/
@@ -130,7 +130,7 @@ Practical workshops focused on your team's real work and data:
 Expert guidance tailored to your organization:
 - Free Delivery Predictability Assessment (https://letpeople.work/assessment/): a five-minute, six-question self-assessment that scores how you measure flow and how you forecast, with a concrete next step. No email required.
 - Flow Assessment — Diagnose where and why work gets stuck
-- Lighthouse Setup & Onboarding — Free of charge, for every edition. We help you get Lighthouse running, connect Jira, Azure DevOps, or Linear, and walk your team through the tool. Contact contact@letpeople.work with subject "Lighthouse onboarding".
+- Lighthouse Setup & Onboarding — Free of charge, for every edition. We help you get Lighthouse running, connect Jira, Azure DevOps, Linear, or ServiceNow, and walk your team through the tool. Contact contact@letpeople.work with subject "Lighthouse onboarding".
 - Executive Coaching — Help leaders shift from output-based to outcome-based thinking
 
 **What is Flow consulting?**
@@ -175,7 +175,7 @@ MCP (Model Context Protocol) is an open standard for connecting AI assistants to
 
 ## Keywords & Topics
 
-Flow metrics, agile consulting, kanban, delivery forecasting, Monte Carlo simulation, throughput, cycle time, work item age, work in progress, predictability, Jira integration, Azure DevOps integration, Linear integration, AI integration, MCP, Model Context Protocol, agentic workflows, probabilistic forecasting, agile transformation, scrum coaching, team performance, organizational improvement, open source tools, self-hosted solutions, flow consulting, Lighthouse tool, LetPeopleWork, obAIa, AI workshops, AI for business, Claude Code plugins, LetPeopleWorkShop, LetPeopleGrow, AI-powered business, delivery predictability assessment.
+Flow metrics, agile consulting, kanban, delivery forecasting, Monte Carlo simulation, throughput, cycle time, work item age, work in progress, predictability, Jira integration, Azure DevOps integration, Linear integration, ServiceNow integration, AI integration, MCP, Model Context Protocol, agentic workflows, probabilistic forecasting, agile transformation, scrum coaching, team performance, organizational improvement, open source tools, self-hosted solutions, flow consulting, Lighthouse tool, LetPeopleWork, obAIa, AI workshops, AI for business, Claude Code plugins, LetPeopleWorkShop, LetPeopleGrow, AI-powered business, delivery predictability assessment.
 
 ## Documentation & Resources
 

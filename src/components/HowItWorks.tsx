@@ -5,7 +5,7 @@ const steps = [
     number: "01",
     title: "Connect your data",
     description:
-      "Lighthouse installs in under ten minutes and pulls from Jira, Azure DevOps, or Linear. No spreadsheets. No manual exports.",
+      "Lighthouse installs in under ten minutes and pulls from Jira, Azure DevOps, Linear, or ServiceNow. No spreadsheets. No manual exports.",
   },
   {
     number: "02",

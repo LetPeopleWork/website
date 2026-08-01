@@ -440,10 +440,10 @@ const Lighthouse = () => {
 			icon: <ArrowRight className="h-8 w-8" />,
 			title: "Integrate with the tools you already use",
 			description:
-				"No need to maintain multiple data sources - Lighthouse connects to Jira, Azure DevOps, Linear, and CSV",
-			extendedDescription: `You don't want to maintain your data in yet another tool. This is why Lighthouse connects to what you are already using: Jira, Azure DevOps, Linear, or a simple CSV export.
+				"No need to maintain multiple data sources - Lighthouse connects to Jira, Azure DevOps, Linear, ServiceNow, and CSV",
+			extendedDescription: `You don't want to maintain your data in yet another tool. This is why Lighthouse connects to what you are already using: Jira, Azure DevOps, Linear, ServiceNow, or a simple CSV export.
 
-      Its flexible design lets Lighthouse work with your data source no matter how you set it up. Using custom fields or labels? Have special filters you want to apply? Lighthouse can cope with that. Connect with a Personal Access Token, or use OAuth for Jira and Azure DevOps on the paid tiers.`,
+      Its flexible design lets Lighthouse work with your data source no matter how you set it up. Using custom fields or labels? Have special filters you want to apply? Lighthouse can cope with that. Connect with a Personal Access Token, or use OAuth for Jira and Azure DevOps on the paid tiers. ServiceNow connects at team level and reads whichever ITSM record classes your teams work - incidents, change requests, problems, catalog tasks.`,
 			callToAction: "Your System is not supported? Let us know!",
 			mediaItems: [
 				{
@@ -562,13 +562,14 @@ const Lighthouse = () => {
 			},
 		],
 		description:
-			"Open-source flow metrics and probabilistic forecasting tool. Connects to Jira, Azure DevOps, and Linear. AI integration via MCP, so you can ask your AI assistant questions about your delivery data directly. Self-hosted, no cloud dependency.",
+			"Open-source flow metrics and probabilistic forecasting tool. Connects to Jira, Azure DevOps, Linear, and ServiceNow. AI integration via MCP, so you can ask your AI assistant questions about your delivery data directly. Self-hosted, no cloud dependency.",
 		featureList: [
 			"Flow Metrics Visualization",
 			"Monte Carlo Probabilistic Forecasting",
 			"Jira Integration",
 			"Azure DevOps Integration",
 			"Linear Integration",
+			"ServiceNow Integration",
 			"AI Integration via MCP (Model Context Protocol)",
 			"CLI for Shell Scripts and CI/CD Pipelines",
 			"Team and Portfolio Level Analytics",
@@ -751,8 +752,8 @@ const Lighthouse = () => {
 		<div className="min-h-screen bg-background">
 			<SEO
 				title="Lighthouse - Flow Metrics & Forecasting Tool for Agile Teams"
-				description="Lighthouse is an open-source tool for visualizing flow metrics and forecasting delivery dates using Monte Carlo simulations. Connects to Jira, Azure DevOps, and Linear. AI integration via MCP, so you can ask Claude or Copilot questions about your delivery data. Free community version available."
-				keywords="lighthouse flow metrics, agile forecasting tool, Monte Carlo simulation, delivery forecasting, when will it be done, how much can we do, Jira flow metrics, Azure DevOps metrics, Linear integration, AI integration, MCP, Model Context Protocol, agile AI assistant, throughput, cycle time, lead time, WIP, work in progress, team velocity, sprint forecasting, agile metrics dashboard, kanban metrics, scrum metrics, project forecasting, portfolio forecasting, open source agile, predictability, self-hosted forecasting, agile analytics"
+				description="Lighthouse is an open-source tool for visualizing flow metrics and forecasting delivery dates using Monte Carlo simulations. Connects to Jira, Azure DevOps, Linear, and ServiceNow. AI integration via MCP, so you can ask Claude or Copilot questions about your delivery data. Free community version available."
+				keywords="lighthouse flow metrics, agile forecasting tool, Monte Carlo simulation, delivery forecasting, when will it be done, how much can we do, Jira flow metrics, Azure DevOps metrics, Linear integration, ServiceNow integration, ITSM flow metrics, AI integration, MCP, Model Context Protocol, agile AI assistant, throughput, cycle time, lead time, WIP, work in progress, team velocity, sprint forecasting, agile metrics dashboard, kanban metrics, scrum metrics, project forecasting, portfolio forecasting, open source agile, predictability, self-hosted forecasting, agile analytics"
 				ogImage="https://letpeople.work/forecasts-project.png"
 				ogType="website"
 				canonicalUrl="https://letpeople.work/lighthouse"
@@ -787,7 +788,7 @@ const Lighthouse = () => {
 						<p className="text-xl text-muted-foreground max-w-4xl mx-auto mb-12">
 							You're being asked when it'll be done. Right now, your honest
 							answer is a guess. Lighthouse turns your real history from Jira,
-							Azure DevOps, or Linear into forecasts you can defend, from team
+							Azure DevOps, Linear, or ServiceNow into forecasts you can defend, from team
 							to portfolio, and shows you where delivery is losing speed so you
 							can fix it.
 						</p>
@@ -1034,7 +1035,7 @@ const Lighthouse = () => {
 						</h3>
 						<p className="text-muted-foreground leading-relaxed mb-6">
 							We'll onboard you, free of charge. We help you get Lighthouse
-							running in your environment, connect Jira, Azure DevOps, or
+							running in your environment, connect Jira, Azure DevOps, ServiceNow, or
 							Linear, and walk your team through the tool. No catch: an easy
 							start is the best pitch for Lighthouse we have.
 						</p>
@@ -1141,7 +1142,7 @@ const Lighthouse = () => {
 							</p>
 							<ul className="space-y-2.5 mb-8 flex-1 text-sm text-foreground/80">
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>All core flow metrics &amp; Monte Carlo forecasts</span></li>
-								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Jira, Azure DevOps, Linear, CSV</span></li>
+								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Jira, Azure DevOps, Linear, ServiceNow, CSV</span></li>
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>AI / MCP integration</span></li>
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Up to 3 teams · 1 portfolio · 1 delivery</span></li>
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Community Slack support</span></li>
