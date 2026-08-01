@@ -24,10 +24,7 @@ interface Category {
   items: OfferingItem[];
 }
 
-// Built per render rather than at module load: the Flow Clarity Assessment price flips at the #5563
-// cutover instant, and a module-scope object would freeze whatever it was when the bundle evaluated.
-function buildCategories(): Record<string, Category> {
-  return {
+const categories: Record<string, Category> = {
   certifications: {
     label: "Official Certifications",
     tagline: "ProKanban.org accredited training. Leave with a credential and a skillset.",
@@ -127,7 +124,7 @@ function buildCategories(): Record<string, Category> {
         name: "Flow Clarity Assessment",
         description: "A standardized, data-driven diagnostic that cuts through assumptions and reveals what your historical data says about how work flows through your teams. No opinions, just objective analysis.",
         duration: "3–6 months of data analyzed",
-        format: `${prices().assessment} · Includes Lighthouse Premium License`,
+        format: `${prices.assessment} · Includes Lighthouse Premium License`,
         badge: "Diagnostic",
       },
       {
@@ -145,8 +142,7 @@ function buildCategories(): Record<string, Category> {
       },
     ],
   },
-  };
-}
+};
 
 // ─── COMPONENTS ──────────────────────────────────────────────────────────────
 
@@ -301,7 +297,7 @@ export default function ExpertiseAndServices() {
         </div>
 
         <div className="flex flex-col gap-4">
-          {Object.entries(buildCategories()).map(([id, data]) => (
+          {Object.entries(categories).map(([id, data]) => (
             <CategoryAccordion
               key={id}
               id={id}

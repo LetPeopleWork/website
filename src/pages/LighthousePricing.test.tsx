@@ -5,20 +5,12 @@ import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import Lighthouse from "./Lighthouse";
-import { PRICE_CUTOVER_INSTANT } from "@/lib/pricing";
-
-// ADO #5563 — AC-1.1 to AC-1.4. The pricing section gates on the clock, so the future is only
-// observable by faking it. This is the evidence that lets the change deploy a day early.
-const CUTOVER = new Date(PRICE_CUTOVER_INSTANT);
-const ONE_MINUTE_BEFORE = new Date(CUTOVER.getTime() - 60_000);
 
 vi.mock("@/integrations/supabase/client", () => ({
   supabase: { functions: { invoke: vi.fn() } },
 }));
 
-function renderPricingPageAt(instant: Date) {
-  vi.setSystemTime(instant);
-
+function renderPricingPage() {
   return render(
     <HelmetProvider>
       <MemoryRouter initialEntries={["/lighthouse"]}>
@@ -41,9 +33,7 @@ function selfServiceCard(): HTMLElement {
  *
  * Read from source rather than from the rendered DOM on purpose: react-helmet-async 2.x mounts its tags
  * through a deferred callback that neither jsdom nor a static server render flushes, so the ld+json
- * block is unobservable from a test. The binding in the source is the thing that has to be right, and
- * it is exactly what regressed before this change — both pages had a hardcoded "2000" while the visible
- * card said CHF 999.
+ * block is unobservable from a test. The binding in the source is the thing that has to be right.
  */
 function declaredOfferPriceBinding(page: "Lighthouse" | "Index"): string[] {
   const source = readFileSync(join(__dirname, `${page}.tsx`), "utf8");
@@ -54,7 +44,6 @@ function declaredOfferPriceBinding(page: "Lighthouse" | "Index"): string[] {
 }
 
 beforeEach(() => {
-  vi.useFakeTimers({ shouldAdvanceTime: true });
   vi.stubGlobal(
     "fetch",
     vi.fn().mockResolvedValue({ ok: false, json: async () => ({}) }),
@@ -84,45 +73,27 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  vi.useRealTimers();
   vi.unstubAllGlobals();
 });
 
-describe("Lighthouse pricing across the cutover", () => {
-  it("AC-1.1 quotes CHF 999 one minute before the cutover", () => {
-    renderPricingPageAt(ONE_MINUTE_BEFORE);
-
-    expect(within(selfServiceCard()).getByText("CHF 999")).toBeInTheDocument();
-  });
-
-  it("AC-1.2 quotes CHF 2,000 at the instant itself, not one tick later", () => {
-    renderPricingPageAt(CUTOVER);
+describe("Lighthouse pricing", () => {
+  it("quotes CHF 2,000 for the Self-Service licence", () => {
+    renderPricingPage();
 
     expect(within(selfServiceCard()).getByText("CHF 2,000")).toBeInTheDocument();
-    expect(within(selfServiceCard()).queryByText("CHF 999")).not.toBeInTheDocument();
   });
 
-  it("AC-1.3 drops every transitional notice once the cutover has passed", () => {
-    renderPricingPageAt(CUTOVER);
+  it("carries no transitional price notice", () => {
+    renderPricingPage();
 
     expect(screen.queryByText(/Until August 2026/)).not.toBeInTheDocument();
     expect(screen.queryByText(/from August 2026/)).not.toBeInTheDocument();
-    expect(screen.queryByText(/lock CHF 999/)).not.toBeInTheDocument();
-    expect(
-      screen.queryByText(/From August 2026, this license is CHF 2,000/),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByText(/CHF 999/)).not.toBeInTheDocument();
   });
 
-  it("AC-1.3 still shows the pre-launch notice before the cutover", () => {
-    renderPricingPageAt(ONE_MINUTE_BEFORE);
-
-    expect(screen.getByText(/Until August 2026/)).toBeInTheDocument();
-  });
-
-  // Before this change the structured data said "2000" while the visible card said CHF 999 — search
-  // engines and AI assistants were quoting a price the page contradicted.
+  // The structured data once carried its own price literal and drifted from the visible card.
   it.each(["Lighthouse", "Index"] as const)(
-    "AC-1.4 binds %s's JSON-LD Self-Service offer to the pricing module, not a literal",
+    "binds %s's JSON-LD Self-Service offer to the pricing module, not a literal",
     (page) => {
       const bindings = declaredOfferPriceBinding(page);
 

@@ -88,7 +88,7 @@ import {
 } from "@/lib/lighthouseDownloads";
 import QuickDownloadBar from "@/components/QuickDownloadBar";
 import { trackDownload, trackEvent } from "@/lib/plausible";
-import { isAfterPriceCutover, prices } from "@/lib/pricing";
+import { prices } from "@/lib/pricing";
 
 const WindowsIcon = ({ className }: { className?: string }) => (
 	<svg
@@ -191,9 +191,6 @@ const serverDownloads: DownloadEntry[] = [
 ];
 
 const Lighthouse = () => {
-	// Read at render, not module load, so a re-render across the cutover picks up the new price (#5563).
-	const afterPriceCutover = isAfterPriceCutover();
-	const currentPrices = prices();
 	const [latestVersion, setLatestVersion] = useState<string>("");
 	const [releaseAssets, setReleaseAssets] = useState<ReleaseAsset[]>([]);
 	const [copiedCommand, setCopiedCommand] = useState(false);
@@ -550,7 +547,7 @@ const Lighthouse = () => {
 			{
 				"@type": "Offer",
 				name: "Self-Service License",
-				price: currentPrices.selfServiceAmount,
+				price: prices.selfServiceAmount,
 				priceCurrency: "CHF",
 				description:
 					"Annual self-hosted license with unlimited teams, portfolios, and all paid-tier features. Community Slack support.",
@@ -1130,19 +1127,6 @@ const Lighthouse = () => {
 						</p>
 					</div>
 
-					{/* Pre-launch notice — gone once the cutover has passed (ADO #5563) */}
-					{!afterPriceCutover && (
-					<div className="max-w-3xl mx-auto mb-16 rounded-2xl border border-primary/20 bg-accent/40 px-6 py-6 text-center">
-						<span className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground text-[11px] font-bold uppercase tracking-[0.12em] px-3 py-1 mb-3">
-							Until August 2026
-						</span>
-						<p className="text-sm md:text-base text-foreground leading-relaxed">
-							<span className="font-semibold">Self-Service is</span> <span className="font-semibold text-primary">CHF 999 / year</span> <span className="font-semibold">today. In August 2026 it becomes CHF 2,000.</span>{" "}
-							Start before then and you lock CHF 999 for your full term. We're telling you early so the choice is yours, no countdown.
-						</p>
-					</div>
-					)}
-
 					{/* 3-tier card grid */}
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-16 md:mb-20 items-stretch">
 						{/* Community */}
@@ -1177,12 +1161,9 @@ const Lighthouse = () => {
 							</span>
 							<div className="text-xs font-semibold uppercase tracking-[0.15em] text-primary mb-3">Self-Service</div>
 							<div className="flex items-baseline gap-2 mb-1">
-								<div className="text-4xl md:text-5xl font-semibold text-foreground tracking-tight">{currentPrices.selfService}</div>
+								<div className="text-4xl md:text-5xl font-semibold text-foreground tracking-tight">{prices.selfService}</div>
 								<div className="text-sm text-muted-foreground">/ year</div>
 							</div>
-							{!afterPriceCutover && (
-							<span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-accent text-primary text-xs font-semibold px-3 py-1 mb-3">Current rate · CHF 2,000 from August 2026</span>
-							)}
 								<div className="text-sm text-muted-foreground mb-6">Annual license. Self-hosted.</div>
 							<p className="text-base text-foreground/80 leading-relaxed mb-6">
 								The full product, your way.<br />Run it, configure it, and scale it, with the community at your back.
@@ -1466,15 +1447,10 @@ const Lighthouse = () => {
 									<div className="mb-6">
 										<div className="flex items-baseline gap-3">
 											<div className="text-4xl font-bold text-foreground">
-												{currentPrices.selfService}
+												{prices.selfService}
 											</div>
 											<div className="text-lg text-muted-foreground">/ year</div>
 										</div>
-										{!afterPriceCutover && (
-										<p className="text-xs text-primary font-medium mt-2">
-											Current rate, locked in for your term. From August 2026, this license is CHF 2,000.
-										</p>
-										)}
 									</div>
 
 									{/* License Details Collapsible */}

@@ -11,7 +11,7 @@ import SEO from "@/components/SEO";
 import { prices } from "@/lib/pricing";
 
 const Index = () => {
-  const { selfServiceAmount } = prices();
+  const { selfServiceAmount } = prices;
 
   // Structured data for organization
   const structuredData = {

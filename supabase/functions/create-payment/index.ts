@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from "https://esm.sh/stripe@14.21.0";
-import { resolvePriceId } from "./priceCutover.ts";
+// ADO #5563 — the Self-Service licence, CHF 2,000/year.
+const SELF_SERVICE_PRICE_ID = "price_1Tz9rbKzDcGH6xxwjjLiT0VV";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -22,7 +23,7 @@ serve(async (req) => {
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       customer_email: customerId ? undefined : email,
-      line_items: [{ price: resolvePriceId(new Date()), quantity: 1 }],
+      line_items: [{ price: SELF_SERVICE_PRICE_ID, quantity: 1 }],
       mode: "payment",
       allow_promotion_codes: true,
       metadata: {

@@ -17,10 +17,7 @@ type Tier = {
   comingSoon?: boolean;
 };
 
-// Built per render rather than at module load: the pilot price flips at the #5563 cutover instant, and
-// a module-scope array would freeze whatever the price was when the bundle first evaluated.
-function buildTiers(): Tier[] {
-  return [
+const tiers: Tier[] = [
   {
     id: "assess",
     label: "Assess",
@@ -51,7 +48,7 @@ function buildTiers(): Tier[] {
       "Your team knows how to maintain and extend it",
       "A forecast you can stand behind, or we keep working until you have one",
     ],
-    price: prices().pilot,
+    price: prices.pilot,
     cta: { label: "Plan your pilot", href: "mailto:contact@letpeople.work?subject=BYOD%20Workshop%20%2B%20Lighthouse%20Pilot" },
     recommended: true,
   },
@@ -72,8 +69,7 @@ function buildTiers(): Tier[] {
     priceFrom: true,
     cta: { label: "Design your rollout", href: "mailto:contact@letpeople.work?subject=Flow%20Transformation%20Package" },
   },
-  ];
-}
+];
 
 function TierCard({ tier, index }: { tier: Tier; index: number }) {
   const { ref, revealed } = useScrollReveal<HTMLDivElement>();
@@ -193,7 +189,7 @@ export default function EngagementPath() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
-          {buildTiers().map((tier, i) => (
+          {tiers.map((tier, i) => (
             <TierCard key={tier.id} tier={tier} index={i} />
           ))}
         </div>
