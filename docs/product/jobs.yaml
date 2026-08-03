@@ -1,0 +1,105 @@
+# Validated Jobs-to-be-Done — letpeople.work
+#
+# SSOT bootstrapped by DISCUSS (2026-08-03, feature: sizing-poker).
+# Greenfield: no docs/product/ existed before this file.
+#
+# Evidence status legend:
+#   validated  — confirmed against real user contact (interviews, support, analytics)
+#   asserted   — grounded in practitioner conversation, not yet tested with users
+#
+# NOTE: every job below is `asserted`. The Slack thread (Benji, Oliver, Liz Rettig,
+# Chris G) is practitioner input from inside and adjacent to the company, NOT
+# customer discovery. Do not treat these as validated until slice 1 ships and a
+# real team runs a real round. This distinction is the whole point of the
+# opportunity scores staying provisional.
+
+jobs:
+  - id: size-without-estimating
+    status: asserted
+    story: >
+      When I am about to pull the next item into a system that is not starving,
+      I want to know whether it fits the time my system actually takes,
+      so I can start it or slice it without holding an estimation meeting.
+    dimensions:
+      functional: Decide start-vs-slice for each candidate item, fast.
+      emotional: Relief at not having to defend a number nobody believes.
+      social: Be seen as the team that stopped theatre without becoming reckless.
+    forces:
+      push: >
+        Estimation rounds cost hours and produce numbers the team does not trust
+        and does not use. The output is a story point, which answers no question
+        anyone actually has.
+      pull: >
+        A single yes/no per item, anchored to a number the team already earned
+        from its own delivery history.
+      anxiety: >
+        "If we stop estimating, we lose the conversation." The three-way question
+        must keep the two conversations worth having (this is too big; this is
+        blocked on something) and drop the rest.
+      habit: >
+        Planning poker is muscle memory, ceremonially protected, and already
+        on the calendar. Replacing it means displacing a recurring meeting.
+    opportunity:
+      importance: high
+      satisfaction: low
+      note: >
+        Provisional. Importance inferred from two existing paid workshops
+        ("SLE & Right Sizing", "Epic Right Sizing & Slicing") selling against
+        this problem; satisfaction inferred from the absence of any tool that
+        anchors sizing to a team's own SLE. Revisit after slice 1.
+
+  - id: find-the-coupling
+    status: asserted
+    story: >
+      When my team keeps missing its expectations without any single item
+      looking large, I want to see which items are waiting on a person, a
+      decision, or another team, so I can fix the dependency instead of
+      re-estimating the work.
+    dimensions:
+      functional: Surface out-of-team dependencies before work starts, not after it stalls.
+      emotional: Vindication that the delays were structural, not effort mis-estimated.
+      social: Bring the steering conversation a system finding, not an apology.
+    forces:
+      push: >
+        Items age past the SLE for reasons that have nothing to do with size,
+        and estimation formats have no slot to record that.
+      pull: >
+        A middle answer — "yes, if…" — that names the condition in one tap.
+      anxiety: >
+        Naming a dependency can read as blaming a colleague or another team.
+        The chip vocabulary must stay structural, never personal.
+      habit: >
+        Dependencies currently surface in standup after the item is already
+        stuck, where the cost is sunk.
+    opportunity:
+      importance: high
+      satisfaction: very-low
+      note: >
+        Provisional, and the highest-uncertainty job of the three. This is the
+        one thing no competing tool does at all. If slice 1 shows the middle
+        bucket going unused, this job is disproven and the feature collapses to
+        a timer over Lunar Logic's existing card deck.
+
+  - id: know-my-sle
+    status: asserted
+    story: >
+      When I am asked what my team's SLE is and I do not know,
+      I want to find out what it is and where it comes from,
+      so I can use it instead of guessing.
+    dimensions:
+      functional: Obtain a defensible 85th-percentile cycle time.
+      emotional: Stop feeling like the team improvising without instruments.
+      social: Answer the "how long will this take" question with evidence.
+    forces:
+      push: The tool asks for a number the visitor may not have.
+      pull: Lighthouse computes it from the tracker they already use.
+      anxiety: "Our data is too messy for this to mean anything."
+      habit: Reaching for a team average or a gut number instead of a percentile.
+    opportunity:
+      importance: medium
+      satisfaction: low
+      note: >
+        This job is the commercial hinge, not the primary job. It is what makes
+        the free page a genuine entry point to Lighthouse and to the two existing
+        workshops rather than a standalone toy. Do not let it hijack the primary
+        flow: the SLE field must accept a guess and move on.

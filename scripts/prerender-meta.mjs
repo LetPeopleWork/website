@@ -41,6 +41,17 @@ const seoRoutes = [
     image: `${SITE}/og/assessment.png`,
     imageAlt: "How predictable is your delivery? Free five-minute assessment.",
   },
+  {
+    // Unlisted on purpose: shipped for link-only access while the mechanism is
+    // being dogfooded. Deliberately absent from sitemap.xml and llms.txt too.
+    // To launch it: drop `noindex`, add the sitemap + llms.txt entries, and add
+    // a nav link.
+    path: "sizing-poker",
+    title: "Sizing Poker - Size Your Backlog Against Your SLE | LetPeopleWork",
+    description:
+      "Size a backlog without estimating it. One question per item, three answers, anchored to your team's Service Level Expectation instead of story points. Free, no signup, runs entirely in your browser.",
+    noindex: true,
+  },
 ];
 
 // Utility routes: plain SPA fallback so direct URLs resolve. No meta override.
@@ -53,10 +64,16 @@ const escapeAttr = (s) =>
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
 
-function applyMeta(html, { title, description, url, image, imageAlt }) {
+function applyMeta(html, { title, description, url, image, imageAlt, noindex }) {
   const t = escapeAttr(title);
   const d = escapeAttr(description);
   const swaps = [
+    // Unlisted routes: live, reachable by link, but kept out of search results
+    // and AI crawlers. Must match the noIndex prop on the page's <SEO>.
+    [
+      /(<meta name="robots" content=")[\s\S]*?(")/,
+      noindex ? `$1noindex, nofollow$2` : "$&",
+    ],
     [/<title>[\s\S]*?<\/title>/, `<title>${t}</title>`],
     [/(<meta name="description" content=")[\s\S]*?(")/, `$1${d}$2`],
     [/(<meta property="og:title" content=")[\s\S]*?(")/, `$1${t}$2`],

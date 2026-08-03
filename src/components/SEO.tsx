@@ -10,6 +10,14 @@ interface SEOProps {
   canonicalUrl?: string;
   structuredData?: object;
   breadcrumbs?: Array<{ name: string; url: string }>;
+  /**
+   * Keep the page out of search results and AI crawlers. Use for pages that are
+   * live but deliberately unlisted, so only people with the link reach them.
+   * index.html ships "index, follow"; this swaps it for the run of this page and
+   * restores it on navigating away. scripts/prerender-meta.mjs must set the same
+   * flag for the route, or crawlers reading the static HTML will still index it.
+   */
+  noIndex?: boolean;
 }
 
 const SEO = ({
@@ -21,7 +29,8 @@ const SEO = ({
   ogType = "website",
   canonicalUrl,
   structuredData,
-  breadcrumbs
+  breadcrumbs,
+  noIndex = false
 }: SEOProps) => {
   const siteUrl = "https://letpeople.work";
   const fullTitle = title.includes("LetPeopleWork") ? title : `${title} | LetPeopleWork`;
@@ -94,6 +103,15 @@ const SEO = ({
     meta("name", "title", fullTitle);
     meta("name", "description", description);
     meta("name", "keywords", keywords);
+    // Restored explicitly rather than only set, so navigating from an unlisted
+    // page to a normal one does not leave the whole SPA marked noindex.
+    meta(
+      "name",
+      "robots",
+      noIndex
+        ? "noindex, nofollow"
+        : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+    );
     meta("property", "og:type", ogType);
     meta("property", "og:url", canonical);
     meta("property", "og:title", fullTitle);
@@ -123,6 +141,7 @@ const SEO = ({
     ogType,
     ogImage,
     ogImageAlt,
+    noIndex,
   ]);
 
   // JSON-LD is rendered inline. React 19 does not hoist script tags, and it

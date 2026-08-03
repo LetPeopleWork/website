@@ -52,6 +52,14 @@ export default {
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
+				},
+				verdict: {
+					fits: 'hsl(var(--verdict-fits))',
+					'fits-wash': 'hsl(var(--verdict-fits-wash))',
+					conditional: 'hsl(var(--verdict-conditional))',
+					'conditional-wash': 'hsl(var(--verdict-conditional-wash))',
+					toobig: 'hsl(var(--verdict-toobig))',
+					'toobig-wash': 'hsl(var(--verdict-toobig-wash))'
 				}
 			},
 			borderRadius: {

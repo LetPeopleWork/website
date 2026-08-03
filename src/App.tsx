@@ -15,6 +15,7 @@ const AI = lazy(() => import("./pages/AI"));
 const Assessment = lazy(() => import("./pages/Assessment"));
 const AdminAssessment = lazy(() => import("./pages/AdminAssessment"));
 const SurveyRoute = lazy(() => import("./pages/SurveyRoute"));
+const SizingPoker = lazy(() => import("./pages/SizingPoker"));
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,7 @@ const App = () => (
                 element={<Navigate to="/admin/dashboard" replace />}
               />
               <Route path="/survey" element={<SurveyRoute />} />
+              <Route path="/sizing-poker" element={<SizingPoker />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

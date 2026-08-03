@@ -48,6 +48,16 @@ All colors MUST be HSL.
     
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
+    /* Sizing verdicts. Semantic, deliberately kept quieter than a traffic light:
+       "fits" sits on the brand teal, the other two are desaturated so the round
+       reads as a finding rather than an alarm. */
+    --verdict-fits: 158 29% 26%;
+    --verdict-fits-wash: 158 29% 95%;
+    --verdict-conditional: 38 68% 34%;
+    --verdict-conditional-wash: 38 62% 95%;
+    --verdict-toobig: 6 49% 44%;
+    --verdict-toobig-wash: 6 55% 96%;
+
     --radius: 0.5rem;
   }
 
@@ -79,6 +89,13 @@ All colors MUST be HSL.
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+
+    --verdict-fits: 158 40% 60%;
+    --verdict-fits-wash: 158 30% 14%;
+    --verdict-conditional: 38 62% 58%;
+    --verdict-conditional-wash: 38 30% 14%;
+    --verdict-toobig: 6 65% 65%;
+    --verdict-toobig-wash: 6 30% 15%;
   }
 }
 
