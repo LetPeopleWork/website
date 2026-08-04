@@ -75,6 +75,20 @@ describe("the way in", () => {
     expect(screen.getByTestId("sizing-run").textContent).not.toMatch(jargon);
   });
 
+  it("tells the facilitator to collect answers simultaneously, before the round", async () => {
+    const user = userEvent.setup();
+    renderPage(makeClock().now);
+
+    await user.click(screen.getByRole("button", { name: /try it out/i }));
+
+    // The page cannot enforce independent answers on a shared screen, so it
+    // says so where reading is free. Not during the round: a countdown per item
+    // would fix anchoring but inflate the seconds-per-item claim. See D14.
+    expect(screen.getByTestId("sizing-facilitation-hint")).toHaveTextContent(
+      /at the same time/i,
+    );
+  });
+
   it("offers an example backlog so nobody has to invent one", async () => {
     const user = userEvent.setup();
     renderPage(makeClock().now);

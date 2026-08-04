@@ -40,6 +40,7 @@ const contentSchema = z.object({
     itemsHelp: z.string().min(1).max(160),
     cta: z.string().min(1),
     sampleCta: z.string().min(1),
+    facilitationHint: z.string().min(1).max(200),
   }),
   run: z.object({
     facilitatorCue: z.string().min(1),
@@ -83,10 +84,13 @@ const raw = {
     itemsHelp: "One per line. Paste straight from your backlog.",
     cta: "Start sizing",
     sampleCta: "Use an example backlog",
+    // Removes anchoring without costing a second per item. See D14.
+    facilitationHint:
+      "Doing this with your team? Have everyone answer at the same time, hands up together, so the first person to speak does not decide it for the rest.",
   },
 
   run: {
-    facilitatorCue: "Look at this with your team, and get their vote.",
+    facilitatorCue: "Ask everyone to answer at once.",
     questionTemplate: "Doable in {days} days or less?",
     hint: "First instinct. You will sort out the details at the end.",
     abandon: "Start over",

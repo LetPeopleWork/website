@@ -86,6 +86,18 @@ const ConfigStep = ({
           </div>
         </div>
 
+        {/* The page runs as a shared-screen session, so the one thing it cannot
+            enforce is that people answer independently. Said here, before the
+            round, rather than during it: a countdown per item would fix the same
+            problem but cost a second or two on every item, and the seconds per
+            item figure is the whole claim. See feature-delta.md D14. */}
+        <p
+          className="rounded-xl border border-border bg-muted/40 px-4 py-3 text-sm leading-relaxed text-muted-foreground"
+          data-testid="sizing-facilitation-hint"
+        >
+          {c.facilitationHint}
+        </p>
+
         <div className="flex flex-wrap items-center gap-3">
           <Button onClick={onStart} disabled={count === 0} size="lg">
             {c.cta}

@@ -144,6 +144,37 @@ slice 03 (async result codes) from the website scope entirely, and reduces slice
 superseded. The website page's second job is to produce the evidence for whether
 that Lighthouse investment is worth making at all.
 
+**[D14] The page runs one shared screen. Multi-device sessions are Lighthouse's.**
+(Peter, 2026-08-04: "what if as a PO or Scrum Master, I want to invite the team
+to the session. Do we need a group session that I can run?")
+
+The page already hosts a group session — shared screen, one facilitator, the team
+answers aloud, which is how refinement runs in a room or on a call. What is being
+asked for is *multi-device*: everyone joins on their own phone and votes
+privately. Declined for the website, on three grounds:
+
+- Rooms mean session state, real-time sync, lifecycle and expiry, plus an abuse
+  surface on a public URL. That is not a teaser, that is the product (D12).
+- Six free tools already do exactly this, several with tracker integration. It is
+  a fight entered on their turf with our worst hand (D1).
+- It is worth far more inside Lighthouse, and building it here spends it. Group
+  sizing pays off because you stop needing a refinement meeting and review only
+  the Maybes and Nos — which requires items to come *from* the backlog and results
+  to go *back* to it. On the website that loop is open: paste in, copy out. In
+  Lighthouse it closes.
+
+The question did surface a real defect, though: on a shared screen the first
+person to speak sets the answer for everyone. Anchoring is the one thing planning
+poker's simultaneous reveal genuinely gets right, and this page had no answer to
+it. Fixed as facilitation, not as a feature — the config step now asks the
+facilitator to collect answers simultaneously.
+
+An on-screen countdown per item would fix the same problem mechanically, and was
+rejected: at roughly two seconds an item it would inflate the seconds-per-item
+figure by tens of percent, and that figure is the entire claim (D5). A defect in
+how a session is run is cheaper to fix with a sentence than with a feature that
+damages the measurement.
+
 **[D9] Reference-class / child-count sizing modes stay out.**
 Chris G's 20.07. thread frames Sizing Poker as one mode of a general sizer
 parameterised by SLE, child count, or reference class. Noted, deliberately not
