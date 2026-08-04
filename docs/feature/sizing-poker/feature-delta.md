@@ -175,6 +175,36 @@ figure by tens of percent, and that figure is the entire claim (D5). A defect in
 how a session is run is cheaper to fix with a sentence than with a feature that
 damages the measurement.
 
+**[D15] Stopping early keeps the results. Running out of time is the normal case.**
+(Peter, 2026-08-04: "I had planned 10, but we only managed to go through 5, I'd
+still like to see the results.")
+
+The mid-round exit shipped in D14's commit discarded every answer. That conflated
+two different things: leaving the round, and throwing the work away. A session
+that gets through five of ten items has produced five real decisions, and a
+timeboxed refinement ending before the list does is the ordinary case, not the
+exception.
+
+The control now leads to the wrap-up and keeps what was answered. It reads
+"Finish early" once anything has been answered, and "Start over" only before the
+first answer, where there is genuinely nothing to show and the likely reason for
+leaving is a mis-set target. Still no way back to a previous answer: revisiting
+one is the deliberation the round exists to prevent.
+
+A partial wrap-up states what it is — "Stopped early", "5 of 10 items sized" —
+and does not claim a pace, because asserting "faster than estimating" off an
+abandoned round would be overreaching on the one number the page stakes its
+claim on (D5). Seconds per item is computed over what was actually sized, never
+over what was planned.
+
+It also adds a fourth list, "Not sized yet", carrying the items the round never
+reached, in order, and included in the copied summary. That is where the next
+session starts.
+
+Analytics now carry `planned` alongside `items` and an `ended: all | early`
+flag, which makes the round-completion KPI directly measurable rather than
+inferred from the absence of a completion event.
+
 **[D9] Reference-class / child-count sizing modes stay out.**
 Chris G's 20.07. thread frames Sizing Poker as one mode of a general sizer
 parameterised by SLE, child count, or reference class. Noted, deliberately not

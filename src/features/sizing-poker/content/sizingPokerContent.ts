@@ -47,6 +47,7 @@ const contentSchema = z.object({
     questionTemplate: z.string().includes("{days}"),
     hint: z.string().min(1),
     abandon: z.string().min(1),
+    finishEarly: z.string().min(1),
   }),
   wrapUp: z.object({
     fastHeading: z.string().min(1),
@@ -57,6 +58,9 @@ const contentSchema = z.object({
     maybeGuidance: z.string().min(1),
     tooBigHeading: z.string().min(1),
     tooBigGuidance: z.string().min(1),
+    unsizedHeading: z.string().min(1),
+    unsizedGuidance: z.string().min(1),
+    partialHeading: z.string().min(1),
     nextStepsHeading: z.string().min(1),
     nextSteps: z.array(nextStepSchema).min(2),
   }),
@@ -94,6 +98,7 @@ const raw = {
     questionTemplate: "Doable in {days} days or less?",
     hint: "First instinct. You will sort out the details at the end.",
     abandon: "Start over",
+    finishEarly: "Finish early",
   },
 
   wrapUp: {
@@ -110,6 +115,14 @@ const raw = {
     tooBigHeading: "Needs work",
     tooBigGuidance:
       "Too big to finish in the time you set. Consider your options before anyone starts them: slice them smaller, or pair on them.",
+
+    unsizedHeading: "Not sized yet",
+    unsizedGuidance:
+      "You ran out of time before these. They are where the next round starts.",
+
+    // Used instead of the fast/slow line when a round stopped early: claiming a
+    // pace on a partial round would be overreaching.
+    partialHeading: "Here is how far you got.",
 
     nextStepsHeading: "Two questions this round probably raised",
     nextSteps: [

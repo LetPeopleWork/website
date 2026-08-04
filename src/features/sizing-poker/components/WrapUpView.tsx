@@ -67,10 +67,10 @@ const WrapUpView = ({
   return (
     <div data-testid="sizing-result">
       <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-primary">
-        Round complete
+        {stats.endedEarly ? "Stopped early" : "Round complete"}
       </p>
       <h1 className="mb-6 text-balance text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-        {stats.wasFast ? c.fastHeading : c.slowHeading}
+        {stats.endedEarly ? c.partialHeading : stats.wasFast ? c.fastHeading : c.slowHeading}
       </h1>
 
       <div className="flex flex-col gap-6 rounded-2xl border border-border bg-card p-6 shadow-soft">
@@ -83,8 +83,9 @@ const WrapUpView = ({
           </div>
           <div className="mt-2 text-[15px] text-muted-foreground">seconds per item</div>
           <div className="mt-1 text-sm text-muted-foreground">
-            {stats.total} item{stats.total === 1 ? "" : "s"} in{" "}
-            {formatDuration(stats.elapsedMs)} total
+            {stats.endedEarly
+              ? `${stats.total} of ${stats.planned} items sized in ${formatDuration(stats.elapsedMs)}`
+              : `${stats.total} item${stats.total === 1 ? "" : "s"} in ${formatDuration(stats.elapsedMs)} total`}
           </div>
         </div>
 
@@ -139,11 +140,18 @@ const WrapUpView = ({
             accent="border-verdict-toobig"
             testId="sizing-list-toobig"
           />
+          <ItemList
+            heading={c.unsizedHeading}
+            guidance={c.unsizedGuidance}
+            items={stats.unsizedItems}
+            accent="border-border"
+            testId="sizing-list-unsized"
+          />
         </div>
 
         <div className="flex flex-wrap items-center gap-3 border-t border-border pt-5">
           <Button onClick={copySummary} variant="outline">
-            {copied ? "Copied" : "Copy all three lists"}
+            {copied ? "Copied" : "Copy the lists"}
           </Button>
           <Button onClick={onRestart} variant="ghost">
             Run another round

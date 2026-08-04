@@ -33,6 +33,7 @@ export type RoundAction =
   | { type: "begin" }
   | { type: "start"; items: readonly string[]; targetDays: number; at: number }
   | { type: "vote"; verdict: Verdict; at: number }
+  | { type: "finish"; at: number }
   | { type: "restart" };
 
 /** Upper bound on a single round. Past this, sizing is not the problem. */
@@ -114,6 +115,24 @@ const vote = (state: RoundState, verdict: Verdict, at: number): RoundState => {
   return { ...state, votes, currentIndex: nextIndex };
 };
 
+/**
+ * Stop a round before the last item and keep what was answered.
+ *
+ * Running out of time is the ordinary way a session ends: you bring ten items,
+ * you get through five. Those five are a real result and the round must not
+ * discard them. Only a round with nothing answered yet has nothing to report,
+ * and that one goes back to config so the target can be corrected.
+ */
+const finish = (state: RoundState, at: number): RoundState => {
+  if (state.phase !== "running") {
+    return state;
+  }
+  if (state.votes.length === 0) {
+    return { ...initialState(), phase: "config", targetDays: state.targetDays };
+  }
+  return { ...state, phase: "done", finishedAt: at };
+};
+
 export const reduce = (state: RoundState, action: RoundAction): RoundState => {
   switch (action.type) {
     case "begin":
@@ -122,6 +141,8 @@ export const reduce = (state: RoundState, action: RoundAction): RoundState => {
       return start(state, action.items, action.targetDays, action.at);
     case "vote":
       return vote(state, action.verdict, action.at);
+    case "finish":
+      return finish(state, action.at);
     case "restart":
       // Back to config, not intro: a second round is a repeat, not a first look.
       // Keep the target, which is a property of the team, not of the round.

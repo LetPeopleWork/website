@@ -89,6 +89,8 @@ describe("trackingProps", () => {
 
     expect(props).toEqual({
       items: 2,
+      planned: 2,
+      ended: "all",
       ready: 1,
       maybe: 0,
       needs_work: 1,
@@ -98,5 +100,47 @@ describe("trackingProps", () => {
 
     const serialised = JSON.stringify(props);
     state.items.forEach((item) => expect(serialised).not.toContain(item));
+  });
+});
+
+describe("a round that stopped early", () => {
+  /** Answers `answered` of `planned` items, then stops. */
+  const partial = (planned: number, answered: number): RoundState => {
+    const items = Array.from({ length: planned }, (_, i) => `item ${i + 1}`);
+    let state = reduce(initialState(), { type: "start", items, targetDays: 8, at: 0 });
+    for (let i = 0; i < answered; i++) {
+      state = reduce(state, { type: "vote", verdict: "fits", at: (i + 1) * 2_000 });
+    }
+    return reduce(state, { type: "finish", at: answered * 2_000 });
+  };
+
+  it("keeps the answers and reports both the planned and the sized count", () => {
+    const stats = statsFor(partial(10, 5));
+    expect(stats.total).toBe(5);
+    expect(stats.planned).toBe(10);
+    expect(stats.endedEarly).toBe(true);
+  });
+
+  it("computes seconds per item over what was actually sized, not what was planned", () => {
+    // 5 answers, last at t=10s -> 2.0s each, not 1.0s over the planned ten.
+    expect(statsFor(partial(10, 5)).secondsPerItem).toBe(2);
+  });
+
+  it("reports the items it never reached, in order", () => {
+    expect(statsFor(partial(4, 2)).unsizedItems).toEqual(["item 3", "item 4"]);
+  });
+
+  it("is not flagged as early when every item was answered", () => {
+    const stats = statsFor(partial(3, 3));
+    expect(stats.endedEarly).toBe(false);
+    expect(stats.unsizedItems).toEqual([]);
+  });
+
+  it("tells analytics the round ended early, so completion rate is measurable", () => {
+    expect(trackingProps(statsFor(partial(10, 5)))).toMatchObject({
+      items: 5,
+      planned: 10,
+      ended: "early",
+    });
   });
 });

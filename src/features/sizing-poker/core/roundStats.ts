@@ -13,7 +13,11 @@ import type { RoundState, Vote } from "./roundMachine";
 export const DELIBERATION_THRESHOLD_SECONDS = 15;
 
 export interface RoundStats {
+  /** Items answered. The denominator for secondsPerItem. */
   readonly total: number;
+  /** Items brought to the round, which may be more than were answered. */
+  readonly planned: number;
+  readonly endedEarly: boolean;
   readonly fits: number;
   readonly conditional: number;
   readonly tooBig: number;
@@ -23,6 +27,8 @@ export interface RoundStats {
   readonly readyItems: readonly string[];
   readonly maybeItems: readonly string[];
   readonly tooBigItems: readonly string[];
+  /** Brought but never reached, so the next session knows where to pick up. */
+  readonly unsizedItems: readonly string[];
   readonly wasFast: boolean;
 }
 
@@ -41,8 +47,14 @@ export const statsFor = (state: RoundState): RoundStats => {
   const maybeItems = itemsWith(state.votes, "conditional");
   const tooBigItems = itemsWith(state.votes, "too-big");
 
+  // Votes are cast in item order, so whatever sits past the last vote is
+  // exactly what the round did not reach.
+  const unsizedItems = state.items.slice(total);
+
   return {
     total,
+    planned: state.items.length,
+    endedEarly: total > 0 && total < state.items.length,
     fits: readyItems.length,
     conditional: maybeItems.length,
     tooBig: tooBigItems.length,
@@ -51,6 +63,7 @@ export const statsFor = (state: RoundState): RoundStats => {
     readyItems,
     maybeItems,
     tooBigItems,
+    unsizedItems,
     wasFast: total > 0 && secondsPerItem < DELIBERATION_THRESHOLD_SECONDS,
   };
 };
@@ -84,12 +97,17 @@ export const summaryText = (stats: RoundStats, targetDays: number): string => {
   const block = (heading: string, items: readonly string[]) =>
     items.length ? `\n${heading}\n${items.map((i) => `- ${i}`).join("\n")}\n` : "";
 
+  const counted = stats.endedEarly
+    ? `${stats.total} of ${stats.planned} items sized`
+    : `${stats.total} items`;
+
   return [
     `Sizing round: could we finish each of these within ${targetDays} days?`,
-    `${stats.total} items in ${formatDuration(stats.elapsedMs)} (${stats.secondsPerItem.toFixed(1)}s each)`,
+    `${counted} in ${formatDuration(stats.elapsedMs)} (${stats.secondsPerItem.toFixed(1)}s each)`,
     block("Ready to go", stats.readyItems),
     block("Maybe - something needs arranging first", stats.maybeItems),
     block("Needs work - too big, slice before starting", stats.tooBigItems),
+    block("Not sized yet - ran out of time", stats.unsizedItems),
   ]
     .join("\n")
     .trim();
@@ -103,6 +121,8 @@ export const trackingProps = (
   stats: RoundStats,
 ): Record<string, string | number> => ({
   items: stats.total,
+  planned: stats.planned,
+  ended: stats.endedEarly ? "early" : "all",
   ready: stats.fits,
   maybe: stats.conditional,
   needs_work: stats.tooBig,

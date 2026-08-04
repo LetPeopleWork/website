@@ -116,7 +116,7 @@ const SizingPoker = ({ now = Date.now }: SizingPokerProps) => {
               targetDays={state.targetDays}
               startedAt={state.startedAt}
               onVote={handleVote}
-              onAbandon={() => dispatch({ type: "restart" })}
+              onAbandon={() => dispatch({ type: "finish", at: now() })}
               now={now}
             />
           )}

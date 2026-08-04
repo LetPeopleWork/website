@@ -132,16 +132,84 @@ describe("the round", () => {
     expect(screen.getByTestId("sizing-item")).toHaveTextContent("Second item");
   });
 
-  it("offers a way out mid-round, so a wrong setting does not trap you", async () => {
+  it("keeps the results when a round stops early: planned ten, sized five", async () => {
+    const user = userEvent.setup();
+    const items = Array.from({ length: 10 }, (_, i) => `Item ${i + 1}`);
+    renderPage(makeClock().now);
+
+    await setUpRound(user, items);
+    await user.keyboard("1");
+    await user.keyboard("1");
+    await user.keyboard("2");
+    await user.keyboard("3");
+    await user.keyboard("1");
+    await user.click(screen.getByRole("button", { name: /finish early/i }));
+
+    // Running out of time is the ordinary way a session ends. The five answers
+    // are a real result and must survive.
+    const result = screen.getByTestId("sizing-result");
+    expect(result).toHaveTextContent("5 of 10 items sized");
+    expect(within(screen.getByTestId("sizing-list-ready")).getAllByRole("listitem")).toHaveLength(3);
+    expect(within(screen.getByTestId("sizing-list-maybe")).getAllByRole("listitem")).toHaveLength(1);
+    expect(within(screen.getByTestId("sizing-list-toobig")).getAllByRole("listitem")).toHaveLength(1);
+  });
+
+  it("lists what it never reached, so the next round knows where to start", async () => {
+    const user = userEvent.setup();
+    renderPage(makeClock().now);
+
+    await setUpRound(user, ["Done one", "Done two", "Never reached", "Also not reached"]);
+    await user.keyboard("1");
+    await user.keyboard("1");
+    await user.click(screen.getByRole("button", { name: /finish early/i }));
+
+    const unsized = screen.getByTestId("sizing-list-unsized");
+    expect(within(unsized).getByText("Never reached")).toBeInTheDocument();
+    expect(within(unsized).getByText("Also not reached")).toBeInTheDocument();
+    expect(within(unsized).queryByText("Done one")).not.toBeInTheDocument();
+  });
+
+  it("does not claim a pace on a partial round", async () => {
     const user = userEvent.setup();
     renderPage(makeClock().now);
 
     await setUpRound(user, ["One", "Two", "Three"]);
     await user.keyboard("1");
+    await user.click(screen.getByRole("button", { name: /finish early/i }));
+
+    const result = screen.getByTestId("sizing-result");
+    expect(result).toHaveTextContent(/Stopped early/i);
+    expect(result).not.toHaveTextContent(/faster than estimating/i);
+  });
+
+  it("goes back to config when nothing has been answered yet", async () => {
+    const user = userEvent.setup();
+    renderPage(makeClock().now);
+
+    await setUpRound(user, ["One", "Two", "Three"]);
+    // Nothing answered, so there is no result to show: this is the wrong-target
+    // escape hatch, and it reads as such.
     await user.click(screen.getByRole("button", { name: /start over/i }));
 
     expect(screen.getByTestId("sizing-config")).toBeInTheDocument();
-    expect(screen.queryByTestId("sizing-run")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("sizing-result")).not.toBeInTheDocument();
+  });
+
+  it("includes the unsized items in the copied summary", async () => {
+    const user = userEvent.setup();
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, "clipboard", { value: { writeText }, configurable: true });
+    renderPage(makeClock().now);
+
+    await setUpRound(user, ["Sized thing", "Left over"]);
+    await user.keyboard("1");
+    await user.click(screen.getByRole("button", { name: /finish early/i }));
+    await user.click(screen.getByRole("button", { name: /copy the lists/i }));
+
+    const copied = writeText.mock.calls[0][0] as string;
+    expect(copied).toContain("1 of 2 items sized");
+    expect(copied).toContain("Not sized yet");
+    expect(copied).toContain("Left over");
   });
 
   it("has no way to revisit a previous answer, which would be deliberation", async () => {
@@ -239,7 +307,7 @@ describe("the wrap-up", () => {
     await setUpRound(user, ["Ready thing", "Huge thing"]);
     await user.keyboard("1");
     await user.keyboard("3");
-    await user.click(screen.getByRole("button", { name: /copy all three lists/i }));
+    await user.click(screen.getByRole("button", { name: /copy the lists/i }));
 
     const copied = writeText.mock.calls[0][0] as string;
     expect(copied).toContain("Ready to go");

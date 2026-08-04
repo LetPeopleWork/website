@@ -119,16 +119,18 @@ const RunStep = ({
 
       <div className="mt-6 flex flex-wrap items-baseline justify-between gap-3">
         <p className="text-sm text-muted-foreground">{c.run.hint}</p>
-        {/* An exit, not an undo. Setting the wrong number of days on a twenty
-            item round otherwise traps you until the end. Deliberately not a
-            "back one item" control: revisiting an answer is the deliberation
-            this whole screen is built to avoid. */}
+        {/* Stopping early is the ordinary way a session ends: you bring ten
+            items and get through five. Those five are a result, so this leads to
+            the wrap-up rather than discarding them. Only before the first answer
+            is there nothing to show, and then it reads "Start over" instead.
+            Deliberately still not a "back one item" control: revisiting an
+            answer is the deliberation this screen is built to avoid. */}
         <button
           type="button"
           onClick={onAbandon}
           className="text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground"
         >
-          {c.run.abandon}
+          {index === 0 ? c.run.abandon : c.run.finishEarly}
         </button>
       </div>
     </div>
