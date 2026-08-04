@@ -1,9 +1,11 @@
-// Derived numbers for the result screen. Pure; recomputed on render, never stored.
+// Derived numbers for the wrap-up screen. Pure; recomputed on render, never stored.
 //
 // secondsPerItem is the headline figure and the feature's own falsification
 // instrument (see docs/feature/sizing-poker/feature-delta.md, D5). If it climbs,
 // the three-way question is not beating estimation on speed and the page should
-// say so rather than hide it.
+// say so rather than hide it. No competing planning-poker tool reports round
+// duration at all, because in their model deliberation is the point. Here it is
+// the thing being disproven, so it leads.
 
 import type { RoundState, Vote } from "./roundMachine";
 
@@ -17,12 +19,15 @@ export interface RoundStats {
   readonly tooBig: number;
   readonly elapsedMs: number;
   readonly secondsPerItem: number;
+  /** The three take-away lists, so a PO can copy them straight into their tracker. */
+  readonly readyItems: readonly string[];
+  readonly maybeItems: readonly string[];
   readonly tooBigItems: readonly string[];
   readonly wasFast: boolean;
 }
 
-const countOf = (votes: readonly Vote[], verdict: Vote["verdict"]): number =>
-  votes.filter((v) => v.verdict === verdict).length;
+const itemsWith = (votes: readonly Vote[], verdict: Vote["verdict"]): readonly string[] =>
+  votes.filter((v) => v.verdict === verdict).map((v) => v.item);
 
 export const statsFor = (state: RoundState): RoundStats => {
   const total = state.votes.length;
@@ -32,14 +37,20 @@ export const statsFor = (state: RoundState): RoundStats => {
       : 0;
   const secondsPerItem = total === 0 ? 0 : elapsedMs / 1000 / total;
 
+  const readyItems = itemsWith(state.votes, "fits");
+  const maybeItems = itemsWith(state.votes, "conditional");
+  const tooBigItems = itemsWith(state.votes, "too-big");
+
   return {
     total,
-    fits: countOf(state.votes, "fits"),
-    conditional: countOf(state.votes, "conditional"),
-    tooBig: countOf(state.votes, "too-big"),
+    fits: readyItems.length,
+    conditional: maybeItems.length,
+    tooBig: tooBigItems.length,
     elapsedMs,
     secondsPerItem,
-    tooBigItems: state.votes.filter((v) => v.verdict === "too-big").map((v) => v.item),
+    readyItems,
+    maybeItems,
+    tooBigItems,
     wasFast: total > 0 && secondsPerItem < DELIBERATION_THRESHOLD_SECONDS,
   };
 };
@@ -68,6 +79,22 @@ export const splitWidths = (
   return { fits, conditional, tooBig: 100 - fits - conditional };
 };
 
+/** Plain-text summary a PO can paste into their tracker or into Slack. */
+export const summaryText = (stats: RoundStats, targetDays: number): string => {
+  const block = (heading: string, items: readonly string[]) =>
+    items.length ? `\n${heading}\n${items.map((i) => `- ${i}`).join("\n")}\n` : "";
+
+  return [
+    `Sizing round: could we finish each of these within ${targetDays} days?`,
+    `${stats.total} items in ${formatDuration(stats.elapsedMs)} (${stats.secondsPerItem.toFixed(1)}s each)`,
+    block("Ready to go", stats.readyItems),
+    block("Maybe - something needs arranging first", stats.maybeItems),
+    block("Needs work - too big, slice before starting", stats.tooBigItems),
+  ]
+    .join("\n")
+    .trim();
+};
+
 /**
  * Analytics payload. Counts and buckets only, never item titles.
  * See src/lib/plausible.ts: properties must stay non-personal.
@@ -76,9 +103,9 @@ export const trackingProps = (
   stats: RoundStats,
 ): Record<string, string | number> => ({
   items: stats.total,
-  fits: stats.fits,
-  conditional: stats.conditional,
-  too_big: stats.tooBig,
+  ready: stats.fits,
+  maybe: stats.conditional,
+  needs_work: stats.tooBig,
   seconds_per_item: Math.round(stats.secondsPerItem),
   pace: stats.wasFast ? "fast" : "slow",
 });

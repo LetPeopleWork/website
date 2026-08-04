@@ -11,7 +11,7 @@ import {
 /** Runs a whole round, spending `msPerItem` on each answer. */
 const roundOf = (verdicts: readonly Verdict[], msPerItem = 5_000): RoundState => {
   const items = verdicts.map((_, i) => `item ${i + 1}`);
-  let state = reduce(initialState(), { type: "start", items, sleDays: 8, at: 0 });
+  let state = reduce(initialState(), { type: "start", items, targetDays: 8, at: 0 });
   verdicts.forEach((verdict, i) => {
     state = reduce(state, { type: "vote", verdict, at: (i + 1) * msPerItem });
   });
@@ -89,9 +89,9 @@ describe("trackingProps", () => {
 
     expect(props).toEqual({
       items: 2,
-      fits: 1,
-      conditional: 0,
-      too_big: 1,
+      ready: 1,
+      maybe: 0,
+      needs_work: 1,
       seconds_per_item: 3,
       pace: "fast",
     });

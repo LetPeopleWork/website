@@ -80,6 +80,10 @@ jobs:
         bucket going unused, this job is disproven and the feature collapses to
         a timer over Lunar Logic's existing card deck.
 
+  # Revised 2026-08-04: the audience is a PO or Scrum Master who has never met the
+  # terminology, not a practitioner who already has flow data. Developers are
+  # explicitly out of scope as an entry point - they participate in a round that
+  # someone else facilitates, they do not go looking for one.
   - id: know-my-sle
     status: asserted
     story: >
@@ -99,7 +103,10 @@ jobs:
       importance: medium
       satisfaction: low
       note: >
-        This job is the commercial hinge, not the primary job. It is what makes
-        the free page a genuine entry point to Lighthouse and to the two existing
-        workshops rather than a standalone toy. Do not let it hijack the primary
-        flow: the SLE field must accept a guess and move on.
+        Reweighted 2026-08-04: with the page confirmed as a teaser rather than a
+        product (D12), this job carries the whole second half of the value. The
+        page must be useful on its own AND leave an appetite Lighthouse can
+        satisfy. It is answered in the wrap-up, never in the setup: the config
+        step asks for a number of days in plain language and accepts a guess,
+        because asking an unfamiliar visitor for an SLE up front is what made the
+        first version go unread.

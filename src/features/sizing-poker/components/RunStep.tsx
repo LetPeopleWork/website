@@ -7,9 +7,10 @@ interface RunStepProps {
   item: string;
   index: number;
   total: number;
-  sleDays: number;
+  targetDays: number;
   startedAt: number;
   onVote: (verdict: Verdict) => void;
+  onAbandon: () => void;
   /** Injectable for tests so the ticking clock does not need real timers. */
   now?: () => number;
 }
@@ -19,6 +20,10 @@ const c = sizingPokerContent;
 // Deliberately no text input anywhere in this view (AC-1.2), and exactly one
 // item on screen (AC-1.3): with nothing to compare against, there is nothing to
 // calibrate, and the answer stays an instinct rather than a negotiation.
+//
+// What to DO about a Maybe or a No is deliberately not explained here. That
+// guidance sits on the wrap-up, next to the lists it applies to, so the vote
+// itself stays a reflex. See feature-delta.md D11.
 const VERDICT_STYLES: Record<Verdict, string> = {
   fits: "hover:border-verdict-fits hover:bg-verdict-fits-wash hover:text-verdict-fits",
   conditional:
@@ -31,9 +36,10 @@ const RunStep = ({
   item,
   index,
   total,
-  sleDays,
+  targetDays,
   startedAt,
   onVote,
+  onAbandon,
   now = Date.now,
 }: RunStepProps) => {
   const [elapsed, setElapsed] = useState(() => Math.max(0, now() - startedAt));
@@ -80,13 +86,15 @@ const RunStep = ({
         />
       </div>
 
+      <p className="mb-4 text-sm font-medium text-primary">{c.run.facilitatorCue}</p>
+
       <p
-        className="mb-2 flex min-h-[2.4em] items-center text-balance text-2xl font-semibold leading-tight tracking-tight text-foreground md:text-3xl"
+        className="mb-3 flex min-h-[2.4em] items-center text-balance text-2xl font-semibold leading-tight tracking-tight text-foreground md:text-3xl"
         data-testid="sizing-item"
       >
         {item}
       </p>
-      <p className="mb-7 text-sm text-muted-foreground">{questionFor(sleDays)}</p>
+      <p className="mb-7 text-lg text-muted-foreground">{questionFor(targetDays)}</p>
 
       <div className="grid gap-2.5">
         {c.answers.map((answer) => (
@@ -109,7 +117,20 @@ const RunStep = ({
         ))}
       </div>
 
-      <p className="mt-6 text-sm text-muted-foreground">{c.runHint}</p>
+      <div className="mt-6 flex flex-wrap items-baseline justify-between gap-3">
+        <p className="text-sm text-muted-foreground">{c.run.hint}</p>
+        {/* An exit, not an undo. Setting the wrong number of days on a twenty
+            item round otherwise traps you until the end. Deliberately not a
+            "back one item" control: revisiting an answer is the deliberation
+            this whole screen is built to avoid. */}
+        <button
+          type="button"
+          onClick={onAbandon}
+          className="text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground"
+        >
+          {c.run.abandon}
+        </button>
+      </div>
     </div>
   );
 };

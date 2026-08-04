@@ -49,7 +49,9 @@ const seoRoutes = [
     path: "sizing-poker",
     title: "Sizing Poker - Size Your Backlog Against Your SLE | LetPeopleWork",
     description:
-      "Size a backlog without estimating it. One question per item, three answers, anchored to your team's Service Level Expectation instead of story points. Free, no signup, runs entirely in your browser.",
+      "Size a backlog by asking one question per item: could we finish this within the time we set? Three answers, no story points. Free, no signup, runs entirely in your browser.",
+    image: `${SITE}/og/sizing-poker.jpg`,
+    imageAlt: "Does it fit? One question per work item. Three answers. No story points.",
     noindex: true,
   },
 ];

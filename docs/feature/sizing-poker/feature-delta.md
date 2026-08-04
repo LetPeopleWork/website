@@ -8,16 +8,22 @@ Tier-1 `[REF]` sections only; Tier-2 expansions available on request.
 
 ## Wave: DISCUSS / [REF] Persona ID
 
-`facilitator-with-flow-data` — a Scrum Master, team lead, or delivery manager who
-already runs a refinement or planning session, has (or can get) a cycle-time
-percentile, and is dissatisfied with story-point estimation. Runs the session on
-a shared screen or asks the team to answer independently. Not a buyer; an
-practitioner who will show the tool to their team within a day if it works.
+**Revised 2026-08-04** after Benji's and Peter's review. The original persona
+(`facilitator-with-flow-data`, someone who already has a cycle-time percentile)
+was wrong in both directions: too expert, and not specific enough about role.
 
-Secondary: `curious-sceptic` — arrives from the Slack thread, a conference talk,
-or the release notes, has no SLE to hand, and will spend under two minutes
-deciding whether the idea is serious. The page must survive this visitor without
-letting them dilute the primary flow.
+`po-or-scrum-master-who-has-not-seen-this` — a Product Owner or Scrum Master who
+runs refinement, is dissatisfied with story-point estimation, and has **never met
+the terminology**. No SLE, no cycle-time percentile, quite possibly no flow data
+at all. They will try it alone first, then bring it to the team if it survives
+contact.
+
+Explicitly **not** developers. Benji: "Kein Entwickler wird das von sich aus
+machen." A developer is a participant in a round somebody else facilitates; they
+will not arrive at this page under their own steam. Peter, on the hostility this
+topic attracts: "vor allem wenn ich mir die grumpy Leute auf Reddit so durchlese"
+— which is a reason to lead with a mechanism the visitor can try in silence,
+rather than an argument they have to agree with first.
 
 ---
 
@@ -96,6 +102,47 @@ value against "planning poker". But *poker* imports exactly the mental model D4
 is trying to suppress — rounds, reveal, negotiation, convergence. The URL and the
 announced name stay; the page's own headline is the question itself ("Does it
 fit?"). No re-vote, no reveal ceremony, no convergence ritual is built.
+
+**[D10] No terminology before the wrap-up.** (Benji, 2026-08-04)
+The first version opened with a paragraph of explanation, a field labelled
+"Your Service Level Expectation", and the unit "days, 85% of the time". Benji's
+verdict on it: *"Finde das zu viel Text, ich habs nicht gelesen und einfach auf
+Start geklickt."* He skipped the lot and clicked Start — which is the correct
+behaviour, and the finding. The flow is now intro → config → round → wrap-up:
+the config asks "How fast should your items be done?" in days, with no percentile
+and no jargon, and "Service Level Expectation", "cycle time" and "Work Item Age"
+appear exactly once each, in the wrap-up, as answers to two questions the visitor
+now has a reason to ask. A test asserts the jargon is absent from every screen
+before the wrap-up, and that the intro stays under 50 words.
+
+**[D11] Guidance sits on the wrap-up, not in the round.**
+Benji proposed a hint at vote time: *"If it's a maybe, think about what needs to
+be true so it becomes a yes. If it's a no, consider options you have like
+splitting or working in a pair."* The content is right and it is now in the
+product — but attached to the Maybe and Needs-work lists on the wrap-up, not
+shown during voting. Reason: it is an instruction to *think*, and D4 exists
+because Liz Rettig's constraint is that thinking at vote time is what kills the
+mechanism. Putting it where the action happens keeps both. Flagged for Benji to
+overrule if he disagrees.
+
+**[D12] The page is a teaser, and that is a specification, not a limitation.**
+(Benji and Peter, 2026-08-04) *"Das Website tool soll gar nicht feature complete
+sein, sondern teasern"* — with the appetite it creates satisfiable by Lighthouse.
+Peter: *"less is more und gleichzeitig einen Mehrwert/Appetit geben."* The bar is
+that it must be genuinely **useful** on its own while staying deliberately
+incomplete. Practical consequence: the wrap-up's two Lighthouse questions are now
+the most load-bearing part of the page, not a footer. Every future feature
+request for this page gets tested against "does this deepen the tease, or does it
+start replacing Lighthouse?"
+
+**[D13] Group management, sync/async modes and secret voting are Lighthouse's, not the website's.**
+Benji: group sessions are the better long-term shape — *"weil man dann kein
+Refinement Meeting mehr braucht, bzw. da nur die Maybe's und No's anschauen
+muss"* — but *"das wäre dann in-Tool und nicht auf der Website"*. This retires
+slice 03 (async result codes) from the website scope entirely, and reduces slice
+02 to the wrap-up guidance already shipped under D11. Both briefs are marked
+superseded. The website page's second job is to produce the evidence for whether
+that Lighthouse investment is worth making at all.
 
 **[D9] Reference-class / child-count sizing modes stay out.**
 Chris G's 20.07. thread frames Sizing Poker as one mode of a general sizer

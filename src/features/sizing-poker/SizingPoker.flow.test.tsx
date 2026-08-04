@@ -27,23 +27,72 @@ const renderPage = (now: () => number) =>
     </HelmetProvider>,
   );
 
-const typeItems = async (user: ReturnType<typeof userEvent.setup>, lines: string[]) => {
-  const box = screen.getByLabelText(/items you'd bring to refinement/i);
-  await user.clear(box);
-  await user.type(box, lines.join("\n"));
+type User = ReturnType<typeof userEvent.setup>;
+
+/** Intro -> config, then fill in the round. */
+const setUpRound = async (user: User, items: string[], targetDays?: string) => {
+  await user.click(screen.getByRole("button", { name: /try it out/i }));
+  if (targetDays) {
+    const target = screen.getByLabelText(/how fast should your items be done/i);
+    await user.clear(target);
+    await user.type(target, targetDays);
+  }
+  await user.type(screen.getByLabelText(/which items do you want to size/i), items.join("\n"));
+  await user.click(screen.getByRole("button", { name: /start sizing/i }));
 };
 
 beforeEach(() => {
   trackEvent.mockClear();
 });
 
-describe("Sizing Poker round", () => {
+describe("the way in", () => {
+  it("opens on a short intro, not on a form", () => {
+    renderPage(makeClock().now);
+
+    expect(screen.getByTestId("sizing-intro")).toBeInTheDocument();
+    expect(screen.queryByTestId("sizing-config")).not.toBeInTheDocument();
+  });
+
+  it("keeps the intro under 50 words, since the first reviewer skipped past it unread", () => {
+    renderPage(makeClock().now);
+
+    const words = screen.getByTestId("sizing-intro").textContent!.trim().split(/\s+/).length;
+    expect(words).toBeLessThan(50);
+  });
+
+  it("never says SLE, cycle time or percentile before the wrap-up", async () => {
+    const user = userEvent.setup();
+    renderPage(makeClock().now);
+
+    const jargon = /service level expectation|\bSLE\b|cycle time|percentile|85%/i;
+    expect(screen.getByTestId("sizing-intro").textContent).not.toMatch(jargon);
+
+    await user.click(screen.getByRole("button", { name: /try it out/i }));
+    expect(screen.getByTestId("sizing-config").textContent).not.toMatch(jargon);
+
+    await user.type(screen.getByLabelText(/which items do you want to size/i), "One thing");
+    await user.click(screen.getByRole("button", { name: /start sizing/i }));
+    expect(screen.getByTestId("sizing-run").textContent).not.toMatch(jargon);
+  });
+
+  it("offers an example backlog so nobody has to invent one", async () => {
+    const user = userEvent.setup();
+    renderPage(makeClock().now);
+
+    await user.click(screen.getByRole("button", { name: /try it out/i }));
+    expect(screen.getByTestId("sizing-item-count")).toHaveTextContent("Add at least one item");
+
+    await user.click(screen.getByRole("button", { name: /use an example backlog/i }));
+    expect(screen.getByTestId("sizing-item-count")).toHaveTextContent("8 items ready");
+  });
+});
+
+describe("the round", () => {
   it("#AC-1.3 shows exactly one item at a time, and no other item is on screen", async () => {
     const user = userEvent.setup();
     renderPage(makeClock().now);
 
-    await typeItems(user, ["First item", "Second item"]);
-    await user.click(screen.getByRole("button", { name: /start the round/i }));
+    await setUpRound(user, ["First item", "Second item"]);
 
     expect(screen.getByTestId("sizing-item")).toHaveTextContent("First item");
     expect(screen.queryByText("Second item")).not.toBeInTheDocument();
@@ -53,7 +102,7 @@ describe("Sizing Poker round", () => {
     const user = userEvent.setup();
     renderPage(makeClock().now);
 
-    await user.click(screen.getByRole("button", { name: /start the round/i }));
+    await setUpRound(user, ["One thing"]);
 
     const run = screen.getByTestId("sizing-run");
     expect(run.querySelectorAll("input, textarea")).toHaveLength(0);
@@ -63,21 +112,54 @@ describe("Sizing Poker round", () => {
     const user = userEvent.setup();
     renderPage(makeClock().now);
 
-    await typeItems(user, ["First item", "Second item"]);
-    await user.click(screen.getByRole("button", { name: /start the round/i }));
-
+    await setUpRound(user, ["First item", "Second item"]);
     await user.keyboard("1");
+
     expect(screen.getByTestId("sizing-item")).toHaveTextContent("Second item");
   });
 
+  it("offers a way out mid-round, so a wrong setting does not trap you", async () => {
+    const user = userEvent.setup();
+    renderPage(makeClock().now);
+
+    await setUpRound(user, ["One", "Two", "Three"]);
+    await user.keyboard("1");
+    await user.click(screen.getByRole("button", { name: /start over/i }));
+
+    expect(screen.getByTestId("sizing-config")).toBeInTheDocument();
+    expect(screen.queryByTestId("sizing-run")).not.toBeInTheDocument();
+  });
+
+  it("has no way to revisit a previous answer, which would be deliberation", async () => {
+    const user = userEvent.setup();
+    renderPage(makeClock().now);
+
+    await setUpRound(user, ["One", "Two"]);
+    await user.keyboard("1");
+
+    const run = screen.getByTestId("sizing-run");
+    expect(within(run).queryByRole("button", { name: /^back$/i })).not.toBeInTheDocument();
+    expect(within(run).queryByRole("button", { name: /previous/i })).not.toBeInTheDocument();
+  });
+
+  it("asks the question in the visitor's own number of days", async () => {
+    const user = userEvent.setup();
+    renderPage(makeClock().now);
+
+    await setUpRound(user, ["One thing"], "21");
+
+    expect(screen.getByTestId("sizing-run")).toHaveTextContent("Doable in 21 days or less?");
+  });
+});
+
+describe("the wrap-up", () => {
   it("#AC-1.1 reports mean seconds per item from the driven clock", async () => {
     const user = userEvent.setup();
     const clock = makeClock();
     renderPage(clock.now);
 
-    await typeItems(user, ["One", "Two"]);
+    await setUpRound(user, ["One", "Two"]);
     // round starts at t=0, last answer lands at t=8s -> 2 items, 4.0s each
-    await user.click(screen.getByRole("button", { name: /start the round/i }));
     clock.set(4_000);
     await user.keyboard("1");
     clock.set(8_000);
@@ -87,82 +169,99 @@ describe("Sizing Poker round", () => {
     expect(screen.getByTestId("sizing-result")).toHaveTextContent("2 items in 0:08 total");
   });
 
-  it("#AC-1.5 lists the too-big items verbatim, with singular phrasing for one", async () => {
+  it("splits the items into three actionable lists a PO can act on", async () => {
     const user = userEvent.setup();
     renderPage(makeClock().now);
 
-    await typeItems(user, ["Small thing", "Migrate the whole database"]);
-    await user.click(screen.getByRole("button", { name: /start the round/i }));
+    await setUpRound(user, ["Ready thing", "Blocked thing", "Huge thing"]);
     await user.keyboard("1");
+    await user.keyboard("2");
     await user.keyboard("3");
 
-    const findings = screen.getByTestId("sizing-findings");
-    expect(findings).toHaveTextContent("Slice this one before anyone starts it");
-    expect(within(findings).getByText("Migrate the whole database")).toBeInTheDocument();
+    expect(within(screen.getByTestId("sizing-list-ready")).getByText("Ready thing")).toBeInTheDocument();
+    expect(within(screen.getByTestId("sizing-list-maybe")).getByText("Blocked thing")).toBeInTheDocument();
+    expect(within(screen.getByTestId("sizing-list-toobig")).getByText("Huge thing")).toBeInTheDocument();
   });
 
-  it("#AC-1.5 uses plural phrasing for more than one too-big item", async () => {
+  it("hides a list that has no items in it", async () => {
     const user = userEvent.setup();
     renderPage(makeClock().now);
 
-    await typeItems(user, ["Big one", "Bigger one"]);
-    await user.click(screen.getByRole("button", { name: /start the round/i }));
-    await user.keyboard("3");
-    await user.keyboard("3");
+    await setUpRound(user, ["A", "B"]);
+    await user.keyboard("1");
+    await user.keyboard("1");
 
-    expect(screen.getByTestId("sizing-findings")).toHaveTextContent(
-      "Slice these 2 before anyone starts them",
-    );
+    expect(screen.getByTestId("sizing-list-ready")).toBeInTheDocument();
+    expect(screen.queryByTestId("sizing-list-maybe")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("sizing-list-toobig")).not.toBeInTheDocument();
   });
 
-  it("calls out a healthy backlog when everything fits", async () => {
+  it("only now introduces the terminology, and points at Lighthouse for both questions", async () => {
     const user = userEvent.setup();
     renderPage(makeClock().now);
 
-    await typeItems(user, ["A", "B"]);
-    await user.click(screen.getByRole("button", { name: /start the round/i }));
-    await user.keyboard("1");
+    await setUpRound(user, ["One thing"]);
     await user.keyboard("1");
 
-    expect(screen.getByTestId("sizing-findings")).toHaveTextContent("Everything fits");
+    const nextSteps = screen.getByTestId("sizing-next-steps");
+    expect(nextSteps).toHaveTextContent(/Service Level Expectation/i);
+    expect(nextSteps).toHaveTextContent(/Work Item Age/i);
+    expect(within(nextSteps).getAllByRole("link")).toHaveLength(2);
+  });
+
+  it("copies all three lists as plain text for the PO's tracker", async () => {
+    const user = userEvent.setup();
+    // Defined after setup() on purpose: userEvent installs its own clipboard
+    // stub, so a mock defined before this line gets silently overwritten.
+    // navigator.clipboard is also getter-only in jsdom, hence defineProperty.
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, "clipboard", {
+      value: { writeText },
+      configurable: true,
+    });
+
+    renderPage(makeClock().now);
+
+    await setUpRound(user, ["Ready thing", "Huge thing"]);
+    await user.keyboard("1");
+    await user.keyboard("3");
+    await user.click(screen.getByRole("button", { name: /copy all three lists/i }));
+
+    const copied = writeText.mock.calls[0][0] as string;
+    expect(copied).toContain("Ready to go");
+    expect(copied).toContain("Ready thing");
+    expect(copied).toContain("Huge thing");
   });
 
   it("#AC-1.6 never puts item titles into analytics", async () => {
     const user = userEvent.setup();
     renderPage(makeClock().now);
 
-    await typeItems(user, ["Commercially sensitive project name"]);
-    await user.click(screen.getByRole("button", { name: /start the round/i }));
+    await setUpRound(user, ["Commercially sensitive project name"]);
     await user.keyboard("3");
 
     expect(trackEvent).toHaveBeenCalledWith(
       "Sizing round completed",
-      expect.objectContaining({ items: 1, too_big: 1 }),
+      expect.objectContaining({ items: 1, needs_work: 1 }),
     );
     expect(JSON.stringify(trackEvent.mock.calls)).not.toContain("Commercially sensitive");
   });
 
-  it("#AC-4.1 starts with the default SLE without the visitor touching it", async () => {
+  it("returns to config, not the intro, when running a second round", async () => {
     const user = userEvent.setup();
     renderPage(makeClock().now);
 
-    expect(screen.getByLabelText(/service level expectation/i)).toHaveValue(8);
-    await user.click(screen.getByRole("button", { name: /start the round/i }));
-    expect(screen.getByTestId("sizing-run")).toHaveTextContent("within 8 days");
+    await setUpRound(user, ["Only item"]);
+    await user.keyboard("1");
+    await user.click(screen.getByRole("button", { name: /run another round/i }));
+
+    expect(screen.getByTestId("sizing-config")).toBeInTheDocument();
+    expect(screen.queryByTestId("sizing-intro")).not.toBeInTheDocument();
   });
+});
 
-  it("refuses to start an empty round", async () => {
-    const user = userEvent.setup();
-    renderPage(makeClock().now);
-
-    const box = screen.getByLabelText(/items you'd bring to refinement/i);
-    await user.clear(box);
-
-    expect(screen.getByRole("button", { name: /start the round/i })).toBeDisabled();
-    expect(screen.getByTestId("sizing-item-count")).toHaveTextContent("Add at least one item");
-  });
-
-  it("is marked noindex while unlisted, and does not leave the SPA noindex", async () => {
+describe("staying unlisted", () => {
+  it("is marked noindex, and does not leave the SPA noindex", async () => {
     const { unmount } = renderPage(makeClock().now);
     expect(document.querySelector('meta[name="robots"]')).toHaveAttribute(
       "content",
@@ -184,22 +283,5 @@ describe("Sizing Poker round", () => {
       "content",
       "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
     );
-  });
-
-  it("returns to setup on restart and can run a second round", async () => {
-    const user = userEvent.setup();
-    renderPage(makeClock().now);
-
-    await typeItems(user, ["Only item"]);
-    await user.click(screen.getByRole("button", { name: /start the round/i }));
-    await user.keyboard("1");
-    await user.click(screen.getByRole("button", { name: /run another round/i }));
-
-    expect(screen.getByTestId("sizing-setup")).toBeInTheDocument();
-
-    await user.click(screen.getByRole("button", { name: /start the round/i }));
-    await user.keyboard("1");
-    expect(screen.getByTestId("sizing-result")).toBeInTheDocument();
-    expect(trackEvent.mock.calls.filter((c) => c[0] === "Sizing round completed")).toHaveLength(2);
   });
 });

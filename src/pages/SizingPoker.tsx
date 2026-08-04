@@ -3,15 +3,16 @@ import Navigation from "@/components/Navigation";
 import SimpleFooter from "@/components/SimpleFooter";
 import SEO from "@/components/SEO";
 import { trackEvent } from "@/lib/plausible";
-import SetupStep from "@/features/sizing-poker/components/SetupStep";
+import IntroStep from "@/features/sizing-poker/components/IntroStep";
+import ConfigStep from "@/features/sizing-poker/components/ConfigStep";
 import RunStep from "@/features/sizing-poker/components/RunStep";
-import ResultView from "@/features/sizing-poker/components/ResultView";
+import WrapUpView from "@/features/sizing-poker/components/WrapUpView";
 import { sizingPokerContent } from "@/features/sizing-poker/content/sizingPokerContent";
 import {
-  DEFAULT_SLE_DAYS,
+  DEFAULT_TARGET_DAYS,
   currentItem,
   initialState,
-  normaliseSle,
+  normaliseTarget,
   parseItems,
   reduce,
   type Verdict,
@@ -31,17 +32,15 @@ const structuredData = {
   operatingSystem: "Any",
   url: "https://letpeople.work/sizing-poker",
   description:
-    "Size a backlog against your team's Service Level Expectation instead of estimating it. One question per item, three answers, no story points. Runs entirely in the browser.",
+    "Size a backlog by asking one question per item instead of estimating it: could we finish this within the time we set? Three answers, no story points. Runs entirely in the browser.",
   offers: { "@type": "Offer", price: "0", priceCurrency: "CHF" },
   publisher: { "@type": "Organization", name: "LetPeopleWork GmbH" },
 };
 
 const SizingPoker = ({ now = Date.now }: SizingPokerProps) => {
   const [state, dispatch] = useReducer(reduce, undefined, initialState);
-  const [sleValue, setSleValue] = useState(String(DEFAULT_SLE_DAYS));
-  const [itemsValue, setItemsValue] = useState(() =>
-    sizingPokerContent.sampleItems.join("\n"),
-  );
+  const [targetValue, setTargetValue] = useState(String(DEFAULT_TARGET_DAYS));
+  const [itemsValue, setItemsValue] = useState("");
   const reported = useRef(false);
 
   const stats = useMemo(() => statsFor(state), [state]);
@@ -64,7 +63,7 @@ const SizingPoker = ({ now = Date.now }: SizingPokerProps) => {
     dispatch({
       type: "start",
       items,
-      sleDays: normaliseSle(sleValue),
+      targetDays: normaliseTarget(targetValue),
       at: now(),
     });
   };
@@ -78,9 +77,9 @@ const SizingPoker = ({ now = Date.now }: SizingPokerProps) => {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <SEO
-        title="Sizing Poker - Size your backlog against your SLE"
-        description="Size a backlog without estimating it. One question per item, three answers, anchored to your team's Service Level Expectation. Free, no signup, runs entirely in your browser."
-        keywords="sizing poker, right sizing, no estimates, service level expectation, SLE, planning poker alternative, story points alternative, flow metrics, refinement"
+        title="Sizing Poker - Size your backlog without estimating it"
+        description="Size a backlog by asking one question per item: could we finish this within the time we set? Three answers, no story points. Free, no signup, runs entirely in your browser."
+        keywords="sizing poker, right sizing, no estimates, planning poker alternative, story points alternative, backlog refinement, flow metrics, service level expectation"
         structuredData={structuredData}
         breadcrumbs={[
           { name: "Home", url: "/" },
@@ -94,12 +93,17 @@ const SizingPoker = ({ now = Date.now }: SizingPokerProps) => {
       <Navigation />
       <main className="flex-1 px-4 pb-16 pt-28">
         <div className="mx-auto w-full max-w-2xl">
-          {state.phase === "setup" && (
-            <SetupStep
-              sleValue={sleValue}
+          {state.phase === "intro" && (
+            <IntroStep onBegin={() => dispatch({ type: "begin" })} />
+          )}
+
+          {state.phase === "config" && (
+            <ConfigStep
+              targetValue={targetValue}
               itemsValue={itemsValue}
-              onSleChange={setSleValue}
+              onTargetChange={setTargetValue}
               onItemsChange={setItemsValue}
+              onUseSample={() => setItemsValue(sizingPokerContent.sampleItems.join("\n"))}
               onStart={handleStart}
             />
           )}
@@ -109,18 +113,22 @@ const SizingPoker = ({ now = Date.now }: SizingPokerProps) => {
               item={item}
               index={state.currentIndex}
               total={state.items.length}
-              sleDays={state.sleDays}
+              targetDays={state.targetDays}
               startedAt={state.startedAt}
               onVote={handleVote}
+              onAbandon={() => dispatch({ type: "restart" })}
               now={now}
             />
           )}
 
           {state.phase === "done" && (
-            <ResultView
+            <WrapUpView
               stats={stats}
-              sleDays={state.sleDays}
+              targetDays={state.targetDays}
               onRestart={() => dispatch({ type: "restart" })}
+              onNextStepClick={(question) =>
+                trackEvent("Sizing next step clicked", { question })
+              }
             />
           )}
         </div>

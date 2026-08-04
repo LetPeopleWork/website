@@ -1,5 +1,13 @@
 # Slice 02 — Name the condition in one tap
 
+> **SUPERSEDED 2026-08-04 (D13).** Group management, synchronous/asynchronous
+> modes and secret voting belong in Lighthouse, not on the website page, which is
+> deliberately a teaser rather than a feature-complete tool. Kept for the
+> reasoning and the learning hypothesis, which still apply to the Lighthouse
+> decision this page is meant to inform. Do not build from this brief as-is.
+
+The guidance content shipped instead on the wrap-up under D11, without capturing structured conditions.
+
 **Goal:** When the answer is "yes, if…", capture *what* would need to be true
 without anyone typing, and aggregate it into a dependency finding.
 

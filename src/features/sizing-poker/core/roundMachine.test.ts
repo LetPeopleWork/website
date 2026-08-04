@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
-  DEFAULT_SLE_DAYS,
+  DEFAULT_TARGET_DAYS,
   MAX_ITEMS,
   currentItem,
   initialState,
-  normaliseSle,
+  normaliseTarget,
   parseItems,
   progressRatio,
   reduce,
@@ -12,7 +12,7 @@ import {
 } from "./roundMachine";
 
 const startedRound = (items: readonly string[], at = 1_000): RoundState =>
-  reduce(initialState(), { type: "start", items, sleDays: 8, at });
+  reduce(initialState(), { type: "start", items, targetDays: 8, at });
 
 describe("parseItems", () => {
   it("takes one item per line, trimming whitespace", () => {
@@ -33,22 +33,22 @@ describe("parseItems", () => {
   });
 });
 
-describe("normaliseSle", () => {
+describe("normaliseTarget", () => {
   it("accepts a plain positive number of days", () => {
-    expect(normaliseSle(14)).toBe(14);
-    expect(normaliseSle("21")).toBe(21);
+    expect(normaliseTarget(14)).toBe(14);
+    expect(normaliseTarget("21")).toBe(21);
   });
 
   it("falls back to the default for junk, zero, and negatives", () => {
-    expect(normaliseSle("")).toBe(DEFAULT_SLE_DAYS);
-    expect(normaliseSle("abc")).toBe(DEFAULT_SLE_DAYS);
-    expect(normaliseSle(0)).toBe(DEFAULT_SLE_DAYS);
-    expect(normaliseSle(-3)).toBe(DEFAULT_SLE_DAYS);
-    expect(normaliseSle(Number.NaN)).toBe(DEFAULT_SLE_DAYS);
+    expect(normaliseTarget("")).toBe(DEFAULT_TARGET_DAYS);
+    expect(normaliseTarget("abc")).toBe(DEFAULT_TARGET_DAYS);
+    expect(normaliseTarget(0)).toBe(DEFAULT_TARGET_DAYS);
+    expect(normaliseTarget(-3)).toBe(DEFAULT_TARGET_DAYS);
+    expect(normaliseTarget(Number.NaN)).toBe(DEFAULT_TARGET_DAYS);
   });
 
   it("clamps absurd values instead of trusting them", () => {
-    expect(normaliseSle(99_999)).toBe(365);
+    expect(normaliseTarget(99_999)).toBe(365);
   });
 });
 
@@ -61,8 +61,20 @@ describe("start", () => {
   });
 
   it("refuses to start an empty round", () => {
-    const state = reduce(initialState(), { type: "start", items: [], sleDays: 8, at: 1 });
-    expect(state.phase).toBe("setup");
+    const state = reduce(initialState(), { type: "start", items: [], targetDays: 8, at: 1 });
+    expect(state.phase).toBe("intro");
+  });
+});
+
+describe("begin", () => {
+  it("moves from the intro to the config step", () => {
+    expect(initialState().phase).toBe("intro");
+    expect(reduce(initialState(), { type: "begin" }).phase).toBe("config");
+  });
+
+  it("does nothing once past the intro", () => {
+    const running = startedRound(["one"]);
+    expect(reduce(running, { type: "begin" })).toEqual(running);
   });
 });
 
@@ -105,23 +117,23 @@ describe("vote", () => {
 
   it("ignores votes before the round has started", () => {
     const state = reduce(initialState(), { type: "vote", verdict: "fits", at: 1 });
-    expect(state.phase).toBe("setup");
+    expect(state.phase).toBe("intro");
     expect(state.votes).toHaveLength(0);
   });
 });
 
 describe("restart", () => {
-  it("clears the round but keeps the SLE, which belongs to the team", () => {
+  it("returns to config, keeping the target, which belongs to the team", () => {
     const done = reduce(
-      reduce(initialState(), { type: "start", items: ["only"], sleDays: 21, at: 1_000 }),
+      reduce(initialState(), { type: "start", items: ["only"], targetDays: 21, at: 1_000 }),
       { type: "vote", verdict: "fits", at: 2_000 },
     );
     const state = reduce(done, { type: "restart" });
 
-    expect(state.phase).toBe("setup");
+    expect(state.phase).toBe("config");
     expect(state.votes).toEqual([]);
     expect(state.startedAt).toBeNull();
-    expect(state.sleDays).toBe(21);
+    expect(state.targetDays).toBe(21);
   });
 });
 

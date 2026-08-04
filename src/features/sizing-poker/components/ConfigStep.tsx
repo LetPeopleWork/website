@@ -5,65 +5,61 @@ import { Textarea } from "@/components/ui/textarea";
 import { sizingPokerContent } from "../content/sizingPokerContent";
 import { MAX_ITEMS, parseItems } from "../core/roundMachine";
 
-interface SetupStepProps {
-  sleValue: string;
+interface ConfigStepProps {
+  targetValue: string;
   itemsValue: string;
-  onSleChange: (value: string) => void;
+  onTargetChange: (value: string) => void;
   onItemsChange: (value: string) => void;
+  onUseSample: () => void;
   onStart: () => void;
 }
 
-const c = sizingPokerContent;
+const c = sizingPokerContent.config;
 
-const SetupStep = ({
-  sleValue,
+const ConfigStep = ({
+  targetValue,
   itemsValue,
-  onSleChange,
+  onTargetChange,
   onItemsChange,
+  onUseSample,
   onStart,
-}: SetupStepProps) => {
+}: ConfigStepProps) => {
   const count = parseItems(itemsValue).length;
 
   return (
-    <div data-testid="sizing-setup">
-      <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-primary">
-        {c.eyebrow}
-      </p>
-      <h1 className="mb-3 text-balance text-4xl font-bold tracking-tight text-foreground md:text-5xl">
+    <div data-testid="sizing-config">
+      <h1 className="mb-6 text-balance text-3xl font-bold tracking-tight text-foreground md:text-4xl">
         {c.heading}
       </h1>
-      <p className="mb-7 max-w-[56ch] text-lg leading-relaxed text-muted-foreground">
-        {c.lede}
-      </p>
 
-      <div className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-6 shadow-soft">
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="sizing-sle" className="text-sm font-semibold">
-            {c.sleLabel}
+      <div className="flex flex-col gap-6 rounded-2xl border border-border bg-card p-6 shadow-soft">
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="sizing-target" className="text-base font-semibold">
+            {c.targetLabel}
           </Label>
           <div className="flex items-center gap-3">
             <Input
-              id="sizing-sle"
+              id="sizing-target"
               type="number"
               min={1}
               max={365}
               inputMode="numeric"
-              value={sleValue}
-              onChange={(event) => onSleChange(event.target.value)}
-              aria-describedby="sizing-sle-help"
+              value={targetValue}
+              onChange={(event) => onTargetChange(event.target.value)}
+              aria-describedby="sizing-target-help"
               className="max-w-[110px] font-semibold tabular-nums"
             />
-            <span className="text-sm text-muted-foreground">{c.sleUnit}</span>
+            <span className="text-muted-foreground">{c.targetUnit}</span>
           </div>
-          <p id="sizing-sle-help" className="text-sm leading-relaxed text-muted-foreground">
-            {c.sleHelp}
+          <p id="sizing-target-help" className="text-sm text-muted-foreground">
+            {c.targetHelp}
           </p>
         </div>
 
         <hr className="border-border" />
 
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="sizing-items" className="text-sm font-semibold">
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="sizing-items" className="text-base font-semibold">
             {c.itemsLabel}
           </Label>
           <Textarea
@@ -74,15 +70,25 @@ const SetupStep = ({
             onChange={(event) => onItemsChange(event.target.value)}
             aria-describedby="sizing-items-help"
             className="min-h-[150px] leading-relaxed"
+            placeholder={"Add SSO login via Azure AD\nFix timezone bug in the export scheduler\n..."}
           />
-          <p id="sizing-items-help" className="text-sm text-muted-foreground">
-            {c.itemsHelp}
-          </p>
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <p id="sizing-items-help" className="text-sm text-muted-foreground">
+              {c.itemsHelp}
+            </p>
+            <button
+              type="button"
+              onClick={onUseSample}
+              className="text-sm font-medium text-primary underline underline-offset-4"
+            >
+              {c.sampleCta}
+            </button>
+          </div>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
           <Button onClick={onStart} disabled={count === 0} size="lg">
-            {c.startCta}
+            {c.cta}
           </Button>
           <span className="text-sm text-muted-foreground" data-testid="sizing-item-count">
             {count === 0
@@ -92,10 +98,8 @@ const SetupStep = ({
           </span>
         </div>
       </div>
-
-      <p className="mt-5 text-sm text-muted-foreground">{c.privacyNote}</p>
     </div>
   );
 };
 
-export default SetupStep;
+export default ConfigStep;

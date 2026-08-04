@@ -1,5 +1,11 @@
 # Slice 03 — Async by shareable code
 
+> **SUPERSEDED 2026-08-04 (D13).** Group management, synchronous/asynchronous
+> modes and secret voting belong in Lighthouse, not on the website page, which is
+> deliberately a teaser rather than a feature-complete tool. Kept for the
+> reasoning and the learning hypothesis, which still apply to the Lighthouse
+> decision this page is meant to inform. Do not build from this brief as-is.
+
 **Goal:** Everyone answers independently, shares a short code, and the team
 discusses only the items where they actually disagreed.
 

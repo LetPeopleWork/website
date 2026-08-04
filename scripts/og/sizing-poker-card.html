@@ -1,0 +1,84 @@
+<title>Sizing Poker OG card</title>
+<!-- Source of truth for public/og/sizing-poker.jpg.
+     Regenerate:  npm run og:sizing-poker  -->
+<style>html,body{margin:0;padding:0;overflow:hidden;background:#2F5C4C}
+canvas{display:block;width:1200px;height:630px}</style>
+<canvas id="c" width="1200" height="630"></canvas>
+<script>
+const c = document.getElementById("c");
+const x = c.getContext("2d");
+
+const INK   = "#F4F8F6";
+const TEAL  = "#2F5C4C";
+const DEEP  = "#22453A";
+const MUTED = "#A9C4B8";
+const FITS  = "#7FC4A3";
+const COND  = "#D9AE5F";
+const BIG   = "#E08878";
+
+const SANS = '700 1px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+const font = (px, weight) => SANS.replace("700 1px", `${weight} ${px}px`);
+
+// Flat ground on purpose: a gradient or grid here costs ~10x the file size in
+// PNG and bands badly in Slack and LinkedIn preview cards.
+x.fillStyle = TEAL;
+x.fillRect(0, 0, 1200, 630);
+
+// single accent rule, carrying the three verdict colours
+[FITS, COND, BIG].forEach((colour, i) => {
+  x.fillStyle = colour;
+  x.fillRect(0, 0 + i * 8, 1200, 8);
+});
+
+// eyebrow
+x.fillStyle = MUTED;
+x.font = font(21, 700);
+x.letterSpacing = "3.4px";
+x.fillText("SIZING, WITHOUT ESTIMATING", 84, 150);
+x.letterSpacing = "0px";
+
+// headline
+x.fillStyle = INK;
+x.font = font(112, 700);
+x.fillText("Does it fit?", 80, 272);
+
+// subline
+x.fillStyle = MUTED;
+x.font = font(31, 400);
+x.fillText("One question per work item. Three answers.", 84, 330);
+x.fillText("No story points.", 84, 374);
+
+// the three answers as chips
+const chips = [["Yes", FITS], ["Maybe", COND], ["No", BIG]];
+let cx = 84;
+x.font = font(27, 700);
+chips.forEach(([label, colour]) => {
+  const w = x.measureText(label).width + 62;
+  x.fillStyle = "rgba(255,255,255,0.07)";
+  x.beginPath();
+  x.roundRect(cx, 434, w, 62, 31);
+  x.fill();
+  x.strokeStyle = colour;
+  x.lineWidth = 2;
+  x.stroke();
+
+  x.fillStyle = colour;
+  x.beginPath();
+  x.arc(cx + 27, 465, 7, 0, Math.PI * 2);
+  x.fill();
+
+  x.fillStyle = INK;
+  x.fillText(label, cx + 44, 475);
+  cx += w + 18;
+});
+
+// wordmark
+x.font = font(27, 700);
+x.fillStyle = INK;
+x.fillText("#LetPeople", 84, 566);
+const lw = x.measureText("#LetPeople").width;
+x.fillStyle = FITS;
+x.fillText(".Work", 84 + lw, 566);
+
+window.__png = c.toDataURL("image/png");
+</script>
