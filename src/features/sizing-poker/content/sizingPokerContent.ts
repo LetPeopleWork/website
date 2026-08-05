@@ -81,7 +81,7 @@ const raw = {
   config: {
     heading: "Two things before you start",
     // Never "Service Level Expectation" here. That word is earned in the wrap-up.
-    targetLabel: "How fast should your items be done?",
+    targetLabel: "How quickly should an item normally be done in your environment?",
     targetUnit: "days or less",
     targetHelp: "A rough number is fine. You will get a better one at the end.",
     itemsLabel: "Which items do you want to size today?",

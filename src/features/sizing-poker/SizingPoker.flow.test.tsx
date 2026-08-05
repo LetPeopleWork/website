@@ -33,7 +33,7 @@ type User = ReturnType<typeof userEvent.setup>;
 const setUpRound = async (user: User, items: string[], targetDays?: string) => {
   await user.click(screen.getByRole("button", { name: /try it out/i }));
   if (targetDays) {
-    const target = screen.getByLabelText(/how fast should your items be done/i);
+    const target = screen.getByLabelText(/how quickly should an item normally be done/i);
     await user.clear(target);
     await user.type(target, targetDays);
   }
