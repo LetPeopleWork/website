@@ -416,6 +416,8 @@ const Lighthouse = () => {
       Lighthouse is using Monte Carlo Simulations to create probabilistic forecasts. Those forecasts come with an associated probability, which will help you do proper risk management.
       Like a Lighthouse that is consistently shining light into the darkness, the forecasts are updated continuously, so that you can take action once you notice that your initial plan may not work out anymore.
 
+      Those timelines follow the order of your Features, because that is the order your teams work them in. By default Lighthouse reads that order from your work tracking system. On a paid tier you can take it over instead: move any Feature to the top, up, down, or to the bottom, and see the dates move straight away, without touching the backlog everyone else is looking at.
+
       You have the data already, now you just need Lighthouse and you will be able to create plans and timelines within seconds!`,
 			callToAction: "",
 			mediaItems: [
@@ -1336,6 +1338,10 @@ const Lighthouse = () => {
 													},
 													{
 														feature: { label: "Rule-Based Deliveries", tooltip: "Define rules to automatically include your Features based on criteria like labels, fixVersion, or custom fields, ensuring your deliveries are always up-to-date without manual updating." },
+														community: false, self: true, enterprise: true,
+													},
+													{
+														feature: { label: "Manual Feature Ordering", tooltip: "Decide the order Lighthouse forecasts your Features in, rather than inheriting whatever rank they carry in your work tracking system. Move any Feature to the top, up, down, or to the bottom, and the forecast updates straight away." },
 														community: false, self: true, enterprise: true,
 													},
 													{
