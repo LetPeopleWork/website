@@ -1,6 +1,13 @@
 {
   "posts": [
     {
+      "title": "An Introduction and Step-by-Step Guide to Multi-Team Monte Carlo Simulations",
+      "link": "https://blog.letpeople.work/p/an-introduction-and-step-by-step",
+      "date": "2026-08-07T07:21:39.000Z",
+      "displayDate": "7 Aug 2026",
+      "excerpt": "Mo Teams Mo Problems?"
+    },
+    {
       "title": "Our Obeya Lives in Git Now. And It Thinks Along.",
       "link": "https://blog.letpeople.work/p/our-obeya-lives-in-git-now-and-it",
       "date": "2026-07-30T12:04:00.000Z",
@@ -13,13 +20,6 @@
       "date": "2026-07-12T17:02:55.000Z",
       "displayDate": "12 Jul 2026",
       "excerpt": "I have sat in the meeting where everything was green until the week it was red."
-    },
-    {
-      "title": "I Still Don't Understand What's Happening. And I'm Building Things Anyway.",
-      "link": "https://blog.letpeople.work/p/i-still-dont-understand-whats-happening",
-      "date": "2026-06-24T10:16:09.000Z",
-      "displayDate": "24 Jun 2026",
-      "excerpt": "Let me start with a confession."
     }
   ]
 }
