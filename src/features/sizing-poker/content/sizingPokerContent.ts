@@ -73,7 +73,13 @@ const raw = {
     eyebrow: "Sizing, without estimating",
     heading: "Does it fit?",
     // Two sentences. The first version put six here and went unread.
-    lede: "One question per work item, three possible answers, no story points. Try it on your own backlog and see how far you get before the coffee goes cold.",
+    //
+    // The second sentence exists because two of the first two external
+    // reviewers arrived expecting a room to join and vote in (see D16). The
+    // name promises poker, poker promises a card per person, and this is a
+    // facilitator's tool. Saying who drives it, in the first thing anyone
+    // reads, is cheaper than arguing with the expectation afterwards.
+    lede: "One question per work item, three possible answers, no story points. You run it: on your own, or with your team round a shared screen.",
     cta: "Try it out",
     aside: "Free, no signup. Nothing leaves your browser.",
   },

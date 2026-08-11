@@ -7,11 +7,15 @@
 #   validated  — confirmed against real user contact (interviews, support, analytics)
 #   asserted   — grounded in practitioner conversation, not yet tested with users
 #
-# NOTE: every job below is `asserted`. The Slack thread (Benji, Oliver, Liz Rettig,
-# Chris G) is practitioner input from inside and adjacent to the company, NOT
-# customer discovery. Do not treat these as validated until slice 1 ships and a
-# real team runs a real round. This distinction is the whole point of the
-# opportunity scores staying provisional.
+# NOTE: the first three jobs remain `asserted`. The Slack thread (Benji, Oliver,
+# Liz Rettig, Chris G) is practitioner input from inside and adjacent to the
+# company, NOT customer discovery. Do not treat these as validated until a real
+# team runs a real round. This distinction is the whole point of the opportunity
+# scores staying provisional.
+#
+# `size-together-apart` (added 2026-08-05) is the first job with evidence from
+# outside the company: two of the first two external reviewers of the live page
+# raised it unprompted and independently.
 
 jobs:
   - id: size-without-estimating
@@ -110,3 +114,53 @@ jobs:
         step asks for a number of days in plain language and accepts a guess,
         because asking an unfamiliar visitor for an SLE up front is what made the
         first version go unread.
+
+  # Added 2026-08-05 from the first external feedback on the live page.
+  # Deliberately NOT a website job: see feature-delta.md D13, D14, D16. It is
+  # recorded here because producing this evidence is the website page's stated
+  # second job, and this is the signal the Lighthouse decision needs.
+  - id: size-together-apart
+    status: asserted-with-external-evidence
+    story: >
+      When my team is distributed and we are sizing on a video call,
+      I want everyone to answer independently rather than out loud,
+      so the first person to speak does not decide it for everyone else.
+    dimensions:
+      functional: Collect one independent answer per person, then surface only the disagreements.
+      emotional: Confidence that the result is the team's read, not the loudest person's.
+      social: Quieter team members are counted without having to interrupt.
+    forces:
+      push: >
+        On a shared screen the first voice anchors the room. In a co-located
+        session a simultaneous show of hands fixes that; on a video call it does
+        not, because people talk over each other. The current page mitigates
+        anchoring with facilitation only, which is weakest exactly where a web
+        tool is most likely to be used.
+      pull: >
+        Everyone votes on their own device, privately, and the tool shows where
+        the team actually disagrees.
+      anxiety: >
+        Another room-based voting tool is a commodity: at least six are free and
+        several sync with the tracker. Entering that category with no backend and
+        no integration wins nothing.
+      habit: >
+        Planning poker tools have trained people to expect a join link. That
+        expectation is why both reviewers were surprised, and it is the reason
+        the page now states who drives it in its opening sentence.
+    evidence:
+      - source: "Oliver, Slack, 2026-08-05"
+        quote: "I was kind of expecting some kind of sizing 'session' that people join, rather than a questionnaire."
+        note: >
+          Same reviewer also judged the current scope adequate: "I guess this
+          gives most of the value for a v1."
+      - source: "Mya, Slack, 2026-08-05"
+        quote: "most powerful in a virtual session when people are not co-located"
+    opportunity:
+      importance: high
+      satisfaction: very-low
+      note: >
+        The value depends on the loop closing: items drawn from the backlog,
+        results written back, and the refinement meeting reduced to the Maybes
+        and Nos. That is only true inside Lighthouse. Built on the website it is
+        the weak version of the strong feature, and it spends the differentiator
+        that is supposed to pull people towards the product.

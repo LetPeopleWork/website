@@ -205,6 +205,48 @@ Analytics now carry `planned` alongside `items` and an `ended: all | early`
 flag, which makes the round-completion KPI directly measurable rather than
 inferred from the absence of a completion event.
 
+**[D16] First external feedback: the name mis-sets the expectation, and D14's mitigation is weaker than claimed for distributed teams.**
+(Oliver and Mya, 2026-08-05. First feedback from users outside the company.)
+
+Two of the first two external reviewers independently arrived expecting a session
+they could join and vote in, and were surprised to find a facilitator's tool.
+That is a finding, and it splits into three parts that need separating.
+
+**1. The name is doing the damage, and this is a v1 defect.** Oliver: *"Not sure
+if it is really analogous to poker without each participant having cards
+though?"* He is right. Poker's defining mechanic is a card per participant; this
+has one screen and one operator. Nothing in the page corrected the expectation
+the name created. Fixed now in the intro lede, which says who drives it in the
+first sentence anyone reads. Cheaper than arguing with the expectation after the
+fact. Renaming the page is the fuller fix and is deliberately **not** taken
+unilaterally: "Sizing Poker" is in a public release note and carries search value
+against "planning poker". Flagged for the owners.
+
+**2. The multi-device request is now externally evidenced, and still not the
+website's job.** D1, D12, D13 and D14 all still hold: rooms mean state, sync and
+expiry on a public URL; six free tools already do this; and it pays off only when
+the loop closes through the backlog, which the website cannot do. Notably Oliver
+concedes the point himself — *"I guess this gives most of the value for a v1."*
+What has changed is the strength of evidence for the **Lighthouse** version.
+Producing exactly this signal is the page's stated second job (D12), so this is
+the mechanism working, not failing.
+
+**3. A correction to D14.** Mya: *"most powerful in a virtual session when people
+are not co-located."* D14 mitigated anchoring with a facilitation instruction —
+have everyone answer at the same time, hands up together. That works in a room.
+It works **poorly** on a video call, where people talk over each other and the
+first voice still dominates, and a video call is the likelier setting for a
+web-based tool. So the anchoring defect is only partly fixed, and it is least
+fixed for the audience most likely to arrive here. This does not change the
+build/don't-build decision, but D14 should not be read as having closed the
+problem for distributed teams. It has not.
+
+The cheapest thing that would actually serve Mya's case without a backend is the
+shareable result code from `slices/slice-03-async-codes.md`: everyone runs the
+round alone, shares a short code, the facilitator pastes them in and sees only
+the items that split the room. That brief is currently marked superseded under
+D13. Reopening it is an owners' decision, recorded here so the option is not lost.
+
 **[D9] Reference-class / child-count sizing modes stay out.**
 Chris G's 20.07. thread frames Sizing Poker as one mode of a general sizer
 parameterised by SLE, child count, or reference class. Noted, deliberately not
