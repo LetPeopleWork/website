@@ -7,7 +7,7 @@ export const LIGHTHOUSE_GITHUB_REPO_URL = `https://github.com/${LIGHTHOUSE_GITHU
 export const LIGHTHOUSE_GITHUB_RELEASES_URL = `${LIGHTHOUSE_GITHUB_REPO_URL}/releases`;
 
 export const LIGHTHOUSE_DOCKER_COMMAND =
-	'docker run -d -p 8081:443 -p 8080:80 -v ".:/app/Data" -v "./logs:/app/logs" -e "Database__ConnectionString=Data Source=/app/Data/LighthouseAppContext.db" ghcr.io/letpeoplework/lighthouse:latest';
+	'docker run -d -p 8081:443 -p 8080:80 -v lighthouse-data:/app/data -v lighthouse-logs:/app/logs -e "Database__ConnectionString=Data Source=/app/data/LighthouseAppContext.db" ghcr.io/letpeoplework/lighthouse:latest';
 
 export function detectClientOs(): ClientOs {
 	if (typeof window === "undefined") return "unknown";
