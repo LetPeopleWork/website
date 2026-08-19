@@ -3,7 +3,10 @@ import type { Answers, BandName } from "../core/scoring";
 export type ResponseSource =
   | "readiness-assessment"
   | "user-survey"
-  | "user-survey-trial";
+  | "user-survey-trial"
+  // 30-day Self-Service trial requested from the Lighthouse pricing page,
+  // with no survey attached. Lands in the same admin "Trial requests" card.
+  | "lighthouse-trial";
 
 export interface CapturedResponse {
   readonly source: ResponseSource;

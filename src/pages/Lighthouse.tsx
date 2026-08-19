@@ -73,6 +73,7 @@ import LighthouseTestimonials from "@/components/LighthouseTestimonials";
 import FAQSection from "@/components/FAQSection";
 import LighthouseLearnMore from "@/components/LighthouseLearnMore";
 import LighthouseWhatsNew from "@/components/LighthouseWhatsNew";
+import TrialRequestDialog from "@/features/trial/components/TrialRequestDialog";
 import { format } from "date-fns";
 import { lighthouseAsset } from "@/lib/lighthouseAsset";
 import metricsTeamVideo from "@/assets/videos/Metrics_Team.mp4";
@@ -214,6 +215,8 @@ const Lighthouse = () => {
 		description: "",
 	});
 	const [showLegalDialog, setShowLegalDialog] = useState(false);
+	// Which trial CTA opened the dialog; null = closed. Analytics only.
+	const [trialSource, setTrialSource] = useState<string | null>(null);
 	const { toast } = useToast();
 
 	// Pre-fill form from URL parameters on mount
@@ -1187,6 +1190,13 @@ const Lighthouse = () => {
 							>
 								Get Self-Service <ArrowRight className="w-4 h-4" />
 							</a>
+							<button
+								type="button"
+								onClick={() => { setTrialSource("pricing-card"); trackEvent("Trial dialog opened", { source: "pricing-card" }); }}
+								className="mt-3 text-sm font-medium text-primary underline underline-offset-4 hover:text-primary-hover"
+							>
+								or try it free for 30 days &mdash; no signup, no credit card
+							</button>
 						</div>
 
 						{/* Enterprise */}
@@ -1402,6 +1412,18 @@ const Lighthouse = () => {
 						</div>
 					</div>
 				</div>
+
+					{/* Post-comparison trial CTA: whoever read this far is evaluating. */}
+					<div className="text-center mt-12">
+						<p className="text-lg text-foreground font-medium mb-1">Easier to just try it?</p>
+						<p className="text-sm text-muted-foreground mb-5">We&apos;ll send you a 30-day Self-Service license. No signup, no credit card &mdash; it expires on its own.</p>
+						<Button
+							variant="outline"
+							onClick={() => { setTrialSource("comparison"); trackEvent("Trial dialog opened", { source: "comparison" }); }}
+						>
+							Try Self-Service free for 30 days
+						</Button>
+					</div>
 			</section>
 
 			{/* FAQ — objection-handling, placed right before the final license CTA */}
@@ -2054,6 +2076,12 @@ const Lighthouse = () => {
 			</Dialog>
 
 			{/* Legal Information Dialog */}
+			<TrialRequestDialog
+				open={trialSource !== null}
+				onOpenChange={(open) => { if (!open) setTrialSource(null); }}
+				source={trialSource ?? "pricing-card"}
+			/>
+
 			<LegalInfoDialog
 				open={showLegalDialog}
 				onOpenChange={setShowLegalDialog}

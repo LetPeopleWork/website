@@ -15,7 +15,9 @@ const RESPONSES_TABLE = "responses";
 const LEADS_TABLE = "leads";
 
 const SURVEY_SOURCE: ResponseSource = "user-survey";
-const SURVEY_TRIAL_SOURCE: ResponseSource = "user-survey-trial";
+// Trial requests arrive from two places: the survey's opt-in and the
+// Lighthouse pricing page. The admin card treats them as one queue.
+const TRIAL_SOURCES: ResponseSource[] = ["user-survey-trial", "lighthouse-trial"];
 
 interface ResponseRow {
   source: string;
@@ -92,7 +94,7 @@ export const createSupabaseDashboardRepository = (
       const trialQuery = await client
         .from(LEADS_TABLE)
         .select("id,source,email,organization,created_at,fulfilled_at")
-        .eq("source", SURVEY_TRIAL_SOURCE);
+        .in("source", TRIAL_SOURCES);
       if (trialQuery.error) {
         throw new Error(trialQuery.error.message);
       }
