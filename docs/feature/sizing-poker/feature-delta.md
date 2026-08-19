@@ -77,7 +77,9 @@ product's own primary output: if the mechanism is slow, our tool says so, in
 public, without us having to be honest about it separately. This is both the
 value proof and the falsification instrument.
 
-**[D6] No backend for the MVP. Async ships as shareable result codes.**
+**[D6] No backend for the MVP.** *(Superseded in part, 2026-08-11: the shareable
+result codes described below were built and rejected as too complicated. The
+no-backend position stands; codes are not the way it gets delivered.)*
 Supabase is available (`supabase/functions/`, used by the assessment), so a
 backend is *possible* — but rooms mean session lifecycle, expiry, abuse surface,
 and rate limiting for a page whose entire promise is speed and simplicity.
@@ -246,6 +248,55 @@ shareable result code from `slices/slice-03-async-codes.md`: everyone runs the
 round alone, shares a short code, the facilitator pastes them in and sees only
 the items that split the room. That brief is currently marked superseded under
 D13. Reopening it is an owners' decision, recorded here so the option is not lost.
+
+**[D17] Discussion proximity: the objection is real for splits, weak elsewhere, and doubles as a test of the mechanism.**
+(Peter, 2026-08-11: "What people will argue about is that the discussion piece
+can only happen while they are on the item.")
+
+The strongest objection raised so far. It collapses three different
+conversations into one, and they do not behave alike:
+
+- **No / too big** produces "how do we slice this?" — a design conversation
+  needing the right people and usually a whiteboard. Holding it at vote time is
+  the thing that makes refinement drag. Batching it is an improvement.
+- **Maybe** produces "what needs to be true?" — an action item, not a debate.
+  Also fine batched.
+- **A split** produces "you said yes, I said no, what do you know that I don't?"
+  That is knowledge asymmetry and it genuinely is best while loaded. **Here the
+  objection holds.**
+
+Splits are the minority of the minority if the core hypothesis is right, so the
+objection applies to a small fraction of items rather than to the design.
+
+**Counter that is worth stating explicitly:** a synchronous reveal does not only
+load context, it also applies conformity pressure. Someone who sees four "Yes"
+cards before committing may not register their "No" at all. Independent
+answering records the disagreement *before* anyone learns they are in a
+minority, so batching plausibly surfaces MORE real disagreement, not less.
+
+**Two mitigations, in preference order:**
+
+1. *One token of why, captured at vote time.* A single tap, not a text field:
+   Maybe → person / decision / another team / unclear; No → too big / too many
+   unknowns / too many parts. This converts a context-reload problem into data
+   already held. It revives the shelved `slices/slice-02-conditions.md` on a
+   better argument than the original: D11 rejected making people *think* at vote
+   time, and recording one token of a conclusion already reached is not thinking.
+   **D11 is hereby narrowed, not overturned** — no deliberation at vote time, but
+   one tap of "why" is permitted and wanted.
+2. *A focused synchronous pass over the split items only.* Self-pace the list,
+   then walk the three that split, together, on screen. Proximity where it
+   matters at a fraction of the sync cost. This is Benji's stated shape: no
+   refinement meeting, just the Maybes and Nos.
+
+**The reframe to offer whoever raises it:** if reloading context for an item is
+genuinely expensive, the answer was not an instinct, and the mechanism has
+already failed for that item. A five second gut call does not need warming back
+up; a one line title suffices. Needing people "on the item" to discuss it is an
+admission that the vote required analysis, which is estimation wearing a
+different hat. The objection is therefore also a test: if it proves true across
+the board, that is evidence against the three-way question itself, and the
+honest response is to say so rather than add machinery that conceals it.
 
 **[D9] Reference-class / child-count sizing modes stay out.**
 Chris G's 20.07. thread frames Sizing Poker as one mode of a general sizer
