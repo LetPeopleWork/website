@@ -10,7 +10,7 @@ export const createEdgeFunctionTrialRequest = (
     const { error } = await client.functions.invoke(REQUEST_TRIAL_FUNCTION, {
       body: {
         email: request.email,
-        organization: request.organization ?? null,
+        organization: request.organization,
       },
     });
     if (error) {

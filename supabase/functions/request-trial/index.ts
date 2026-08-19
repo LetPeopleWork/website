@@ -25,7 +25,7 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 interface TrialRequest {
   readonly email: string;
-  readonly organization: string | null;
+  readonly organization: string;
 }
 
 const parsePayload = (body: unknown): TrialRequest | null => {
@@ -37,17 +37,17 @@ const parsePayload = (body: unknown): TrialRequest | null => {
     return null;
   }
 
-  // Organization is optional here, unlike the survey's opt-in: the pricing
-  // page asks for as little as possible.
+  // Organization is required, same as the survey's trial opt-in: a trial
+  // license is issued to an organization, and it is the one thing needed to
+  // qualify the request.
   const organization = candidate.organization;
-  if (organization !== undefined && organization !== null && typeof organization !== "string") {
+  if (typeof organization !== "string" || organization.trim().length === 0) {
     return null;
   }
-  const trimmedOrg = typeof organization === "string" ? organization.trim() : "";
 
   return {
     email: email.trim(),
-    organization: trimmedOrg.length > 0 ? trimmedOrg : null,
+    organization: organization.trim(),
   };
 };
 
@@ -59,7 +59,7 @@ const notifyTeam = (request: TrialRequest): Promise<void> =>
       "New 30-day Self-Service trial request from the Lighthouse page.",
       "",
       `Email: ${request.email}`,
-      `Organization: ${request.organization ?? "(not given)"}`,
+      `Organization: ${request.organization}`,
       "",
       "Send the license and mark it as sent in the admin dashboard:",
       "https://letpeople.work/admin/dashboard",

@@ -44,12 +44,12 @@ describe("the trial request dialog", () => {
     expect(submission.submit).not.toHaveBeenCalled();
   });
 
-  it("submits email and optional organization, then confirms a human sends it", async () => {
+  it("submits email and organization, then confirms a human sends it", async () => {
     const user = userEvent.setup();
     const submission = renderDialog(async () => {});
 
     await user.type(screen.getByLabelText(/where should we send the license/i), "po@company.com");
-    await user.type(screen.getByLabelText(/organization/i), "ACME");
+    await user.type(screen.getByLabelText(/which organization/i), "ACME");
     await user.click(screen.getByRole("button", { name: /send me the license/i }));
 
     expect(submission.submit).toHaveBeenCalledWith({
@@ -60,17 +60,15 @@ describe("the trial request dialog", () => {
     expect(screen.getByTestId("trial-done")).toHaveTextContent(/nothing to cancel/i);
   });
 
-  it("treats organization as genuinely optional", async () => {
+  it("requires the organization, matching the survey's trial opt-in", async () => {
     const user = userEvent.setup();
     const submission = renderDialog(async () => {});
 
     await user.type(screen.getByLabelText(/where should we send the license/i), "po@company.com");
     await user.click(screen.getByRole("button", { name: /send me the license/i }));
 
-    expect(submission.submit).toHaveBeenCalledWith({
-      email: "po@company.com",
-      organization: undefined,
-    });
+    expect(screen.getByRole("alert")).toHaveTextContent(/which organization/i);
+    expect(submission.submit).not.toHaveBeenCalled();
   });
 
   it("never puts the email address into analytics", async () => {
@@ -78,11 +76,14 @@ describe("the trial request dialog", () => {
     renderDialog(async () => {});
 
     await user.type(screen.getByLabelText(/where should we send the license/i), "secret@corp.com");
+    await user.type(screen.getByLabelText(/which organization/i), "Secret Corp");
     await user.click(screen.getByRole("button", { name: /send me the license/i }));
     await screen.findByTestId("trial-done");
 
     expect(trackEvent).toHaveBeenCalledWith("Trial requested", { source: "pricing-card" });
-    expect(JSON.stringify(trackEvent.mock.calls)).not.toContain("secret@corp.com");
+    const calls = JSON.stringify(trackEvent.mock.calls);
+    expect(calls).not.toContain("secret@corp.com");
+    expect(calls).not.toContain("Secret Corp");
   });
 
   it("offers the licensing address as a fallback when the request fails", async () => {
@@ -92,6 +93,7 @@ describe("the trial request dialog", () => {
     });
 
     await user.type(screen.getByLabelText(/where should we send the license/i), "po@company.com");
+    await user.type(screen.getByLabelText(/which organization/i), "ACME");
     await user.click(screen.getByRole("button", { name: /send me the license/i }));
 
     expect(await screen.findByRole("alert")).toHaveTextContent(/licensing@letpeople\.work/i);

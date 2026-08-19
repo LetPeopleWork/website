@@ -62,12 +62,16 @@ const TrialRequestDialog = ({
       setError("Enter a valid email so we know where to send the license.");
       return;
     }
+    if (organization.trim().length === 0) {
+      setError("Tell us which organization the license is for.");
+      return;
+    }
     setError(null);
     setPhase("sending");
     try {
       await submit.submit({
         email: email.trim(),
-        organization: organization.trim() || undefined,
+        organization: organization.trim(),
       });
       // Counts and origin only - the email address never goes to analytics.
       trackEvent("Trial requested", { source });
@@ -123,7 +127,7 @@ const TrialRequestDialog = ({
                 />
               </div>
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="trial-organization">Organization (optional)</Label>
+                <Label htmlFor="trial-organization">Which organization is it for?</Label>
                 <Input
                   id="trial-organization"
                   type="text"
