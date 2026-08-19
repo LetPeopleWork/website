@@ -48,21 +48,16 @@ const SEO = ({
     }))
   } : null;
 
-  // WebSite structured data with search action
+  // WebSite structured data. Deliberately no SearchAction: the site has no
+  // search, and advertising one made Google crawl the literal template URL
+  // (/?s={search_term_string}) straight into Search Console's
+  // "Crawled - currently not indexed" report.
   const websiteStructuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "LetPeopleWork",
     "url": siteUrl,
-    "description": "Expert consulting in Flow, Delivery, and Obeya methodologies. Creators of Lighthouse - the leading open-source flow metrics and forecasting tool.",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": {
-        "@type": "EntryPoint",
-        "urlTemplate": `${siteUrl}/?s={search_term_string}`
-      },
-      "query-input": "required name=search_term_string"
-    }
+    "description": "Expert consulting in Flow, Delivery, and Obeya methodologies. Creators of Lighthouse - the leading open-source flow metrics and forecasting tool."
   };
 
   // Meta tags are updated in place rather than rendered as JSX. index.html
