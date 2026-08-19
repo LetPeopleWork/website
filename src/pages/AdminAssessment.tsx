@@ -105,6 +105,11 @@ const AdminAssessment = ({
       <SEO
         title="Admin dashboard"
         description="Internal admin dashboard for Delivery Predictability Assessment and survey results."
+        // Internal page. Kept in step with the noindex flag for the admin
+        // routes in scripts/prerender-meta.mjs — both layers are needed,
+        // because Google renders JS and this component overwrites the static
+        // robots tag.
+        noIndex
       />
       {session && summary ? (
         <AdminDashboard

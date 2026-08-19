@@ -69,12 +69,15 @@
       that read raw HTML get the core facts here so the page is never an empty
       div. Keep these facts in sync with the live site and llms.txt.
     -->
+    <!-- This block is the HOMEPAGE fallback only: scripts/prerender-meta.mjs
+         swaps it per route, so every page shows its own content to crawlers
+         rather than all of them showing this one. Route-specific text lives in
+         the seoRoutes array in that script. -->
     <noscript>
-      <h1>Lighthouse by LetPeopleWork</h1>
-      <p>Lighthouse is an open-source, self-hosted flow metrics and Monte Carlo forecasting tool for software delivery teams. It is a free, self-hosted alternative to ActionableAgile and Nave.</p>
-      <p>It connects to Jira, Azure DevOps, and Linear, turns a team's real delivery history into probabilistic delivery forecasts, and shows where the delivery system is losing speed, including blocked work and predictability trends over time. AI assistants can query the flow data directly over MCP (Model Context Protocol). It runs as a native desktop app (Windows, macOS, Linux), as a Docker container, or on Kubernetes via an official Helm chart.</p>
-      <p>Editions, all self-hosted and open source: Community is free forever (up to 3 teams and 1 portfolio). Self-Service is CHF 2,000 per year, with unlimited teams and portfolios. Enterprise is CHF 10,000 per year with prioritised support. Your data always stays on your own infrastructure.</p>
-      <p>LetPeopleWork GmbH is a Swiss consultancy in flow, forecasting, and delivery, and the maker of Lighthouse. More detail at https://letpeople.work/lighthouse, a comparison with ActionableAgile and Nave at <a href="https://letpeople.work/compare/">https://letpeople.work/compare/</a>, and a machine-readable summary at https://letpeople.work/llms.txt</p>
+      <h1>LetPeopleWork - Flow Metrics Consulting and the Lighthouse Tool</h1>
+      <p>LetPeopleWork GmbH is a Swiss consultancy in flow, forecasting, and delivery, and the maker of Lighthouse, an open-source, self-hosted flow metrics and Monte Carlo forecasting tool that connects to Jira, Azure DevOps, and Linear.</p>
+      <p>The consultancy side offers ProKanban.org certified training, hands-on workshops on flow metrics, probabilistic forecasting and right-sizing, and data-driven assessments of delivery predictability. The tooling side is Lighthouse: a free, self-hosted alternative to ActionableAgile and Nave, with AI access to flow data over MCP (Model Context Protocol).</p>
+      <p>Details: Lighthouse at https://letpeople.work/lighthouse, a free delivery predictability assessment at https://letpeople.work/assessment, a tool comparison at <a href="https://letpeople.work/compare/">https://letpeople.work/compare/</a>, and a machine-readable summary at https://letpeople.work/llms.txt</p>
     </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
