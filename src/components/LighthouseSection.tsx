@@ -81,7 +81,7 @@ const LighthouseSection = () => {
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Most teams already have the data. They just can't see what it's telling them. Lighthouse connects to Jira, Azure DevOps, Linear, and ServiceNow, turns your history into honest forecasts, and shows you exactly where your delivery system is losing speed.
+            Most teams already have the data. They just can't see what it's telling them, so the same delays keep surprising them, quarter after quarter. Lighthouse connects to Jira, Azure DevOps, Linear, and ServiceNow, turns your history into honest forecasts, and shows you exactly where your delivery system is losing speed.
           </p>
         </div>
 

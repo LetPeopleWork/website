@@ -53,7 +53,7 @@ const Hero = () => {
           </h1>
 
           <p className="text-lg md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed font-light">
-            You're being asked when it'll be done. Right now, your honest answer is a guess. Lighthouse shows you <em className="text-foreground/80 not-italic font-normal">why</em> delivery is slow and <em className="text-foreground/80 not-italic font-normal">when</em> it'll finish, so you can fix the system and stop defending the date.
+            You're being asked when it'll be done. Right now your honest answer is a guess, <em className="text-foreground/80 not-italic font-normal">and every guess that slips costs you a little more trust</em>. Lighthouse turns your real delivery history into forecasts you can defend, so you stop losing the room every time a date moves.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
