@@ -172,7 +172,7 @@ const RunStep = ({
           </Button>
         </div>
       ) : (
-      <div className="grid gap-2.5">
+      <div className="grid gap-2.5" data-testid="sizing-answers">
         {c.answers.map((answer) => (
           <button
             key={answer.verdict}
