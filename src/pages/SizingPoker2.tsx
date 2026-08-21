@@ -264,6 +264,7 @@ const SizingPoker2 = ({ now = Date.now }: SizingPoker2Props) => {
               </div>
               <Spotlight
                 anchor='[data-testid="wizard-days-anchor"]'
+                dock
                 text={STEP_TIPS[0]}
                 doHint={"→ Click Start sizing"}
                 step={0}

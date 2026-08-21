@@ -94,6 +94,7 @@ const fallbackRoutes = [
   // style is chosen.
   { path: "sizing-poker-2", title: "Sizing Poker prototype | LetPeopleWork" },
   { path: "sizing-poker-3", title: "Sizing Poker prototype | LetPeopleWork" },
+  { path: "sizing-poker-4", title: "Sizing Poker prototype | LetPeopleWork" },
 ];
 
 const FALLBACK_NOSCRIPT = `

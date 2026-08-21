@@ -18,6 +18,7 @@ const SurveyRoute = lazy(() => import("./pages/SurveyRoute"));
 const SizingPoker = lazy(() => import("./pages/SizingPoker"));
 const SizingPoker2 = lazy(() => import("./pages/SizingPoker2"));
 const SizingPoker3 = lazy(() => import("./pages/SizingPoker3"));
+const SizingPoker4 = lazy(() => import("./pages/SizingPoker4"));
 
 const queryClient = new QueryClient();
 
@@ -51,6 +52,7 @@ const App = () => (
               <Route path="/sizing-poker" element={<SizingPoker />} />
               <Route path="/sizing-poker-2" element={<SizingPoker2 />} />
               <Route path="/sizing-poker-3" element={<SizingPoker3 />} />
+              <Route path="/sizing-poker-4" element={<SizingPoker4 />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
