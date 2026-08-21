@@ -7,11 +7,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import WrapUpView from "@/features/sizing-poker/components/WrapUpView";
 import { sizingPokerContent, questionFor } from "@/features/sizing-poker/content/sizingPokerContent";
+import ConfigStep from "@/features/sizing-poker/components/ConfigStep";
 import {
   DEFAULT_TARGET_DAYS,
   currentItem,
   initialState,
   normaliseTarget,
+  parseItems,
   reduce,
   type Verdict,
 } from "@/features/sizing-poker/core/roundMachine";
@@ -38,21 +40,30 @@ const PAGE_TEXT = {
   contextLine: (days: number) => `An example round with a ${days} day window.`,
   popupCta: "Next item",
   introCta: "Next",
-  startHeading: "How fast should an item be done?",
-  startExplainer:
-    "Pick a number of days. In the round you will see one work item at a time and answer a single question: is it doable within that many days? That is all the sizing there is.",
-  startNote: "We loaded an example backlog with 8 items so you can try it.",
-  startCta: "Start the round",
 };
+
+// The two highlight popups on the config screen.
+const CONFIG_STEPS = [
+  {
+    anchor: "#sizing-target",
+    text: () =>
+      "First, set how quickly an item should normally be done where you work. A rough number is fine.",
+  },
+  {
+    anchor: "#sizing-items",
+    text: () =>
+      "Your items go here, one per line, straight from your backlog. For this round we filled in an example backlog. Press Start sizing when you're ready.",
+  },
+];
 
 // The two highlight popups on the first item.
 const INTRO_STEPS = [
   {
-    anchor: "sizing-item",
+    anchor: '[data-testid="sizing-item"]',
     text: () => "Read the title and discuss if you understand it.",
   },
   {
-    anchor: "popup-answers",
+    anchor: '[data-testid="popup-answers"]',
     text: (days: number) => `Choose whether it's doable within ${days} days or less.`,
   },
 ];
@@ -71,6 +82,19 @@ const MAYBE_EXAMPLES: Record<string, string> = {
 };
 const MAYBE_FALLBACK = "pairing, or help from another team";
 
+// Same idea for a no: a splitting suggestion that fits the item on screen.
+const NO_EXAMPLES: Record<string, string> = {
+  "Add SSO login via Azure AD": "starting with login for one pilot group before rolling it out to everyone",
+  "Fix timezone bug in the export scheduler": "fixing it first for the one report where it hurts most",
+  "Migrate the reporting database to the new cluster": "moving a single report to the new cluster first",
+  "Add CSV export to the metrics table": "exporting the current view first and adding filters later",
+  "Rework the onboarding email sequence": "reworking the first email before the rest of the sequence",
+  "Support custom date ranges in forecasts": "starting with a fixed set of ranges before free ones",
+  "Add rate limiting to the public API": "starting with a limit on the one endpoint that gets hit hardest",
+  "Replace the deprecated charting library": "replacing a single chart first to prove the new library",
+};
+const NO_FALLBACK = "splitting the item into smaller parts";
+
 // One popup per answer, on every click.
 const POPUPS: Record<Verdict, { heading: string; body: (days: number, item: string) => string }> = {
   fits: {
@@ -84,7 +108,8 @@ const POPUPS: Record<Verdict, { heading: string; body: (days: number, item: stri
   },
   "too-big": {
     heading: "No",
-    body: () => "Discuss how we can address this. For example splitting the item into smaller parts.",
+    body: (_days, item) =>
+      `Discuss how we can address this. For example splitting the item into smaller parts: ${NO_EXAMPLES[item] ?? NO_FALLBACK}.`,
   },
 };
 
@@ -112,7 +137,7 @@ const IntroHighlight = ({
 
   useEffect(() => {
     const measure = () => {
-      const el = document.querySelector(`[data-testid="${anchor}"]`);
+      const el = document.querySelector(anchor);
       setRect(el ? el.getBoundingClientRect() : null);
     };
     measure();
@@ -164,13 +189,22 @@ const SizingPoker4 = ({ now = Date.now }: SizingPoker4Props) => {
   const [pending, setPending] = useState<Verdict | null>(null);
   // 0 and 1 are the highlight steps on the first item; 2 means free play.
   const [introStep, setIntroStep] = useState(0);
+  // Same again for the config screen.
+  const [configStep, setConfigStep] = useState(0);
   const [daysValue, setDaysValue] = useState(String(DEFAULT_TARGET_DAYS));
+  // Prefilled: the example backlog sits in the real form, so the screen the
+  // popups explain is the one a team will actually use.
+  const [itemsValue, setItemsValue] = useState(sizingPokerContent.sampleItems.join("\n"));
 
   const startRound = () => {
+    const items = parseItems(itemsValue);
+    if (items.length === 0) {
+      return;
+    }
     dispatch({ type: "begin" });
     dispatch({
       type: "start",
-      items: sizingPokerContent.sampleItems,
+      items,
       targetDays: normaliseTarget(daysValue),
       at: now(),
     });
@@ -231,43 +265,14 @@ const SizingPoker4 = ({ now = Date.now }: SizingPoker4Props) => {
         <div className="mx-auto w-full max-w-2xl">
           {(state.phase === "intro" || state.phase === "config") && (
             <div data-testid="popup-start">
-              <h1 className="mb-4 text-balance text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-                {PAGE_TEXT.startHeading}
-              </h1>
-              <div className="flex flex-col gap-6 rounded-2xl border border-border bg-card p-6 shadow-soft">
-                <p className="text-[15px] leading-relaxed text-muted-foreground">
-                  {PAGE_TEXT.startExplainer}
-                </p>
-                <div>
-                  <Label htmlFor="popup-days" className="text-base font-semibold">
-                    {sizingPokerContent.config.targetLabel}
-                  </Label>
-                  <div className="mt-2 flex items-center gap-3">
-                    <Input
-                      id="popup-days"
-                      type="number"
-                      min={1}
-                      max={365}
-                      inputMode="numeric"
-                      value={daysValue}
-                      onChange={(event) => setDaysValue(event.target.value)}
-                      className="max-w-[110px] font-semibold tabular-nums"
-                    />
-                    <span className="text-muted-foreground">
-                      {sizingPokerContent.config.targetUnit}
-                    </span>
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  <span className="font-semibold text-primary">&#10003;</span>{" "}
-                  {PAGE_TEXT.startNote}
-                </p>
-                <div>
-                  <Button onClick={startRound} size="lg" data-testid="popup-start-cta">
-                    {PAGE_TEXT.startCta}
-                  </Button>
-                </div>
-              </div>
+              <ConfigStep
+                targetValue={daysValue}
+                itemsValue={itemsValue}
+                onTargetChange={setDaysValue}
+                onItemsChange={setItemsValue}
+                onUseSample={() => setItemsValue(sizingPokerContent.sampleItems.join("\n"))}
+                onStart={startRound}
+              />
             </div>
           )}
 
@@ -337,6 +342,16 @@ const SizingPoker4 = ({ now = Date.now }: SizingPoker4Props) => {
           )}
         </div>
       </main>
+
+      {(state.phase === "intro" || state.phase === "config") &&
+        configStep < CONFIG_STEPS.length && (
+          <IntroHighlight
+            anchor={CONFIG_STEPS[configStep].anchor}
+            text={CONFIG_STEPS[configStep].text()}
+            cta={PAGE_TEXT.introCta}
+            onNext={() => setConfigStep((step) => step + 1)}
+          />
+        )}
 
       {state.phase === "running" && introStep < INTRO_STEPS.length && (
         <IntroHighlight
