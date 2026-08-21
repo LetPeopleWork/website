@@ -259,3 +259,70 @@ describe("the guided walkthrough (G17)", () => {
     expect(state.phase).toBe("config");
   });
 });
+
+describe("target enforcement (G19)", () => {
+  const enforcedRound = (): RoundState => {
+    const configured = reduce(initialState(), { type: "beginGuided" });
+    return reduce(configured, {
+      type: "start",
+      items: ["easy", "coupled", "huge"],
+      targetDays: 10,
+      at: 1_000,
+      guidedTargets: ["fits", "conditional", "too-big"],
+    });
+  };
+
+  it("a vote that misses the target is answered, not recorded", () => {
+    let state = enforcedRound();
+    state = reduce(state, { type: "vote", verdict: "too-big", at: 2_000 });
+    expect(state.redirectPending).toBe(true);
+    expect(state.votes).toHaveLength(0);
+    expect(state.currentIndex).toBe(0);
+    // Crucially: a wrong "No" does not trigger the lesson - the lesson belongs
+    // to the item designed for it.
+    expect(state.lessonPending).toBe(false);
+  });
+
+  it("the target answer clears the redirect and moves on", () => {
+    let state = enforcedRound();
+    state = reduce(state, { type: "vote", verdict: "too-big", at: 2_000 });
+    state = reduce(state, { type: "vote", verdict: "fits", at: 3_000 });
+    expect(state.redirectPending).toBe(false);
+    expect(state.votes).toEqual([{ item: "easy", verdict: "fits" }]);
+    expect(state.currentIndex).toBe(1);
+  });
+
+  it("every walkthrough therefore visits all three answers", () => {
+    let state = enforcedRound();
+    state = reduce(state, { type: "vote", verdict: "fits", at: 2_000 });
+    state = reduce(state, { type: "vote", verdict: "conditional", at: 3_000 });
+    state = reduce(state, { type: "vote", verdict: "too-big", at: 4_000 });
+    state = reduce(state, { type: "dismissLesson", at: 5_000 });
+    expect(state.phase).toBe("done");
+    expect(state.votes.map((v) => v.verdict)).toEqual(["fits", "conditional", "too-big"]);
+  });
+
+  it("exiting the walkthrough drops the enforcement with the coaching", () => {
+    let state = enforcedRound();
+    state = reduce(state, { type: "vote", verdict: "too-big", at: 2_000 });
+    state = reduce(state, { type: "exitGuided", at: 3_000 });
+    expect(state.redirectPending).toBe(false);
+    // Now a free round: any answer records.
+    state = reduce(state, { type: "vote", verdict: "too-big", at: 4_000 });
+    expect(state.votes).toHaveLength(1);
+    expect(state.lessonPending).toBe(false);
+  });
+
+  it("without targets, guided votes stay free (backwards compatible)", () => {
+    const configured = reduce(initialState(), { type: "beginGuided" });
+    let state = reduce(configured, {
+      type: "start",
+      items: ["a", "b"],
+      targetDays: 10,
+      at: 1_000,
+    });
+    state = reduce(state, { type: "vote", verdict: "conditional", at: 2_000 });
+    expect(state.votes).toHaveLength(1);
+    expect(state.redirectPending).toBe(false);
+  });
+});

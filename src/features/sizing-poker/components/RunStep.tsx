@@ -19,6 +19,8 @@ interface RunStepProps {
     noteBefore?: string;
     /** Quiet aside below the answers. Item 1 only (G16). */
     noteAfter?: string;
+    /** G19: shown when the last click missed this item's target answer. */
+    redirect?: string;
     /** First-"No" lesson currently replacing the answers (G3). */
     lessonPending: boolean;
     onDismissLesson: () => void;
@@ -140,6 +142,16 @@ const RunStep = ({
         {item}
       </p>
       <p className="mb-7 text-lg text-muted-foreground">{questionFor(targetDays)}</p>
+
+      {guided?.redirect && !lessonPending && (
+        <p
+          className="mb-4 rounded-xl border border-coach-rule border-l-[3px] border-l-coach bg-coach-wash px-4 py-3 text-sm leading-relaxed text-coach"
+          data-testid="guided-redirect"
+          role="status"
+        >
+          {guided.redirect}
+        </p>
+      )}
 
       {lessonPending ? (
         <div

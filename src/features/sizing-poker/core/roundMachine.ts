@@ -38,6 +38,13 @@ export interface RoundState {
   /** The first "No" of a guided round pauses here until the lesson is dismissed (G3). */
   readonly lessonPending: boolean;
   readonly lessonShown: boolean;
+  /**
+   * G19: in the walkthrough every item teaches one specific answer, so all
+   * three get visited. A vote that misses the target is not recorded - the
+   * redirect note answers it instead, and this flag shows that note.
+   */
+  readonly guidedTargets: readonly Verdict[] | null;
+  readonly redirectPending: boolean;
   readonly targetDays: number;
   readonly items: readonly string[];
   readonly currentIndex: number;
@@ -50,7 +57,14 @@ export interface RoundState {
 export type RoundAction =
   | { type: "begin" }
   | { type: "beginGuided" }
-  | { type: "start"; items: readonly string[]; targetDays: number; at: number }
+  | {
+      type: "start";
+      items: readonly string[];
+      targetDays: number;
+      at: number;
+      /** One target answer per item; guided rounds only (G19). */
+      guidedTargets?: readonly Verdict[];
+    }
   | { type: "vote"; verdict: Verdict; at: number }
   | { type: "dismissLesson"; at: number }
   | { type: "exitGuided"; at: number }
@@ -68,6 +82,8 @@ export const initialState = (): RoundState => ({
   startedGuided: false,
   lessonPending: false,
   lessonShown: false,
+  guidedTargets: null,
+  redirectPending: false,
   targetDays: DEFAULT_TARGET_DAYS,
   items: [],
   currentIndex: 0,
@@ -107,6 +123,7 @@ const start = (
   items: readonly string[],
   targetDays: number,
   at: number,
+  guidedTargets?: readonly Verdict[],
 ): RoundState => {
   if (items.length === 0) {
     return state;
@@ -117,6 +134,8 @@ const start = (
     startedGuided: state.mode === "guided",
     lessonPending: false,
     lessonShown: false,
+    guidedTargets: state.mode === "guided" ? (guidedTargets ?? null) : null,
+    redirectPending: false,
     targetDays,
     items,
     currentIndex: 0,
@@ -144,7 +163,19 @@ const vote = (state: RoundState, verdict: Verdict, at: number): RoundState => {
     return state;
   }
 
-  const voted = { ...state, votes: [...state.votes, { item, verdict }] };
+  // G19: a walkthrough vote that misses the item's target is answered, not
+  // recorded - the redirect note explains why this item teaches what it does,
+  // and the round waits for the target answer.
+  const target = state.guidedTargets?.[state.currentIndex];
+  if (state.mode === "guided" && target !== undefined && verdict !== target) {
+    return { ...state, redirectPending: true };
+  }
+
+  const voted = {
+    ...state,
+    votes: [...state.votes, { item, verdict }],
+    redirectPending: false,
+  };
 
   // The first "No" of a guided round holds on the item and teaches, once (G3).
   // The vote is already recorded; only the advance waits.
@@ -181,7 +212,7 @@ export const reduce = (state: RoundState, action: RoundAction): RoundState => {
         ? { ...state, phase: "config", mode: "guided" }
         : state;
     case "start":
-      return start(state, action.items, action.targetDays, action.at);
+      return start(state, action.items, action.targetDays, action.at, action.guidedTargets);
     case "vote":
       return vote(state, action.verdict, action.at);
     case "dismissLesson":
@@ -201,7 +232,7 @@ export const reduce = (state: RoundState, action: RoundAction): RoundState => {
         : state;
       return cleared.phase === "config"
         ? { ...initialState(), phase: "config", targetDays: state.targetDays }
-        : { ...cleared, mode: "normal" };
+        : { ...cleared, mode: "normal", guidedTargets: null, redirectPending: false };
     }
     case "finish":
       return finish(state, action.at);

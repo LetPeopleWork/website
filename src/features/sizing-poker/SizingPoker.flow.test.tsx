@@ -547,3 +547,31 @@ describe("the walkthrough (G8-G18)", () => {
     expect(screen.getByTestId("guided-ending").textContent).not.toMatch(jargon);
   });
 });
+
+describe("G19: the walkthrough guarantees all three answers", () => {
+  it("a wrong answer gets a coach reply and the item waits for the right one", async () => {
+    const user = userEvent.setup();
+    renderPage(makeClock().now);
+    await user.click(screen.getByRole("button", { name: /walk me through it/i }));
+    await user.click(screen.getByRole("button", { name: /start sizing/i }));
+
+    // Item 1 teaches Yes; try No.
+    await user.keyboard("3");
+    expect(screen.getByTestId("guided-redirect")).toHaveTextContent(/click yes/i);
+    // Not recorded: still on item 1, and no lesson hijacked by the wrong No.
+    expect(screen.getByTestId("sizing-item")).toHaveTextContent("Add CSV export");
+    expect(screen.queryByTestId("guided-lesson")).not.toBeInTheDocument();
+
+    // The target answer clears the note and moves on.
+    await user.keyboard("1");
+    expect(screen.queryByTestId("guided-redirect")).not.toBeInTheDocument();
+    expect(screen.getByTestId("sizing-item")).toHaveTextContent("Rework the onboarding");
+  });
+
+  it("the redirect copy carries no jargon either", async () => {
+    const jargon = /service level expectation|\bSLE\b|cycle time|percentile|85%|kanban/i;
+    sizingPokerContent.guided.items.forEach((entry) => {
+      expect(entry.redirect).not.toMatch(jargon);
+    });
+  });
+});

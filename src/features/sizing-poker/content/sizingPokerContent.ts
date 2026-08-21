@@ -78,10 +78,15 @@ const contentSchema = z.object({
     configConfirmation: z.string().min(1).max(120),
     // Exactly three curated items, one specimen per answer (G17). A note
     // before the item is a nudge; a note after is an aside. Never both.
+    // `target` is the answer this item exists to teach (G19): a different
+    // answer is not recorded - `redirect` explains why and asks for another
+    // look, so every walkthrough visits Yes, Maybe and No exactly once.
     items: z
       .array(
         z.object({
           title: z.string().min(1),
+          target: z.enum(["fits", "conditional", "too-big"]),
+          redirect: z.string().min(1).max(220),
           noteBefore: z.string().max(200).optional(),
           noteAfter: z.string().max(200).optional(),
         }),
@@ -220,6 +225,9 @@ const raw = {
         // is the lesson. The after-note is Benji's "what causes you to think?"
         // as a private noticing (G16).
         title: "Add CSV export to the metrics table",
+        target: "fits" as const,
+        redirect:
+          "Fair instinct \u2014 but look again: it's small, contained, and all this team's. Most items should feel like this. Click Yes and see where a yes goes.",
         noteAfter:
           "Read the title and react \u2014 first instinct. If it's a no, notice what makes you think that. You'll use it in a moment.",
       },
@@ -227,6 +235,9 @@ const raw = {
         // The dependency ("hier brauchen wir Marketing"). The only pre-answer
         // note: it points at who the item needs; the user draws the conclusion.
         title: "Rework the onboarding email sequence",
+        target: "conditional" as const,
+        redirect:
+          "Almost \u2014 but this one needs marketing's time, not just yours. That's not a clean yes and not a real no. Click Maybe and see what it's for.",
         noteBefore:
           "This one's different. Look at who it needs \u2014 not just this team. When an item only works if someone outside is free, that's what Maybe is for.",
       },
@@ -234,6 +245,9 @@ const raw = {
         // The no ("f\u00fchlt sich nach viel an"). Needs no nudge; the first
         // "No" triggers the one-time lesson (G3).
         title: "Migrate the reporting database to the new cluster",
+        target: "too-big" as const,
+        redirect:
+          "Brave \u2014 but core work like this rarely fits in the time you set. Click No: the useful part of this method is what happens after a no.",
       },
     ],
     lessonHeading: "You said no. That's the useful answer.",

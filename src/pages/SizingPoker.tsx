@@ -78,6 +78,10 @@ const SizingPoker = ({ now = Date.now }: SizingPokerProps) => {
       items,
       targetDays: normaliseTarget(targetValue),
       at: now(),
+      guidedTargets:
+        state.mode === "guided"
+          ? sizingPokerContent.guided.items.map((entry) => entry.target)
+          : undefined,
     });
   };
 
@@ -148,6 +152,9 @@ const SizingPoker = ({ now = Date.now }: SizingPokerProps) => {
                   ? {
                       noteBefore: guidedItemFor(state.currentIndex)?.noteBefore,
                       noteAfter: guidedItemFor(state.currentIndex)?.noteAfter,
+                      redirect: state.redirectPending
+                        ? guidedItemFor(state.currentIndex)?.redirect
+                        : undefined,
                       lessonPending: state.lessonPending,
                       onDismissLesson: () =>
                         dispatch({ type: "dismissLesson", at: now() }),

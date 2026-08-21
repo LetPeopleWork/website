@@ -254,9 +254,32 @@ The design in between:
   the one-time G3 lesson.
 - **Nudge, never command.** If someone answers against the grain the round
   simply continues — no correction, no branching. A rare missed lesson costs
-  less than forced clicks cost everyone.
+  less than forced clicks cost everyone. *(Superseded by G19 — Peter overruled
+  the miss-tolerance.)*
 - **Dividend:** the guided ending's split is 1/1/1 — one item in each list — so
   the output format itself teaches what each answer is for.
+
+**[G19] Every walkthrough must actually visit Yes, Maybe and No — enforced by acknowledge-explain-redirect, not by disabling buttons.**
+(Peter, 2026-08-21: *"In the walkthrough I should need to have Yes, Maybe and
+No."* — overrules G17's miss-tolerance.)
+
+G17 guaranteed the three answers only statistically; Peter's decision makes the
+guarantee absolute. The failure mode to avoid is Simon Says: greying out two
+buttons or auto-advancing teaches button locations, not judgment. Instead a
+"wrong" answer is *answered*: the coach replies in a note above the answers —
+first validating the instinct, then explaining why this item is the specimen
+for a different answer, then naming the target ("Click Maybe and see what it's
+for"). The vote is not recorded until the target answer lands, so the ending's
+1/1/1 split is now a certainty, not a dividend.
+
+Mechanics: each guided item carries a `target` verdict and a `redirect` string
+(content module); the machine stores `guidedTargets` only when a guided round
+starts with them, and a non-target guided vote sets `redirectPending` without
+recording anything — in particular, a wrong "No" on items 1–2 does **not** fire
+the G3 lesson, which stays bound to the item designed for it. Exit drops the
+enforcement with the rest of the coaching (G11: exit keeps the round, now as a
+free one). Normal rounds and target-less guided starts are byte-for-byte
+unchanged, so G2's evidence separation is untouched.
 
 **[G18] Guided screens are styled in the site's shipped tokens, plus two new ones for the coach voice.**
 The mock now uses the exact palette from `src/index.css` (teal primary
