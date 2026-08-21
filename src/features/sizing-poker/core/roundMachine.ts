@@ -13,6 +13,13 @@ export type Verdict = "fits" | "conditional" | "too-big";
 
 export type Phase = "intro" | "config" | "running" | "done";
 
+/**
+ * "guided" is the walkthrough (G8-G17): example items, coach notes, and the
+ * one-time lesson on the first "No". It is a flag through the same phases, not
+ * a separate flow (G5).
+ */
+export type Mode = "normal" | "guided";
+
 export interface Vote {
   readonly item: string;
   readonly verdict: Verdict;
@@ -20,6 +27,17 @@ export interface Vote {
 
 export interface RoundState {
   readonly phase: Phase;
+  readonly mode: Mode;
+  /**
+   * True for any round that BEGAN guided, even after the coaching is exited.
+   * The wrap-up and analytics key off this, not off `mode`: a round whose early
+   * answers were made while reading coach notes has a fabricated pace, and it
+   * must never feed the seconds-per-item evidence (G2, G10).
+   */
+  readonly startedGuided: boolean;
+  /** The first "No" of a guided round pauses here until the lesson is dismissed (G3). */
+  readonly lessonPending: boolean;
+  readonly lessonShown: boolean;
   readonly targetDays: number;
   readonly items: readonly string[];
   readonly currentIndex: number;
@@ -31,8 +49,11 @@ export interface RoundState {
 
 export type RoundAction =
   | { type: "begin" }
+  | { type: "beginGuided" }
   | { type: "start"; items: readonly string[]; targetDays: number; at: number }
   | { type: "vote"; verdict: Verdict; at: number }
+  | { type: "dismissLesson"; at: number }
+  | { type: "exitGuided"; at: number }
   | { type: "finish"; at: number }
   | { type: "restart" };
 
@@ -43,6 +64,10 @@ export const DEFAULT_TARGET_DAYS = 10;
 
 export const initialState = (): RoundState => ({
   phase: "intro",
+  mode: "normal",
+  startedGuided: false,
+  lessonPending: false,
+  lessonShown: false,
   targetDays: DEFAULT_TARGET_DAYS,
   items: [],
   currentIndex: 0,
@@ -88,6 +113,10 @@ const start = (
   }
   return {
     phase: "running",
+    mode: state.mode,
+    startedGuided: state.mode === "guided",
+    lessonPending: false,
+    lessonShown: false,
     targetDays,
     items,
     currentIndex: 0,
@@ -97,8 +126,17 @@ const start = (
   };
 };
 
+/** Move past the current item: next one, or the end of the round. */
+const advance = (state: RoundState, at: number): RoundState => {
+  const nextIndex = state.currentIndex + 1;
+  if (nextIndex >= state.items.length) {
+    return { ...state, phase: "done", finishedAt: at };
+  }
+  return { ...state, currentIndex: nextIndex };
+};
+
 const vote = (state: RoundState, verdict: Verdict, at: number): RoundState => {
-  if (state.phase !== "running") {
+  if (state.phase !== "running" || state.lessonPending) {
     return state;
   }
   const item = state.items[state.currentIndex];
@@ -106,13 +144,14 @@ const vote = (state: RoundState, verdict: Verdict, at: number): RoundState => {
     return state;
   }
 
-  const votes = [...state.votes, { item, verdict }];
-  const nextIndex = state.currentIndex + 1;
+  const voted = { ...state, votes: [...state.votes, { item, verdict }] };
 
-  if (nextIndex >= state.items.length) {
-    return { ...state, votes, phase: "done", finishedAt: at };
+  // The first "No" of a guided round holds on the item and teaches, once (G3).
+  // The vote is already recorded; only the advance waits.
+  if (state.mode === "guided" && verdict === "too-big" && !state.lessonShown) {
+    return { ...voted, lessonPending: true, lessonShown: true };
   }
-  return { ...state, votes, currentIndex: nextIndex };
+  return advance(voted, at);
 };
 
 /**
@@ -137,10 +176,33 @@ export const reduce = (state: RoundState, action: RoundAction): RoundState => {
   switch (action.type) {
     case "begin":
       return state.phase === "intro" ? { ...state, phase: "config" } : state;
+    case "beginGuided":
+      return state.phase === "intro"
+        ? { ...state, phase: "config", mode: "guided" }
+        : state;
     case "start":
       return start(state, action.items, action.targetDays, action.at);
     case "vote":
       return vote(state, action.verdict, action.at);
+    case "dismissLesson":
+      return state.lessonPending
+        ? advance({ ...state, lessonPending: false }, action.at)
+        : state;
+    // Leaving the walkthrough keeps the visitor exactly where they are, minus
+    // the coaching (G11) - training wheels, not a locked track. startedGuided
+    // survives on purpose: the answers so far were made while reading notes,
+    // so the round must still end on the guided wrap-up, without a pace (G10).
+    case "exitGuided": {
+      if (state.mode !== "guided") {
+        return state;
+      }
+      const cleared = state.lessonPending
+        ? advance({ ...state, lessonPending: false }, action.at)
+        : state;
+      return cleared.phase === "config"
+        ? { ...initialState(), phase: "config", targetDays: state.targetDays }
+        : { ...cleared, mode: "normal" };
+    }
     case "finish":
       return finish(state, action.at);
     case "restart":

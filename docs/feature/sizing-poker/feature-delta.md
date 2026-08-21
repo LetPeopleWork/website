@@ -298,6 +298,27 @@ different hat. The objection is therefore also a test: if it proves true across
 the board, that is evidence against the three-way question itself, and the
 honest response is to say so rather than add machinery that conceals it.
 
+**[D18] A guided walkthrough is being designed as a separate feature; three of these decisions are touched.**
+(Benji and Peter, 2026-08-21. Full DISCUSS output in
+`docs/feature/sizing-guided-walkthrough/feature-delta.md`.)
+
+Recorded here so the parent decisions are not silently contradicted later:
+
+- **D5 is at risk and is protected by G2.** A guided round is deliberately slow
+  and would inflate seconds-per-item if it shared the metric. Every sizing event
+  gains a `mode: guided | normal` flag so the falsification instrument stays
+  usable. This is the one place the new feature could damage this one.
+- **D4 and D11 are unchanged, and G3 explains why the "what could we do?" prompt
+  does not breach them.** Prompting thought is a hazard in a round whose value is
+  speed, and the whole point in a mode whose value is teaching. The prompt exists
+  only in guided mode, asserted by test.
+- **D16's naming lesson applies again (G7).** "Interactive Tutorial" is a working
+  name; "tutorial" promises learning an interface rather than a method.
+
+Also promotes a finding about *this* feature: the example backlog already carries
+a real team discussion, and the shipped `sampleItems` do span the needed spread.
+That makes it a product surface rather than filler, and G1 puts a test on it.
+
 **[D9] Reference-class / child-count sizing modes stay out.**
 Chris G's 20.07. thread frames Sizing Poker as one mode of a general sizer
 parameterised by SLE, child count, or reference class. Noted, deliberately not

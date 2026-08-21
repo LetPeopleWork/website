@@ -7,6 +7,7 @@ import IntroStep from "@/features/sizing-poker/components/IntroStep";
 import ConfigStep from "@/features/sizing-poker/components/ConfigStep";
 import RunStep from "@/features/sizing-poker/components/RunStep";
 import WrapUpView from "@/features/sizing-poker/components/WrapUpView";
+import GuidedEnding from "@/features/sizing-poker/components/GuidedEnding";
 import { sizingPokerContent } from "@/features/sizing-poker/content/sizingPokerContent";
 import {
   DEFAULT_TARGET_DAYS,
@@ -46,20 +47,32 @@ const SizingPoker = ({ now = Date.now }: SizingPokerProps) => {
   const stats = useMemo(() => statsFor(state), [state]);
 
   // Counts and buckets only. Item titles never leave the browser (AC-1.6).
+  // Every event carries the mode, and a guided round additionally emits its
+  // own completion event - a walkthrough pace is fabricated by someone reading
+  // coach notes and must stay separable from the real evidence (G2).
   useEffect(() => {
     if (state.phase === "done" && !reported.current) {
       reported.current = true;
-      trackEvent("Sizing round completed", trackingProps(stats));
+      const mode = state.startedGuided ? "guided" : "normal";
+      trackEvent("Sizing round completed", { ...trackingProps(stats), mode });
+      if (state.startedGuided) {
+        trackEvent("Walkthrough completed");
+      }
     }
-  }, [state.phase, stats]);
+  }, [state.phase, state.startedGuided, stats]);
 
   const handleStart = () => {
-    const items = parseItems(itemsValue);
+    // The walkthrough sizes three curated items - one specimen per answer
+    // (G17) - never the visitor's own input.
+    const items =
+      state.mode === "guided"
+        ? sizingPokerContent.guided.items.map((entry) => entry.title)
+        : parseItems(itemsValue);
     if (items.length === 0) {
       return;
     }
     reported.current = false;
-    trackEvent("Sizing round started", { items: items.length });
+    trackEvent("Sizing round started", { items: items.length, mode: state.mode });
     dispatch({
       type: "start",
       items,
@@ -67,6 +80,14 @@ const SizingPoker = ({ now = Date.now }: SizingPokerProps) => {
       at: now(),
     });
   };
+
+  const handleBeginGuided = () => {
+    trackEvent("Walkthrough started");
+    dispatch({ type: "beginGuided" });
+  };
+
+  const guidedItemFor = (index: number) =>
+    sizingPokerContent.guided.items[index];
 
   const handleVote = (verdict: Verdict) => {
     dispatch({ type: "vote", verdict, at: now() });
@@ -94,7 +115,10 @@ const SizingPoker = ({ now = Date.now }: SizingPokerProps) => {
       <main className="flex-1 px-4 pb-16 pt-28">
         <div className="mx-auto w-full max-w-2xl">
           {state.phase === "intro" && (
-            <IntroStep onBegin={() => dispatch({ type: "begin" })} />
+            <IntroStep
+              onBegin={() => dispatch({ type: "begin" })}
+              onBeginGuided={handleBeginGuided}
+            />
           )}
 
           {state.phase === "config" && (
@@ -105,6 +129,8 @@ const SizingPoker = ({ now = Date.now }: SizingPokerProps) => {
               onItemsChange={setItemsValue}
               onUseSample={() => setItemsValue(sizingPokerContent.sampleItems.join("\n"))}
               onStart={handleStart}
+              guided={state.mode === "guided"}
+              onExitGuided={() => dispatch({ type: "exitGuided", at: now() })}
             />
           )}
 
@@ -117,11 +143,34 @@ const SizingPoker = ({ now = Date.now }: SizingPokerProps) => {
               startedAt={state.startedAt}
               onVote={handleVote}
               onAbandon={() => dispatch({ type: "finish", at: now() })}
+              guided={
+                state.mode === "guided"
+                  ? {
+                      noteBefore: guidedItemFor(state.currentIndex)?.noteBefore,
+                      noteAfter: guidedItemFor(state.currentIndex)?.noteAfter,
+                      lessonPending: state.lessonPending,
+                      onDismissLesson: () =>
+                        dispatch({ type: "dismissLesson", at: now() }),
+                      onExit: () => dispatch({ type: "exitGuided", at: now() }),
+                    }
+                  : undefined
+              }
               now={now}
             />
           )}
 
-          {state.phase === "done" && (
+          {/* A round that BEGAN guided ends here even if the coaching was
+              exited: its pace was made while reading notes, and the page's
+              headline number must never first appear as a fabricated one (G10). */}
+          {state.phase === "done" && state.startedGuided && (
+            <GuidedEnding
+              stats={stats}
+              onOwnItems={() => dispatch({ type: "restart" })}
+              onExit={() => dispatch({ type: "restart" })}
+            />
+          )}
+
+          {state.phase === "done" && !state.startedGuided && (
             <WrapUpView
               stats={stats}
               targetDays={state.targetDays}

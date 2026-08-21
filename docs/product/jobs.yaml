@@ -164,3 +164,80 @@ jobs:
         and Nos. That is only true inside Lighthouse. Built on the website it is
         the weak version of the strong feature, and it spends the differentiator
         that is supposed to pull people towards the product.
+
+  # Added 2026-08-21 from Benji and Peter's Slack thread on a guided walkthrough.
+  # See docs/feature/sizing-guided-walkthrough/feature-delta.md
+  - id: learn-by-doing-not-reading
+    status: asserted
+    story: >
+      When I land on a sizing tool I have never used and it asks me for a number
+      of days I have never thought about, I want to be walked through one round
+      on example work, so I can judge the method without having to supply
+      anything of my own first.
+    dimensions:
+      functional: Complete one round end to end without preparing data or vocabulary.
+      emotional: Not feeling stupid at the first field. The cold start is where people leave.
+      social: Be able to explain the method to a team afterwards, in my own words.
+    forces:
+      push: >
+        The first screen asks for a number the visitor has no basis for. That is
+        a cliff, and it sits before any of the value.
+      pull: >
+        One button that fills everything in and explains the next move at each
+        step.
+      anxiety: >
+        A tutorial that is slow, patronising, or cannot be escaped. Also the risk
+        that guided rounds pollute the seconds-per-item evidence, which is a
+        product risk rather than a user one - see G2.
+      habit: >
+        Skipping tutorials. Whatever is built must be worth not skipping within
+        the first screen, and must be leaveable at any point.
+    opportunity:
+      importance: high
+      satisfaction: very-low
+      note: >
+        Provisional. The cold-start problem is inferred from the shape of the
+        page, not yet from observed drop-off - the page is unlisted and has no
+        traffic to speak of. Revisit once the walkthrough ships and start rate
+        is measurable.
+
+  - id: rehearse-on-fake-data
+    status: asserted
+    story: >
+      When I want my team to try a new way of sizing, I want to run one example
+      round with them without preparing anything, so we can have the real
+      argument on work that belongs to nobody before risking it on ours.
+    dimensions:
+      functional: Run a complete example session with zero preparation.
+      emotional: Relief that a first attempt cannot embarrass anyone.
+      social: Introduce a new practice without appearing to impose it.
+    forces:
+      push: >
+        Trying a new method on the real backlog spends the team's actual
+        refinement on an experiment that might not work, in front of everyone.
+      pull: >
+        Benji, from real use: the example items already produce genuine
+        disagreement, because people react to a title - "that needs marketing",
+        "core functionality, feels big", "that is just a UI tweak, it fits".
+      anxiety: >
+        That fake data feels like a toy and the team disengages. This is exactly
+        what slice 03 is built to disprove.
+      habit: >
+        New practices normally arrive as a slide deck. This arrives as a thing
+        the team does for ten minutes.
+    evidence:
+      - source: "Benji Huser, Slack, 2026-08-21"
+        quote: "mit einem Team kannst du fast \"richtige\" Diskussionen führen auch mit den Demo Daten"
+        note: >
+          Checked against the shipped sampleItems and it holds - the eight items
+          do span his three reaction types. That was luck, and G1 turns it into a
+          constraint.
+    opportunity:
+      importance: high
+      satisfaction: very-low
+      note: >
+        The mechanism that makes this work is that nobody has to defend their own
+        estimate. Disagreeing about whether an item is too big is safe when the
+        item belongs to no one, so the social stakes that distort a first attempt
+        are absent. That is why a retro is the right room, and why this job may
+        matter more for adoption than the solo learning job above.

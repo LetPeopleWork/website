@@ -149,3 +149,113 @@ describe("progressRatio", () => {
     expect(progressRatio(initialState())).toBe(0);
   });
 });
+
+describe("the guided walkthrough (G17)", () => {
+  const guidedRound = (): RoundState => {
+    const configured = reduce(initialState(), { type: "beginGuided" });
+    return reduce(configured, {
+      type: "start",
+      items: ["easy", "coupled", "huge"],
+      targetDays: 10,
+      at: 1_000,
+    });
+  };
+
+  it("beginGuided lands on config in guided mode", () => {
+    const state = reduce(initialState(), { type: "beginGuided" });
+    expect(state.phase).toBe("config");
+    expect(state.mode).toBe("guided");
+  });
+
+  it("a round started guided stays marked as such for its whole life", () => {
+    let state = guidedRound();
+    expect(state.startedGuided).toBe(true);
+    state = reduce(state, { type: "exitGuided", at: 2_000 });
+    expect(state.mode).toBe("normal");
+    expect(state.startedGuided).toBe(true);
+  });
+
+  it("the first No pauses on the item with the lesson pending", () => {
+    let state = guidedRound();
+    state = reduce(state, { type: "vote", verdict: "fits", at: 2_000 });
+    state = reduce(state, { type: "vote", verdict: "too-big", at: 3_000 });
+
+    expect(state.lessonPending).toBe(true);
+    expect(state.currentIndex).toBe(1); // still on the item that got the No
+    expect(state.votes).toHaveLength(2); // but the vote is recorded
+  });
+
+  it("votes are ignored while the lesson is up, so keyboard mashing cannot skip it", () => {
+    let state = guidedRound();
+    state = reduce(state, { type: "vote", verdict: "too-big", at: 2_000 });
+    const during = reduce(state, { type: "vote", verdict: "fits", at: 3_000 });
+    expect(during).toEqual(state);
+  });
+
+  it("dismissing the lesson advances, and a second No teaches nothing (G3: once)", () => {
+    let state = guidedRound();
+    state = reduce(state, { type: "vote", verdict: "too-big", at: 2_000 });
+    state = reduce(state, { type: "dismissLesson", at: 3_000 });
+    expect(state.currentIndex).toBe(1);
+    expect(state.lessonPending).toBe(false);
+
+    state = reduce(state, { type: "vote", verdict: "too-big", at: 4_000 });
+    expect(state.lessonPending).toBe(false);
+    expect(state.currentIndex).toBe(2);
+  });
+
+  it("a No on the last item finishes the round after the lesson is dismissed", () => {
+    let state = guidedRound();
+    state = reduce(state, { type: "vote", verdict: "fits", at: 2_000 });
+    state = reduce(state, { type: "vote", verdict: "conditional", at: 3_000 });
+    state = reduce(state, { type: "vote", verdict: "too-big", at: 4_000 });
+    expect(state.phase).toBe("running"); // held by the lesson
+    state = reduce(state, { type: "dismissLesson", at: 5_000 });
+    expect(state.phase).toBe("done");
+    expect(state.finishedAt).toBe(5_000);
+  });
+
+  it("the lesson never fires in a normal round", () => {
+    let state = reduce(initialState(), { type: "begin" });
+    state = reduce(state, { type: "start", items: ["a", "b"], targetDays: 10, at: 1_000 });
+    state = reduce(state, { type: "vote", verdict: "too-big", at: 2_000 });
+    expect(state.lessonPending).toBe(false);
+    expect(state.currentIndex).toBe(1);
+  });
+
+  it("exiting from guided config resets to a clean normal config (nothing to keep)", () => {
+    const configured = reduce(initialState(), { type: "beginGuided" });
+    const state = reduce(configured, { type: "exitGuided", at: 1 });
+    expect(state.phase).toBe("config");
+    expect(state.mode).toBe("normal");
+    expect(state.startedGuided).toBe(false);
+  });
+
+  it("exiting mid-round keeps the round intact, coaching removed (G11)", () => {
+    let state = guidedRound();
+    state = reduce(state, { type: "vote", verdict: "fits", at: 2_000 });
+    state = reduce(state, { type: "exitGuided", at: 3_000 });
+    expect(state.phase).toBe("running");
+    expect(state.mode).toBe("normal");
+    expect(state.currentIndex).toBe(1);
+    expect(state.votes).toHaveLength(1);
+  });
+
+  it("exiting while the lesson is up dismisses it and advances", () => {
+    let state = guidedRound();
+    state = reduce(state, { type: "vote", verdict: "too-big", at: 2_000 });
+    state = reduce(state, { type: "exitGuided", at: 3_000 });
+    expect(state.lessonPending).toBe(false);
+    expect(state.currentIndex).toBe(1);
+    expect(state.mode).toBe("normal");
+  });
+
+  it("restart clears guided state entirely - the second round is the real thing", () => {
+    let state = guidedRound();
+    state = reduce(state, { type: "vote", verdict: "fits", at: 2_000 });
+    state = reduce(state, { type: "restart" });
+    expect(state.mode).toBe("normal");
+    expect(state.startedGuided).toBe(false);
+    expect(state.phase).toBe("config");
+  });
+});

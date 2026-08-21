@@ -58,6 +58,14 @@ All colors MUST be HSL.
     --verdict-toobig: 6 49% 44%;
     --verdict-toobig-wash: 6 55% 96%;
 
+    /* The walkthrough's coach voice. Slate - the same hue family as
+       --foreground - so it harmonises with the site while staying clearly
+       distinct from brand teal: the visitor can always tell the product's
+       voice from the guide's. */
+    --coach: 215 45% 34%;
+    --coach-wash: 215 45% 96.5%;
+    --coach-rule: 215 40% 86%;
+
     --radius: 0.5rem;
   }
 
@@ -96,6 +104,10 @@ All colors MUST be HSL.
     --verdict-conditional-wash: 38 30% 14%;
     --verdict-toobig: 6 65% 65%;
     --verdict-toobig-wash: 6 30% 15%;
+
+    --coach: 215 50% 70%;
+    --coach-wash: 215 30% 15%;
+    --coach-rule: 215 30% 32%;
   }
 }
 

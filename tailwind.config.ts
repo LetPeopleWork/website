@@ -53,6 +53,11 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				coach: {
+					DEFAULT: 'hsl(var(--coach))',
+					wash: 'hsl(var(--coach-wash))',
+					rule: 'hsl(var(--coach-rule))'
+				},
 				verdict: {
 					fits: 'hsl(var(--verdict-fits))',
 					'fits-wash': 'hsl(var(--verdict-fits-wash))',

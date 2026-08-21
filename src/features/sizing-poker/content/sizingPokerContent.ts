@@ -66,6 +66,38 @@ const contentSchema = z.object({
   }),
   answers: z.array(answerSchema).length(3),
   sampleItems: z.array(z.string().min(1)).min(5),
+  // The walkthrough (G8-G18). Length caps are G13: on a phone a three-line
+  // coach note pushes the answers below the fold, so a slip fails the build.
+  guided: z.object({
+    entryCta: z.string().min(1).max(30),
+    modeLabel: z.string().min(1).max(30),
+    modeLabelFinished: z.string().min(1).max(40),
+    exitLabel: z.string().min(1).max(15),
+    configHeading: z.string().min(1),
+    configCoach: z.string().min(1).max(220),
+    configConfirmation: z.string().min(1).max(120),
+    // Exactly three curated items, one specimen per answer (G17). A note
+    // before the item is a nudge; a note after is an aside. Never both.
+    items: z
+      .array(
+        z.object({
+          title: z.string().min(1),
+          noteBefore: z.string().max(200).optional(),
+          noteAfter: z.string().max(200).optional(),
+        }),
+      )
+      .length(3),
+    lessonHeading: z.string().min(1).max(60),
+    lessonIntro: z.string().min(1).max(140),
+    lessonOptions: z.array(z.string().min(1).max(100)).length(2),
+    lessonCta: z.string().min(1).max(20),
+    endingEyebrow: z.string().min(1).max(40),
+    endingHeading: z.string().min(1).max(60),
+    endingLede: z.string().min(1).max(140),
+    handoverHeading: z.string().min(1).max(60),
+    handoverBody: z.string().min(1).max(260),
+    handoverCta: z.string().min(1).max(30),
+  }),
 });
 
 const raw = {
@@ -169,6 +201,58 @@ const raw = {
       subtitle: "Too big as it stands.",
     },
   ],
+
+  guided: {
+    entryCta: "Walk me through it",
+    modeLabel: "Walkthrough",
+    modeLabelFinished: "Walkthrough \u00b7 finished",
+    exitLabel: "Exit",
+    configHeading: "One thing before you start",
+    configCoach:
+      "One number first: how long does a typical item take once someone starts it? Not the longest, not the shortest \u2014 the one that wouldn't surprise anyone. No idea? Try 10.",
+    configConfirmation:
+      "Example backlog loaded \u2014 you'll size three of its items, one at a time.",
+    // One specimen per answer, nudged but never commanded (G17). Both nudge
+    // items are Benji's own examples from the 2026-08-21 thread.
+    items: [
+      {
+        // The reflex. Small and contained; nearly everyone says yes, and that
+        // is the lesson. The after-note is Benji's "what causes you to think?"
+        // as a private noticing (G16).
+        title: "Add CSV export to the metrics table",
+        noteAfter:
+          "Read the title and react \u2014 first instinct. If it's a no, notice what makes you think that. You'll use it in a moment.",
+      },
+      {
+        // The dependency ("hier brauchen wir Marketing"). The only pre-answer
+        // note: it points at who the item needs; the user draws the conclusion.
+        title: "Rework the onboarding email sequence",
+        noteBefore:
+          "This one's different. Look at who it needs \u2014 not just this team. When an item only works if someone outside is free, that's what Maybe is for.",
+      },
+      {
+        // The no ("f\u00fchlt sich nach viel an"). Needs no nudge; the first
+        // "No" triggers the one-time lesson (G3).
+        title: "Migrate the reporting database to the new cluster",
+      },
+    ],
+    lessonHeading: "You said no. That's the useful answer.",
+    lessonIntro:
+      "A \u201cno\u201d isn't a verdict to write down \u2014 it's the start of a short conversation:",
+    lessonOptions: [
+      "Could it be split into something smaller that would fit?",
+      "Does someone specific need to be free for it to work?",
+    ],
+    lessonCta: "Got it",
+    endingEyebrow: "Walkthrough complete",
+    endingHeading: "That's the whole method.",
+    endingLede:
+      "Three items, one question each \u2014 and each answer sends its item somewhere different.",
+    handoverHeading: "Now do it with your own backlog.",
+    handoverBody:
+      "Same three answers, your items, about a minute. That run gives you a real number for how fast the question goes \u2014 this one doesn't, because you were reading me.",
+    handoverCta: "Size my own items",
+  },
 
   sampleItems: [
     "Add SSO login via Azure AD",
