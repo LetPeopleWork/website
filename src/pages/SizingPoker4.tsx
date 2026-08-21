@@ -1,14 +1,17 @@
-import { useEffect, useMemo, useReducer, useRef, useState } from "react";
+import { useEffect, useMemo, useReducer, useState } from "react";
 import Navigation from "@/components/Navigation";
 import SimpleFooter from "@/components/SimpleFooter";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import WrapUpView from "@/features/sizing-poker/components/WrapUpView";
 import { sizingPokerContent, questionFor } from "@/features/sizing-poker/content/sizingPokerContent";
 import {
   DEFAULT_TARGET_DAYS,
   currentItem,
   initialState,
+  normaliseTarget,
   reduce,
   type Verdict,
 } from "@/features/sizing-poker/core/roundMachine";
@@ -32,36 +35,56 @@ import { statsFor } from "@/features/sizing-poker/core/roundStats";
 
 const PAGE_TEXT = {
   title: "Sizing Poker (Prototype D) - Popup guidance",
-  contextLine: "An example round with a 10 day window.",
+  contextLine: (days: number) => `An example round with a ${days} day window.`,
   popupCta: "Next item",
   introCta: "Next",
+  startHeading: "How fast should an item be done?",
+  startExplainer:
+    "Pick a number of days. In the round you will see one work item at a time and answer a single question: is it doable within that many days? That is all the sizing there is.",
+  startNote: "We loaded an example backlog with 8 items so you can try it.",
+  startCta: "Start the round",
 };
 
 // The two highlight popups on the first item.
 const INTRO_STEPS = [
   {
     anchor: "sizing-item",
-    text: "Read the title and discuss if you understand it.",
+    text: () => "Read the title and discuss if you understand it.",
   },
   {
     anchor: "popup-answers",
-    text: "Choose whether it's doable within 10 days or less.",
+    text: (days: number) => `Choose whether it's doable within ${days} days or less.`,
   },
 ];
 
+// A maybe needs an example that fits the item, or the popup reads like a
+// template. Keyed by item title; the fallback covers items added later.
+const MAYBE_EXAMPLES: Record<string, string> = {
+  "Add SSO login via Azure AD": "access to the Azure AD tenant, or test accounts from IT",
+  "Fix timezone bug in the export scheduler": "reproduction data from support, or pairing with someone who knows the scheduler",
+  "Migrate the reporting database to the new cluster": "a maintenance window agreed with operations",
+  "Add CSV export to the metrics table": "pairing with someone who knows the metrics code",
+  "Rework the onboarding email sequence": "commitment from the marketing department",
+  "Support custom date ranges in forecasts": "a decision from the product owner on how far back ranges may go",
+  "Add rate limiting to the public API": "agreement with the customers who use the API today",
+  "Replace the deprecated charting library": "a decision which library to use instead",
+};
+const MAYBE_FALLBACK = "pairing, or help from another team";
+
 // One popup per answer, on every click.
-const POPUPS: Record<Verdict, { heading: string; body: string }> = {
+const POPUPS: Record<Verdict, { heading: string; body: (days: number, item: string) => string }> = {
   fits: {
     heading: "Yes",
-    body: "Great, move on to the next item.",
+    body: () => "Great, move on to the next item.",
   },
   conditional: {
     heading: "Maybe",
-    body: "Discuss what must be true in order that it can be done in 10 days. Can we achieve that? For example pairing, or commitment from the marketing department.",
+    body: (days, item) =>
+      `Discuss what must be true in order that it can be done in ${days} days. Can we achieve that? For example ${MAYBE_EXAMPLES[item] ?? MAYBE_FALLBACK}.`,
   },
   "too-big": {
     heading: "No",
-    body: "Discuss how we can address this. For example splitting the item into smaller parts.",
+    body: () => "Discuss how we can address this. For example splitting the item into smaller parts.",
   },
 };
 
@@ -141,22 +164,17 @@ const SizingPoker4 = ({ now = Date.now }: SizingPoker4Props) => {
   const [pending, setPending] = useState<Verdict | null>(null);
   // 0 and 1 are the highlight steps on the first item; 2 means free play.
   const [introStep, setIntroStep] = useState(0);
-  const booted = useRef(false);
+  const [daysValue, setDaysValue] = useState(String(DEFAULT_TARGET_DAYS));
 
-  // Straight into the round, with the full example backlog.
-  useEffect(() => {
-    if (booted.current) {
-      return;
-    }
-    booted.current = true;
+  const startRound = () => {
     dispatch({ type: "begin" });
     dispatch({
       type: "start",
       items: sizingPokerContent.sampleItems,
-      targetDays: DEFAULT_TARGET_DAYS,
+      targetDays: normaliseTarget(daysValue),
       at: now(),
     });
-  }, [now]);
+  };
 
   const stats = useMemo(() => statsFor(state), [state]);
   const item = currentItem(state);
@@ -211,9 +229,51 @@ const SizingPoker4 = ({ now = Date.now }: SizingPoker4Props) => {
       <Navigation />
       <main className="flex-1 px-4 pb-16 pt-28">
         <div className="mx-auto w-full max-w-2xl">
+          {(state.phase === "intro" || state.phase === "config") && (
+            <div data-testid="popup-start">
+              <h1 className="mb-4 text-balance text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+                {PAGE_TEXT.startHeading}
+              </h1>
+              <div className="flex flex-col gap-6 rounded-2xl border border-border bg-card p-6 shadow-soft">
+                <p className="text-[15px] leading-relaxed text-muted-foreground">
+                  {PAGE_TEXT.startExplainer}
+                </p>
+                <div>
+                  <Label htmlFor="popup-days" className="text-base font-semibold">
+                    {sizingPokerContent.config.targetLabel}
+                  </Label>
+                  <div className="mt-2 flex items-center gap-3">
+                    <Input
+                      id="popup-days"
+                      type="number"
+                      min={1}
+                      max={365}
+                      inputMode="numeric"
+                      value={daysValue}
+                      onChange={(event) => setDaysValue(event.target.value)}
+                      className="max-w-[110px] font-semibold tabular-nums"
+                    />
+                    <span className="text-muted-foreground">
+                      {sizingPokerContent.config.targetUnit}
+                    </span>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  <span className="font-semibold text-primary">&#10003;</span>{" "}
+                  {PAGE_TEXT.startNote}
+                </p>
+                <div>
+                  <Button onClick={startRound} size="lg" data-testid="popup-start-cta">
+                    {PAGE_TEXT.startCta}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+
           {state.phase === "running" && item !== null && (
             <div data-testid="popup-run">
-              <p className="mb-6 text-sm text-muted-foreground">{PAGE_TEXT.contextLine}</p>
+              <p className="mb-6 text-sm text-muted-foreground">{PAGE_TEXT.contextLine(state.targetDays)}</p>
 
               <div className="rounded-2xl border border-border bg-card p-6 shadow-soft">
                 <div className="mb-3 flex items-baseline justify-between text-sm tabular-nums text-muted-foreground">
@@ -281,7 +341,7 @@ const SizingPoker4 = ({ now = Date.now }: SizingPoker4Props) => {
       {state.phase === "running" && introStep < INTRO_STEPS.length && (
         <IntroHighlight
           anchor={INTRO_STEPS[introStep].anchor}
-          text={INTRO_STEPS[introStep].text}
+          text={INTRO_STEPS[introStep].text(state.targetDays)}
           cta={PAGE_TEXT.introCta}
           onNext={() => setIntroStep((step) => step + 1)}
         />
@@ -301,7 +361,7 @@ const SizingPoker4 = ({ now = Date.now }: SizingPoker4Props) => {
               {POPUPS[pending].heading}
             </h2>
             <p className="mb-5 text-[15px] leading-relaxed text-muted-foreground">
-              {POPUPS[pending].body}
+              {POPUPS[pending].body(state.targetDays, item ?? "")}
             </p>
             <Button onClick={dismissPopup} size="lg" data-testid="popup-dismiss">
               {PAGE_TEXT.popupCta}

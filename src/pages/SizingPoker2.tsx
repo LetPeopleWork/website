@@ -27,18 +27,17 @@ import { statsFor } from "@/features/sizing-poker/core/roundStats";
 // analytics: nothing from this page may touch the real evidence (G2).
 //
 // The wizard: the page dims, the one control that matters stays lit inside a
-// spotlight cutout, and the coach speaks from a card anchored to it. A wrong
-// answer shakes the card and swaps its text for the redirect (G19 still
-// binds). Advance stays on-action (G6): the card never has a Next button
-// during votes - the click itself drives the wizard.
+// spotlight cutout, and the coach speaks from a card docked at the bottom.
+// Per Benji's feedback (21.8.2026) the guided round runs the FULL example
+// backlog and prescribes no answers. The wizard covers the config step and
+// the first item; after that the round runs free. Advance stays on-action
+// (G6): the card has no Next button during votes.
 
-const TOTAL_STEPS = 4; // config + three items
+const TOTAL_STEPS = 2; // config + first item
 
 const STEP_TIPS = [
   "This is the one decision a round needs: the time window every item is judged against. 10 days is a good default — keep it and press Start sizing.",
-  "Read the title and react — first instinct. Most everyday items feel like this one: small, contained, all yours.",
-  "One thing to notice here: whose time does this need? Not everything a team sizes is theirs alone.",
-  "Last one. Just react — and if it feels like a lot, say so.",
+  "Read the title and react — first instinct. From here it's one item at a time, same question each time.",
 ];
 
 interface SpotlightProps {
@@ -47,15 +46,15 @@ interface SpotlightProps {
   text: string;
   doHint: string;
   step: number;
-  /** Bump to replay the shake (a redirect landed). */
-  nudgeKey: number;
+  /** Bump to replay the shake. Unused since targets were dropped. */
+  nudgeKey?: number;
   /** Dock the card bottom-centre (run step) instead of anchoring it - an
       anchored card would cover the item title, the one thing to react to. */
   dock?: boolean;
   onExit: () => void;
 }
 
-const Spotlight = ({ anchor, text, doHint, step, nudgeKey, dock = false, onExit }: SpotlightProps) => {
+const Spotlight = ({ anchor, text, doHint, step, nudgeKey = 0, dock = false, onExit }: SpotlightProps) => {
   const [rect, setRect] = useState<DOMRect | null>(null);
 
   // Polled, not observed: the anchor is re-created on every step change and a
@@ -158,14 +157,13 @@ const SizingPoker2 = ({ now = Date.now }: SizingPoker2Props) => {
   const [state, dispatch] = useReducer(reduce, undefined, initialState);
   const [targetValue, setTargetValue] = useState(String(DEFAULT_TARGET_DAYS));
   const [itemsValue, setItemsValue] = useState("");
-  const [nudgeKey, setNudgeKey] = useState(0);
 
   const stats = useMemo(() => statsFor(state), [state]);
   const g = sizingPokerContent.guided;
   const guided = state.mode === "guided";
 
   const handleStart = () => {
-    const items = guided ? g.items.map((entry) => entry.title) : parseItems(itemsValue);
+    const items = guided ? sizingPokerContent.sampleItems : parseItems(itemsValue);
     if (items.length === 0) {
       return;
     }
@@ -174,27 +172,17 @@ const SizingPoker2 = ({ now = Date.now }: SizingPoker2Props) => {
       items,
       targetDays: normaliseTarget(targetValue),
       at: now(),
-      guidedTargets: guided ? g.items.map((entry) => entry.target) : undefined,
     });
   };
 
-  // The shake is counted at the click, not derived in an effect: a second
-  // wrong answer on the same item must replay it even though redirectPending
-  // stays true throughout.
   const handleVote = (verdict: Verdict) => {
-    if (guided && state.phase === "running") {
-      const target = g.items[state.currentIndex]?.target;
-      setNudgeKey(target !== undefined && verdict !== target ? nudgeKey + 1 : 0);
-    }
     dispatch({ type: "vote", verdict, at: now() });
   };
 
   const exit = () => dispatch({ type: "exitGuided", at: now() });
   const item = currentItem(state);
 
-  const tipText = state.redirectPending
-    ? (g.items[state.currentIndex]?.redirect ?? "")
-    : STEP_TIPS[state.phase === "config" ? 0 : state.currentIndex + 1];
+  const tipText = STEP_TIPS[state.phase === "config" ? 0 : 1];
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -204,7 +192,7 @@ const SizingPoker2 = ({ now = Date.now }: SizingPoker2Props) => {
         noIndex
       />
       <Navigation />
-      <main className={`flex-1 px-4 pt-28 ${guided && state.phase === "running" ? "pb-56" : "pb-16"}`}>
+      <main className={`flex-1 px-4 pt-28 ${guided && state.phase === "running" && state.currentIndex === 0 ? "pb-56" : "pb-16"}`}>
         <div className="mx-auto w-full max-w-2xl">
           {state.phase === "intro" && (
             <IntroStep
@@ -297,14 +285,14 @@ const SizingPoker2 = ({ now = Date.now }: SizingPoker2Props) => {
                 }
                 now={now}
               />
-              {guided && !state.lessonPending && (
+              {guided && !state.lessonPending && state.currentIndex === 0 && (
                 <Spotlight
                   anchor='[data-testid="sizing-answers"]'
                   dock
                   text={tipText}
                   doHint={"→ React with one click"}
-                  step={state.currentIndex + 1}
-                  nudgeKey={nudgeKey}
+                  step={1}
+                  nudgeKey={0}
                   onExit={exit}
                 />
               )}
