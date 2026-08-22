@@ -6,9 +6,12 @@ import { trackEvent } from "@/lib/plausible";
 import IntroStep from "@/features/sizing-poker/components/IntroStep";
 import ConfigStep from "@/features/sizing-poker/components/ConfigStep";
 import RunStep from "@/features/sizing-poker/components/RunStep";
+import GuidedHighlight from "@/features/sizing-poker/components/GuidedHighlight";
+import VerdictPopup from "@/features/sizing-poker/components/VerdictPopup";
+import WalkthroughBar from "@/features/sizing-poker/components/WalkthroughBar";
 import WrapUpView from "@/features/sizing-poker/components/WrapUpView";
 import GuidedEnding from "@/features/sizing-poker/components/GuidedEnding";
-import { sizingPokerContent } from "@/features/sizing-poker/content/sizingPokerContent";
+import { fillTemplate, sizingPokerContent } from "@/features/sizing-poker/content/sizingPokerContent";
 import {
   DEFAULT_TARGET_DAYS,
   currentItem,
@@ -42,6 +45,12 @@ const SizingPoker = ({ now = Date.now }: SizingPokerProps) => {
   const [state, dispatch] = useReducer(reduce, undefined, initialState);
   const [targetValue, setTargetValue] = useState(String(DEFAULT_TARGET_DAYS));
   const [itemsValue, setItemsValue] = useState("");
+  // Walkthrough tour state (G20). The highlight steps run once per phase; the
+  // verdict popup holds the clicked answer until it is dismissed, and only
+  // then dispatches the vote - the item under discussion stays on screen.
+  const [configStep, setConfigStep] = useState(0);
+  const [itemStep, setItemStep] = useState(0);
+  const [popupVerdict, setPopupVerdict] = useState<Verdict | null>(null);
   const reported = useRef(false);
 
   const stats = useMemo(() => statsFor(state), [state]);
@@ -62,42 +71,81 @@ const SizingPoker = ({ now = Date.now }: SizingPokerProps) => {
   }, [state.phase, state.startedGuided, stats]);
 
   const handleStart = () => {
-    // The walkthrough sizes three curated items - one specimen per answer
-    // (G17) - never the visitor's own input.
-    const items =
-      state.mode === "guided"
-        ? sizingPokerContent.guided.items.map((entry) => entry.title)
-        : parseItems(itemsValue);
+    const items = parseItems(itemsValue);
     if (items.length === 0) {
       return;
     }
     reported.current = false;
     trackEvent("Sizing round started", { items: items.length, mode: state.mode });
+    setItemStep(0);
     dispatch({
       type: "start",
       items,
       targetDays: normaliseTarget(targetValue),
       at: now(),
-      guidedTargets:
-        state.mode === "guided"
-          ? sizingPokerContent.guided.items.map((entry) => entry.target)
-          : undefined,
     });
   };
 
+  // The walkthrough runs on the real config form, prefilled with the example
+  // backlog (G20) - the screen the popups explain is the one a team will use.
   const handleBeginGuided = () => {
     trackEvent("Walkthrough started");
+    setItemsValue(sizingPokerContent.sampleItems.join("\n"));
+    setConfigStep(0);
+    setItemStep(0);
+    setPopupVerdict(null);
     dispatch({ type: "beginGuided" });
   };
 
-  const guidedItemFor = (index: number) =>
-    sizingPokerContent.guided.items[index];
+  const handleExitGuided = () => {
+    // Exiting from the config also clears the prefill: the visitor asked for
+    // the normal page, and the normal page starts empty.
+    if (state.phase === "config") {
+      setItemsValue("");
+    }
+    setPopupVerdict(null);
+    dispatch({ type: "exitGuided", at: now() });
+  };
 
   const handleVote = (verdict: Verdict) => {
+    // Guided (G20): the click opens the answer's popup first; the vote lands
+    // when it is dismissed. A second key press while it is open does nothing.
+    if (state.mode === "guided") {
+      if (popupVerdict !== null) {
+        return;
+      }
+      setItemStep(2);
+      setPopupVerdict(verdict);
+      return;
+    }
     dispatch({ type: "vote", verdict, at: now() });
   };
 
   const item = currentItem(state);
+
+  const dismissPopup = () => {
+    if (popupVerdict !== null) {
+      dispatch({ type: "vote", verdict: popupVerdict, at: now() });
+      setPopupVerdict(null);
+    }
+  };
+
+  // Enter closes the open verdict popup, matching the lesson-style keyboard
+  // path of the earlier walkthrough.
+  useEffect(() => {
+    if (popupVerdict === null) {
+      return;
+    }
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        dismissPopup();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [popupVerdict]);
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -126,16 +174,24 @@ const SizingPoker = ({ now = Date.now }: SizingPokerProps) => {
           )}
 
           {state.phase === "config" && (
-            <ConfigStep
-              targetValue={targetValue}
-              itemsValue={itemsValue}
-              onTargetChange={setTargetValue}
-              onItemsChange={setItemsValue}
-              onUseSample={() => setItemsValue(sizingPokerContent.sampleItems.join("\n"))}
-              onStart={handleStart}
-              guided={state.mode === "guided"}
-              onExitGuided={() => dispatch({ type: "exitGuided", at: now() })}
-            />
+            <>
+              {state.mode === "guided" && <WalkthroughBar onExit={handleExitGuided} />}
+              <ConfigStep
+                targetValue={targetValue}
+                itemsValue={itemsValue}
+                onTargetChange={setTargetValue}
+                onItemsChange={setItemsValue}
+                onUseSample={() => setItemsValue(sizingPokerContent.sampleItems.join("\n"))}
+                onStart={handleStart}
+              />
+              {state.mode === "guided" && configStep < 2 && (
+                <GuidedHighlight
+                  anchor={configStep === 0 ? "#sizing-target" : "#sizing-items"}
+                  text={sizingPokerContent.guided.configSteps[configStep]}
+                  onNext={() => setConfigStep((step) => step + 1)}
+                />
+              )}
+            </>
           )}
 
           {state.phase === "running" && item !== null && state.startedAt !== null && (
@@ -147,22 +203,35 @@ const SizingPoker = ({ now = Date.now }: SizingPokerProps) => {
               startedAt={state.startedAt}
               onVote={handleVote}
               onAbandon={() => dispatch({ type: "finish", at: now() })}
-              guided={
-                state.mode === "guided"
-                  ? {
-                      noteBefore: guidedItemFor(state.currentIndex)?.noteBefore,
-                      noteAfter: guidedItemFor(state.currentIndex)?.noteAfter,
-                      redirect: state.redirectPending
-                        ? guidedItemFor(state.currentIndex)?.redirect
-                        : undefined,
-                      lessonPending: state.lessonPending,
-                      onDismissLesson: () =>
-                        dispatch({ type: "dismissLesson", at: now() }),
-                      onExit: () => dispatch({ type: "exitGuided", at: now() }),
-                    }
-                  : undefined
-              }
+              guided={state.mode === "guided" ? { onExit: handleExitGuided } : undefined}
               now={now}
+            />
+          )}
+
+          {state.phase === "running" &&
+            state.mode === "guided" &&
+            state.currentIndex === 0 &&
+            itemStep < 2 &&
+            popupVerdict === null && (
+              <GuidedHighlight
+                anchor={
+                  itemStep === 0
+                    ? '[data-testid="sizing-item"]'
+                    : '[data-testid="sizing-answers"]'
+                }
+                text={fillTemplate(sizingPokerContent.guided.itemSteps[itemStep], {
+                  days: state.targetDays,
+                })}
+                onNext={() => setItemStep((step) => step + 1)}
+              />
+            )}
+
+          {state.phase === "running" && popupVerdict !== null && item !== null && (
+            <VerdictPopup
+              verdict={popupVerdict}
+              item={item}
+              targetDays={state.targetDays}
+              onDismiss={dismissPopup}
             />
           )}
 
@@ -172,8 +241,14 @@ const SizingPoker = ({ now = Date.now }: SizingPokerProps) => {
           {state.phase === "done" && state.startedGuided && (
             <GuidedEnding
               stats={stats}
-              onOwnItems={() => dispatch({ type: "restart" })}
-              onExit={() => dispatch({ type: "restart" })}
+              onOwnItems={() => {
+                setItemsValue("");
+                dispatch({ type: "restart" });
+              }}
+              onExit={() => {
+                setItemsValue("");
+                dispatch({ type: "restart" });
+              }}
             />
           )}
 

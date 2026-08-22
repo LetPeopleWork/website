@@ -66,36 +66,29 @@ const contentSchema = z.object({
   }),
   answers: z.array(answerSchema).length(3),
   sampleItems: z.array(z.string().min(1)).min(5),
-  // The walkthrough (G8-G18). Length caps are G13: on a phone a three-line
-  // coach note pushes the answers below the fold, so a slip fails the build.
+  // The walkthrough, in Benji's popup model (G20). Length caps are G13: a
+  // long popup pushes what it explains off a phone screen, so a slip fails
+  // the build. Templates use {days} and {example} placeholders, filled by
+  // fillTemplate below.
   guided: z.object({
     entryCta: z.string().min(1).max(30),
     modeLabel: z.string().min(1).max(30),
     modeLabelFinished: z.string().min(1).max(40),
     exitLabel: z.string().min(1).max(15),
-    configHeading: z.string().min(1),
-    configCoach: z.string().min(1).max(220),
-    configConfirmation: z.string().min(1).max(120),
-    // Exactly three curated items, one specimen per answer (G17). A note
-    // before the item is a nudge; a note after is an aside. Never both.
-    // `target` is the answer this item exists to teach (G19): a different
-    // answer is not recorded - `redirect` explains why and asks for another
-    // look, so every walkthrough visits Yes, Maybe and No exactly once.
-    items: z
-      .array(
-        z.object({
-          title: z.string().min(1),
-          target: z.enum(["fits", "conditional", "too-big"]),
-          redirect: z.string().min(1).max(220),
-          noteBefore: z.string().max(200).optional(),
-          noteAfter: z.string().max(200).optional(),
-        }),
-      )
-      .length(3),
-    lessonHeading: z.string().min(1).max(60),
-    lessonIntro: z.string().min(1).max(140),
-    lessonOptions: z.array(z.string().min(1).max(100)).length(2),
-    lessonCta: z.string().min(1).max(20),
+    // Highlight popups: two on the config screen, two on the first item.
+    configSteps: z.array(z.string().min(1).max(220)).length(2),
+    itemSteps: z.array(z.string().min(1).max(160)).length(2),
+    stepCta: z.string().min(1).max(15),
+    popupCta: z.string().min(1).max(20),
+    // One popup per answer, on every click. The maybe and no popups name an
+    // example that fits the item on screen; unknown items get the fallback.
+    popupYes: z.string().min(1).max(120),
+    popupMaybe: z.string().min(1).max(260),
+    popupNo: z.string().min(1).max(260),
+    maybeExamples: z.record(z.string(), z.string().min(1).max(120)),
+    maybeFallback: z.string().min(1).max(80),
+    noExamples: z.record(z.string(), z.string().min(1).max(120)),
+    noFallback: z.string().min(1).max(80),
     endingEyebrow: z.string().min(1).max(40),
     endingHeading: z.string().min(1).max(60),
     endingLede: z.string().min(1).max(140),
@@ -212,56 +205,48 @@ const raw = {
     modeLabel: "Walkthrough",
     modeLabelFinished: "Walkthrough \u00b7 finished",
     exitLabel: "Exit",
-    configHeading: "One thing before you start",
-    configCoach:
-      "One number first: how long does a typical item take once someone starts it? Not the longest, not the shortest \u2014 the one that wouldn't surprise anyone. No idea? Try 10.",
-    configConfirmation:
-      "Example backlog loaded \u2014 you'll size three of its items, one at a time.",
-    // One specimen per answer, nudged but never commanded (G17). Both nudge
-    // items are Benji's own examples from the 2026-08-21 thread.
-    items: [
-      {
-        // The reflex. Small and contained; nearly everyone says yes, and that
-        // is the lesson. The after-note is Benji's "what causes you to think?"
-        // as a private noticing (G16).
-        title: "Add CSV export to the metrics table",
-        target: "fits" as const,
-        redirect:
-          "Fair instinct \u2014 but look again: it's small, contained, and all this team's. Most items should feel like this. Click Yes and see where a yes goes.",
-        noteAfter:
-          "Read the title and react \u2014 first instinct. If it's a no, notice what makes you think that. You'll use it in a moment.",
-      },
-      {
-        // The dependency ("hier brauchen wir Marketing"). The only pre-answer
-        // note: it points at who the item needs; the user draws the conclusion.
-        title: "Rework the onboarding email sequence",
-        target: "conditional" as const,
-        redirect:
-          "Almost \u2014 but this one needs marketing's time, not just yours. That's not a clean yes and not a real no. Click Maybe and see what it's for.",
-        noteBefore:
-          "This one's different. Look at who it needs \u2014 not just this team. When an item only works if someone outside is free, that's what Maybe is for.",
-      },
-      {
-        // The no ("f\u00fchlt sich nach viel an"). Needs no nudge; the first
-        // "No" triggers the one-time lesson (G3).
-        title: "Migrate the reporting database to the new cluster",
-        target: "too-big" as const,
-        redirect:
-          "Brave \u2014 but core work like this rarely fits in the time you set. Click No: the useful part of this method is what happens after a no.",
-      },
+    configSteps: [
+      "First, set how quickly an item should normally be done where you work. A rough number is fine.",
+      "Your items go here, one per line, straight from your backlog. For this round we filled in an example backlog. Press Start sizing when you're ready.",
     ],
-    lessonHeading: "You said no. That's the useful answer.",
-    lessonIntro:
-      "A \u201cno\u201d isn't a verdict to write down \u2014 it's the start of a short conversation:",
-    lessonOptions: [
-      "Could it be split into something smaller that would fit?",
-      "Does someone specific need to be free for it to work?",
+    itemSteps: [
+      "Read the title and discuss if you understand it.",
+      "Choose whether it's doable within {days} days or less.",
     ],
-    lessonCta: "Got it",
+    stepCta: "Next",
+    popupCta: "Next item",
+    // The popup texts are Benji's own words from the 2026-08-21 thread.
+    popupYes: "Great, move on to the next item.",
+    popupMaybe:
+      "Discuss what must be true in order that it can be done in {days} days. Can we achieve that? For example {example}.",
+    popupNo:
+      "Discuss how we can address this. For example splitting the item into smaller parts: {example}.",
+    maybeExamples: {
+      "Add SSO login via Azure AD": "access to the Azure AD tenant, or test accounts from IT",
+      "Fix timezone bug in the export scheduler": "reproduction data from support, or pairing with someone who knows the scheduler",
+      "Migrate the reporting database to the new cluster": "a maintenance window agreed with operations",
+      "Add CSV export to the metrics table": "pairing with someone who knows the metrics code",
+      "Rework the onboarding email sequence": "commitment from the marketing department",
+      "Support custom date ranges in forecasts": "a decision from the product owner on how far back ranges may go",
+      "Add rate limiting to the public API": "agreement with the customers who use the API today",
+      "Replace the deprecated charting library": "a decision which library to use instead",
+    },
+    maybeFallback: "pairing, or help from another team",
+    noExamples: {
+      "Add SSO login via Azure AD": "starting with login for one pilot group before rolling it out to everyone",
+      "Fix timezone bug in the export scheduler": "fixing it first for the one report where it hurts most",
+      "Migrate the reporting database to the new cluster": "moving a single report to the new cluster first",
+      "Add CSV export to the metrics table": "exporting the current view first and adding filters later",
+      "Rework the onboarding email sequence": "reworking the first email before the rest of the sequence",
+      "Support custom date ranges in forecasts": "starting with a fixed set of ranges before free ones",
+      "Add rate limiting to the public API": "starting with a limit on the one endpoint that gets hit hardest",
+      "Replace the deprecated charting library": "replacing a single chart first to prove the new library",
+    },
+    noFallback: "splitting the item into smaller parts",
     endingEyebrow: "Walkthrough complete",
     endingHeading: "That's the whole method.",
     endingLede:
-      "Three items, one question each \u2014 and each answer sends its item somewhere different.",
+      "One question per item \u2014 and each answer sends its item somewhere different.",
     handoverHeading: "Now do it with your own backlog.",
     handoverBody:
       "Same three answers, your items, about a minute. That run gives you a real number for how fast the question goes \u2014 this one doesn't, because you were reading me.",
@@ -281,6 +266,15 @@ const raw = {
 };
 
 export const sizingPokerContent = contentSchema.parse(raw);
+
+/** Fill the {days}/{example} placeholders in a guided popup template. */
+export const fillTemplate = (
+  template: string,
+  values: { days?: number; example?: string },
+): string =>
+  template
+    .replace("{days}", String(values.days ?? ""))
+    .replace("{example}", values.example ?? "");
 
 export type SizingPokerAnswer = (typeof sizingPokerContent)["answers"][number];
 

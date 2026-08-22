@@ -281,6 +281,41 @@ enforcement with the rest of the coaching (G11: exit keeps the round, now as a
 free one). Normal rounds and target-less guided starts are byte-for-byte
 unchanged, so G2's evidence separation is untouched.
 
+**[G20] The walkthrough is Benji's popup model: the real screens, highlight steps, and one popup per click. Supersedes G3, G12, G15, G16, G17 and G19.**
+(Benji's feedback and spec, Slack 21.8.2026; Peter's decision 22.8.2026 after
+comparing four live prototypes: "Nehme Version 1,2,3 weg und baue dafuer
+SizingPoker4 ein.")
+
+What changed and why:
+
+- **The full example backlog, not a curated three.** Benji: "ich wuerde alle
+  Items vom Beispiel mit rein nehmen." The guided round now runs all 8 sample
+  items through the REAL config form, prefilled - the screen being explained
+  is the one a team will later use with its own backlog. G15's reduced config
+  and G17's curated items are gone.
+- **No prescribed answers.** Benji did not understand the target/redirect
+  mechanic ("nicht 'vorgeben' was jetzt richtig sein soll - das habe ich
+  nicht verstanden"), which is the strongest possible evidence against a
+  teaching device. G19's enforcement is removed from the machine entirely;
+  guided votes record exactly like normal ones.
+- **Highlight steps.** Two on the config (day field, items box) and two on
+  the first item (title: "read and discuss", answers: "choose"), each a dim
+  layer with the element cut out and a bottom-docked card. Docked, never
+  anchored: an anchored card covered the Start button in prototype B.
+- **One popup per click, every click.** Yes is one line; Maybe and No carry
+  Benji's discussion prompts, with an example that fits the item on screen
+  (content holds one maybe- and one no-example per sample item). The vote
+  dispatches when the popup closes, so the item under discussion stays
+  visible. This replaces the G3 first-No lesson and the coach notes - the
+  machine no longer knows about lessons at all; pausing is a page concern.
+- **What survives:** the entry point (G8/G9), advance-on-action (G6), the
+  mode bar with Exit (G11), the guided ending without a pace (G10,
+  startedGuided), mode-separated analytics (G2), and the jargon ban (G4),
+  now enforced across the popups.
+- The popup texts are Benji's own words from the thread; the highlight and
+  example texts are drafts for Benji and Peter to rewrite (their explicit
+  wish). All of it lives in the content module's `guided` section.
+
 **[G18] Guided screens are styled in the site's shipped tokens, plus two new ones for the coach voice.**
 The mock now uses the exact palette from `src/index.css` (teal primary
 `158 29% 26%`, the verdict trio, `shadow-soft`, shadcn button and card shapes),

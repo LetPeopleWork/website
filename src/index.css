@@ -174,13 +174,3 @@ All colors MUST be HSL.
     background: radial-gradient(60% 55% at 50% 45%, hsl(158 29% 26% / 0.10) 0%, transparent 70%);
   }
 }
-/* Prototype B (/sizing-poker-2): the wizard card shakes when a walkthrough
-   answer misses its target and the redirect swaps in. */
-@keyframes wizard-nudge {
-  0%, 100% { translate: 0; }
-  25% { translate: -6px 0; }
-  75% { translate: 6px 0; }
-}
-.animate-wizard-nudge {
-  animation: wizard-nudge 0.4s;
-}

@@ -13,17 +13,10 @@ interface RunStepProps {
   startedAt: number;
   onVote: (verdict: Verdict) => void;
   onAbandon: () => void;
-  /** Walkthrough mode (G12/G3). Absent = a normal round, untouched. */
+  /** Walkthrough mode (G20). Absent = a normal round, untouched. The
+      teaching itself lives in the page's popups; this view only carries the
+      mode bar and hides the facilitator chrome. */
   guided?: {
-    /** Nudge shown above the item, before answering. Item 2 only (G17). */
-    noteBefore?: string;
-    /** Quiet aside below the answers. Item 1 only (G16). */
-    noteAfter?: string;
-    /** G19: shown when the last click missed this item's target answer. */
-    redirect?: string;
-    /** First-"No" lesson currently replacing the answers (G3). */
-    lessonPending: boolean;
-    onDismissLesson: () => void;
     onExit: () => void;
   };
   /** Injectable for tests so the ticking clock does not need real timers. */
@@ -67,22 +60,11 @@ const RunStep = ({
     return () => window.clearInterval(id);
   }, [startedAt, now]);
 
-  const lessonPending = guided?.lessonPending ?? false;
-
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (guided && event.key === "Escape") {
         event.preventDefault();
         guided.onExit();
-        return;
-      }
-      // While the lesson is up the answers are hidden, so the keys are too -
-      // Enter dismisses instead, and mashing 1/2/3 cannot skip the teaching.
-      if (lessonPending) {
-        if (event.key === "Enter") {
-          event.preventDefault();
-          guided?.onDismissLesson();
-        }
         return;
       }
       const match = c.answers.find((answer) => answer.key === event.key);
@@ -93,7 +75,7 @@ const RunStep = ({
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [onVote, guided, lessonPending]);
+  }, [onVote, guided]);
 
   return (
     <div data-testid="sizing-run">
@@ -122,14 +104,6 @@ const RunStep = ({
         />
       </div>
 
-      {guided?.noteBefore && !lessonPending && (
-        <p
-          className="mb-5 rounded-xl border border-coach-rule border-l-[3px] border-l-coach bg-coach-wash px-4 py-3 text-sm leading-relaxed text-coach"
-          data-testid="guided-note-before"
-        >
-          {guided.noteBefore}
-        </p>
-      )}
 
       {!guided && (
         <p className="mb-4 text-sm font-medium text-primary">{c.run.facilitatorCue}</p>
@@ -143,35 +117,7 @@ const RunStep = ({
       </p>
       <p className="mb-7 text-lg text-muted-foreground">{questionFor(targetDays)}</p>
 
-      {guided?.redirect && !lessonPending && (
-        <p
-          className="mb-4 rounded-xl border border-coach-rule border-l-[3px] border-l-coach bg-coach-wash px-4 py-3 text-sm leading-relaxed text-coach"
-          data-testid="guided-redirect"
-          role="status"
-        >
-          {guided.redirect}
-        </p>
-      )}
 
-      {lessonPending ? (
-        <div
-          className="rounded-2xl border border-coach-rule bg-coach-wash p-5"
-          data-testid="guided-lesson"
-        >
-          <h3 className="mb-2 text-lg font-bold tracking-tight text-coach">
-            {g.lessonHeading}
-          </h3>
-          <p className="mb-2 text-[15px] leading-relaxed text-coach">{g.lessonIntro}</p>
-          <ul className="mb-5 list-disc pl-5 text-[15px] leading-relaxed text-coach">
-            {g.lessonOptions.map((option) => (
-              <li key={option}>{option}</li>
-            ))}
-          </ul>
-          <Button onClick={guided?.onDismissLesson} size="lg">
-            {g.lessonCta}
-          </Button>
-        </div>
-      ) : (
       <div className="grid gap-2.5" data-testid="sizing-answers">
         {c.answers.map((answer) => (
           <button
@@ -192,16 +138,6 @@ const RunStep = ({
           </button>
         ))}
       </div>
-      )}
-
-      {guided?.noteAfter && !lessonPending && (
-        <p
-          className="mt-5 border-l-[3px] border-coach-rule py-0.5 pl-3 text-[13.5px] leading-relaxed text-coach"
-          data-testid="guided-note-after"
-        >
-          {guided.noteAfter}
-        </p>
-      )}
 
       {!guided && (
       <div className="mt-6 flex flex-wrap items-baseline justify-between gap-3">

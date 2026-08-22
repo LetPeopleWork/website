@@ -90,11 +90,6 @@ const fallbackRoutes = [
   { path: "admin/dashboard", title: "Admin dashboard | LetPeopleWork" },
   { path: "admin/assessment", title: "Admin dashboard | LetPeopleWork" },
   { path: "survey", title: "Survey | LetPeopleWork" },
-  // Walkthrough style prototypes, link-only for comparison. Remove once a
-  // style is chosen.
-  { path: "sizing-poker-2", title: "Sizing Poker prototype | LetPeopleWork" },
-  { path: "sizing-poker-3", title: "Sizing Poker prototype | LetPeopleWork" },
-  { path: "sizing-poker-4", title: "Sizing Poker prototype | LetPeopleWork" },
 ];
 
 const FALLBACK_NOSCRIPT = `

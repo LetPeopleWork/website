@@ -13,9 +13,6 @@ interface ConfigStepProps {
   onItemsChange: (value: string) => void;
   onUseSample: () => void;
   onStart: () => void;
-  /** Walkthrough mode (G15): one focused control, everything else collapsed. */
-  guided?: boolean;
-  onExitGuided?: () => void;
 }
 
 const c = sizingPokerContent.config;
@@ -28,64 +25,8 @@ const ConfigStep = ({
   onItemsChange,
   onUseSample,
   onStart,
-  guided = false,
-  onExitGuided,
 }: ConfigStepProps) => {
   const count = parseItems(itemsValue).length;
-
-  // G15: in the walkthrough the config shows exactly one focused control. The
-  // example backlog is confirmed in a single line, never rendered as a form -
-  // showing the whole form at once was the "crowded" first version.
-  if (guided) {
-    return (
-      <div data-testid="sizing-config">
-        <WalkthroughBar onExit={onExitGuided ?? (() => {})} />
-
-        <h1 className="mb-6 text-balance text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-          {g.configHeading}
-        </h1>
-
-        <div className="flex flex-col gap-6 rounded-2xl border border-border bg-card p-6 shadow-soft">
-          <p
-            className="rounded-xl border border-coach-rule border-l-[3px] border-l-coach bg-coach-wash px-4 py-3 text-sm leading-relaxed text-coach"
-            data-testid="guided-coach"
-          >
-            {g.configCoach}
-          </p>
-
-          <div className="-m-3 rounded-xl bg-coach-wash p-3 ring-2 ring-coach" data-testid="guided-ring">
-            <Label htmlFor="sizing-target" className="text-base font-semibold">
-              {c.targetLabel}
-            </Label>
-            <div className="mt-2 flex items-center gap-3">
-              <Input
-                id="sizing-target"
-                type="number"
-                min={1}
-                max={365}
-                inputMode="numeric"
-                value={targetValue}
-                onChange={(event) => onTargetChange(event.target.value)}
-                className="max-w-[110px] font-semibold tabular-nums"
-              />
-              <span className="text-muted-foreground">{c.targetUnit}</span>
-            </div>
-          </div>
-
-          <p className="text-sm text-muted-foreground" data-testid="guided-confirmation">
-            <span className="font-semibold text-primary">&#10003;</span>{" "}
-            {g.configConfirmation}
-          </p>
-
-          <div>
-            <Button onClick={onStart} size="lg">
-              {c.cta}
-            </Button>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div data-testid="sizing-config">

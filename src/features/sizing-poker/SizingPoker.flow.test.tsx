@@ -369,10 +369,23 @@ describe("staying unlisted", () => {
   });
 });
 
-describe("the walkthrough (G8-G18)", () => {
+describe("the walkthrough (G20)", () => {
   const startWalkthrough = async (user: User) => {
     await user.click(screen.getByRole("button", { name: /walk me through it/i }));
+    // Two highlight steps on the config screen, then start.
+    await user.click(screen.getByTestId("guided-highlight-next"));
+    await user.click(screen.getByTestId("guided-highlight-next"));
     await user.click(screen.getByRole("button", { name: /start sizing/i }));
+    // Two highlight steps on the first item.
+    await user.click(screen.getByTestId("guided-highlight-next"));
+    await user.click(screen.getByTestId("guided-highlight-next"));
+  };
+
+  const voteThrough = async (user: User, keys: readonly string[]) => {
+    for (const key of keys) {
+      await user.keyboard(key);
+      await user.click(screen.getByTestId("verdict-popup-dismiss"));
+    }
   };
 
   it("G8/G9: sits beside the normal start, and does not displace it", () => {
@@ -382,76 +395,101 @@ describe("the walkthrough (G8-G18)", () => {
     expect(screen.getByRole("button", { name: /walk me through it/i })).toBeInTheDocument();
   });
 
-  it("G15: guided config shows one focused control and no items form", async () => {
+  it("G20: guided config is the real form, prefilled and explained by highlights", async () => {
     const user = userEvent.setup();
     renderPage(makeClock().now);
 
     await user.click(screen.getByRole("button", { name: /walk me through it/i }));
 
-    const config = screen.getByTestId("sizing-config");
-    expect(config.querySelectorAll("textarea")).toHaveLength(0);
-    expect(screen.getByTestId("guided-ring")).toBeInTheDocument();
-    expect(screen.getByTestId("guided-confirmation")).toHaveTextContent(/three of its items/i);
+    // The real config, not a reduced one: the screen being explained is the
+    // one a team will use with its own backlog.
     expect(screen.getByTestId("walkthrough-bar")).toBeInTheDocument();
+    expect(screen.getByLabelText(/which items do you want to size/i)).toHaveValue(
+      sizingPokerContent.sampleItems.join("\n"),
+    );
+
+    // First highlight explains the day field, the second the items box.
+    expect(screen.getByTestId("guided-highlight")).toBeInTheDocument();
+    expect(screen.getByText(/how quickly an item should normally be done where you work/i)).toBeInTheDocument();
+    await user.click(screen.getByTestId("guided-highlight-next"));
+    expect(screen.getByText(/one per line, straight from your backlog/i)).toBeInTheDocument();
+    await user.click(screen.getByTestId("guided-highlight-next"));
+    expect(screen.queryByTestId("guided-highlight")).not.toBeInTheDocument();
   });
 
-  it("G17: sizes exactly three curated items, all drawn from the example backlog", async () => {
+  it("G20: the round runs the full example backlog, with two highlights on item 1", async () => {
+    const user = userEvent.setup();
+    renderPage(makeClock().now);
+    await user.click(screen.getByRole("button", { name: /walk me through it/i }));
+    await user.click(screen.getByTestId("guided-highlight-next"));
+    await user.click(screen.getByTestId("guided-highlight-next"));
+    await user.click(screen.getByRole("button", { name: /start sizing/i }));
+
+    expect(screen.getByTestId("sizing-run")).toHaveTextContent(
+      `of ${sizingPokerContent.sampleItems.length}`,
+    );
+    expect(screen.getByText(/read the title and discuss/i)).toBeInTheDocument();
+    await user.click(screen.getByTestId("guided-highlight-next"));
+    expect(screen.getByText(/doable within 10 days or less/i)).toBeInTheDocument();
+    await user.click(screen.getByTestId("guided-highlight-next"));
+    expect(screen.queryByTestId("guided-highlight")).not.toBeInTheDocument();
+  });
+
+  it("G20: every answer opens its popup, and the vote lands on dismiss", async () => {
+    const user = userEvent.setup();
+    renderPage(makeClock().now);
+    await startWalkthrough(user);
+
+    const firstItem = screen.getByTestId("sizing-item").textContent;
+    await user.keyboard("2");
+    const popup = screen.getByTestId("verdict-popup");
+    expect(popup).toHaveTextContent(/discuss what must be true/i);
+    // Still on the item under discussion - nothing recorded yet.
+    expect(screen.getByTestId("sizing-item")).toHaveTextContent(firstItem!);
+    // Mashing keys while the popup is open changes nothing.
+    await user.keyboard("1");
+    expect(screen.getByTestId("sizing-item")).toHaveTextContent(firstItem!);
+
+    await user.click(screen.getByTestId("verdict-popup-dismiss"));
+    expect(screen.queryByTestId("verdict-popup")).not.toBeInTheDocument();
+    expect(screen.getByTestId("sizing-item")).not.toHaveTextContent(firstItem!);
+  });
+
+  it("G20: the maybe and no popups name an example that fits the item on screen", async () => {
+    const user = userEvent.setup();
+    renderPage(makeClock().now);
+    await startWalkthrough(user);
+
+    // Item 1 is "Add SSO login via Azure AD".
+    await user.keyboard("2");
+    expect(screen.getByTestId("verdict-popup")).toHaveTextContent(/azure ad tenant/i);
+    await user.click(screen.getByTestId("verdict-popup-dismiss"));
+
+    // Item 2 is the timezone bug.
+    await user.keyboard("3");
+    expect(screen.getByTestId("verdict-popup")).toHaveTextContent(/splitting the item/i);
+    expect(screen.getByTestId("verdict-popup")).toHaveTextContent(/the one report where it hurts most/i);
+  });
+
+  it("G20: content carries an example for every sample item, on both popups", () => {
     const { guided, sampleItems } = sizingPokerContent;
-    expect(guided.items).toHaveLength(3);
-    guided.items.forEach((entry) => expect(sampleItems).toContain(entry.title));
-  });
-
-  it("G16/G12: item 1 carries the noticing aside below, item 2 the nudge above", async () => {
-    const user = userEvent.setup();
-    renderPage(makeClock().now);
-    await startWalkthrough(user);
-
-    expect(screen.getByTestId("sizing-item")).toHaveTextContent("Add CSV export");
-    expect(screen.getByTestId("guided-note-after")).toHaveTextContent(/notice what makes you think/i);
-    expect(screen.queryByTestId("guided-note-before")).not.toBeInTheDocument();
-
-    await user.keyboard("1");
-    expect(screen.getByTestId("sizing-item")).toHaveTextContent("Rework the onboarding");
-    expect(screen.getByTestId("guided-note-before")).toHaveTextContent(/who it needs/i);
-    expect(screen.queryByTestId("guided-note-after")).not.toBeInTheDocument();
-  });
-
-  it("G3: the first No replaces the answers with the lesson, once, and Got it finishes the arc", async () => {
-    const user = userEvent.setup();
-    renderPage(makeClock().now);
-    await startWalkthrough(user);
-
-    await user.keyboard("1"); // yes on the reflex item
-    await user.keyboard("2"); // maybe on the dependency
-    await user.keyboard("3"); // no on the big one -> lesson
-
-    const lesson = screen.getByTestId("guided-lesson");
-    expect(lesson).toHaveTextContent(/you said no/i);
-    expect(lesson).toHaveTextContent(/split into something smaller/i);
-    // The answers are gone while the lesson is up.
-    expect(screen.queryByRole("button", { name: /^yes/i })).not.toBeInTheDocument();
-    // Mashing keys cannot skip it.
-    await user.keyboard("1");
-    expect(screen.getByTestId("guided-lesson")).toBeInTheDocument();
-
-    await user.click(screen.getByRole("button", { name: /got it/i }));
-    expect(screen.getByTestId("guided-ending")).toBeInTheDocument();
+    sampleItems.forEach((title) => {
+      expect(guided.maybeExamples[title]).toBeTruthy();
+      expect(guided.noExamples[title]).toBeTruthy();
+    });
   });
 
   it("G10: the guided ending shows the three lists but never a pace", async () => {
     const user = userEvent.setup();
     renderPage(makeClock().now);
     await startWalkthrough(user);
-    await user.keyboard("1");
-    await user.keyboard("2");
-    await user.keyboard("3");
-    await user.click(screen.getByRole("button", { name: /got it/i }));
+    await voteThrough(user, ["1", "2", "3", "1", "1", "1", "1", "1"]);
 
     const ending = screen.getByTestId("guided-ending");
     expect(screen.queryByTestId("sizing-seconds-per-item")).not.toBeInTheDocument();
     expect(ending).not.toHaveTextContent(/seconds per item/i);
-    expect(screen.getByTestId("guided-list-ready")).toHaveTextContent("Add CSV export");
-    expect(screen.getByTestId("guided-list-maybe")).toHaveTextContent("Rework the onboarding");
+    expect(screen.getByTestId("guided-list-ready")).toBeInTheDocument();
+    expect(screen.getByTestId("guided-list-maybe")).toHaveTextContent("Fix timezone bug");
     expect(screen.getByTestId("guided-list-toobig")).toHaveTextContent("Migrate the reporting");
     expect(screen.getByTestId("guided-handover")).toHaveTextContent(/your own backlog/i);
   });
@@ -460,15 +498,12 @@ describe("the walkthrough (G8-G18)", () => {
     const user = userEvent.setup();
     renderPage(makeClock().now);
     await startWalkthrough(user);
-    await user.keyboard("1");
-    await user.keyboard("2");
-    await user.keyboard("3");
-    await user.click(screen.getByRole("button", { name: /got it/i }));
+    await voteThrough(user, ["1", "1", "1", "1", "1", "1", "1", "1"]);
     await user.click(screen.getByRole("button", { name: /size my own items/i }));
 
     expect(screen.getByTestId("sizing-config")).toBeInTheDocument();
     expect(screen.queryByTestId("walkthrough-bar")).not.toBeInTheDocument();
-    // The example items never leaked into the visitor's own textarea.
+    // The example items never leak into the visitor's own round.
     expect(screen.getByLabelText(/which items do you want to size/i)).toHaveValue("");
   });
 
@@ -476,12 +511,17 @@ describe("the walkthrough (G8-G18)", () => {
     const user = userEvent.setup();
     renderPage(makeClock().now);
     await startWalkthrough(user);
-    await user.keyboard("1");
+    await voteThrough(user, ["1"]);
+    const itemBefore = screen.getByTestId("sizing-item").textContent;
     await user.keyboard("{Escape}");
 
     expect(screen.queryByTestId("walkthrough-bar")).not.toBeInTheDocument();
     expect(screen.getByTestId("sizing-run")).toBeInTheDocument();
-    expect(screen.getByTestId("sizing-item")).toHaveTextContent("Rework the onboarding");
+    expect(screen.getByTestId("sizing-item")).toHaveTextContent(itemBefore!);
+    // Free round now: a vote records without a popup.
+    await user.keyboard("1");
+    expect(screen.queryByTestId("verdict-popup")).not.toBeInTheDocument();
+    expect(screen.getByTestId("sizing-item")).not.toHaveTextContent(itemBefore!);
   });
 
   it("G10 survives an exit: a round that began guided still ends without a pace", async () => {
@@ -489,25 +529,37 @@ describe("the walkthrough (G8-G18)", () => {
     renderPage(makeClock().now);
     await startWalkthrough(user);
     await user.keyboard("{Escape}");
-    await user.keyboard("1");
-    await user.keyboard("1");
-    await user.keyboard("1");
+    for (let i = 0; i < sizingPokerContent.sampleItems.length; i++) {
+      await user.keyboard("1");
+    }
 
     expect(screen.getByTestId("guided-ending")).toBeInTheDocument();
     expect(screen.queryByTestId("sizing-seconds-per-item")).not.toBeInTheDocument();
+  });
+
+  it("exiting from the guided config clears the prefill", async () => {
+    const user = userEvent.setup();
+    renderPage(makeClock().now);
+    await user.click(screen.getByRole("button", { name: /walk me through it/i }));
+    await user.keyboard("{Escape}");
+    // Escape is a run-step affordance; the config uses the Exit link.
+    await user.click(screen.getByRole("button", { name: /^exit$/i }));
+
+    expect(screen.queryByTestId("walkthrough-bar")).not.toBeInTheDocument();
+    expect(screen.getByLabelText(/which items do you want to size/i)).toHaveValue("");
   });
 
   it("G2: guided analytics are separable, and a normal round says so too", async () => {
     const user = userEvent.setup();
     renderPage(makeClock().now);
     await startWalkthrough(user);
-    await user.keyboard("1");
-    await user.keyboard("2");
-    await user.keyboard("3");
-    await user.click(screen.getByRole("button", { name: /got it/i }));
+    await voteThrough(user, ["1", "1", "1", "1", "1", "1", "1", "1"]);
 
     expect(trackEvent).toHaveBeenCalledWith("Walkthrough started");
-    expect(trackEvent).toHaveBeenCalledWith("Sizing round started", { items: 3, mode: "guided" });
+    expect(trackEvent).toHaveBeenCalledWith("Sizing round started", {
+      items: sizingPokerContent.sampleItems.length,
+      mode: "guided",
+    });
     expect(trackEvent).toHaveBeenCalledWith(
       "Sizing round completed",
       expect.objectContaining({ mode: "guided" }),
@@ -527,51 +579,23 @@ describe("the walkthrough (G8-G18)", () => {
     );
   });
 
-  it("G4: no jargon on any guided screen, lesson and ending included", async () => {
+  it("G4: no jargon on any guided screen, popups included", async () => {
     const user = userEvent.setup();
     renderPage(makeClock().now);
     const jargon = /service level expectation|\bSLE\b|cycle time|percentile|85%|kanban/i;
 
     await user.click(screen.getByRole("button", { name: /walk me through it/i }));
-    expect(screen.getByTestId("sizing-config").textContent).not.toMatch(jargon);
+    expect(document.body.textContent).not.toMatch(jargon);
 
+    await user.click(screen.getByTestId("guided-highlight-next"));
+    await user.click(screen.getByTestId("guided-highlight-next"));
     await user.click(screen.getByRole("button", { name: /start sizing/i }));
-    expect(screen.getByTestId("sizing-run").textContent).not.toMatch(jargon);
+    expect(document.body.textContent).not.toMatch(jargon);
 
-    await user.keyboard("1");
     await user.keyboard("2");
+    expect(screen.getByTestId("verdict-popup").textContent).not.toMatch(jargon);
+    await user.click(screen.getByTestId("verdict-popup-dismiss"));
     await user.keyboard("3");
-    expect(screen.getByTestId("guided-lesson").textContent).not.toMatch(jargon);
-
-    await user.click(screen.getByRole("button", { name: /got it/i }));
-    expect(screen.getByTestId("guided-ending").textContent).not.toMatch(jargon);
-  });
-});
-
-describe("G19: the walkthrough guarantees all three answers", () => {
-  it("a wrong answer gets a coach reply and the item waits for the right one", async () => {
-    const user = userEvent.setup();
-    renderPage(makeClock().now);
-    await user.click(screen.getByRole("button", { name: /walk me through it/i }));
-    await user.click(screen.getByRole("button", { name: /start sizing/i }));
-
-    // Item 1 teaches Yes; try No.
-    await user.keyboard("3");
-    expect(screen.getByTestId("guided-redirect")).toHaveTextContent(/click yes/i);
-    // Not recorded: still on item 1, and no lesson hijacked by the wrong No.
-    expect(screen.getByTestId("sizing-item")).toHaveTextContent("Add CSV export");
-    expect(screen.queryByTestId("guided-lesson")).not.toBeInTheDocument();
-
-    // The target answer clears the note and moves on.
-    await user.keyboard("1");
-    expect(screen.queryByTestId("guided-redirect")).not.toBeInTheDocument();
-    expect(screen.getByTestId("sizing-item")).toHaveTextContent("Rework the onboarding");
-  });
-
-  it("the redirect copy carries no jargon either", async () => {
-    const jargon = /service level expectation|\bSLE\b|cycle time|percentile|85%|kanban/i;
-    sizingPokerContent.guided.items.forEach((entry) => {
-      expect(entry.redirect).not.toMatch(jargon);
-    });
+    expect(screen.getByTestId("verdict-popup").textContent).not.toMatch(jargon);
   });
 });
