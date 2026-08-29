@@ -2,6 +2,19 @@
   "events": [
     {
       "type": "Meetup",
+      "title": "Let People Behind the Scenes  - A Lighthouse Live Special",
+      "date": null,
+      "displayDate": "TBD",
+      "time": "",
+      "location": "Online",
+      "price": "Free",
+      "description": "Lighthouse shipped its first release in April 2024. Today, we sit at over 100 shipped releases.\n\nThere are two of us. That only works because of how the week is put together. Over the past two years, we've moved AI into the middle of how the company actually operates: From the execution in code to a...",
+      "ctaText": "RSVP on Meetup",
+      "ctaLink": "https://www.meetup.com/lighthouselive/events/316323791/",
+      "source": "meetup"
+    },
+    {
+      "type": "Meetup",
       "title": "Beyond Burnups with Nick Brown",
       "date": null,
       "displayDate": "TBD",
