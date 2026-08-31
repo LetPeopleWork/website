@@ -15,6 +15,19 @@
     },
     {
       "type": "Meetup",
+      "title": "Planning SAFely: Forecasts and Flow for Quarterly Plans with Agnieszka Reginek",
+      "date": null,
+      "displayDate": "TBD",
+      "time": "",
+      "location": "Online",
+      "price": "Free",
+      "description": "Quarterly planning doesn't have to mean overcommitment, endless refinement, and a plan that's outdated two weeks later.\nMost teams already have the delivery history they'd need to plan differently. It just isn't what they plan with, so the same surprises come back every quarter.\n\nIn this session, Ag...",
+      "ctaText": "RSVP on Meetup",
+      "ctaLink": "https://www.meetup.com/lighthouselive/events/316323625/",
+      "source": "meetup"
+    },
+    {
+      "type": "Meetup",
       "title": "Beyond Burnups with Nick Brown",
       "date": null,
       "displayDate": "TBD",
