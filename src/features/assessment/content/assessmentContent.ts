@@ -42,7 +42,7 @@ export type BandCopy = z.infer<typeof bandSchema>;
 
 const COMMUNITY_HREF = "https://letpeople.work/lighthouse";
 const PREMIUM_HREF = "https://letpeople.work/lighthouse#lighthouse-premium";
-const WORKSHOPS_HREF = "https://letpeople.work/#workshops";
+const TRIAL_HREF = "https://letpeople.work/lighthouse#lighthouse-trial";
 
 const communityCta = (label: string): Cta => ({
   label,
@@ -56,9 +56,11 @@ const premiumCta: Cta = {
   isCommunity: false,
 };
 
-const workshopCta: Cta = {
-  label: "Book a workshop",
-  href: WORKSHOPS_HREF,
+// Replaced the former workshop CTA when consulting left the site: the
+// 30-day Self-Service trial is now the deeper next step.
+const trialCta: Cta = {
+  label: "Try Self-Service free for 30 days",
+  href: TRIAL_HREF,
   isCommunity: false,
 };
 
@@ -202,7 +204,7 @@ const rawContent = {
       ctas: [
         communityCta("Use Lighthouse to operationalize forecasting (free)"),
         premiumCta,
-        workshopCta,
+        trialCta,
       ],
     },
     {
@@ -218,7 +220,7 @@ const rawContent = {
       ctas: [
         premiumCta,
         communityCta("Use Lighthouse to scale your forecasting (free)"),
-        workshopCta,
+        trialCta,
       ],
     },
   ],

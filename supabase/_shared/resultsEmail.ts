@@ -17,8 +17,6 @@ export interface BandEmailCopy {
   readonly forecastRead: string;
   readonly ctas: readonly EmailCta[];
   readonly kitLinks: readonly EmailLink[];
-  readonly workshops: readonly EmailLink[];
-  readonly consulting: readonly EmailLink[];
 }
 
 export interface ResultsEmail {
@@ -42,30 +40,27 @@ const LOGO_URL =
 
 const COMMUNITY_HREF = "https://letpeople.work/lighthouse";
 const PREMIUM_HREF = "https://letpeople.work/lighthouse#lighthouse-premium";
-const WORKSHOPS_HREF = "https://letpeople.work/#workshops";
-const SERVICES_HREF = "https://letpeople.work/#services";
-
-const workshop = (label: string): EmailLink => ({
-  label,
-  href: WORKSHOPS_HREF,
-});
+const TRIAL_HREF = "https://letpeople.work/lighthouse#lighthouse-trial";
 
 const PREMIUM_CTA: EmailCta = {
   label: "Explore Lighthouse Premium",
   href: PREMIUM_HREF,
 };
 
-const service = (label: string): EmailLink => ({ label, href: SERVICES_HREF });
+// Mirrors trialCta in assessmentContent.ts (parity test enforces it).
+const TRIAL_CTA: EmailCta = {
+  label: "Try Self-Service free for 30 days",
+  href: TRIAL_HREF,
+};
 
-const FLOW_CLARITY = service(
-  "Flow Clarity Assessment: a data-driven diagnostic of how work really flows",
-);
-const FLOW_HEALTH = service(
-  "Flow Health Check: a fast snapshot of your team or portfolio delivery health",
-);
-const LIGHTHOUSE_SETUP = service(
-  "Lighthouse Setup & Introduction: we configure Lighthouse and onboard your team",
-);
+// Same for every band: setup help is free for every edition.
+const HELP_LINKS: readonly EmailLink[] = [
+  {
+    label:
+      "Lighthouse setup & onboarding is free for every edition: write to contact@letpeople.work",
+    href: "mailto:contact@letpeople.work?subject=Lighthouse%20onboarding",
+  },
+];
 
 export const BAND_EMAIL_COPY: Readonly<Record<BandName, BandEmailCopy>> = {
   "Flying blind": {
@@ -78,7 +73,6 @@ export const BAND_EMAIL_COPY: Readonly<Record<BandName, BandEmailCopy>> = {
     ctas: [
       { label: "Start with Lighthouse (free)", href: COMMUNITY_HREF },
     ],
-    consulting: [LIGHTHOUSE_SETUP, FLOW_CLARITY],
     kitLinks: [
       {
         label: "Connect your work tracking system",
@@ -97,10 +91,6 @@ export const BAND_EMAIL_COPY: Readonly<Record<BandName, BandEmailCopy>> = {
         href: "https://www.youtube.com/@LetPeopleWork",
       },
     ],
-    workshops: [
-      workshop("Flow Metrics & Little's Law"),
-      workshop("Introduction to Probabilistic Forecasting"),
-    ],
   },
   Drifting: {
     kitName: "Steering Kit",
@@ -112,7 +102,6 @@ export const BAND_EMAIL_COPY: Readonly<Record<BandName, BandEmailCopy>> = {
     ctas: [
       { label: "Start with Lighthouse (free)", href: COMMUNITY_HREF },
     ],
-    consulting: [FLOW_CLARITY, FLOW_HEALTH],
     kitLinks: [
       {
         label: "The hidden cost of noise in your predictions",
@@ -131,10 +120,6 @@ export const BAND_EMAIL_COPY: Readonly<Record<BandName, BandEmailCopy>> = {
         href: "https://docs.lighthouse.letpeople.work/metrics/widgets.html",
       },
     ],
-    workshops: [
-      workshop("Visualization & Interpretation of Flow Metrics"),
-      workshop("Actively Manage Items in a Workflow"),
-    ],
   },
   "Flow-aware": {
     kitName: "Level-Up Kit",
@@ -149,9 +134,8 @@ export const BAND_EMAIL_COPY: Readonly<Record<BandName, BandEmailCopy>> = {
         href: COMMUNITY_HREF,
       },
       PREMIUM_CTA,
-      { label: "Book a workshop", href: WORKSHOPS_HREF },
+      TRIAL_CTA,
     ],
-    consulting: [FLOW_HEALTH, FLOW_CLARITY],
     kitLinks: [
       {
         label: "A diner breakfast on Flow, Kanban and SLEs",
@@ -165,10 +149,6 @@ export const BAND_EMAIL_COPY: Readonly<Record<BandName, BandEmailCopy>> = {
         label: "Portfolios: forecast across teams",
         href: "https://docs.lighthouse.letpeople.work/portfolios/portfolios.html",
       },
-    ],
-    workshops: [
-      workshop("SLE & Right Sizing"),
-      workshop("Workflow Definition & Visualization"),
     ],
   },
   Predictable: {
@@ -184,9 +164,8 @@ export const BAND_EMAIL_COPY: Readonly<Record<BandName, BandEmailCopy>> = {
         label: "Use Lighthouse to scale your forecasting (free)",
         href: COMMUNITY_HREF,
       },
-      { label: "Book a workshop", href: WORKSHOPS_HREF },
+      TRIAL_CTA,
     ],
-    consulting: [FLOW_HEALTH, LIGHTHOUSE_SETUP],
     kitLinks: [
       {
         label: "Low WIP, small features, high freedom",
@@ -204,10 +183,6 @@ export const BAND_EMAIL_COPY: Readonly<Record<BandName, BandEmailCopy>> = {
         label: "AI and automation",
         href: "https://docs.lighthouse.letpeople.work/aiintegration.html",
       },
-    ],
-    workshops: [
-      workshop("Epic Right Sizing & Slicing"),
-      workshop("Signal & Noise"),
     ],
   },
 };
@@ -263,9 +238,7 @@ const renderHtml = (
 
       ${sectionHtml(`Your ${copy.kitName}`, copy.kitLinks)}
 
-      ${sectionHtml("Workshops for where you are", copy.workshops)}
-
-      ${sectionHtml("Want hands-on help?", copy.consulting)}
+      ${sectionHtml("Need a hand getting started?", HELP_LINKS)}
 
       <h3 style="color: #495057;">Your next step</h3>
       <ul>
@@ -317,9 +290,7 @@ ${copy.forecastRead}
 
 ${sectionText(`Your ${copy.kitName}:`, copy.kitLinks)}
 
-${sectionText("Workshops for where you are:", copy.workshops)}
-
-${sectionText("Want hands-on help?", copy.consulting)}
+${sectionText("Need a hand getting started?", HELP_LINKS)}
 
 Your next step:
 ${copy.ctas.map(linkText).join("\n")}

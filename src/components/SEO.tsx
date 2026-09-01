@@ -57,7 +57,7 @@ const SEO = ({
     "@type": "WebSite",
     "name": "LetPeopleWork",
     "url": siteUrl,
-    "description": "Expert consulting in Flow, Delivery, and Obeya methodologies. Creators of Lighthouse - the leading open-source flow metrics and forecasting tool."
+    "description": "Makers of Lighthouse, the open-source flow metrics and forecasting tool, and Sizing Poker, a free way to size a backlog without estimating it."
   };
 
   // Meta tags are updated in place rather than rendered as JSX. index.html

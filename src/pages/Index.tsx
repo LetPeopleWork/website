@@ -3,7 +3,7 @@ import Hero from "@/components/Hero";
 import HowItWorks from "@/components/HowItWorks";
 import LighthouseSection from "@/components/LighthouseSection";
 import AIIntegrationSection from "@/components/AIIntegrationSection";
-import ExpertiseAndServices from "@/components/ExpertiseAndServices";
+import WhoBuildsThis from "@/components/WhoBuildsThis";
 import BlogSection from "@/components/BlogSection";
 import StayConnected from "@/components/StayConnected";
 import SimpleFooter from "@/components/SimpleFooter";
@@ -20,7 +20,7 @@ const Index = () => {
     "name": "LetPeopleWork GmbH",
     "url": "https://letpeople.work",
     "logo": "https://letpeople.work/assets/LPW_Banner_White-DTCn4RDr.png",
-    "description": "Expert consulting and training in Flow, Delivery, and Obeya methodologies. Creators of Lighthouse - the leading open-source flow metrics and forecasting tool.",
+    "description": "Makers of Lighthouse, the open-source flow metrics and forecasting tool, and Sizing Poker, a free way to size a backlog without estimating it.",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Mühlackerstrasse 108",
@@ -50,24 +50,6 @@ const Index = () => {
       }
     ],
     "makesOffer": [
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Flow Consulting",
-          "description": "Expert guidance to improve your flow metrics and organizational performance",
-          "serviceType": "Consulting"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Workshops & Training",
-          "description": "Custom trainings and workshops on Flow, Kanban, and forecasting methodologies",
-          "serviceType": "Training"
-        }
-      },
       {
         "@type": "Offer",
         "itemOffered": {
@@ -108,7 +90,7 @@ const Index = () => {
                 "priceCurrency": "CHF",
                 "unitText": "year"
               },
-              "description": "Annual self-hosted license with prioritised support, named contacts, onboarding calls, and workshop discounts."
+              "description": "Annual self-hosted license with prioritised support, named contacts, and onboarding calls."
             }
           ]
         }
@@ -119,9 +101,9 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="LetPeopleWork - Flow Metrics Consulting & Lighthouse Tool"
-        description="Transform your organization with expert Flow consulting and Lighthouse, the leading open-source flow metrics tool. Get data-driven insights, improve predictability, and deliver value faster with Monte Carlo forecasting."
-        keywords="flow metrics consulting, agile consulting, kanban consulting, delivery forecasting, lighthouse tool, flow metrics tool, agile coaching, scrum coaching, Monte Carlo forecasting, predictability, throughput, cycle time, lead time, agile transformation, organizational improvement"
+        title="LetPeopleWork - Lighthouse and Sizing Poker: flow metrics, forecasting, sizing"
+        description="Two tools for delivery teams. Lighthouse turns your real delivery data into flow metrics and Monte Carlo forecasts you can defend. Sizing Poker sizes a backlog without estimating it. Both free, both from LetPeopleWork."
+        keywords="flow metrics, delivery forecasting, lighthouse tool, flow metrics tool, Monte Carlo forecasting, predictability, throughput, cycle time, lead time, sizing poker, right sizing, no estimates, backlog refinement"
         structuredData={structuredData}
         breadcrumbs={[
           { name: "Home", url: "/" }
@@ -132,7 +114,7 @@ const Index = () => {
       <HowItWorks />
       <LighthouseSection />
       <AIIntegrationSection />
-      <ExpertiseAndServices />
+      <WhoBuildsThis />
       <BlogSection />
       <StayConnected />
       <SimpleFooter />

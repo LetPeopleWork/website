@@ -79,9 +79,8 @@ export const ResultView = ({
               Want your {band.kitName} to go further?
             </CardTitle>
             <p className="text-sm text-muted-foreground">
-              Leave your email and we'll send hand-picked articles, Lighthouse
-              how-tos, and the workshops that match where you are right now. No
-              spam, just the kit.
+              Leave your email and we'll send hand-picked articles and Lighthouse
+              how-tos that match where you are right now. No spam, just the kit.
             </p>
           </CardHeader>
           <CardContent>

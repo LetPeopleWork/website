@@ -563,7 +563,7 @@ const Lighthouse = () => {
 				price: "10000",
 				priceCurrency: "CHF",
 				description:
-					"Annual self-hosted license with prioritised support, 24h acknowledgement, 2x60-min onboarding, named contacts, and workshop discounts.",
+					"Annual self-hosted license with prioritised support, 24h acknowledgement, 2x60-min onboarding, and named contacts.",
 			},
 		],
 		description:
@@ -1216,7 +1216,6 @@ const Lighthouse = () => {
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>24h acknowledgement on async requests</span></li>
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>2 × 60-min onboarding calls in your first 90 days</span></li>
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Named contacts for flow, coaching, and technical questions</span></li>
-								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>10% off any LetPeopleWork workshop or training</span></li>
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span>Data Processing Agreement (minimal, since you self-host)</span></li>
 							</ul>
 														<a
@@ -1378,7 +1377,6 @@ const Lighthouse = () => {
 													{ feature: "24h acknowledgement (async)", community: false, self: false, enterprise: true },
 													{ feature: "Onboarding calls (2×60 min in first 90 days)", community: false, self: false, enterprise: true },
 													{ feature: "Named contacts for support", community: false, self: false, enterprise: true },
-													{ feature: "10% workshop / training discount", community: false, self: false, enterprise: true },
 												],
 											},
 										];
@@ -1413,8 +1411,9 @@ const Lighthouse = () => {
 					</div>
 				</div>
 
-					{/* Post-comparison trial CTA: whoever read this far is evaluating. */}
-					<div className="text-center mt-12">
+					{/* Post-comparison trial CTA: whoever read this far is evaluating.
+					    Anchored: the assessment's next-step CTA lands here. */}
+					<div id="lighthouse-trial" className="text-center mt-12 scroll-mt-24">
 						<p className="text-lg text-foreground font-medium mb-1">Easier to just try it?</p>
 						<p className="text-sm text-muted-foreground mb-5">We&apos;ll send you a 30-day Self-Service license. No signup, no credit card &mdash; it expires on its own.</p>
 						<Button
@@ -1695,7 +1694,7 @@ const Lighthouse = () => {
 										Want priority support?
 								</h3>
 								<p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-2">
-									Enterprise gives you the same product as Self-Service, plus a prioritised support queue, a 24h acknowledgement on async requests, onboarding calls, and a 10% workshop discount.
+									Enterprise gives you the same product as Self-Service, plus a prioritised support queue, a 24h acknowledgement on async requests, and onboarding calls.
 								</p>
 							</div>
 							<div className="flex flex-col gap-4">

@@ -55,11 +55,11 @@ describe("assessment content (#20, #21 + load-time invariants)", () => {
     }
   });
 
-  it("#20 the sweet-spot and top bands offer a workshop as their secondary next step", () => {
+  it("#20 the sweet-spot and top bands offer the 30-day trial as a further next step", () => {
     for (const band of ["Flow-aware", "Predictable"] as const) {
       expect(
         bandContent(band).ctas.some((cta) =>
-          cta.label.toLowerCase().includes("workshop"),
+          cta.label.toLowerCase().includes("30 days"),
         ),
       ).toBe(true);
     }

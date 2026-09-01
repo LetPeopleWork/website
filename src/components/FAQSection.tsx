@@ -40,7 +40,7 @@ const faqs = [
   {
     question: "Do you help with setup and onboarding?",
     answer:
-      "Yes, and it's free. We help you get Lighthouse running, connect Jira, Azure DevOps, Linear, or ServiceNow, and walk your team through the tool, at no cost and for every edition. Write to contact@letpeople.work with the subject \"Lighthouse onboarding\". If you want to go deeper, the BYOD pilot workshop puts your team on your own data, and Enterprise licenses include structured onboarding calls.",
+      "Yes, and it's free. We help you get Lighthouse running, connect Jira, Azure DevOps, Linear, or ServiceNow, and walk your team through the tool, at no cost and for every edition. Write to contact@letpeople.work with the subject \"Lighthouse onboarding\". Enterprise licenses also include structured onboarding calls.",
   },
   {
     question: "I tried something like this before and it didn't stick.",
