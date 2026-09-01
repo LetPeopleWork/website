@@ -53,12 +53,12 @@ const Hero = () => {
             </Button>
 
             <Button variant="outline" size="lg" className="rounded-full px-8 py-6 text-base" onClick={openTrial}>
-              Try free for 30 days
+              Try Premium free for 30 days
             </Button>
           </div>
 
           <p className="text-sm text-muted-foreground mb-14">
-            No signup, no credit card. We email you a 30-day Self-Service license and it expires on its own.
+            No signup, no credit card. We email you a 30-day Premium license and it expires on its own.
             {" "}
             <a href="/assessment" className="text-primary font-medium underline-offset-4 hover:underline">
               Not sure where you stand? Take the free assessment.

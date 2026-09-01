@@ -59,7 +59,7 @@ const premiumCta: Cta = {
 // Replaced the former workshop CTA when consulting left the site: the
 // 30-day Self-Service trial is now the deeper next step.
 const trialCta: Cta = {
-  label: "Try Self-Service free for 30 days",
+  label: "Try Premium free for 30 days",
   href: TRIAL_HREF,
   isCommunity: false,
 };

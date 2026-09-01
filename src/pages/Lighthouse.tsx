@@ -1415,12 +1415,12 @@ const Lighthouse = () => {
 					    Anchored: the assessment's next-step CTA lands here. */}
 					<div id="lighthouse-trial" className="text-center mt-12 scroll-mt-24">
 						<p className="text-lg text-foreground font-medium mb-1">Easier to just try it?</p>
-						<p className="text-sm text-muted-foreground mb-5">We&apos;ll send you a 30-day Self-Service license. No signup, no credit card &mdash; it expires on its own.</p>
+						<p className="text-sm text-muted-foreground mb-5">We&apos;ll send you a 30-day Premium license (Self-Service edition). No signup, no credit card &mdash; it expires on its own.</p>
 						<Button
 							variant="outline"
 							onClick={() => { setTrialSource("comparison"); trackEvent("Trial dialog opened", { source: "comparison" }); }}
 						>
-							Try Self-Service free for 30 days
+							Try Premium free for 30 days
 						</Button>
 					</div>
 			</section>

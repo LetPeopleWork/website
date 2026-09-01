@@ -106,7 +106,7 @@ const TrialRequestDialog = ({
           // the browser bubble would preempt it.
           <form onSubmit={handleSubmit} noValidate data-testid="trial-form">
             <DialogHeader>
-              <DialogTitle>Try Self-Service free for 30 days</DialogTitle>
+              <DialogTitle>Try Premium free for 30 days</DialogTitle>
               <DialogDescription className="pt-2 text-base leading-relaxed">
                 No signup, no credit card, nothing to cancel. Tell us where to
                 send it and we&apos;ll email you a 30-day license so you can

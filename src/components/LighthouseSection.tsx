@@ -124,7 +124,7 @@ const LighthouseSection = () => {
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="rounded-full px-8">
-              <Link to="/lighthouse#lighthouse-trial">Try free for 30 days</Link>
+              <Link to="/lighthouse#lighthouse-trial">Try Premium free for 30 days</Link>
             </Button>
           </div>
           <p className="text-xs text-muted-foreground">

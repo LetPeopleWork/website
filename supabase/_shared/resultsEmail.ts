@@ -49,7 +49,7 @@ const PREMIUM_CTA: EmailCta = {
 
 // Mirrors trialCta in assessmentContent.ts (parity test enforces it).
 const TRIAL_CTA: EmailCta = {
-  label: "Try Self-Service free for 30 days",
+  label: "Try Premium free for 30 days",
   href: TRIAL_HREF,
 };
 
