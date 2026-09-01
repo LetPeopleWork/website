@@ -1,6 +1,6 @@
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
-import ToolsSection from "@/components/ToolsSection";
+import SizingPokerTeaser from "@/components/SizingPokerTeaser";
 import HowItWorks from "@/components/HowItWorks";
 import LighthouseSection from "@/components/LighthouseSection";
 import AIIntegrationSection from "@/components/AIIntegrationSection";
@@ -114,8 +114,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="LetPeopleWork - Lighthouse and Sizing Poker: flow metrics, forecasting, sizing"
-        description="Two tools for delivery teams. Lighthouse turns your real delivery data into flow metrics and Monte Carlo forecasts you can defend. Sizing Poker sizes a backlog without estimating it. Both free, both from LetPeopleWork."
+        title="LetPeopleWork - Lighthouse: flow metrics and forecasts you can defend"
+        description="Lighthouse turns your real delivery data into flow metrics and Monte Carlo forecasts you can defend. Open source, self-hosted, free to start, and a 30-day Self-Service trial with no signup and no credit card. Also from LetPeopleWork: Sizing Poker."
         keywords="flow metrics, delivery forecasting, lighthouse tool, flow metrics tool, Monte Carlo forecasting, predictability, throughput, cycle time, lead time, sizing poker, right sizing, no estimates, backlog refinement"
         structuredData={structuredData}
         breadcrumbs={[
@@ -124,10 +124,10 @@ const Index = () => {
       />
       <Navigation />
       <Hero />
-      <ToolsSection />
-      <HowItWorks />
       <LighthouseSection />
+      <HowItWorks />
       <AIIntegrationSection />
+      <SizingPokerTeaser />
       <WhoBuildsThis />
       <BlogSection />
       <StayConnected />

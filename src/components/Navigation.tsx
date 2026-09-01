@@ -12,8 +12,8 @@ const Navigation = () => {
 
   // Tools first, company second. Home is the logo.
   const navItems = [
-    { name: "Sizing Poker", href: "/sizing-poker", isHash: false },
     { name: "AI", href: "/ai", isHash: false },
+    { name: "Sizing Poker", href: "/sizing-poker", isHash: false },
     { name: "Connect", href: "#stay-connected", isHash: true },
   ];
 
@@ -21,6 +21,7 @@ const Navigation = () => {
   // rest are one scroll away on the page itself.
   const lighthouseSubItems = [
     { name: "Downloads", href: "#downloads" },
+    { name: "Free 30-day trial", href: "#lighthouse-trial" },
     { name: "See it in 10 minutes", href: "#first-forecast" },
     { name: "Pricing", href: "#lighthouse-premium" },
     { name: "Get a License", href: "#lighthouse-license" },

@@ -1,12 +1,21 @@
+import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import TrialRequestDialog from "@/features/trial/components/TrialRequestDialog";
+import { trackEvent } from "@/lib/plausible";
 import heroFlow from "@/assets/hero-flow.jpg";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
-// Both buttons are real links now, not scrolls: the hero's job is to get a
-// visitor to a tool in one click, not to the next section.
+// The primary button is a real link to the product page; the secondary one
+// opens the 30-day trial right here, because the trial is the offer with the
+// least friction and it should not be three scrolls away.
 const Hero = () => {
+  const [trialOpen, setTrialOpen] = useState(false);
+  const openTrial = () => {
+    trackEvent("Trial dialog opened", { source: "hero" });
+    setTrialOpen(true);
+  };
   const { ref: statsRef, revealed: statsRevealed } = useScrollReveal<HTMLDivElement>();
 
   return (
@@ -53,14 +62,14 @@ const Hero = () => {
               </Link>
             </Button>
 
-            <Button asChild variant="outline" size="lg" className="group rounded-full px-8 py-6 text-base">
-              <Link to="/sizing-poker">
-                Try Sizing Poker
-                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-              </Link>
+            <Button variant="outline" size="lg" className="group rounded-full px-8 py-6 text-base" onClick={openTrial}>
+              Try Self-Service free for 30 days
             </Button>
           </div>
 
+          <p className="text-sm text-muted-foreground mb-3">
+            No signup, no credit card. We send you a 30-day Self-Service license and it expires on its own.
+          </p>
           <p className="text-sm text-muted-foreground mb-20">
             Not sure where to start? Take our{" "}
             <a href="/assessment" className="text-primary font-medium underline-offset-4 hover:underline">
@@ -100,6 +109,8 @@ const Hero = () => {
           </div>
         </div>
       </div>
+
+      <TrialRequestDialog open={trialOpen} onOpenChange={setTrialOpen} source="hero" />
     </section>
   );
 };

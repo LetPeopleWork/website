@@ -10,6 +10,7 @@ import lighthouseLogo from "@/assets/LighthouseLogo.png";
 import { lighthouseAsset } from "@/lib/lighthouseAsset";
 import forecastsProjectVideo from "@/assets/videos/Forecasts_Project.mp4";
 import LighthouseTestimonials from "@/components/LighthouseTestimonials";
+import { Link } from "react-router-dom";
 import QuickDownloadBar from "@/components/QuickDownloadBar";
 
 const LighthouseSection = () => {
@@ -95,6 +96,13 @@ const LighthouseSection = () => {
           </p>
           <QuickDownloadBar source="home" additionalLink={{ name: "All Downloads", url: "/lighthouse#downloads" }} />
           <p className="text-xs text-muted-foreground mt-4">Community Version free forever • 100% open source • Self-hosted, so your data and the tool stay with you.</p>
+          <p className="text-sm text-muted-foreground mt-6">
+            Want everything unlocked?{" "}
+            <Link to="/lighthouse#lighthouse-trial" className="text-primary font-medium underline-offset-4 hover:underline">
+              Try Self-Service free for 30 days
+            </Link>{" "}
+            — no signup, no credit card.
+          </p>
         </div>
 
         {/* Main Content Grid */}
