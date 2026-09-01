@@ -1,7 +1,7 @@
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import SizingPokerTeaser from "@/components/SizingPokerTeaser";
-import HowItWorks from "@/components/HowItWorks";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import LighthouseSection from "@/components/LighthouseSection";
 import AIIntegrationSection from "@/components/AIIntegrationSection";
 import WhoBuildsThis from "@/components/WhoBuildsThis";
@@ -125,9 +125,9 @@ const Index = () => {
       <Navigation />
       <Hero />
       <LighthouseSection />
-      <HowItWorks />
-      <AIIntegrationSection />
+      <TestimonialsSection />
       <SizingPokerTeaser />
+      <AIIntegrationSection />
       <WhoBuildsThis />
       <BlogSection />
       <StayConnected />

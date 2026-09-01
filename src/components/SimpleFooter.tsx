@@ -19,6 +19,7 @@ const SimpleFooter = () => {
     { name: "AI", href: "/ai" },
     { name: "Flow Assessment", href: "/assessment" },
     { name: "Compare", href: "/compare/" },
+    { name: "Connect", href: "/#stay-connected" },
     { name: "Blog", href: "https://blog.letpeople.work", external: true },
     { name: "YouTube", href: "https://www.youtube.com/@LetPeopleWork/videos", external: true },
     { name: "Meetup", href: "https://www.meetup.com/lighthouselive/", external: true },

@@ -14,7 +14,6 @@ const Navigation = () => {
   const navItems = [
     { name: "AI", href: "/ai", isHash: false },
     { name: "Sizing Poker", href: "/sizing-poker", isHash: false },
-    { name: "Connect", href: "#stay-connected", isHash: true },
   ];
 
   // Trimmed from ten anchors to the ones a visitor actually looks for; the
@@ -172,24 +171,15 @@ const Navigation = () => {
         {isOpen && (
           <div className="md:hidden border-t border-border">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              {/* Mobile Lighthouse Menu */}
-              <div>
-                <button
-                  onClick={handleLighthouseClick}
-                  className="block w-full text-left px-3 py-2 rounded-md text-foreground hover:text-primary hover:bg-accent transition-colors font-medium"
-                >
-                  Lighthouse
-                </button>
-                {lighthouseSubItems.map((subItem) => (
-                  <button
-                    key={subItem.name}
-                    onClick={() => handleLighthouseSubClick(subItem.href)}
-                    className="block w-full text-left px-6 py-2 rounded-md text-sm text-foreground hover:text-primary hover:bg-accent transition-colors"
-                  >
-                    {subItem.name}
-                  </button>
-                ))}
-              </div>
+              {/* Mobile: Lighthouse is one link. The anchors are one scroll
+                  away on the page itself; seven sub-rows buried the rest of
+                  the menu. */}
+              <button
+                onClick={handleLighthouseClick}
+                className="block w-full text-left px-3 py-2 rounded-md text-foreground hover:text-primary hover:bg-accent transition-colors font-medium"
+              >
+                Lighthouse
+              </button>
 
               {navItems.map((item) => (
                 <a

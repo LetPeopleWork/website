@@ -42,17 +42,10 @@ const StayConnected = () => {
   ];
 
   return (
-    <section id="stay-connected" className="py-24 md:py-32 bg-gradient-subtle">
+    <section id="stay-connected" className="pt-4 pb-24 md:pb-32 bg-background scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6">
-            Keep getting better at this
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            The methods, metrics, and mindsets that make flow stick, from the community that's building faster delivery, not just measuring it.
-          </p>
-        </div>
+        {/* Continues the blog block above: one heading for both. */}
+        <h3 className="text-xl font-bold text-foreground mb-8">Where to find us</h3>
 
         {/* Connection Options */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

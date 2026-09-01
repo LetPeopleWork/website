@@ -12,8 +12,7 @@ const founders = [
     image: PeterImage,
     alt: "Peter Zylka-Greger - Flow and Kanban Expert",
     paragraphs: [
-      "For years I have been working with teams worldwide, experiencing what great teams can achieve. But also seeing that success isn't just about putting individuals together—it requires the right techniques, emotional intelligence, and toolkit.",
-      "We see frustrated team members, overwhelmed managers, and complaining customers because people are drowning in meetings instead of delivering value. People want to contribute and be part of something successful—we just need to let them work.",
+      "Years with teams worldwide taught me that people want to contribute and be part of something successful. We just need to let them work.",
     ],
   },
   {
@@ -21,8 +20,7 @@ const founders = [
     image: BenjiImage,
     alt: "Benjamin Huser-Berta - Software Engineer and Scrum Master",
     paragraphs: [
-      "As a Software Engineer and Scrum Master, I've seen teams struggle with wasteful processes and overwhelming workloads that kill motivation. I believe work can be creative and fun when we reduce waste and create environments focused on delivering value.",
-      "We build the tools we use ourselves, with hands-on experience making them work in complex organizational environments.",
+      "Software engineer and Scrum Master. Work can be creative and fun when we reduce waste and focus on delivering value.",
     ],
   },
 ];
@@ -31,10 +29,10 @@ const WhoBuildsThis = () => {
   const { ref, revealed } = useScrollReveal<HTMLDivElement>();
   return (
     <section id="about" className="bg-background">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
         <div
           ref={ref}
-          className={`text-center bg-background/80 backdrop-blur-sm rounded-2xl p-12 border border-border transition-all duration-700 ease-out ${
+          className={`text-center rounded-2xl p-8 md:p-12 border border-border transition-all duration-700 ease-out ${
             revealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
@@ -45,7 +43,7 @@ const WhoBuildsThis = () => {
             The practitioners behind the tools
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto text-left">
+          <div className="grid md:grid-cols-2 gap-10 max-w-3xl mx-auto text-center">
             {founders.map((founder) => (
               <div key={founder.name} className="space-y-4">
                 <div className="text-center mb-6">
@@ -68,7 +66,7 @@ const WhoBuildsThis = () => {
             ))}
           </div>
 
-          <p className="mt-12 text-lg font-medium text-primary">
+          <p className="mt-10 text-base font-medium text-primary">
             We build the tools, and we use them ourselves.
           </p>
         </div>

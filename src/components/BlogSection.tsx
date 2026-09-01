@@ -48,7 +48,7 @@ function PostCard({ post, index }: { post: BlogPost; index: number }) {
 function BlogContent({ posts }: { posts: BlogPost[] }) {
   const { ref, revealed } = useScrollReveal<HTMLDivElement>();
   return (
-    <section id="blog" className="pt-8 md:pt-10 pb-24 md:pb-32 bg-background">
+    <section id="blog" className="pt-8 md:pt-10 pb-12 md:pb-16 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           ref={ref}
@@ -58,10 +58,10 @@ function BlogContent({ posts }: { posts: BlogPost[] }) {
         >
           <div className="max-w-2xl">
             <span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-4 block">
-              From the blog
+              Blog and community
             </span>
             <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
-              What we see, try, and measure.
+              Keep getting better at this.
             </h2>
           </div>
           <a
