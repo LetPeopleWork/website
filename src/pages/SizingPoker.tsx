@@ -158,10 +158,6 @@ const SizingPoker = ({ now = Date.now }: SizingPokerProps) => {
           { name: "Home", url: "/" },
           { name: "Sizing Poker", url: "/sizing-poker" },
         ]}
-        // Unlisted while the mechanism is dogfooded: live and reachable by link,
-        // but out of search and AI crawlers. Kept in step with the `noindex`
-        // flag for this route in scripts/prerender-meta.mjs.
-        noIndex
       />
       <Navigation />
       <main className="flex-1 px-4 pb-16 pt-28">

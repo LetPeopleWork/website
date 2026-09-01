@@ -18,8 +18,17 @@ We build the tools we recommend. Our founders have 15+ years of hands-on experie
 
 - [Homepage](https://letpeople.work/): Overview of the LetPeopleWork tools, Lighthouse and Sizing Poker, and the company mission
 - [Lighthouse Product Page](https://letpeople.work/lighthouse/): Full details on Lighthouse features, pricing, downloads, and AI integration
+- [Sizing Poker](https://letpeople.work/sizing-poker/): Free browser tool that sizes a backlog by asking one question per item instead of estimating it
 - [AI at LetPeopleWork](https://letpeople.work/ai/): obAIa, open-source Claude Code plugins, and the AI workshop journey
 - [Delivery Predictability Assessment](https://letpeople.work/assessment/): Free five-minute self-assessment of how predictable your delivery is
+
+## Sizing Poker - Backlog Sizing Without Estimates
+
+**What is Sizing Poker?**
+A free tool at https://letpeople.work/sizing-poker/ for sizing a backlog without story points or estimates. You set the number of days an item should normally be done in (this is the team's Service Level Expectation), then see one work item at a time and answer a single question: could we finish this within that time? Three answers: Yes (pull it when there is room), Maybe (something has to be arranged first, name it), No (too big, split it). A round of ten items takes minutes. It runs entirely in the browser; nothing is uploaded and no signup is needed. A walkthrough with an example backlog explains each step and what to discuss after each answer.
+
+**Who is it for?**
+Product Owners, Scrum Masters and teams doing backlog refinement who want to replace estimation with a fast fit-or-not decision, and teams using Lighthouse who want to right-size their work against their Service Level Expectation.
 
 ## Lighthouse - Flow Metrics & Forecasting Tool
 

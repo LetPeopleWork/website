@@ -15,6 +15,7 @@ const SimpleFooter = () => {
   const siteLinks = [
     { name: "Home", href: "/" },
     { name: "Lighthouse", href: "/lighthouse" },
+    { name: "Sizing Poker", href: "/sizing-poker" },
     { name: "AI", href: "/ai" },
     { name: "Flow Assessment", href: "/assessment" },
     { name: "Compare", href: "/compare/" },

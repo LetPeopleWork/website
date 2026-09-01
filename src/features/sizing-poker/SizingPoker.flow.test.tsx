@@ -343,25 +343,9 @@ describe("the wrap-up", () => {
   });
 });
 
-describe("staying unlisted", () => {
-  it("is marked noindex, and does not leave the SPA noindex", async () => {
-    const { unmount } = renderPage(makeClock().now);
-    expect(document.querySelector('meta[name="robots"]')).toHaveAttribute(
-      "content",
-      "noindex, nofollow",
-    );
-    unmount();
-
-    // Any normal page rendering afterwards must put the tag back, otherwise one
-    // visit to an unlisted route would deindex the whole client-rendered site.
-    const { default: SEO } = await import("@/components/SEO");
-    render(
-      <HelmetProvider>
-        <MemoryRouter>
-          <SEO title="Normal page" />
-        </MemoryRouter>
-      </HelmetProvider>,
-    );
+describe("launched", () => {
+  it("is indexable like any other product page", () => {
+    renderPage(makeClock().now);
     expect(document.querySelector('meta[name="robots"]')).toHaveAttribute(
       "content",
       "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",

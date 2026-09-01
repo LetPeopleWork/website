@@ -95,6 +95,18 @@ const Index = () => {
             }
           ]
         }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "WebApplication",
+          "name": "Sizing Poker",
+          "url": "https://letpeople.work/sizing-poker",
+          "description": "Size a backlog by asking one question per item instead of estimating it: could we finish this within the time we set? Three answers, no story points. Free, runs entirely in the browser.",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Any",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CHF" }
+        }
       }
     ]
   };

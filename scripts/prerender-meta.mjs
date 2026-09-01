@@ -65,17 +65,12 @@ const seoRoutes = [
     `,
   },
   {
-    // Unlisted on purpose: shipped for link-only access while the mechanism is
-    // being dogfooded. Deliberately absent from sitemap.xml and llms.txt too.
-    // To launch it: drop `noindex`, add the sitemap + llms.txt entries, and add
-    // a nav link.
     path: "sizing-poker",
     title: "Sizing Poker - Size Your Backlog Against Your SLE | LetPeopleWork",
     description:
       "Size a backlog by asking one question per item: could we finish this within the time we set? Three answers, no story points. Free, no signup, runs entirely in your browser.",
     image: `${SITE}/og/sizing-poker.jpg`,
     imageAlt: "Does it fit? One question per work item. Three answers. No story points.",
-    noindex: true,
     noscript: `
       <h1>Sizing Poker - Does it fit?</h1>
       <p>Size a backlog by asking one question per work item instead of estimating it: could we finish this within the time we set? Three answers, no story points. A Product Owner or Scrum Master runs it, alone or with the team round a shared screen. Free, no signup, and nothing leaves the browser.</p>
