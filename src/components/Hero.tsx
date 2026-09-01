@@ -1,23 +1,12 @@
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import heroFlow from "@/assets/hero-flow.jpg";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
+// Both buttons are real links now, not scrolls: the hero's job is to get a
+// visitor to a tool in one click, not to the next section.
 const Hero = () => {
-  const handleGetLighthouse = () => {
-    const lighthouseSection = document.getElementById("lighthouse");
-    if (lighthouseSection) {
-      lighthouseSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const handleHowItWorks = () => {
-    const howItWorksSection = document.getElementById("how-it-works");
-    if (howItWorksSection) {
-      howItWorksSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   const { ref: statsRef, revealed: statsRevealed } = useScrollReveal<HTMLDivElement>();
 
   return (
@@ -57,14 +46,18 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
-            <Button variant="hero" size="lg" className="group rounded-full px-8 py-6 text-base" onClick={handleGetLighthouse}>
-              Get Lighthouse Free
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+            <Button asChild variant="hero" size="lg" className="group rounded-full px-8 py-6 text-base">
+              <Link to="/lighthouse">
+                Get Lighthouse Free
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </Button>
 
-            <Button variant="outline" size="lg" className="group rounded-full px-8 py-6 text-base" onClick={handleHowItWorks}>
-              <Play className="mr-2 group-hover:scale-110 transition-transform" />
-              See How It Works
+            <Button asChild variant="outline" size="lg" className="group rounded-full px-8 py-6 text-base">
+              <Link to="/sizing-poker">
+                Try Sizing Poker
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </Button>
           </div>
 
@@ -89,7 +82,7 @@ const Hero = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-4xl mx-auto">
               {[
                 { value: "15+", label: "Years Experience" },
-                { value: "500+", label: "Professionals Trained" },
+                { value: "4", label: "Work tracking integrations" },
                 { value: "100%", label: "Open Source" },
               ].map((s, i) => (
                 <div

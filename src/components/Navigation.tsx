@@ -10,22 +10,22 @@ const Navigation = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Tools first, company second. Home is the logo.
   const navItems = [
-    { name: "Home", href: "#home", isHash: true },
+    { name: "Sizing Poker", href: "/sizing-poker", isHash: false },
+    { name: "AI", href: "/ai", isHash: false },
     { name: "Connect", href: "#stay-connected", isHash: true },
   ];
 
+  // Trimmed from ten anchors to the ones a visitor actually looks for; the
+  // rest are one scroll away on the page itself.
   const lighthouseSubItems = [
     { name: "Downloads", href: "#downloads" },
     { name: "See it in 10 minutes", href: "#first-forecast" },
-    { name: "Overview", href: "#lighthouse-overview" },
-    { name: "Testimonials", href: "#lighthouse-testimonials" },
-    { name: "FAQ", href: "#faq" },
     { name: "Pricing", href: "#lighthouse-premium" },
     { name: "Get a License", href: "#lighthouse-license" },
+    { name: "FAQ", href: "#faq" },
     { name: "AI Integration", href: "#lighthouse-ai" },
-    { name: "Pitch Deck (PDF)", href: "#lighthouse-convince" },
-    { name: "Key Features", href: "#lighthouse-features" },
   ];
 
   const handleNavClick = (item: typeof navItems[0]) => {
@@ -115,17 +115,6 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={() => handleNavClick(item)}
-                className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
-              >
-                {item.name}
-              </a>
-            ))}
-            
             {/* Lighthouse Dropdown */}
             <div 
               className="relative group"
@@ -155,13 +144,16 @@ const Navigation = () => {
               )}
             </div>
 
-            {/* AI page link */}
-            <a
-              href="/ai"
-              className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
-            >
-              AI
-            </a>
+            {navItems.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                onClick={() => handleNavClick(item)}
+                className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
+              >
+                {item.name}
+              </a>
+            ))}
           </div>
 
           {/* Mobile menu button */}
@@ -179,17 +171,6 @@ const Navigation = () => {
         {isOpen && (
           <div className="md:hidden border-t border-border">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="block px-3 py-2 rounded-md text-foreground hover:text-primary hover:bg-accent transition-colors"
-                  onClick={() => handleNavClick(item)}
-                >
-                  {item.name}
-                </a>
-              ))}
-              
               {/* Mobile Lighthouse Menu */}
               <div>
                 <button
@@ -209,14 +190,16 @@ const Navigation = () => {
                 ))}
               </div>
 
-              {/* Mobile AI link */}
-              <a
-                href="/ai"
-                className="block px-3 py-2 rounded-md text-foreground hover:text-primary hover:bg-accent transition-colors font-medium"
-                onClick={() => setIsOpen(false)}
-              >
-                AI
-              </a>
+              {navItems.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="block px-3 py-2 rounded-md text-foreground hover:text-primary hover:bg-accent transition-colors font-medium"
+                  onClick={() => handleNavClick(item)}
+                >
+                  {item.name}
+                </a>
+              ))}
             </div>
           </div>
         )}
