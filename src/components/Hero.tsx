@@ -24,7 +24,7 @@ const Hero = () => {
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="animate-fade-in">
           <span className="inline-block text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-6">
-            Open-source flow metrics and forecasting
+            Source-available flow metrics and forecasting
           </span>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-[1.05] tracking-tight">

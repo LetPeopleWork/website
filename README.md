@@ -79,7 +79,7 @@ To complete the SEO optimization, you need to manually add these files to the `p
 {
   "name": "LetPeopleWork - Flow Metrics & Forecasting",
   "short_name": "LetPeopleWork",
-  "description": "Transform your organization with Lighthouse - the leading open-source flow metrics and forecasting tool.",
+  "description": "Transform your organization with Lighthouse - the leading source-available flow metrics and forecasting tool.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

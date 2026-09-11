@@ -467,8 +467,8 @@ const Lighthouse = () => {
 			icon: <FileText className="h-8 w-8" />,
 			title: "Full Transparency - Full Control",
 			description:
-				"No need to send your data to some cloud provider in a foreign country - Lighthouse is 100% Open-Source, runs fully on your infrastructure and will not send anything to the cloud",
-			extendedDescription: `We don't want our data to go uncontrolled in the Cloud. We assume you are the same. This is why there is no third-party cloud provider involved. Don't trust us? Check out the code yourself, Lighthouse is 100% Open-Source.
+				"No need to send your data to some cloud provider in a foreign country - Lighthouse runs fully on your infrastructure and will not send anything to the cloud",
+			extendedDescription: `We don't want our data to go uncontrolled in the Cloud. We assume you are the same. This is why there is no third-party cloud provider involved. Don't trust us? Check out the code yourself - the source is public on GitHub.
       
       It's 100% made in Switzerland, where we have many banks that have tight security constraints when it comes to Software. This is why we put effort into making it possible for everyone to be able to run it. All of this applies to the Community and the premium version.`,
 			callToAction:
@@ -567,7 +567,7 @@ const Lighthouse = () => {
 			},
 		],
 		description:
-			"Open-source flow metrics and probabilistic forecasting tool. Connects to Jira, Azure DevOps, Linear, and ServiceNow. AI integration via MCP, so you can ask your AI assistant questions about your delivery data directly. Self-hosted, no cloud dependency.",
+			"Source-available flow metrics and probabilistic forecasting tool. Connects to Jira, Azure DevOps, Linear, and ServiceNow. AI integration via MCP, so you can ask your AI assistant questions about your delivery data directly. Self-hosted, no cloud dependency.",
 		featureList: [
 			"Flow Metrics Visualization",
 			"Monte Carlo Probabilistic Forecasting",
@@ -757,7 +757,7 @@ const Lighthouse = () => {
 		<div className="min-h-screen bg-background">
 			<SEO
 				title="Lighthouse - Flow Metrics & Forecasting Tool for Agile Teams"
-				description="Lighthouse is an open-source tool for visualizing flow metrics and forecasting delivery dates using Monte Carlo simulations. Connects to Jira, Azure DevOps, Linear, and ServiceNow. AI integration via MCP, so you can ask Claude or Copilot questions about your delivery data. Free community version available."
+				description="Lighthouse is a source-available, self-hosted tool for visualizing flow metrics and forecasting delivery dates using Monte Carlo simulations. Connects to Jira, Azure DevOps, Linear, and ServiceNow. AI integration via MCP, so you can ask Claude or Copilot questions about your delivery data. Free community version available."
 				keywords="lighthouse flow metrics, agile forecasting tool, Monte Carlo simulation, delivery forecasting, when will it be done, how much can we do, Jira flow metrics, Azure DevOps metrics, Linear integration, ServiceNow integration, ITSM flow metrics, AI integration, MCP, Model Context Protocol, agile AI assistant, throughput, cycle time, lead time, WIP, work in progress, team velocity, sprint forecasting, agile metrics dashboard, kanban metrics, scrum metrics, project forecasting, portfolio forecasting, open source agile, predictability, self-hosted forecasting, agile analytics"
 				ogImage="https://letpeople.work/forecasts-project.png"
 				ogType="website"
@@ -1129,7 +1129,7 @@ const Lighthouse = () => {
 							<span className="text-primary font-light">Same product. Different access.</span>
 						</h2>
 						<p className="text-lg md:text-xl text-muted-foreground font-light max-w-2xl mx-auto leading-relaxed">
-							Lighthouse stays open source and self-hosted across every edition.<br />Paid tiers unlock unlimited usage and choose how much of us you want alongside it.
+							Lighthouse stays source available and self-hosted across every edition.<br />Paid tiers unlock unlimited usage and choose how much of us you want alongside it.
 						</p>
 					</div>
 
@@ -1141,7 +1141,7 @@ const Lighthouse = () => {
 							<div className="flex items-baseline gap-2 mb-1">
 								<div className="text-4xl md:text-5xl font-semibold text-foreground tracking-tight">Free</div>
 							</div>
-							<div className="text-sm text-muted-foreground mb-6">Forever. Open source. Self-hosted.</div>
+							<div className="text-sm text-muted-foreground mb-6">Forever. Source available. Self-hosted.</div>
 							<p className="text-base text-foreground/80 leading-relaxed mb-6">
 								Everything you need to forecast and see your flow, up to a few teams.
 							</p>
@@ -1229,7 +1229,7 @@ const Lighthouse = () => {
 
 					{/* No lock-in reassurance */}
 					<p className="text-center text-sm md:text-base text-muted-foreground max-w-2xl mx-auto mb-16">
-						Self-hosted and open source. If you ever stop paying, your data and the tool stay with you.
+						Self-hosted, with the source public. If you ever stop paying, your data and the tool stay with you.
 						And guided onboarding is free for every edition, not just Enterprise: we help you get set up, no strings attached.
 					</p>
 
@@ -1304,7 +1304,7 @@ const Lighthouse = () => {
 													{ feature: "Flow Metrics for Projects", community: true, self: true, enterprise: true },
 													{ feature: "Manual Forecasts for Teams", community: true, self: true, enterprise: true },
 													{ feature: "Continuous Forecasts for Projects", community: true, self: true, enterprise: true },
-													{ feature: "100% Open Source (MIT License)", community: true, self: true, enterprise: true },
+													{ feature: "Source available — read and audit the code", community: true, self: true, enterprise: true },
 													{ feature: "Connection to Jira, Azure DevOps & Linear", community: true, self: true, enterprise: true },
 													{
 														feature: { label: "AI & LLM Integration", tooltip: "Connect Lighthouse to Claude, ChatGPT, or any MCP-compatible AI assistant. Query metrics, run forecasts, and explore delivery data through natural language, no dashboard required." },
@@ -1444,7 +1444,7 @@ const Lighthouse = () => {
 							Pick the path that fits.<br />You can move up later, just write to us.
 						</p>
 						<p className="text-sm text-muted-foreground/80 font-light max-w-2xl mx-auto mt-4">
-							Self-hosted and open source. If you ever stop paying, your data and the tool stay with you.
+							Self-hosted, with the source public. If you ever stop paying, your data and the tool stay with you.
 						</p>
 					</div>
 

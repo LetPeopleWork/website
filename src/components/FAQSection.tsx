@@ -45,7 +45,7 @@ const faqs = [
   {
     question: "I tried something like this before and it didn't stick.",
     answer:
-      "Was it Actionable Agile, Nave, or Jira's native forecasting? Lighthouse is self-hosted, open source, and free to start, which removes most of the reasons these tools die in real orgs. IT blocks the SaaS, the budget gets cut, the champion leaves. None of those land the same way when the tool is free and runs on your laptop.",
+      "Was it Actionable Agile, Nave, or Jira's native forecasting? Lighthouse is self-hosted, source available, and free to start, which removes most of the reasons these tools die in real orgs. IT blocks the SaaS, the budget gets cut, the champion leaves. None of those land the same way when the tool is free and runs on your laptop.",
   },
   {
     question: "Is this even for me?",

@@ -1,6 +1,6 @@
 # LetPeopleWork - Lighthouse and Sizing Poker
 
-> LetPeopleWork GmbH builds tools for delivery teams: Lighthouse, the open-source flow metrics and forecasting tool, and Sizing Poker, a free browser tool for sizing a backlog without estimating it. Founded by Peter Zylka-Greger and Benjamin Huser-Berta in Switzerland, we help organizations stop guessing about delivery and start making decisions grounded in real data.
+> LetPeopleWork GmbH builds tools for delivery teams: Lighthouse, the source-available flow metrics and forecasting tool, and Sizing Poker, a free browser tool for sizing a backlog without estimating it. Founded by Peter Zylka-Greger and Benjamin Huser-Berta in Switzerland, we help organizations stop guessing about delivery and start making decisions grounded in real data.
 
 ## About LetPeopleWork
 
@@ -33,7 +33,7 @@ Product Owners, Scrum Masters and teams doing backlog refinement who want to rep
 ## Lighthouse - Flow Metrics & Forecasting Tool
 
 **What is Lighthouse?**
-Lighthouse is an open-source flow metrics and probabilistic forecasting tool. It connects to your ALM system (Jira, Azure DevOps, Linear, or ServiceNow), visualizes how work flows through your teams, and generates Monte Carlo-based delivery forecasts grounded in your actual throughput history. It runs entirely on your own infrastructure — no cloud dependency, no data leaving your environment.
+Lighthouse is a source-available flow metrics and probabilistic forecasting tool. It connects to your ALM system (Jira, Azure DevOps, Linear, or ServiceNow), visualizes how work flows through your teams, and generates Monte Carlo-based delivery forecasts grounded in your actual throughput history. It runs entirely on your own infrastructure — no cloud dependency, no data leaving your environment.
 
 **Key features of Lighthouse:**
 1. Visualize flow metrics: throughput, cycle time, work item age, work in progress
@@ -42,7 +42,7 @@ Lighthouse is an open-source flow metrics and probabilistic forecasting tool. It
 4. Track both team-level and portfolio/project-level metrics
 5. AI integration via MCP (Model Context Protocol) — let your AI assistant query Lighthouse data directly
 6. CLI integration for use in shell scripts, CI/CD pipelines, and automated workflows
-7. 100% open-source and self-hosted
+7. Source available and self-hosted
 8. Community Edition is free forever; paid tiers unlock unlimited usage (see licensing below)
 9. Predictability trends: Percentiles Over Time and Process Behaviour Charts (PBC) Over Time show whether your delivery is becoming more or less predictable
 10. Blocked work tracking: rule-based blocked definition, blocked duration per item, and a Blocked Over Time chart for teams and portfolios
@@ -67,7 +67,7 @@ AI integration is available as a downloadable skill for compatible clients and w
 - Full setup guide: https://docs.lighthouse.letpeople.work/aiintegration.html
 
 **What are Lighthouse's licensing options?**
-Three editions, same product, different access. All editions are open source and self-hosted; if you ever stop paying, your data and the tool stay with you.
+Three editions, same product, different access. All editions are source available and self-hosted; if you ever stop paying, your data and the tool stay with you.
 - Community Edition: Free forever. All core flow metrics and Monte Carlo forecasts, up to 3 teams, 1 portfolio, 1 delivery.
 - Self-Service: CHF 2,000/year. Unlimited teams, portfolios, and deliveries, all paid features, community Slack support. One flat rate, no per-seat pricing.
 - Enterprise: CHF 10,000/year. Everything in Self-Service plus prioritised support, 24h acknowledgement on async requests, onboarding calls, and named contacts.
@@ -90,7 +90,7 @@ Jira, Azure DevOps, Linear, and ServiceNow (team level only). AI assistants via 
 
 **How does Lighthouse compare to ActionableAgile and Nave?**
 All three provide flow metrics (cycle time, throughput, WIP, work item age) and data-driven forecasting. The key differences:
-- Lighthouse is 100% open source and self-hosted (desktop app or Docker); ActionableAgile (by 55 Degrees) and Nave are closed-source commercial SaaS.
+- Lighthouse is source available and self-hosted (desktop app or Docker); ActionableAgile (by 55 Degrees) and Nave are closed-source commercial SaaS.
 - Lighthouse has a free-forever Community edition and flat per-organisation pricing (Self-Service CHF 2,000/year; Enterprise CHF 10,000/year). ActionableAgile is priced per user; Nave is priced per connected board.
 - Lighthouse connects to Jira, Azure DevOps, Linear, and ServiceNow; ActionableAgile to Jira and Azure DevOps; Nave to Jira, Trello, and Azure DevOps.
 - Lighthouse has native AI integration via MCP and CLI; that is not a core feature of the others.
@@ -151,7 +151,7 @@ To help teams stop guessing and start delivering with confidence. We believe the
 .NET Core / C# backend, React + TypeScript frontend. SQLite for local data storage. Cross-platform (Windows, macOS, Linux, Docker).
 
 **Is Lighthouse open source?**
-Yes, 100% open source: https://github.com/LetPeopleWork/Lighthouse
+No - Lighthouse is source available. The source is public on GitHub and you can read, audit, run and modify it, but it is not open source under the Open Source Initiative definition: competing products and hosted resale are restricted. Releases up to v26.9.9.9 remain MIT licensed. https://github.com/LetPeopleWork/Lighthouse
 
 **Where does Lighthouse store data?**
 All data is stored locally using SQLite. Nothing is transmitted to external cloud services. You own your data.
@@ -161,7 +161,7 @@ MCP (Model Context Protocol) is an open standard for connecting AI assistants to
 
 ## Keywords & Topics
 
-Flow metrics, kanban, delivery forecasting, Monte Carlo simulation, throughput, cycle time, work item age, work in progress, predictability, Jira integration, Azure DevOps integration, Linear integration, ServiceNow integration, AI integration, MCP, Model Context Protocol, agentic workflows, probabilistic forecasting, team performance, organizational improvement, open source tools, self-hosted solutions, Lighthouse tool, Sizing Poker, right sizing, no estimates, LetPeopleWork, obAIa, AI workshops, AI for business, Claude Code plugins, LetPeopleWorkShop, LetPeopleGrow, AI-powered business, delivery predictability assessment.
+Flow metrics, kanban, delivery forecasting, Monte Carlo simulation, throughput, cycle time, work item age, work in progress, predictability, Jira integration, Azure DevOps integration, Linear integration, ServiceNow integration, AI integration, MCP, Model Context Protocol, agentic workflows, probabilistic forecasting, team performance, organizational improvement, source available tools, self-hosted tools, self-hosted solutions, Lighthouse tool, Sizing Poker, right sizing, no estimates, LetPeopleWork, obAIa, AI workshops, AI for business, Claude Code plugins, LetPeopleWorkShop, LetPeopleGrow, AI-powered business, delivery predictability assessment.
 
 ## Documentation & Resources
 

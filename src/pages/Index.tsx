@@ -21,7 +21,7 @@ const Index = () => {
     "name": "LetPeopleWork GmbH",
     "url": "https://letpeople.work",
     "logo": "https://letpeople.work/assets/LPW_Banner_White-DTCn4RDr.png",
-    "description": "Makers of Lighthouse, the open-source flow metrics and forecasting tool, and Sizing Poker, a free way to size a backlog without estimating it.",
+    "description": "Makers of Lighthouse, the source-available flow metrics and forecasting tool, and Sizing Poker, a free way to size a backlog without estimating it.",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Mühlackerstrasse 108",
@@ -56,7 +56,7 @@ const Index = () => {
         "itemOffered": {
           "@type": "SoftwareApplication",
           "name": "Lighthouse",
-          "description": "Open-source flow metrics and forecasting tool. Connects to Jira, Azure DevOps, Linear, and ServiceNow. AI integration via MCP. Community, Self-Service, and Enterprise editions.",
+          "description": "Source-available flow metrics and forecasting tool. Connects to Jira, Azure DevOps, Linear, and ServiceNow. AI integration via MCP. Community, Self-Service, and Enterprise editions.",
           "applicationCategory": "DeveloperApplication",
           "operatingSystem": "Cross-platform",
           "offers": [
@@ -65,7 +65,7 @@ const Index = () => {
               "name": "Lighthouse Community Edition",
               "price": "0",
               "priceCurrency": "CHF",
-              "description": "Free open-source edition with core flow metrics and forecasting features. Capped to 3 teams and 1 portfolio."
+              "description": "Free edition with core flow metrics and forecasting features. Capped to 3 teams and 1 portfolio."
             },
             {
               "@type": "Offer",
@@ -115,7 +115,7 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <SEO
         title="LetPeopleWork - Lighthouse: flow metrics and forecasts you can defend"
-        description="Lighthouse turns your real delivery data into flow metrics and Monte Carlo forecasts you can defend. Open source, self-hosted, free to start, and a 30-day Self-Service trial with no signup and no credit card. Also from LetPeopleWork: Sizing Poker."
+        description="Lighthouse turns your real delivery data into flow metrics and Monte Carlo forecasts you can defend. Source available, self-hosted, free to start, and a 30-day Self-Service trial with no signup and no credit card. Also from LetPeopleWork: Sizing Poker."
         keywords="flow metrics, delivery forecasting, lighthouse tool, flow metrics tool, Monte Carlo forecasting, predictability, throughput, cycle time, lead time, sizing poker, right sizing, no estimates, backlog refinement"
         structuredData={structuredData}
         breadcrumbs={[

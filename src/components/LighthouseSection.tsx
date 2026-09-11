@@ -128,7 +128,7 @@ const LighthouseSection = () => {
             </Button>
           </div>
           <p className="text-xs text-muted-foreground">
-            Community edition free forever • 100% open source • Self-hosted on Windows, macOS, Linux, or Docker
+            Community edition free forever • Source available on GitHub • Self-hosted on Windows, macOS, Linux, or Docker
           </p>
         </div>
       </div>
