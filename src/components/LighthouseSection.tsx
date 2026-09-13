@@ -16,7 +16,7 @@ const steps = [
     number: "01",
     title: "Connect your data",
     description:
-      "Installs in under ten minutes and pulls from Jira, Azure DevOps, Linear, or ServiceNow. Self-hosted, so your data never leaves your network.",
+      "Installs in under ten minutes and pulls from Jira, Azure DevOps, Linear, or ServiceNow. Self-hosted, so your delivery data stays in your network.",
   },
   {
     number: "02",
