@@ -9,7 +9,7 @@ export const LIGHTHOUSE_FILM = {
   youtubeId: "",
   title: "Lighthouse in 75 seconds",
   description:
-    "When will it be done? Lighthouse connects to Jira, Azure DevOps, Linear or ServiceNow and turns your delivery history into Monte Carlo forecasts and flow metrics. Self-hosted, open source.",
+    "When will it be done? Lighthouse connects to Jira, Azure DevOps, Linear or ServiceNow and turns your delivery history into Monte Carlo forecasts and flow metrics. Self-hosted, with the source public.",
   durationSeconds: 75,
   /** ISO 8601, for the VideoObject schema. Set to the YouTube publish date. */
   uploadDate: "2026-10-07",
