@@ -42,12 +42,12 @@ const FilmFacade = ({ source, className = "" }: FilmFacadeProps) => {
           aria-label={`Play: ${LIGHTHOUSE_FILM.title}`}
         >
           <img
-            src="/forecasts-project.png"
+            src="/lighthouse-forecast.png"
             alt=""
             className="h-full w-full object-cover opacity-80 transition-opacity group-hover:opacity-60"
             loading="lazy"
-            width="1843"
-            height="1090"
+            width="1920"
+            height="1080"
           />
           <span className="absolute inset-0 grid place-items-center">
             <span className="inline-flex items-center gap-3 rounded-full bg-foreground/90 px-6 py-3 text-base font-semibold text-background shadow-medium ring-1 ring-white/20 backdrop-blur-sm transition-transform group-hover:scale-105 group-hover:bg-foreground">

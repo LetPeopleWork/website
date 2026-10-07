@@ -93,11 +93,11 @@ const Hero = () => {
           )}
           <div className="rounded-t-2xl border border-b-0 border-border bg-card shadow-medium overflow-hidden">
             <img
-              src="/forecasts-project.png"
-              alt="Lighthouse showing a project forecast: probability ranges for when the remaining work will be done"
+              src="/lighthouse-forecast.png"
+              alt="Lighthouse team forecast: when will 10 work items be done, four dates with their probabilities, and a 72% likelihood of making the target date"
               className="w-full h-auto block"
-              width="1843"
-              height="1090"
+              width="1920"
+              height="1080"
               loading="eager"
               fetchPriority="high"
               data-testid="hero-product-shot"

@@ -24,7 +24,7 @@ const SEO = ({
   title = "LetPeopleWork - Flow Metrics & Forecasting with Lighthouse",
   description = "Unlock the full potential of your organization with Lighthouse - the leading source-available tool for flow metrics, Monte Carlo forecasting, and delivery predictions. Connect to Jira, Azure DevOps, Linear & ServiceNow for data-driven insights.",
   keywords = "flow metrics, forecasting tool, Monte Carlo simulation, delivery forecasting, Jira integration, Azure DevOps, Linear integration, ServiceNow integration, agile metrics, team metrics, project forecasting, throughput, cycle time, work in progress, WIP, lead time, scrum metrics, kanban metrics, agile delivery, predictability, self-hosted agile tool, source available",
-  ogImage = "https://letpeople.work/forecasts-project.png",
+  ogImage = "https://letpeople.work/lighthouse-forecast.png",
   ogImageAlt = "Lighthouse Flow Metrics Dashboard",
   ogType = "website",
   canonicalUrl,

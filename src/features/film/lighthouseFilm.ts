@@ -14,7 +14,7 @@ export const LIGHTHOUSE_FILM = {
   /** ISO 8601, for the VideoObject schema. Set to the YouTube publish date. */
   uploadDate: "2026-10-07",
   /** Same-origin poster: the hero product shot, so the facade matches the page. */
-  posterUrl: "https://letpeople.work/forecasts-project.png",
+  posterUrl: "https://letpeople.work/lighthouse-forecast.png",
 } as const;
 
 export const isFilmAvailable = (): boolean => LIGHTHOUSE_FILM.youtubeId.length > 0;

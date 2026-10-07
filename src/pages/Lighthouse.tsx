@@ -76,10 +76,6 @@ import LighthouseWhatsNew from "@/components/LighthouseWhatsNew";
 import TrialRequestDialog from "@/features/trial/components/TrialRequestDialog";
 import { format } from "date-fns";
 import { lighthouseAsset } from "@/lib/lighthouseAsset";
-import metricsTeamVideo from "@/assets/videos/Metrics_Team.mp4";
-import metricsProjectVideo from "@/assets/videos/Metrics_Projects.mp4";
-import forecastsTeamVideo from "@/assets/videos/Forecasts_Team.mp4";
-import forecastsProjectVideo from "@/assets/videos/Forecasts_Project.mp4";
 import gitHubImage from "@/assets/screenshots/GitHub.png";
 import {
 	findAssetByPattern,
@@ -353,30 +349,37 @@ const Lighthouse = () => {
 		}
 	};
 
+	// Screenshots come from the Lighthouse docs on the CDN, so they track the
+	// current UI without a website release. The April screencasts they replace
+	// showed a UI three redesigns old and weighed 185 MB in the bundle.
 	const lighthouseFeatures = [
 		{
 			title: "Visualize the Flow for Teams",
 			description:
-				"Inspect how well work flows through your system and use the data to drive improvements",
-			video: metricsTeamVideo,
+				"Work in progress, age, blocked and stale items, throughput, and a predictability score on one page, each with a red, amber or green signal so you know where to look first.",
+			image: lighthouseAsset("features/metrics/metricsoverview.png"),
+			alt: "Team metrics overview with flow widgets and RAG indicators",
 		},
 		{
 			title: "Visualize the Flow on Portfolio Level",
 			description:
-				"Optimize your end to end value delivery by analyzing higher flight levels",
-			video: metricsProjectVideo,
+				"The same flow metrics one flight level up: features in progress, feature size, blocked work, and how predictable the portfolio is as a whole.",
+			image: lighthouseAsset("features/metrics/portfoliometricsoverview.png"),
+			alt: "Portfolio metrics overview",
 		},
 		{
 			title: "Run Forecasts for your Team",
 			description:
-				'Make plannings a breeze and get answers to "When will it be done" and "How much can we do" within seconds',
-			video: forecastsTeamVideo,
+				'Ask "when will these 10 items be done?" or "how many can we finish by the 11th?" and get an answer with its probability, from your own history, in seconds.',
+			image: lighthouseAsset("features/teamdetail.png"),
+			alt: "Team forecast answering when 10 items will be done and the likelihood of a target date",
 		},
 		{
-			title: "Create Realistic Delivery Timelines",
+			title: "See the Delivery Timeline",
 			description:
-				"Use the power of Monte Carlo Simulations to create timelines that are based on your historical data",
-			video: forecastsProjectVideo,
+				"One bar per feature, from forecast start to forecast finish, dependencies drawn as lines between them, and the features that will not even start before the target date called out.",
+			image: lighthouseAsset("features/deliveryTimeline.png"),
+			alt: "Delivery timeline with one bar per feature and dependency lines",
 		},
 	];
 
@@ -405,9 +408,9 @@ const Lighthouse = () => {
 					alt: "Projects Metrics",
 				},
 				{
-					type: "video" as const,
-					src: metricsTeamVideo,
-					alt: "Team Metrics Demo",
+					type: "image" as const,
+					src: lighthouseAsset("features/metrics/sleRiskWidget.png"),
+					alt: "Items at risk of missing the service level expectation",
 				},
 			],
 		},
@@ -437,9 +440,9 @@ const Lighthouse = () => {
 					alt: "Projects Forecasts",
 				},
 				{
-					type: "video" as const,
-					src: forecastsProjectVideo,
-					alt: "Project Forecasts Demo",
+					type: "image" as const,
+					src: lighthouseAsset("features/realitycheck.png"),
+					alt: "Forecast Reality Check: backtested forecasts per percentile and sampling window",
 				},
 			],
 		},
@@ -539,7 +542,6 @@ const Lighthouse = () => {
 		"@context": "https://schema.org",
 		"@type": "SoftwareApplication",
 		name: "Lighthouse",
-		...(isFilmAvailable() ? { video: filmSchema() } : {}),
 		applicationCategory: "BusinessApplication",
 		applicationSubCategory: "Project Management",
 		operatingSystem:
@@ -587,7 +589,7 @@ const Lighthouse = () => {
 			"Work In Progress Limits",
 			"Self-Hosted, No Cloud Dependency",
 		],
-		screenshot: "https://letpeople.work/forecasts-project.png",
+		screenshot: "https://letpeople.work/lighthouse-forecast.png",
 		aggregateRating: {
 			"@type": "AggregateRating",
 			ratingValue: "5",
@@ -702,6 +704,8 @@ const Lighthouse = () => {
 			url: "https://letpeople.work",
 		},
 		video: [
+			// The film first; the four April screencasts that used to follow are gone.
+			...(isFilmAvailable() ? [filmSchema()] : []),
 			{
 				"@type": "VideoObject",
 				name: "From nothing to a Monte Carlo forecast in under ten minutes",
@@ -713,46 +717,6 @@ const Lighthouse = () => {
 				uploadDate: "2026-08-01T00:00:00Z",
 				duration: "PT1M30S",
 			},
-			{
-				"@type": "VideoObject",
-				name: "Lighthouse Team Metrics Visualization",
-				description:
-					"Visualize how well work flows through your system at the team level with Lighthouse flow metrics",
-				thumbnailUrl: "https://letpeople.work/forecasts-project.png",
-				uploadDate: "2024-10-01T00:00:00Z",
-				contentUrl: metricsTeamVideo,
-				embedUrl: metricsTeamVideo,
-			},
-			{
-				"@type": "VideoObject",
-				name: "Lighthouse Project Metrics Visualization",
-				description:
-					"Optimize your end-to-end value delivery by analyzing higher flight levels with Lighthouse",
-				thumbnailUrl: "https://letpeople.work/forecasts-project.png",
-				uploadDate: "2024-10-01T00:00:00Z",
-				contentUrl: metricsProjectVideo,
-				embedUrl: metricsProjectVideo,
-			},
-			{
-				"@type": "VideoObject",
-				name: "Lighthouse Team Forecasting",
-				description:
-					"Run forecasts for your team and get answers to when work will be done within seconds",
-				thumbnailUrl: "https://letpeople.work/forecasts-project.png",
-				uploadDate: "2024-10-01T00:00:00Z",
-				contentUrl: forecastsTeamVideo,
-				embedUrl: forecastsTeamVideo,
-			},
-			{
-				"@type": "VideoObject",
-				name: "Lighthouse Project Delivery Timeline Forecasting",
-				description:
-					"Create realistic delivery timelines using Monte Carlo Simulations based on historical data",
-				thumbnailUrl: "https://letpeople.work/forecasts-project.png",
-				uploadDate: "2024-10-01T00:00:00Z",
-				contentUrl: forecastsProjectVideo,
-				embedUrl: forecastsProjectVideo,
-			},
 		],
 	};
 
@@ -762,7 +726,7 @@ const Lighthouse = () => {
 				title="Lighthouse - Flow Metrics & Forecasting Tool for Agile Teams"
 				description="Lighthouse is a source-available, self-hosted tool for visualizing flow metrics and forecasting delivery dates using Monte Carlo simulations. Connects to Jira, Azure DevOps, Linear, and ServiceNow. AI integration via MCP, so you can ask Claude or Copilot questions about your delivery data. Free community version available."
 				keywords="lighthouse flow metrics, agile forecasting tool, Monte Carlo simulation, delivery forecasting, when will it be done, how much can we do, Jira flow metrics, Azure DevOps metrics, Linear integration, ServiceNow integration, ITSM flow metrics, AI integration, MCP, Model Context Protocol, agile AI assistant, throughput, cycle time, lead time, WIP, work in progress, team velocity, sprint forecasting, agile metrics dashboard, kanban metrics, scrum metrics, project forecasting, portfolio forecasting, open source agile, predictability, self-hosted forecasting, agile analytics"
-				ogImage="https://letpeople.work/forecasts-project.png"
+				ogImage="https://letpeople.work/lighthouse-forecast.png"
 				ogType="website"
 				canonicalUrl="https://letpeople.work/lighthouse"
 				structuredData={structuredData}
@@ -1103,18 +1067,12 @@ const Lighthouse = () => {
 										</div>
 
 										<div className="flex flex-col justify-center items-center">
-											{/* Single Video Display */}
-											{feature.video && (
-												<video
-													className="w-full max-w-lg h-80 rounded-lg shadow-soft"
-													controls
-													preload="metadata"
-												>
-													<source src={feature.video} type="video/mp4" />
-													<track kind="captions" srcLang="en" label="English" />
-													Your browser does not support the video tag.
-												</video>
-											)}
+											<img
+												src={feature.image}
+												alt={feature.alt}
+												className="w-full max-w-lg rounded-lg border border-border shadow-soft"
+												loading="lazy"
+											/>
 										</div>
 									</div>
 								</CarouselItem>
@@ -1325,7 +1283,7 @@ const Lighthouse = () => {
 													{ feature: "Manual Forecasts for Teams", community: true, self: true, enterprise: true },
 													{ feature: "Continuous Forecasts for Projects", community: true, self: true, enterprise: true },
 													{ feature: "Source available — read and audit the code", community: true, self: true, enterprise: true },
-													{ feature: "Connection to Jira, Azure DevOps & Linear", community: true, self: true, enterprise: true },
+													{ feature: "Connection to Jira, Azure DevOps, Linear & ServiceNow", community: true, self: true, enterprise: true },
 													{
 														feature: { label: "AI & LLM Integration", tooltip: "Connect Lighthouse to Claude, ChatGPT, or any MCP-compatible AI assistant. Query metrics, run forecasts, and explore delivery data through natural language, no dashboard required." },
 														community: true, self: true, enterprise: true,

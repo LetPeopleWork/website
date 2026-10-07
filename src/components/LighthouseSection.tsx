@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import MediaCarousel from "@/components/MediaCarousel";
 import lighthouseLogo from "@/assets/LighthouseLogo.png";
 import { lighthouseAsset } from "@/lib/lighthouseAsset";
-import forecastsProjectVideo from "@/assets/videos/Forecasts_Project.mp4";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 // The one Lighthouse section on the homepage. The former "How it works" three
@@ -70,9 +69,9 @@ const LighthouseSection = () => {
       alt: "Team Forecasts Manual",
     },
     {
-      type: "video" as const,
-      src: forecastsProjectVideo,
-      alt: "Project Forecasts Demo",
+      type: "image" as const,
+      src: lighthouseAsset("features/deliveryTimeline.png"),
+      alt: "Delivery Timeline",
     },
   ];
 
