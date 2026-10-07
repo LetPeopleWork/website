@@ -6,7 +6,7 @@
 // Set YOUTUBE_ID once the upload is public. While it is empty every film
 // affordance on the site stays hidden, so this can ship ahead of the upload.
 export const LIGHTHOUSE_FILM = {
-  youtubeId: "",
+  youtubeId: "kS5B1acUIyA",
   title: "Lighthouse in 75 seconds",
   description:
     "When will it be done? Lighthouse connects to Jira, Azure DevOps, Linear or ServiceNow and turns your delivery history into Monte Carlo forecasts and flow metrics. Self-hosted, with the source public.",
