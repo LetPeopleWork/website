@@ -88,6 +88,8 @@ import {
 	type ReleaseAsset,
 } from "@/lib/lighthouseDownloads";
 import QuickDownloadBar from "@/components/QuickDownloadBar";
+import FilmFacade from "@/features/film/components/FilmFacade";
+import { LIGHTHOUSE_FILM, filmSchema, isFilmAvailable } from "@/features/film/lighthouseFilm";
 import { trackDownload, trackEvent } from "@/lib/plausible";
 import { prices } from "@/lib/pricing";
 
@@ -537,6 +539,7 @@ const Lighthouse = () => {
 		"@context": "https://schema.org",
 		"@type": "SoftwareApplication",
 		name: "Lighthouse",
+		...(isFilmAvailable() ? { video: filmSchema() } : {}),
 		applicationCategory: "BusinessApplication",
 		applicationSubCategory: "Project Management",
 		operatingSystem:
@@ -815,6 +818,23 @@ const Lighthouse = () => {
 					</div>
 				</div>
 			</section>
+
+			{/* The film: the pitch in 75 seconds, before the proof below. */}
+			{isFilmAvailable() && (
+				<section id="film" className="py-20 bg-background scroll-mt-24">
+					<div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+						<div className="text-center mb-8">
+							<h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight mb-4">
+								{LIGHTHOUSE_FILM.title}
+							</h2>
+							<p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+								The question every team gets asked, and what Lighthouse does with it.
+							</p>
+						</div>
+						<FilmFacade source="lighthouse-page" />
+					</div>
+				</section>
+			)}
 
 			{/* Proof: live, unedited setup demo */}
 			<section id="first-forecast" className="py-20 bg-gradient-subtle border-y border-border">

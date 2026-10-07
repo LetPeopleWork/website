@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Play } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import TrialRequestDialog from "@/features/trial/components/TrialRequestDialog";
 import { trackEvent } from "@/lib/plausible";
+import FilmLightbox from "@/features/film/components/FilmLightbox";
+import { LIGHTHOUSE_FILM, isFilmAvailable } from "@/features/film/lighthouseFilm";
 
 // The hero shows the product. Headline, one paragraph, two buttons, and the
 // forecast screen itself - a visitor who has never heard of Lighthouse should
@@ -12,6 +14,11 @@ import { trackEvent } from "@/lib/plausible";
 // that is the offer with the least friction.
 const Hero = () => {
   const [trialOpen, setTrialOpen] = useState(false);
+  const [filmOpen, setFilmOpen] = useState(false);
+  const openFilm = () => {
+    trackEvent("Film played", { source: "hero" });
+    setFilmOpen(true);
+  };
   const openTrial = () => {
     trackEvent("Trial dialog opened", { source: "hero" });
     setTrialOpen(true);
@@ -66,8 +73,24 @@ const Hero = () => {
           </p>
         </div>
 
-        {/* The product, cropped at the bottom so the page reads on. */}
+        {/* The product, cropped at the bottom so the page reads on. With the
+            film published, the shot doubles as its poster: one click, a
+            lightbox, sound on. */}
         <div className="relative mx-auto max-w-5xl">
+          {isFilmAvailable() && (
+            <button
+              type="button"
+              onClick={openFilm}
+              className="group absolute inset-x-0 top-0 z-10 flex h-[70%] items-center justify-center"
+              aria-label={`Play: ${LIGHTHOUSE_FILM.title}`}
+              data-testid="hero-film-play"
+            >
+              <span className="inline-flex items-center gap-3 rounded-full bg-white/95 px-6 py-3 text-base font-semibold text-foreground shadow-medium transition-transform group-hover:scale-105">
+                <Play className="h-5 w-5 fill-current" />
+                Watch the film · {LIGHTHOUSE_FILM.durationSeconds} s
+              </span>
+            </button>
+          )}
           <div className="rounded-t-2xl border border-b-0 border-border bg-card shadow-medium overflow-hidden">
             <img
               src="/forecasts-project.png"
@@ -85,6 +108,7 @@ const Hero = () => {
       </div>
 
       <TrialRequestDialog open={trialOpen} onOpenChange={setTrialOpen} source="hero" />
+      <FilmLightbox open={filmOpen} onOpenChange={setFilmOpen} />
     </section>
   );
 };
