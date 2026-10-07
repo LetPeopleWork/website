@@ -85,7 +85,7 @@ const Hero = () => {
               aria-label={`Play: ${LIGHTHOUSE_FILM.title}`}
               data-testid="hero-film-play"
             >
-              <span className="inline-flex items-center gap-3 rounded-full bg-white/95 px-6 py-3 text-base font-semibold text-foreground shadow-medium transition-transform group-hover:scale-105">
+              <span className="inline-flex items-center gap-3 rounded-full bg-foreground/90 px-6 py-3 text-base font-semibold text-background shadow-medium ring-1 ring-white/20 backdrop-blur-sm transition-transform group-hover:scale-105 group-hover:bg-foreground">
                 <Play className="h-5 w-5 fill-current" />
                 Watch the film · {LIGHTHOUSE_FILM.durationSeconds} s
               </span>
