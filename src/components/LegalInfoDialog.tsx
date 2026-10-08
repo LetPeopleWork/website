@@ -381,6 +381,7 @@ const LegalInfoDialog: React.FC<LegalInfoDialogProps> = ({
                     <li>Wycombe Wanderers F.C.</li>
                     <li>Philadelphia Eagles</li>
                     <li>Cleveland Browns</li>
+                    <li>Newcastle United F.C.</li>
                   </ul>
                   <p className="mt-2">
                     This clause is strictly non-binding, has no legal consequences, and does not affect your rights, licenses, or obligations in any way. However, failure to show appropriate enthusiasm for these teams may result in harmless banter or unsolicited memes in future correspondence.
