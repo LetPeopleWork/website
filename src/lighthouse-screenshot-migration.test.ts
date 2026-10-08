@@ -69,9 +69,9 @@ describe("non-product surfaces stay website-hosted (DDD-9 / DDD-5 exclusions)", 
 
   it("Lighthouse.tsx keeps the OG/SEO image on the same origin, not the CDN", () => {
     const source = lighthousePage();
-    expect(source).toContain("https://letpeople.work/forecasts-project.png");
+    expect(source).toContain("https://letpeople.work/lighthouse-forecast.png");
     expect(source).not.toContain(
-      'lighthouseAsset("forecasts-project.png")',
+      'lighthouseAsset("lighthouse-forecast.png")',
     );
   });
 });

@@ -11,46 +11,52 @@ type Item = {
 // https://github.com/LetPeopleWork/Lighthouse/releases
 const ITEMS: Item[] = [
   {
-    tag: "Integrations",
-    title: "ServiceNow",
+    tag: "Forecasting",
+    title: "Forecast Reality Check",
     description:
-      "Point Lighthouse at incidents, change requests, problems, or catalog tasks and get the same flow metrics and forecasts your Jira and Azure DevOps teams already have. Pre-fill a team from a Visual Task Board instead of writing the query by hand.",
+      "How good are your forecasts, really? Lighthouse backtests its own predictions against what your team then delivered, across sampling windows and horizons, and tells you which percentile to trust and whether your settings are helping.",
   },
   {
-    tag: "Predictability",
-    title: "Percentiles Over Time",
+    tag: "Portfolio",
+    title: "Delivery Timeline",
     description:
-      "Every percentile widget tells you where you stand today. This chart records your 50th to 95th percentiles daily and shows whether they are tightening or drifting, for teams and portfolios.",
+      "A forecast says when a delivery lands. The timeline shows how: one bar per feature from forecast start to finish, in board order, with dependencies drawn between them and the features that will not start before the target date called out.",
   },
   {
-    tag: "Predictability",
-    title: "PBC Over Time",
+    tag: "Forecasting",
+    title: "Forecasted start dates",
     description:
-      "Process Behaviour Charts tell you what is normal for your system. This chart shows whether normal itself is drifting, plotting your process limits daily across throughput, cycle time, WIP, and more.",
+      "Beside every completion forecast now sits a start forecast, from the same simulation. A start date far in the future is Lighthouse telling you the queue in front of that feature is the problem, not the feature.",
   },
   {
     tag: "Flow Signals",
-    title: "Blocked work, first class",
+    title: "Risk of missing your SLE",
     description:
-      "Define what blocked means for your workflow once, by rule. See how long each item has been stuck, watch Blocked Over Time for teams and portfolios, and let long-blocked work surface as stale.",
+      "Every in-progress item carries the probability that it will still finish inside your service level expectation, and a widget collects the ones already at risk, so you act while there is still time.",
   },
   {
-    tag: "Deployment",
-    title: "Official Kubernetes Helm chart",
+    tag: "Forecasting",
+    title: "Dependencies, from your tracker",
     description:
-      "Run the Server edition on any cluster with a single helm install. Optional OIDC login, MCP with OAuth auto-discovery, and horizontal scaling via Redis, all through values.yaml.",
+      "Predecessor links in Azure DevOps, blocked-by links in Jira, relations in Linear: Lighthouse reads them, shows them on every feature list, and on paid tiers the forecast waits for the blocker to finish before the blocked feature starts.",
   },
   {
-    tag: "Access",
-    title: "OAuth, RBAC & API keys",
+    tag: "Forecasting",
+    title: "Honest multi-team odds",
     description:
-      "Connect Jira and Azure DevOps over OAuth, control who sees what with role-based access, and scope API keys for automation.",
+      "A feature worked by two teams is done when both are done. Lighthouse now combines every contributing team's simulation into one joint probability, and a delivery reports the odds that all of its features land, not just the slowest one.",
   },
   {
-    tag: "AI & Automation",
-    title: "CLI and MCP clients",
+    tag: "Portfolio",
+    title: "Features over Time",
     description:
-      "Drive Lighthouse from the terminal, CI, or your AI assistant. Scripts and agents can query metrics, forecasts, and now the blocked trend directly.",
+      "A burnup says the delivery grew. This chart says which feature grew and when: one stacked bar per day with a band per feature, hatched while its size is still an estimate.",
+  },
+  {
+    tag: "Portfolio",
+    title: "Own the order, archive the past",
+    description:
+      "Let Lighthouse own the order of your features across every portfolio on one Features page, and archive a finished delivery so what you forecast in August still reads the same in October.",
   },
 ];
 
