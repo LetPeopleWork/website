@@ -1304,13 +1304,39 @@ const Lighthouse = () => {
 												title: "Base Functionality",
 												rows: [
 													{ feature: "Flow Metrics for Teams", community: true, self: true, enterprise: true },
-													{ feature: "Flow Metrics for Projects", community: true, self: true, enterprise: true },
-													{ feature: "Manual Forecasts for Teams", community: true, self: true, enterprise: true },
-													{ feature: "Continuous Forecasts for Projects", community: true, self: true, enterprise: true },
+													{ feature: "Flow Metrics for Portfolios", community: true, self: true, enterprise: true },
+													{
+														feature: { label: "Team Forecasts: how many, when, and backtests", tooltip: "Ask when a number of Work Items will be done, or how many will be done by a date, and check how past forecasts would have held up against what your Team then delivered." },
+														community: true, self: true, enterprise: true,
+													},
+													{
+														feature: { label: "Continuous Forecasts for Portfolios", tooltip: "Every Feature is re-forecast on every refresh, so the dates move as soon as the work or the Throughput does." },
+														community: true, self: true, enterprise: true,
+													},
 													{ feature: "Source available — read and audit the code", community: true, self: true, enterprise: true },
 													{ feature: "Connection to Jira, Azure DevOps, Linear & ServiceNow", community: true, self: true, enterprise: true },
 													{
 														feature: { label: "Refinement: need & sizing votes", tooltip: "See how many Work Items your team should have ready before the next Refinement, and size each one by voting whether it fits your SLE: Yes, Yes if…, or No. No story points." },
+														community: true, self: true, enterprise: true,
+													},
+													{
+														feature: { label: "Forecast Reality Check", tooltip: "Replay your Team's recent forecasts against what actually got done, and see whether your history window and confidence levels really hold." },
+														community: true, self: true, enterprise: true,
+													},
+													{
+														feature: { label: "Forecasted Start Dates", tooltip: "See when work on each Feature is forecast to begin, not just when it finishes, from the same simulation." },
+														community: true, self: true, enterprise: true,
+													},
+													{
+														feature: { label: "Multi-Team Forecasts", tooltip: "Forecast Features that several Teams work on together, with one likelihood that accounts for every Team involved." },
+														community: true, self: true, enterprise: true,
+													},
+													{
+														feature: { label: "Dependencies, read from your tracker", tooltip: "Blockers from Jira, Azure DevOps and Linear links show on every Feature, with warnings for cycles and waits that cannot be forecast. No setup." },
+														community: true, self: true, enterprise: true,
+													},
+													{
+														feature: { label: "SLE Risk", tooltip: "The chance each in-progress Work Item misses your SLE, worked out from your Team's own history, with a view of the ones already at risk." },
 														community: true, self: true, enterprise: true,
 													},
 													{
@@ -1330,7 +1356,7 @@ const Lighthouse = () => {
 													{ feature: "Number of Portfolios", community: "Max 1", self: "Unlimited", enterprise: "Unlimited" },
 													{ feature: "CSV Support", community: "Max 1 Team", self: "Unlimited", enterprise: "Unlimited" },
 													{ feature: "Demo Data", community: "Basic Scenarios", self: "Advanced Scenarios", enterprise: "Advanced Scenarios" },
-													{ feature: "Deliveries", community: "1 Delivery", self: "Unlimited", enterprise: "Unlimited" },
+													{ feature: "Deliveries", community: "1 per Portfolio", self: "Unlimited", enterprise: "Unlimited" },
 													{
 														feature: { label: "Additional Fields", tooltip: "Add custom fields to capture additional metadata specific to your workflow and requirements." },
 														community: "1 Field", self: "Unlimited", enterprise: "Unlimited",
@@ -1341,7 +1367,7 @@ const Lighthouse = () => {
 												title: "Paid-tier Features",
 												rows: [
 													{
-														feature: { label: "Authentication & RBAC", tooltip: "Secure your Lighthouse instance with any OIDC-compatible identity provider (Microsoft Entra, Google, Keycloak, Auth0, etc.) and control access with Role Based Access Control across four roles and SSO group mappings." },
+														feature: { label: "Authentication & RBAC", tooltip: "Secure your Lighthouse instance with any OIDC-compatible identity provider (Microsoft Entra, Google, Keycloak, Auth0, etc.) and control access with Role Based Access Control across four roles and SSO group mappings. For server installs (Docker, Kubernetes); not available in the standalone desktop apps." },
 														community: false, self: true, enterprise: true,
 													},
 													{
@@ -1353,7 +1379,7 @@ const Lighthouse = () => {
 														community: false, self: true, enterprise: true,
 													},
 													{
-														feature: { label: "Rule-Based Deliveries", tooltip: "Define rules to automatically include your Features based on criteria like labels, fixVersion, or custom fields, ensuring your deliveries are always up-to-date without manual updating." },
+														feature: { label: "Rule-Based Deliveries", tooltip: "Define rules to automatically include your Features based on criteria like labels or custom fields, ensuring your deliveries are always up-to-date without manual updating." },
 														community: false, self: true, enterprise: true,
 													},
 													{
@@ -1361,7 +1387,7 @@ const Lighthouse = () => {
 														community: false, self: true, enterprise: true,
 													},
 													{
-														feature: { label: "Blackout Days", tooltip: "Define days which should not be counted in the Throughput for calculating forecasts, for example bank holidays." },
+														feature: { label: "Blackout Days & Recurring Rules", tooltip: "Define days that do not count as working days, one-off like bank holidays or recurring like weekends. Throughput leaves them out and forecast dates skip them." },
 														community: false, self: true, enterprise: true,
 													},
 													{
@@ -1369,7 +1395,31 @@ const Lighthouse = () => {
 														community: false, self: true, enterprise: true,
 													},
 													{
-														feature: { label: "Data Sync Mappings", tooltip: "Write Metrics and Forecasts back to Jira and Azure DevOps and store them in your system." },
+														feature: { label: "Data Sync Mappings", tooltip: "Write metrics and forecasts, including forecasted start dates and their likelihoods, back to fields in Jira and Azure DevOps." },
+														community: false, self: true, enterprise: true,
+													},
+													{
+														feature: { label: "Delivery Timeline", tooltip: "One bar per Feature from forecast start to finish, in order, with dependencies drawn between them and the Features that will not start before the target date called out." },
+														community: false, self: true, enterprise: true,
+													},
+													{
+														feature: { label: "Dependency-aware Forecasts", tooltip: "The forecast waits for a blocker to finish before the blocked Feature starts, so the dates reflect what your tracker says is in the way." },
+														community: false, self: true, enterprise: true,
+													},
+													{
+														feature: { label: "Named Cycle Times", tooltip: "Measure any start-to-end window, such as a full lead time from backlog to done, right next to the default Cycle Time." },
+														community: false, self: true, enterprise: true,
+													},
+													{
+														feature: { label: "Follow a Jira Release", tooltip: "A Delivery that follows a Jira Release (fixVersion), picks up its Features by itself, and writes the forecast back to it." },
+														community: false, self: true, enterprise: true,
+													},
+													{
+														feature: { label: "Archive Deliveries", tooltip: "Keep a finished Delivery exactly as it was, so what you forecast in August still reads the same in October." },
+														community: false, self: true, enterprise: true,
+													},
+													{
+														feature: { label: "Custom Terminology", tooltip: "Use your words for Feature, Work Item, Team, Portfolio, SLE and more, everywhere in Lighthouse." },
 														community: false, self: true, enterprise: true,
 													},
 												],
