@@ -1904,7 +1904,8 @@ const Lighthouse = () => {
 
 					{/* Config example + downloads */}
 					<div className="grid lg:grid-cols-2 gap-10 mb-16">
-						{/* VS Code config snippet */}
+						{/* VS Code config snippet + MCPB bundle */}
+						<div className="space-y-4">
 						<div className="rounded-xl bg-black/40 border border-white/20 overflow-hidden">
 							<div className="flex items-center gap-2 px-4 py-3 bg-black/30 border-b border-white/10">
 								<div className="w-3 h-3 rounded-full bg-red-400/60" />
@@ -1929,9 +1930,29 @@ const Lighthouse = () => {
 }`}</pre>
 						</div>
 
-						{/* Downloads + skill */}
-						<div className="space-y-4">
 							<div className="rounded-xl bg-white/10 border border-white/20 p-6">
+								<h4 className="text-sm font-semibold text-primary-foreground mb-1">
+									MCPB Bundle
+								</h4>
+								<p className="text-primary-foreground/70 text-sm leading-relaxed mb-4">
+									A single-file bundle for clients that support the MCPB format.
+									No npm install, no configuration. Just drop it in and connect.
+								</p>
+								<a
+									href="https://github.com/LetPeopleWork/lighthouse-clients/releases/latest/download/lighthouse-mcp-stdio.mcpb"
+										onClick={() => trackDownload({ edition: "ai-mcpb", format: "mcpb", source: "ai-integration" })}
+										data-skip-autotrack
+									className="inline-flex items-center gap-2 text-sm font-medium text-green-300 hover:text-green-200 transition-colors"
+								>
+									Download lighthouse-mcp-stdio.mcpb
+									<ArrowRight className="w-4 h-4" />
+								</a>
+							</div>
+						</div>
+
+						{/* Agent skills */}
+						<div>
+							<div className="h-full rounded-xl bg-white/10 border border-white/20 p-6">
 								<h4 className="text-sm font-semibold text-primary-foreground mb-1">
 									Agent Skills
 								</h4>
@@ -1971,24 +1992,6 @@ const Lighthouse = () => {
 								</ul>
 							</div>
 
-							<div className="rounded-xl bg-white/10 border border-white/20 p-6">
-								<h4 className="text-sm font-semibold text-primary-foreground mb-1">
-									MCPB Bundle
-								</h4>
-								<p className="text-primary-foreground/70 text-sm leading-relaxed mb-4">
-									A single-file bundle for clients that support the MCPB format.
-									No npm install, no configuration. Just drop it in and connect.
-								</p>
-								<a
-									href="https://github.com/LetPeopleWork/lighthouse-clients/releases/latest/download/lighthouse-mcp-stdio.mcpb"
-										onClick={() => trackDownload({ edition: "ai-mcpb", format: "mcpb", source: "ai-integration" })}
-										data-skip-autotrack
-									className="inline-flex items-center gap-2 text-sm font-medium text-green-300 hover:text-green-200 transition-colors"
-								>
-									Download lighthouse-mcp-stdio.mcpb
-									<ArrowRight className="w-4 h-4" />
-								</a>
-							</div>
 						</div>
 					</div>
 
