@@ -190,6 +190,32 @@ const serverDownloads: DownloadEntry[] = [
 	},
 ];
 
+// The skills ship as assets of the clients release. Set released once a
+// release carries the zip, or the download link would 404.
+const agentSkills = [
+	{
+		name: "Lighthouse",
+		description: "When and how to use the Lighthouse tools, with fallbacks, authentication, and how to read flow metrics and forecasts.",
+		zip: "lighthouse-skill.zip",
+		edition: "ai-skill",
+		released: true,
+	},
+	{
+		name: "Refinement",
+		description: "Get a Team ready for its next Refinement: whether to refine more or stop, which Work Items are worth the time, and the votes still missing.",
+		zip: "lighthouse-refinement-skill.zip",
+		edition: "ai-skill-refinement",
+		released: false,
+	},
+	{
+		name: "Daily Flow Review",
+		description: "Open the daily with what the Team should decide and discuss today: blocked work, SLE risk, WIP over its limit.",
+		zip: "lighthouse-daily-flow-review-skill.zip",
+		edition: "ai-skill-daily-flow-review",
+		released: false,
+	},
+];
+
 const Lighthouse = () => {
 	const [latestVersion, setLatestVersion] = useState<string>("");
 	const [releaseAssets, setReleaseAssets] = useState<ReleaseAsset[]>([]);
@@ -1907,23 +1933,42 @@ const Lighthouse = () => {
 						<div className="space-y-4">
 							<div className="rounded-xl bg-white/10 border border-white/20 p-6">
 								<h4 className="text-sm font-semibold text-primary-foreground mb-1">
-									Agent Skill
+									Agent Skills
 								</h4>
-								<p className="text-primary-foreground/70 text-sm leading-relaxed mb-4">
-									A pre-built skill that teaches your AI agent when and how to
-									use Lighthouse tools, including fallbacks and authentication.
-									Drop it into Claude Code, VS Code, or any skill-compatible
-									agent.
+								<p className="text-primary-foreground/70 text-sm leading-relaxed mb-5">
+									Teach your AI agent to work with Lighthouse. Drop them into
+									Claude Code, VS Code, or any skill-compatible agent.
 								</p>
-								<a
-									href="https://github.com/LetPeopleWork/lighthouse-clients/releases/latest/download/lighthouse-skill.zip"
-										onClick={() => trackDownload({ edition: "ai-skill", format: "zip", source: "ai-integration" })}
-										data-skip-autotrack
-									className="inline-flex items-center gap-2 text-sm font-medium text-green-300 hover:text-green-200 transition-colors"
-								>
-									Download lighthouse-skill.zip
-									<ArrowRight className="w-4 h-4" />
-								</a>
+								<ul className="space-y-5">
+									{agentSkills.map((skill) => (
+										<li key={skill.zip}>
+											<div className="flex items-center gap-2 mb-1">
+												<span className="text-sm font-semibold text-primary-foreground">
+													{skill.name}
+												</span>
+												{!skill.released && (
+													<span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-primary-foreground/80 border border-white/30 rounded-full px-2 py-0.5">
+														Coming soon
+													</span>
+												)}
+											</div>
+											<p className="text-primary-foreground/70 text-sm leading-relaxed">
+												{skill.description}
+											</p>
+											{skill.released && (
+												<a
+													href={`https://github.com/LetPeopleWork/lighthouse-clients/releases/latest/download/${skill.zip}`}
+													onClick={() => trackDownload({ edition: skill.edition, format: "zip", source: "ai-integration" })}
+													data-skip-autotrack
+													className="mt-2 inline-flex items-center gap-2 text-sm font-medium text-green-300 hover:text-green-200 transition-colors"
+												>
+													Download {skill.zip}
+													<ArrowRight className="w-4 h-4" />
+												</a>
+											)}
+										</li>
+									))}
+								</ul>
 							</div>
 
 							<div className="rounded-xl bg-white/10 border border-white/20 p-6">
