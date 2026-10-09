@@ -11,6 +11,12 @@ type Item = {
 // https://github.com/LetPeopleWork/Lighthouse/releases
 const ITEMS: Item[] = [
   {
+    tag: "Refinement",
+    title: "Refine enough, then stop",
+    description:
+      "The Refinement tab tells your team how many Work Items to have ready before the next Refinement, a range from your own Throughput with a below, in or above verdict, and lets everyone vote on each one: doable within our SLE? Yes, Yes if…, or No. No story points.",
+  },
+  {
     tag: "Forecasting",
     title: "Forecast Reality Check",
     description:
@@ -51,12 +57,6 @@ const ITEMS: Item[] = [
     title: "Features over Time",
     description:
       "A burnup says the delivery grew. This chart says which feature grew and when: one stacked bar per day with a band per feature, hatched while its size is still an estimate.",
-  },
-  {
-    tag: "Portfolio",
-    title: "Own the order, archive the past",
-    description:
-      "Let Lighthouse own the order of your features across every portfolio on one Features page, and archive a finished delivery so what you forecast in August still reads the same in October.",
   },
 ];
 

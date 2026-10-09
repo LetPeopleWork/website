@@ -160,7 +160,7 @@ const raw = {
     // pace on a partial round would be overreaching.
     partialHeading: "Here is how far you got.",
 
-    nextStepsHeading: "Two questions this round probably raised",
+    nextStepsHeading: "Three questions this round probably raised",
     nextSteps: [
       {
         question: "How do you work out what that number should be?",
@@ -175,6 +175,13 @@ const raw = {
           "Sizing tells you what to start. Work Item Age tells you what is quietly going wrong with what you already started: how long each in-progress item has been running, against that same number. It turns the daily from a status round into a short conversation about the two items that need help.",
         href: "/lighthouse",
         linkLabel: "See Work Item Age in Lighthouse",
+      },
+      {
+        question: "How do you do this on your real backlog?",
+        answer:
+          "Lighthouse asks the same question on the Work Items your team is refining, against your measured SLE, and anyone can answer whenever they have a minute instead of in one long meeting. It also tells you how many Work Items the next Refinement needs, so you refine enough and then stop.",
+        href: "/lighthouse",
+        linkLabel: "See Refinement in Lighthouse",
       },
     ],
   },

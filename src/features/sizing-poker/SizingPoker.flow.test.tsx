@@ -289,7 +289,8 @@ describe("the wrap-up", () => {
     const nextSteps = screen.getByTestId("sizing-next-steps");
     expect(nextSteps).toHaveTextContent(/Service Level Expectation/i);
     expect(nextSteps).toHaveTextContent(/Work Item Age/i);
-    expect(within(nextSteps).getAllByRole("link")).toHaveLength(2);
+    expect(nextSteps).toHaveTextContent(/Refinement/i);
+    expect(within(nextSteps).getAllByRole("link")).toHaveLength(3);
   });
 
   it("copies all three lists as plain text for the PO's tracker", async () => {

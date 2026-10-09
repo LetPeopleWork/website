@@ -20,6 +20,7 @@ import {
 	Hammer,
 	Calendar as CalendarIcon,
 	BarChart3,
+	ListChecks,
 	Command,
 	Terminal,
 	Laptop,
@@ -443,6 +444,30 @@ const Lighthouse = () => {
 					type: "image" as const,
 					src: lighthouseAsset("features/realitycheck.png"),
 					alt: "Forecast Reality Check: backtested forecasts per percentile and sampling window",
+				},
+			],
+		},
+		{
+			icon: <ListChecks className="h-8 w-8" />,
+			title: "Refine just enough",
+			description:
+				"Stop over-refining - Lighthouse tells you how many Work Items the next Refinement needs, and whether each one fits your SLE",
+			extendedDescription: `Refining too little starves the team. Refining too much is waste: the backlog changes before anyone starts on it. Lighthouse turns "how much should we refine?" into a number.
+
+      Tell Lighthouse which states hold your refinement work and how often you refine. The Refinement tab then shows the range of Work Items your team is likely to pull until the Refinement after the next one, forecast from your own Throughput, and says whether you have too few, enough, or more than you need.
+
+      Sizing happens right in the list: everyone answers one question per Work Item - could we finish this within our SLE? Yes, "Yes, if…" with a condition, or No. Enough Yes votes make a Work Item ready, doubts send it to discussion, and comments keep open questions next to the work. You can vote from the lh CLI and from your AI assistant too.`,
+			callToAction: "",
+			mediaItems: [
+				{
+					type: "image" as const,
+					src: lighthouseAsset("features/refinement.png"),
+					alt: "Refinement tab: how many Work Items the next Refinement needs, with sizing votes per Work Item",
+				},
+				{
+					type: "image" as const,
+					src: lighthouseAsset("features/refinement_comments.png"),
+					alt: "Votes and comments on a Work Item in refinement",
 				},
 			],
 		},
@@ -1284,6 +1309,10 @@ const Lighthouse = () => {
 													{ feature: "Continuous Forecasts for Projects", community: true, self: true, enterprise: true },
 													{ feature: "Source available — read and audit the code", community: true, self: true, enterprise: true },
 													{ feature: "Connection to Jira, Azure DevOps, Linear & ServiceNow", community: true, self: true, enterprise: true },
+													{
+														feature: { label: "Refinement: need & sizing votes", tooltip: "See how many Work Items your team should have ready before the next Refinement, and size each one by voting whether it fits your SLE: Yes, Yes if…, or No. No story points." },
+														community: true, self: true, enterprise: true,
+													},
 													{
 														feature: { label: "AI & LLM Integration", tooltip: "Connect Lighthouse to Claude, ChatGPT, or any MCP-compatible AI assistant. Query metrics, run forecasts, and explore delivery data through natural language, no dashboard required." },
 														community: true, self: true, enterprise: true,
