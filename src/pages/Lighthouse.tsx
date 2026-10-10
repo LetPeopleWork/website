@@ -205,14 +205,14 @@ const agentSkills = [
 		description: "Get a Team ready for its next Refinement: whether to refine more or stop, which Work Items are worth the time, and the votes still missing.",
 		zip: "lighthouse-refinement-skill.zip",
 		edition: "ai-skill-refinement",
-		released: false,
+		released: true,
 	},
 	{
 		name: "Daily Flow Review",
 		description: "Open the daily with what the Team should decide and discuss today: blocked work, SLE risk, WIP over its limit.",
 		zip: "lighthouse-daily-flow-review-skill.zip",
 		edition: "ai-skill-daily-flow-review",
-		released: false,
+		released: true,
 	},
 ];
 
