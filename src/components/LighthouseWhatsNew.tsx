@@ -20,8 +20,8 @@ const ITEMS: Item[] = [
     title: "Refine enough, then stop",
     description:
       "The Refinement tab tells your team how many Work Items to have ready before the next Refinement, a range from your own Throughput with a below, in or above verdict, and lets everyone vote on each one: doable within our SLE? Yes, Yes if…, or No. No story points.",
-    version: null,
-    released: null,
+    version: "v26.10.10.1",
+    released: "2026-10-10",
   },
   {
     tag: "Forecasting",
@@ -124,7 +124,7 @@ const ITEMS: Item[] = [
 // Every published Lighthouse release since May 2026, newest first. Add the
 // date of each new release here, together with its card above.
 const RELEASE_DATES: string[] = [
-  "2026-10-03", "2026-09-24", "2026-09-20", "2026-09-09", "2026-09-01",
+  "2026-10-10", "2026-10-03", "2026-09-24", "2026-09-20", "2026-09-09", "2026-09-01",
   "2026-08-31", "2026-08-14", "2026-08-08", "2026-08-03", "2026-08-01",
   "2026-07-26", "2026-07-12", "2026-07-03", "2026-06-16", "2026-06-12",
   "2026-06-07", "2026-05-29", "2026-05-24", "2026-05-19", "2026-05-14",
