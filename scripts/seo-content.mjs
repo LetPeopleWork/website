@@ -10,8 +10,8 @@
 //
 // Keep it factual and in step with the real pages. Every claim here is on the
 // site, in the Lighthouse docs or in the privacy policy. Prices come from
-// src/lib/pricing.ts and the pricing cards; the FAQ comes straight from
-// src/content/lighthouse-faq.json, the same file the page renders.
+// src/lib/pricing.json and the FAQ from src/content/lighthouse-faq.json, the
+// same files the pages render.
 
 import { readFileSync } from "node:fs";
 
@@ -23,6 +23,9 @@ const esc = (s) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 export const loadFaq = (path = "src/content/lighthouse-faq.json") =>
+  JSON.parse(readFileSync(path, "utf8"));
+
+export const loadPrices = (path = "src/lib/pricing.json") =>
   JSON.parse(readFileSync(path, "utf8"));
 
 export const renderFaq = (faqs) =>
@@ -39,7 +42,7 @@ const nav = `<nav aria-label="Site">
 
 const footer = `<p>LetPeopleWork GmbH, Switzerland. Built by Peter Zylka-Greger and Benjamin Huser-Berta. Contact: contact@letpeople.work. Machine-readable summary: <a href="${SITE}/llms.txt">${SITE}/llms.txt</a></p>`;
 
-export const homeBody = () => `${nav}
+export const homeBody = (prices) => `${nav}
 <main>
 <h1>When will it be done? Lighthouse answers with the odds.</h1>
 <p>Every guess that slips costs you a little more trust. Lighthouse is a self-hosted flow metrics and Monte Carlo forecasting tool for software delivery teams. It looks at what your team has finished in Jira, Azure DevOps, Linear or ServiceNow and tells you how likely each date is.</p>
@@ -53,14 +56,14 @@ export const homeBody = () => `${nav}
 <h2>Where it runs</h2>
 <p>You install Lighthouse yourself: a desktop app for Windows, macOS and Linux, a Docker container, or Kubernetes with the official Helm chart. It connects to Jira Cloud and Jira Server or Data Center, Azure DevOps, Linear, ServiceNow and CSV. Your work items stay on your systems. The source is public on GitHub under a source-available licence.</p>
 <h2>What it costs</h2>
-<p>The Community edition is free for up to 3 teams and 1 portfolio. Self-Service is CHF 2,000 a year with no limits. Enterprise is CHF 10,000 a year and adds priority support. You can try Premium for 30 days without signing up or giving a credit card.</p>
+<p>The Community edition is free for up to 3 teams and 1 portfolio. Self-Service is ${prices.selfService} a year with no limits. Enterprise is ${prices.enterprise} a year and adds priority support. You can try Premium for 30 days without signing up or giving a credit card.</p>
 <h2>Also from LetPeopleWork</h2>
 <p><a href="${SITE}/sizing-poker/">Sizing Poker</a> sizes a backlog without story points: one question per item, could we finish this within the time we set? It is free and runs in the browser. The <a href="${SITE}/assessment/">delivery predictability assessment</a> is a free five-minute self-check.</p>
 <p><a href="${SITE}/lighthouse/">Lighthouse in detail, with pricing and downloads</a></p>
 </main>
 ${footer}`;
 
-export const lighthouseBody = (faqs) => `${nav}
+export const lighthouseBody = (faqs, prices) => `${nav}
 <main>
 <h1>Lighthouse: flow metrics and Monte Carlo forecasts for software delivery</h1>
 <p>Know how likely your date is before you promise it. Lighthouse is a self-hosted, source-available tool that turns your team's delivery history into probabilistic forecasts and flow metrics, for one team or a whole portfolio. It runs on your laptop or inside your network and connects to Jira Cloud and Data Center, Azure DevOps, Linear and ServiceNow. It is a self-hosted alternative to ActionableAgile and Nave, and the Community edition is free for up to 3 teams.</p>
@@ -103,8 +106,8 @@ export const lighthouseBody = (faqs) => `${nav}
 <h2>Editions and pricing</h2>
 <ul>
 <li>Community: free, up to 3 teams, 1 portfolio and 1 delivery, all core flow metrics and Monte Carlo forecasts.</li>
-<li>Self-Service: CHF 2,000 a year, unlimited teams and portfolios, sign-in and role-based access, rule-based deliveries, data sync mappings.</li>
-<li>Enterprise: CHF 10,000 a year, everything in Self-Service plus priority support and onboarding calls.</li>
+<li>Self-Service: ${prices.selfService} a year, unlimited teams and portfolios, sign-in and role-based access, rule-based deliveries, data sync mappings.</li>
+<li>Enterprise: ${prices.enterprise} a year, everything in Self-Service plus priority support and onboarding calls.</li>
 <li>Try Premium free for 30 days: the license comes by email, with no account and no credit card.</li>
 </ul>
 <p>Compared with ActionableAgile and Nave: <a href="${SITE}/compare/">${SITE}/compare/</a></p>

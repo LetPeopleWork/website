@@ -1,6 +1,4 @@
 import { render, screen, within } from "@testing-library/react";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -26,21 +24,6 @@ function selfServiceCard(): HTMLElement {
   const card = label.closest("div.flex-col");
   if (!card) throw new Error("Self-Service tier card not found");
   return card as HTMLElement;
-}
-
-/**
- * The Self-Service Offer price as declared in a page's source.
- *
- * Read from source rather than from the rendered DOM on purpose: react-helmet-async 2.x mounts its tags
- * through a deferred callback that neither jsdom nor a static server render flushes, so the ld+json
- * block is unobservable from a test. The binding in the source is the thing that has to be right.
- */
-function declaredOfferPriceBinding(page: "Lighthouse" | "Index"): string[] {
-  const source = readFileSync(join(__dirname, `${page}.tsx`), "utf8");
-
-  return Array.from(source.matchAll(/"?price"?:\s*([^,\n]+),/g)).map(([, value]) =>
-    value.trim(),
-  );
 }
 
 beforeEach(() => {
@@ -91,14 +74,12 @@ describe("Lighthouse pricing", () => {
     expect(screen.queryByText(/CHF 999/)).not.toBeInTheDocument();
   });
 
-  // The structured data once carried its own price literal and drifted from the visible card.
-  it.each(["Lighthouse", "Index"] as const)(
-    "binds %s's JSON-LD Self-Service offer to the pricing module, not a literal",
-    (page) => {
-      const bindings = declaredOfferPriceBinding(page);
+  // The structured data once carried its own price literal and drifted from
+  // the visible card. It is now built from pricing.json at deploy time; the
+  // binding is tested in src/seo-schema.test.ts.
+  it("quotes CHF 10,000 for the Enterprise licence", () => {
+    renderPricingPage();
 
-      expect(bindings.some((b) => b.endsWith("selfServiceAmount"))).toBe(true);
-      expect(bindings.filter((b) => b === '"999"' || b === '"2000"')).toEqual([]);
-    },
-  );
+    expect(screen.getAllByText("CHF 10,000").length).toBeGreaterThan(0);
+  });
 });

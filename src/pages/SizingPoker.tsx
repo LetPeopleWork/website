@@ -28,19 +28,6 @@ interface SizingPokerProps {
   now?: () => number;
 }
 
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  name: "Sizing Poker",
-  applicationCategory: "BusinessApplication",
-  operatingSystem: "Any",
-  url: "https://letpeople.work/sizing-poker",
-  description:
-    "Size a backlog by asking one question per item instead of estimating it: could we finish this within the time we set? Three answers, no story points. Runs entirely in the browser.",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "CHF" },
-  publisher: { "@type": "Organization", name: "LetPeopleWork GmbH" },
-};
-
 const SizingPoker = ({ now = Date.now }: SizingPokerProps) => {
   const [state, dispatch] = useReducer(reduce, undefined, initialState);
   const [targetValue, setTargetValue] = useState(String(DEFAULT_TARGET_DAYS));
@@ -153,11 +140,6 @@ const SizingPoker = ({ now = Date.now }: SizingPokerProps) => {
         title="Sizing Poker - Size your backlog without estimating it"
         description="Size a backlog by asking one question per item: could we finish this within the time we set? Three answers, no story points. Free, no signup, runs entirely in your browser."
         keywords="sizing poker, right sizing, no estimates, planning poker alternative, story points alternative, backlog refinement, flow metrics, service level expectation"
-        structuredData={structuredData}
-        breadcrumbs={[
-          { name: "Home", url: "/" },
-          { name: "Sizing Poker", url: "/sizing-poker" },
-        ]}
       />
       <Navigation />
       <main className="flex-1 px-4 pb-16 pt-28">

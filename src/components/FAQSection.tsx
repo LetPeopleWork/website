@@ -3,22 +3,10 @@ import { ChevronDown } from "lucide-react";
 import faqData from "@/content/lighthouse-faq.json";
 
 // The questions live in a JSON file so the build can put the same answers
-// into the static HTML that crawlers without JavaScript read (see
-// scripts/seo-content.mjs). Edit them there.
+// into the static HTML that crawlers without JavaScript read, as text
+// (scripts/seo-content.mjs) and as FAQPage structured data
+// (scripts/seo-schema.mjs). Edit them there.
 const faqs: { question: string; answer: string }[] = faqData;
-
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.map((faq) => ({
-    "@type": "Question",
-    name: faq.question,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: faq.answer,
-    },
-  })),
-};
 
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -27,13 +15,6 @@ const FAQSection = () => {
 
   return (
     <>
-      {/* JSON-LD rendered directly: react-helmet-async does not inject with
-          React 19, and Google reads JSON-LD anywhere in the document. */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-
       <section id="faq" className="py-24 sm:py-32 bg-background">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">

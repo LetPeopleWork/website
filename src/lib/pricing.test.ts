@@ -6,9 +6,23 @@ describe("prices", () => {
     expect(prices).toEqual({
       selfService: "CHF 2,000",
       selfServiceAmount: "2000",
+      enterprise: "CHF 10,000",
+      enterpriseAmount: "10000",
       pilot: "CHF 3,000",
       assessment: "CHF 4,500",
+      aiWorkshopPilot: "CHF 2,500",
+      aiWorkshopPilotAmount: "2500",
     });
+  });
+
+  // The bare amounts go into the structured data, the display strings onto the
+  // page. They have to name the same figure.
+  it.each([
+    ["selfService", "selfServiceAmount"],
+    ["enterprise", "enterpriseAmount"],
+    ["aiWorkshopPilot", "aiWorkshopPilotAmount"],
+  ] as const)("states %s and its bare amount as the same figure", (display, amount) => {
+    expect(prices[display].replace(/[^0-9]/g, "")).toBe(prices[amount]);
   });
 
   // The licence and the pilot both read "CHF 2,000" if the pilot is left alone, on the same site.

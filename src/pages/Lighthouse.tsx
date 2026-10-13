@@ -83,7 +83,7 @@ import {
 import LighthouseQuestions from "@/features/lighthouse-page/LighthouseQuestions";
 import RealityCheckSection from "@/features/lighthouse-page/RealityCheckSection";
 import WhereItRuns from "@/features/lighthouse-page/WhereItRuns";
-import { LIGHTHOUSE_FILM, filmSchema, isFilmAvailable } from "@/features/film/lighthouseFilm";
+import { LIGHTHOUSE_FILM, isFilmAvailable } from "@/features/film/lighthouseFilm";
 import { trackDownload, trackEvent } from "@/lib/plausible";
 import { prices } from "@/lib/pricing";
 
@@ -441,182 +441,6 @@ const Lighthouse = () => {
 	};
 
 	// Structured data for SEO
-	const structuredData = {
-		"@context": "https://schema.org",
-		"@type": "SoftwareApplication",
-		name: "Lighthouse",
-		applicationCategory: "BusinessApplication",
-		applicationSubCategory: "Project Management",
-		operatingSystem:
-			"Windows (Binaries), macOS (Installer (dmg), App Bundle (.app)), Linux (Binaries), Container",
-		offers: [
-			{
-				"@type": "Offer",
-				name: "Community Edition",
-				price: "0",
-				priceCurrency: "CHF",
-				description: "Free forever community edition with core features (capped to 3 teams, 1 portfolio)",
-			},
-			{
-				"@type": "Offer",
-				name: "Self-Service License",
-				price: prices.selfServiceAmount,
-				priceCurrency: "CHF",
-				description:
-					"Annual self-hosted license with unlimited teams, portfolios, and all paid-tier features. Community Slack support.",
-			},
-			{
-				"@type": "Offer",
-				name: "Enterprise License",
-				price: "10000",
-				priceCurrency: "CHF",
-				description:
-					"Annual self-hosted license with prioritised support, 24h acknowledgement, 2x60-min onboarding, and named contacts.",
-			},
-		],
-		description:
-			"Source-available flow metrics and probabilistic forecasting tool. Connects to Jira, Azure DevOps, Linear, and ServiceNow. AI integration via MCP, so you can ask your AI assistant questions about your delivery data directly. Self-hosted, no cloud dependency.",
-		featureList: [
-			"Flow Metrics Visualization",
-			"Monte Carlo Probabilistic Forecasting",
-			"Jira Integration",
-			"Azure DevOps Integration",
-			"Linear Integration",
-			"ServiceNow Integration",
-			"AI Integration via MCP (Model Context Protocol)",
-			"CLI for Shell Scripts and CI/CD Pipelines",
-			"Team and Portfolio Level Analytics",
-			"Throughput Analysis",
-			"Cycle Time Tracking",
-			"Work Item Age Tracking",
-			"Work In Progress Limits",
-			"Self-Hosted, No Cloud Dependency",
-		],
-		screenshot: "https://letpeople.work/lighthouse-forecast.png",
-		aggregateRating: {
-			"@type": "AggregateRating",
-			ratingValue: "5",
-			ratingCount: "6",
-			reviewCount: "6",
-			bestRating: "5",
-			worstRating: "1",
-		},
-		review: [
-			{
-				"@type": "Review",
-				author: {
-					"@type": "Person",
-					name: "Gonzalo Mendez",
-					jobTitle: "Scrum Master",
-				},
-				reviewRating: {
-					"@type": "Rating",
-					ratingValue: "5",
-					bestRating: "5",
-				},
-				reviewBody:
-					"Lighthouse helped us be more on to it. We're now more predictable, efficient, and responsive when it comes to delivering value and serving our customers. It's made planning sessions run smoother and helped set clearer expectations with our stakeholders. The insights we get from the data really sharpen our conversations and keep us focused on what matters.",
-			},
-			{
-				"@type": "Review",
-				author: {
-					"@type": "Person",
-					name: "Lorenzo Santoro",
-					jobTitle: "Project Manager",
-				},
-				reviewRating: {
-					"@type": "Rating",
-					ratingValue: "5",
-					bestRating: "5",
-				},
-				reviewBody:
-					"The ability of Lighthouse to continuous forecast is a game changer. It transforms something complex and time consuming in a continuous activity which enlightens both your project planning and tracking.",
-			},
-			{
-				"@type": "Review",
-				author: {
-					"@type": "Person",
-					name: "Agnieszka Reginek",
-					jobTitle: "Professional Kanban Trainer | Scrum Master",
-				},
-				reviewRating: {
-					"@type": "Rating",
-					ratingValue: "5",
-					bestRating: "5",
-				},
-				reviewBody:
-					"Lighthouse transformed how our Agile Release Train operates: moving us from guesstimations and overcommitment to data-driven PI Planning. It streamlined progress tracking across teams, making delivery more transparent and predictable. With continuous forecasting, we're now better equipped to anticipate risks, align expectations, and deliver value with confidence.",
-			},
-			{
-				"@type": "Review",
-				author: {
-					"@type": "Person",
-					name: "Chris Graves",
-					jobTitle: "Agile Coach",
-				},
-				reviewRating: {
-					"@type": "Rating",
-					ratingValue: "5",
-					bestRating: "5",
-				},
-				reviewBody:
-					"Lighthouse has transformed how we approach delivery. By prompting the right questions earlier and using the default feature size function to quickly forecast 'how much?', it provides a lean, cost-effective way to surface risk and enable better decisions.",
-			},
-			{
-				"@type": "Review",
-				author: {
-					"@type": "Person",
-					name: "Nicolas Brown",
-					jobTitle: "Author of 'Real World Agility' | Consultant | Speaker",
-				},
-				reviewRating: {
-					"@type": "Rating",
-					ratingValue: "5",
-					bestRating: "5",
-				},
-				reviewBody:
-					"Very few tools out there are able to distill what is going on in your system to act effectively as your mission control for all things delivery related. If John Anderton designed a system for flow, this would be it.",
-			},
-			{
-				"@type": "Review",
-				author: {
-					"@type": "Person",
-					name: "Gábor Bittera",
-					jobTitle: "Scrum Master",
-				},
-				reviewRating: {
-					"@type": "Rating",
-					ratingValue: "5",
-					bestRating: "5",
-				},
-				reviewBody:
-					"Whenever I am asked to assess the delivery health of a team, Lighthouse is my go-to tool as a consultant. Its quick, no-faff setup enables me to answer critical questions in a matter of minutes — shifting the conversation from gut-feel to data, and from wishful thinking to delivery risks and probabilities. For any coach trying to make risk visible and discussable, this is the tool that earns its place.",
-			},
-		],
-		softwareVersion: latestVersion,
-		downloadUrl: "https://github.com/LetPeopleWork/Lighthouse/releases",
-		publisher: {
-			"@type": "Organization",
-			name: "LetPeopleWork GmbH",
-			url: "https://letpeople.work",
-		},
-		video: [
-			// The film first; the four April screencasts that used to follow are gone.
-			...(isFilmAvailable() ? [filmSchema()] : []),
-			{
-				"@type": "VideoObject",
-				name: "From nothing to a Monte Carlo forecast in under ten minutes",
-				description:
-					"Live, unedited demo: Gabor Bittera downloads Lighthouse, connects Jira, adds a team, and forecasts the team's next ten work items, finishing with 1:25 left on a ten minute timer.",
-				thumbnailUrl:
-					"https://letpeople.work/lighthouse-first-forecast-poster.jpg",
-				contentUrl: "https://letpeople.work/lighthouse-first-forecast.mp4",
-				uploadDate: "2026-08-01T00:00:00Z",
-				duration: "PT1M30S",
-			},
-		],
-	};
-
 	return (
 		<div className="min-h-screen bg-background">
 			<SEO
@@ -625,12 +449,7 @@ const Lighthouse = () => {
 				keywords="lighthouse flow metrics, agile forecasting tool, Monte Carlo simulation, delivery forecasting, when will it be done, how much can we do, Jira flow metrics, Azure DevOps metrics, Linear integration, ServiceNow integration, ITSM flow metrics, AI integration, MCP, Model Context Protocol, agile AI assistant, throughput, cycle time, lead time, WIP, work in progress, team velocity, sprint forecasting, agile metrics dashboard, kanban metrics, scrum metrics, project forecasting, portfolio forecasting, source available, Jira Data Center, predictability, self-hosted forecasting, agile analytics"
 				ogImage="https://letpeople.work/lighthouse-forecast.png"
 				ogType="website"
-				canonicalUrl="https://letpeople.work/lighthouse"
-				structuredData={structuredData}
-				breadcrumbs={[
-					{ name: "Home", url: "/" },
-					{ name: "Lighthouse", url: "/lighthouse" },
-				]}
+				canonicalUrl="https://letpeople.work/lighthouse/"
 			/>
 			<Navigation />
 
@@ -862,7 +681,7 @@ const Lighthouse = () => {
 						<div className="flex flex-col rounded-3xl border border-border bg-background p-8 md:p-10">
 							<div className="text-xs font-semibold uppercase tracking-[0.15em] text-primary mb-3">Enterprise</div>
 							<div className="flex items-baseline gap-2 mb-1">
-								<div className="text-4xl md:text-5xl font-semibold text-foreground tracking-tight">CHF 10,000</div>
+								<div className="text-4xl md:text-5xl font-semibold text-foreground tracking-tight">{prices.enterprise}</div>
 								<div className="text-sm text-muted-foreground">/ year</div>
 							</div>
 								<div className="text-sm text-muted-foreground mb-6 mt-3">For teams that want priority.</div>
@@ -1631,7 +1450,7 @@ const Lighthouse = () => {
 							</div>
 							<div className="flex flex-col gap-4">
 								<div className="flex items-baseline gap-3">
-									<div className="text-4xl md:text-5xl font-semibold text-foreground tracking-tight">CHF 10,000</div>
+									<div className="text-4xl md:text-5xl font-semibold text-foreground tracking-tight">{prices.enterprise}</div>
 									<div className="text-base text-muted-foreground">/ year</div>
 								</div>
 								<a

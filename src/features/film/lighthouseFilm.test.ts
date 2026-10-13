@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { LIGHTHOUSE_FILM, filmEmbedUrl, filmSchema } from "./lighthouseFilm";
+import { LIGHTHOUSE_FILM, filmEmbedUrl } from "./lighthouseFilm";
 
 describe("the Lighthouse film", () => {
   it("embeds privacy-enhanced and only autoplays after the facade click", () => {
@@ -7,11 +7,11 @@ describe("the Lighthouse film", () => {
     expect(filmEmbedUrl()).toContain("autoplay=1");
   });
 
-  it("describes itself to Google with a same-origin poster and an ISO duration", () => {
-    const schema = filmSchema();
-    expect(schema["@type"]).toBe("VideoObject");
-    expect(schema.thumbnailUrl[0]).toBe(LIGHTHOUSE_FILM.posterUrl);
-    expect(schema.duration).toBe("PT1M15S");
-    expect(schema.uploadDate).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  // The VideoObject itself is built at deploy time (scripts/seo-schema.mjs,
+  // tested in src/seo-schema.test.ts) from the same JSON file.
+  it("has a same-origin poster and an ISO upload date for the structured data", () => {
+    expect(LIGHTHOUSE_FILM.posterUrl).toMatch(/^https:\/\/letpeople\.work\//);
+    expect(LIGHTHOUSE_FILM.uploadDate).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(LIGHTHOUSE_FILM.durationSeconds).toBeGreaterThan(0);
   });
 });

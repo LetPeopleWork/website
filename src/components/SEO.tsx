@@ -8,8 +8,6 @@ interface SEOProps {
   ogImageAlt?: string;
   ogType?: string;
   canonicalUrl?: string;
-  structuredData?: object;
-  breadcrumbs?: Array<{ name: string; url: string }>;
   /**
    * Keep the page out of search results and AI crawlers. Use for pages that are
    * live but deliberately unlisted, so only people with the link reach them.
@@ -28,37 +26,11 @@ const SEO = ({
   ogImageAlt = "Lighthouse Flow Metrics Dashboard",
   ogType = "website",
   canonicalUrl,
-  structuredData,
-  breadcrumbs,
   noIndex = false
 }: SEOProps) => {
   const siteUrl = "https://letpeople.work";
   const fullTitle = title.includes("LetPeopleWork") ? title : `${title} | LetPeopleWork`;
   const canonical = canonicalUrl || `${siteUrl}${window.location.pathname}`;
-
-  // BreadcrumbList structured data
-  const breadcrumbStructuredData = breadcrumbs ? {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": breadcrumbs.map((crumb, index) => ({
-      "@type": "ListItem",
-      "position": index + 1,
-      "name": crumb.name,
-      "item": `${siteUrl}${crumb.url}`
-    }))
-  } : null;
-
-  // WebSite structured data. Deliberately no SearchAction: the site has no
-  // search, and advertising one made Google crawl the literal template URL
-  // (/?s={search_term_string}) straight into Search Console's
-  // "Crawled - currently not indexed" report.
-  const websiteStructuredData = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "LetPeopleWork",
-    "url": siteUrl,
-    "description": "Makers of Lighthouse, the source-available flow metrics and forecasting tool, and Sizing Poker, a free way to size a backlog without estimating it."
-  };
 
   // Meta tags are updated in place rather than rendered as JSX. index.html
   // already ships a full set of SEO tags (rewritten per route by
@@ -139,30 +111,11 @@ const SEO = ({
     noIndex,
   ]);
 
-  // JSON-LD is rendered inline. React 19 does not hoist script tags, and it
-  // does not need to: Google reads JSON-LD anywhere in the document.
-  return (
-    <>
-      {structuredData && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
-      )}
-      {breadcrumbStructuredData && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(breadcrumbStructuredData),
-          }}
-        />
-      )}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteStructuredData) }}
-      />
-    </>
-  );
+  // Structured data (JSON-LD) is not rendered here. It is written into each
+  // route's static HTML at build time by scripts/seo-schema.mjs, so crawlers
+  // that do not run JavaScript see it too. Rendering it again here would give
+  // Google two copies of everything.
+  return null;
 };
 
 export default SEO;

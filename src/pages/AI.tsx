@@ -16,6 +16,8 @@ import {
 import obaiaGraphic from "@/assets/ai/obaia.svg";
 import workshopGraphic from "@/assets/ai/letpeopleworkshop.svg";
 import growGraphic from "@/assets/ai/letpeoplegrow.svg";
+import journeyData from "@/content/ai-journey.json";
+import { prices } from "@/lib/pricing";
 
 const CONTACT_URL = "mailto:contact@letpeople.work";
 
@@ -74,7 +76,7 @@ const FOUNDERS = [
   },
 ];
 
-const PILOT_PRICE = "CHF 2,500";
+const PILOT_PRICE = prices.aiWorkshopPilot;
 
 type JourneyStep = {
   n: string;
@@ -85,44 +87,9 @@ type JourneyStep = {
 };
 
 // One progressive AI journey. Every step is equal, all at pilot price.
-const JOURNEY: JourneyStep[] = [
-  {
-    n: "01",
-    kicker: "Literacy",
-    title: "The bAsIcs",
-    loss:
-      "Most of your people think AI is the chat box. Agents, commands, and skills, the parts that actually do work, are invisible to them. Nobody can use, buy, or ask for what they cannot see.",
-    change:
-      "Everyone leaves with the vocabulary and the mental model, and stops treating the chat window as the whole of AI.",
-  },
-  {
-    n: "02",
-    kicker: "Your first build",
-    title: "BIYA: Build It Yourself Agent",
-    loss:
-      "You have heard \"agent\" a hundred times and built exactly zero. Reading about it is not the same as watching one run your work, and every month it stays abstract is a month you do not get back.",
-    change:
-      "You build your first working agent with your own hands. The idea stops being a slide and becomes something you own.",
-  },
-  {
-    n: "03",
-    kicker: "Ship something real",
-    title: "From Prototype to Product",
-    loss:
-      "The tool your team actually needs dies in a backlog because \"we would need a developer.\" That queue is quietly costing you the thing you could have shipped this week.",
-    change:
-      "Build a real, working product yourself with Lovable and Claude Code, and stop waiting in line for it.",
-  },
-  {
-    n: "04",
-    kicker: "Run on it",
-    title: "Filling the Gap: The AI-Powered Business",
-    loss:
-      "Everyone has AI open in a tab; almost none of it becomes work. That gap, between having AI and AI actually doing your work, is the most expensive thing in your building.",
-    change:
-      "Run your business the obAIa way, with agents doing real work across marketing and operations, connected to the tools you already use.",
-  },
-];
+// The steps live in src/content/ai-journey.json so the build can describe
+// them in the static structured data (scripts/seo-schema.mjs).
+const JOURNEY: JourneyStep[] = journeyData;
 
 function Reveal({
   children,
@@ -168,56 +135,12 @@ const AI = () => {
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const provider = {
-    "@type": "Organization",
-    name: "LetPeopleWork GmbH",
-    url: "https://letpeople.work",
-  };
-
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Service",
-        name: "AI Services and Workshops",
-        provider,
-        serviceType: "AI consulting and training",
-        description:
-          "Practical AI from LetPeopleWork: our obAIa way of working, the open-source LetPeopleWorkShop and LetPeopleGrow plugins for Claude Code, and hands-on AI workshops.",
-      },
-      ...JOURNEY.map((step) => ({
-        "@type": "Course",
-        name: step.title,
-        description: step.change,
-        provider,
-        offers: {
-          "@type": "Offer",
-          price: "2500",
-          priceCurrency: "CHF",
-          description:
-            "Pilot price per team, covering the entire team. Subject to change once the pilot cohorts fill up.",
-          url: "https://letpeople.work/ai/#ai-workshops",
-        },
-        hasCourseInstance: {
-          "@type": "CourseInstance",
-          courseMode: ["Onsite", "Online"],
-          courseWorkload: "P1D",
-        },
-      })),
-    ],
-  };
-
   return (
     <div className="min-h-screen bg-background antialiased">
       <SEO
         title="Less Hype. More Working AI."
         description="Practical AI from LetPeopleWork: obAIa, our two open-source Claude Code plugins (LetPeopleWorkShop and LetPeopleGrow), and hands-on AI workshops grounded in real delivery."
         keywords="AI consulting, AI workshops, obAIa, LetPeopleWorkShop, LetPeopleGrow, Claude Code plugins, AI for business, AI in engineering, agentic workflows"
-        structuredData={structuredData}
-        breadcrumbs={[
-          { name: "Home", url: "/" },
-          { name: "AI", url: "/ai" },
-        ]}
       />
       <Navigation />
 

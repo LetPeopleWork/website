@@ -6,13 +6,15 @@
 // every shared subpage link would otherwise show the homepage card.
 //
 // This writes a static index.html per route with that route's own title,
-// description, and Open Graph / Twitter tags baked into the <head>. No headless
+// description, Open Graph / Twitter tags and structured data (JSON-LD, built
+// by seo-schema.mjs) baked into the <head>. No headless
 // browser required: scrapers only read <head>, and Google renders the JS for
 // full body content. Replaces the manual "cp index.html" fallback step.
 
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
-import { homeBody, lighthouseBody, loadFaq, simpleBody } from "./seo-content.mjs";
+import { homeBody, lighthouseBody, loadFaq, loadPrices, simpleBody } from "./seo-content.mjs";
+import { jsonLdTag, loadSchemaData, schemaFor } from "./seo-schema.mjs";
 
 const DIST = "dist";
 const SITE = "https://letpeople.work";
@@ -175,9 +177,21 @@ const withBody = (html, body) => {
   );
 };
 
+// Puts the route's structured data into its <head>, so crawlers that do not
+// run JavaScript see it as well. The React pages render none, so there is
+// exactly one copy per page.
+const schemaData = loadSchemaData();
+const withSchema = (html, route) => {
+  const schema = schemaFor(route, schemaData);
+  if (!schema) return html;
+  if (!html.includes("</head>")) throw new Error("[prerender-meta] template has no </head>");
+  return html.replace("</head>", () => `  ${jsonLdTag(schema)}\n  </head>`);
+};
+
 const faqs = loadFaq();
+const prices = loadPrices();
 const bodies = {
-  lighthouse: lighthouseBody(faqs),
+  lighthouse: lighthouseBody(faqs, prices),
 };
 
 function writeRoute(routePath, html) {
@@ -190,14 +204,14 @@ for (const r of seoRoutes) {
   // trailing-slash form to match what is actually served.
   const html = applyMeta(template, { ...r, url: `${SITE}/${r.path}/` });
   const body = bodies[r.path] ?? simpleBody(r.noscript);
-  writeRoute(r.path, withBody(html, body));
-  console.log(`[prerender-meta] wrote /${r.path} with page meta and readable body`);
+  writeRoute(r.path, withSchema(withBody(html, body), r.path));
+  console.log(`[prerender-meta] wrote /${r.path} with page meta, readable body and structured data`);
 }
 
 // The homepage is the template itself; it gets its readable body last, after
 // every route above was derived from the untouched template.
-writeFileSync(join(DIST, "index.html"), withBody(template, homeBody()));
-console.log("[prerender-meta] wrote / readable body");
+writeFileSync(join(DIST, "index.html"), withSchema(withBody(template, homeBody(prices)), ""));
+console.log("[prerender-meta] wrote / readable body and structured data");
 for (const { path, title } of fallbackRoutes) {
   let html = template
     .replace(/(<meta name="robots" content=")[\s\S]*?(")/, "$1noindex, nofollow$2")

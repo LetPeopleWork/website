@@ -1,13 +1,14 @@
 import { describe, expect, it } from "vitest";
 import faqs from "@/content/lighthouse-faq.json";
+import prices from "@/lib/pricing.json";
 // @ts-expect-error - plain .mjs build script without type declarations
 import { homeBody, lighthouseBody, renderFaq } from "../scripts/seo-content.mjs";
 
 // The static text that crawlers without JavaScript read (GPTBot, ClaudeBot,
 // PerplexityBot). It has to stay in step with the real pages.
 describe("crawler-readable page content", () => {
-  const lighthouse: string = lighthouseBody(faqs);
-  const home: string = homeBody();
+  const lighthouse: string = lighthouseBody(faqs, prices);
+  const home: string = homeBody(prices);
 
   it("renders every FAQ the page shows, from the same file", () => {
     for (const faq of faqs) {
