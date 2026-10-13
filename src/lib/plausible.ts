@@ -1,4 +1,4 @@
-import Plausible from "plausible-tracker";
+import { init, track } from "@plausible-analytics/tracker";
 
 // Cookieless, EU-hosted web analytics (Plausible).
 //
@@ -6,44 +6,55 @@ import Plausible from "plausible-tracker";
 // banner is required under GDPR/ePrivacy and the Swiss revFADP. The privacy
 // policy discloses it (see LegalInfoDialog, "Cookies & Analytics").
 //
-// Localhost is ignored by default (trackLocalhost: false), so local dev and
-// preview builds do not pollute the stats.
+// Localhost is ignored by default (captureOnLocalhost: false), so local dev
+// and preview builds do not pollute the stats.
 //
-// IMPORTANT: keep this cookieless. Adding Google Analytics, or turning on
-// Plausible's custom-event / revenue tracking, would drag us back into needing
-// a consent banner. Custom events are fine as long as their properties stay
-// non-personal: page paths, editions, platforms and score bands are fine,
-// email addresses and free-text answers are not.
-const plausible = Plausible({
-  domain: "letpeople.work",
-  // apiHost defaults to https://plausible.io (Plausible Cloud, EU region).
-});
+// IMPORTANT: keep this cookieless. Adding Google Analytics would drag us back
+// into needing a consent banner. Custom events are fine as long as their
+// properties stay non-personal: page paths, editions, platforms and score
+// bands are fine, email addresses and free-text answers are not.
+//
+// This is Plausible's official npm tracker. It replaced plausible-tracker
+// (deprecated on npm) in October 2026 because only the official one sends the
+// "engagement" events behind the dashboard's scroll depth and time on page.
 
 // Pageviews are reported with a trailing slash so that /lighthouse and
 // /lighthouse/ do not split into two rows in the dashboard. GitHub Pages
-// redirects to the trailing-slash form anyway.
-const canonicalUrl = () => {
-  const { origin, pathname, search, hash } = window.location;
-  const path = pathname.endsWith("/") ? pathname : `${pathname}/`;
-  return `${origin}${path}${search}${hash}`;
+// redirects to the trailing-slash form anyway. Applied to every event,
+// engagement events included, so they line up with their pageview.
+export const canonicalUrl = (raw: string): string => {
+  try {
+    const url = new URL(raw);
+    if (!url.pathname.endsWith("/")) url.pathname = `${url.pathname}/`;
+    return url.toString();
+  } catch {
+    return raw;
+  }
 };
 
-const trackPageview = () => plausible.trackPageview({ url: canonicalUrl() });
+init({
+  domain: "letpeople.work",
+  // Pageviews follow the SPA's history changes on their own, and the
+  // engagement events (scroll depth, time on page) come with them.
+  autoCapturePageviews: true,
+  // Outbound links and file downloads are tracked by the delegated listener
+  // below, which keeps our event names and never blocks target="_blank".
+  outboundLinks: false,
+  fileDownloads: false,
+  transformRequest: (payload) => ({ ...payload, u: canonicalUrl(payload.u) }),
+});
 
-// Deliberately not enableAutoPageviews(), because that reports the raw URL.
-trackPageview();
-const originalPushState = history.pushState.bind(history);
-history.pushState = function (...args: Parameters<History["pushState"]>) {
-  originalPushState(...args);
-  trackPageview();
-} as typeof history.pushState;
-window.addEventListener("popstate", trackPageview);
+const toProps = (props?: Record<string, string | number | boolean>) =>
+  props
+    ? Object.fromEntries(Object.entries(props).map(([key, value]) => [key, String(value)]))
+    : undefined;
 
 export function trackEvent(
   name: string,
   props?: Record<string, string | number | boolean>,
+  options?: { interactive?: boolean },
 ) {
-  plausible.trackEvent(name, props ? { props } : undefined);
+  track(name, { props: toProps(props), interactive: options?.interactive });
 }
 
 // Values are lowercased so that "Windows" and "windows" stop showing up as two
@@ -62,14 +73,14 @@ export function trackDownload(data: {
   if (data.platform) props.platform = norm(data.platform);
   if (data.format) props.format = norm(data.format).replace(/^\./, "");
   if (data.source) props.source = data.source;
-  plausible.trackEvent("Download", { props });
+  track("Download", { props });
 }
 
 // Outbound links, mailto CTAs and raw file links.
 //
-// Deliberately NOT plausible.enableAutoOutboundTracking(): that helper calls
-// preventDefault() and forces location.href, which breaks every
-// target="_blank" link on the site. This delegated listener only observes.
+// Deliberately our own listener rather than the tracker's outboundLinks
+// option: it keeps the event names the dashboard goals already use, and it
+// only observes, so target="_blank" links behave exactly as written.
 //
 // Anchors that already call trackDownload themselves carry
 // data-skip-autotrack, so a single click never counts as both "Download" and
@@ -106,4 +117,3 @@ document.addEventListener(
   { capture: true },
 );
 
-export default plausible;
