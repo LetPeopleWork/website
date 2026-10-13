@@ -173,7 +173,7 @@ const LighthouseTestimonials = () => {
         setCurrentTestimonial((prev) => (prev - 1 + shuffledTestimonials.length) % shuffledTestimonials.length);
     };
 
-    const title = "See What Lighthouse Users Are Saying";
+    const title = "What teams say about Lighthouse";
 
     return (
         <div className="mb-16">

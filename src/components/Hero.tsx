@@ -6,15 +6,49 @@ import TrialRequestDialog from "@/features/trial/components/TrialRequestDialog";
 import { trackEvent } from "@/lib/plausible";
 import FilmLightbox from "@/features/film/components/FilmLightbox";
 import { LIGHTHOUSE_FILM, isFilmAvailable } from "@/features/film/lighthouseFilm";
+import PathChips from "@/features/paths/PathChips";
+import {
+  findPath,
+  lighthouseHref,
+  pathFromSearch,
+  writePathToUrl,
+  type PathKey,
+} from "@/features/paths/paths";
 
-// The hero shows the product. Headline, one paragraph, two buttons, and the
-// forecast screen itself - a visitor who has never heard of Lighthouse should
-// know what it looks like before scrolling. The primary button is a real link
-// to the product page; the secondary opens the 30-day trial in place, because
-// that is the offer with the least friction.
+const DEFAULT_SUBHEAD =
+  "Lighthouse answers from what your team has already finished in Jira, Azure DevOps, Linear or ServiceNow. You see the odds for any date while there is still time to act.";
+
+const DEFAULT_IMAGE = {
+  src: "/lighthouse-forecast.png",
+  alt: "Lighthouse team forecast: when will 10 work items be done, four dates with their probabilities, and a 72% likelihood of making the target date",
+  width: 1920,
+  height: 1080,
+};
+
+// The first screen carries the message on its own: the visitor's question as
+// the headline, one sentence of answer, two buttons, and the product. Most
+// attention stays on the first two screens, so the screenshot sits here and
+// not further down.
+//
+// The situation chips swap the subhead and the screenshot and add a link to
+// the part of /lighthouse that answers that situation. With no choice, the
+// page is exactly the default, which is also what search engines see.
 const Hero = () => {
   const [trialOpen, setTrialOpen] = useState(false);
   const [filmOpen, setFilmOpen] = useState(false);
+  // A link like letpeople.work/?for=portfolio arrives pre-sorted.
+  const [pathKey, setPathKey] = useState<PathKey | undefined>(
+    () => pathFromSearch(window.location.search)?.key,
+  );
+
+  const path = findPath(pathKey);
+  const image = path?.image ?? DEFAULT_IMAGE;
+
+  const choosePath = (key: PathKey | undefined) => {
+    setPathKey(key);
+    writePathToUrl(key);
+    if (key) trackEvent("Path chosen", { path: key, source: "home-hero" });
+  };
   const openFilm = () => {
     trackEvent("Film played", { source: "hero" });
     setFilmOpen(true);
@@ -31,30 +65,33 @@ const Hero = () => {
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="animate-fade-in">
           <span className="inline-block text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-6">
-            Source-available flow metrics and forecasting
+            Lighthouse · flow metrics and delivery forecasts
           </span>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-[1.05] tracking-tight">
-            Stop defending estimates.
-            <br />
-            <span className="bg-gradient-hero bg-clip-text text-transparent font-light">
-              Start forecasting
-            </span>{" "}
-            <span className="font-light">with confidence.</span>
+            When will it be done?
           </h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
-            You're being asked when it'll be done, and{" "}
-            <em className="text-foreground/80 not-italic font-normal">
-              every guess that slips costs you a little more trust
-            </em>
-            . Lighthouse turns your real delivery history into forecasts you can defend.
-          </p>
+          <div className="max-w-2xl mx-auto mb-10 min-h-[5.5rem]" aria-live="polite">
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed" data-testid="hero-subhead">
+              {path?.subhead ?? DEFAULT_SUBHEAD}
+            </p>
+            {path && (
+              <Link
+                to={lighthouseHref(path)}
+                className="mt-3 inline-flex items-center gap-1.5 text-base font-semibold text-primary underline-offset-4 hover:underline"
+                data-testid="hero-path-link"
+              >
+                {path.linkLabel}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            )}
+          </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-4">
             <Button asChild variant="hero" size="lg" className="group rounded-full px-8 py-6 text-base">
               <Link to="/lighthouse">
-                Get Lighthouse Free
+                Get Lighthouse free
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
@@ -64,13 +101,11 @@ const Hero = () => {
             </Button>
           </div>
 
-          <p className="text-sm text-muted-foreground mb-14">
-            No signup, no credit card. We email you a 30-day Premium license and it expires on its own.
-            {" "}
-            <a href="/assessment" className="text-primary font-medium underline-offset-4 hover:underline">
-              Not sure where you stand? Take the free assessment.
-            </a>
+          <p className="text-sm text-muted-foreground mb-10">
+            Free for up to 3 teams. The Premium trial needs no signup and no credit card.
           </p>
+
+          <PathChips selected={pathKey} onSelect={choosePath} className="mb-12" />
         </div>
 
         {/* The product, cropped at the bottom so the page reads on. With the
@@ -93,11 +128,12 @@ const Hero = () => {
           )}
           <div className="rounded-t-2xl border border-b-0 border-border bg-card shadow-medium overflow-hidden">
             <img
-              src="/lighthouse-forecast.png"
-              alt="Lighthouse team forecast: when will 10 work items be done, four dates with their probabilities, and a 72% likelihood of making the target date"
+              key={image.src}
+              src={image.src}
+              alt={image.alt}
               className="w-full h-auto block"
-              width="1920"
-              height="1080"
+              width={image.width}
+              height={image.height}
               loading="eager"
               fetchPriority="high"
               data-testid="hero-product-shot"

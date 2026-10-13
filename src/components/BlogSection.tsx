@@ -61,7 +61,7 @@ function BlogContent({ posts }: { posts: BlogPost[] }) {
               Blog and community
             </span>
             <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
-              Keep getting better at this.
+              Keep getting better at this
             </h2>
           </div>
           <a

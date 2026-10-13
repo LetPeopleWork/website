@@ -12,10 +12,10 @@ const SizingPokerTeaser = () => (
       >
         <div className="flex-1">
           <span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-2 block">
-            Also free
+            Also free · Sizing Poker
           </span>
           <h3 className="text-xl md:text-2xl font-bold text-foreground tracking-tight mb-1">
-            Sizing Poker: size a backlog without estimating it
+            Still sizing in story points? Ask one question per item instead
           </h3>
           <p className="text-muted-foreground">
             One item at a time, one question, three answers. Runs in your browser, nothing leaves it.

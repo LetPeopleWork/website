@@ -1,6 +1,4 @@
 import { MessageSquare, Linkedin, Mail, Youtube, Users } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 const StayConnected = () => {
   const connections = [
@@ -41,38 +39,28 @@ const StayConnected = () => {
     }
   ];
 
+  // One row of links under the blog, not five equal cards: the page's last
+  // call to action is the closing offer above, and this is where to follow us.
   return (
-    <section id="stay-connected" className="pt-4 pb-24 md:pb-32 bg-background scroll-mt-24">
+    <section id="stay-connected" className="pt-2 pb-24 md:pb-28 bg-background scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Continues the blog block above: one heading for both. */}
-        <h3 className="text-xl font-bold text-foreground mb-8">Where to find us</h3>
-
-        {/* Connection Options */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {connections.map((connection, index) => (
-            <Card key={index} className="group hover:shadow-medium transition-all duration-300 border-0 bg-background/80 backdrop-blur-sm flex flex-col h-full">
-              <CardHeader className="text-center pb-4 flex-shrink-0">
-                <div className="mx-auto w-16 h-16 bg-accent rounded-2xl flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-200 mb-4">
-                  {connection.icon}
-                </div>
-                <CardTitle className="text-xl font-bold text-foreground">
-                  {connection.title}
-                </CardTitle>
-                <CardDescription className="text-muted-foreground">
-                  {connection.description}
-                </CardDescription>
-              </CardHeader>
-              
-              <CardContent className="flex-grow flex flex-col justify-end">
-                <Button variant="outline" className="w-full group" asChild>
-                  <a href={connection.link} target="_blank" rel="noopener noreferrer">
-                    {connection.cta}
-                  </a>
-                </Button>
-              </CardContent>
-            </Card>
+        <h3 className="text-base font-semibold text-foreground mb-4">Where to find us</h3>
+        <ul className="flex flex-wrap gap-3">
+          {connections.map((connection) => (
+            <li key={connection.title}>
+              <a
+                href={connection.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={connection.description}
+                className="inline-flex items-center gap-2.5 rounded-full border border-border bg-background px-4 py-2.5 text-sm font-semibold text-foreground no-underline transition-colors hover:border-primary/40 hover:text-primary [&_svg]:h-4 [&_svg]:w-4 [&_svg]:text-primary"
+              >
+                {connection.icon}
+                {connection.cta}
+              </a>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );
