@@ -21,7 +21,7 @@ const WhereItRuns = ({ onOpenPrivacy }: { onOpenPrivacy: () => void }) => (
           Runs where your data lives
         </h2>
         <p className="text-lg text-muted-foreground leading-relaxed">
-          You install Lighthouse yourself, on a laptop or on your servers. It talks to your tracker directly, so a Jira behind your firewall works the same as Jira Cloud.
+          You install Lighthouse yourself, on a laptop or a server. It talks to your tracker directly, so a Jira that only lives inside your network works just like Jira Cloud.
         </p>
       </div>
 
@@ -41,7 +41,7 @@ const WhereItRuns = ({ onOpenPrivacy }: { onOpenPrivacy: () => void }) => (
           <div>
             <dt className="text-lg font-bold text-foreground mb-1.5">Your work items stay with you</dt>
             <dd className="text-muted-foreground leading-relaxed">
-              Lighthouse keeps its data in its own database on your infrastructure. Usage data is off by default, and if switched on it carries no content.{" "}
+              Lighthouse keeps everything in its own database, on your systems. Usage data is off unless someone turns it on, and even then it holds no work items, names or queries.{" "}
               <button type="button" onClick={onOpenPrivacy} className="text-primary underline-offset-4 hover:underline">
                 What it contains
               </button>
@@ -50,7 +50,7 @@ const WhereItRuns = ({ onOpenPrivacy }: { onOpenPrivacy: () => void }) => (
           <div>
             <dt className="text-lg font-bold text-foreground mb-1.5">Your security team can read the code</dt>
             <dd className="text-muted-foreground leading-relaxed">
-              The source is public on GitHub. Paid editions add sign-in through your identity provider and role-based access.{" "}
+              If IT wants to know what this new tool does, they can read every line on GitHub. Paid editions add sign-in through your identity provider and role-based access.{" "}
               <a
                 href="https://github.com/LetPeopleWork/Lighthouse"
                 target="_blank"
@@ -70,13 +70,13 @@ const WhereItRuns = ({ onOpenPrivacy }: { onOpenPrivacy: () => void }) => (
         <div className="rounded-2xl border border-border bg-background p-7">
           <h3 className="text-xl font-bold text-foreground mb-2">Several trackers, one Lighthouse</h3>
           <p className="text-muted-foreground leading-relaxed">
-            One installation connects to Jira, Azure DevOps, Linear and ServiceNow at the same time, so teams do not have to move to one tool first. A feature worked by several teams gets one forecast that combines all of them.
+            One installation can talk to Jira, Azure DevOps, Linear and ServiceNow at the same time. Nobody has to migrate to one tool before you can start.
           </p>
         </div>
         <div className="rounded-2xl border border-border bg-background p-7">
           <h3 className="text-xl font-bold text-foreground mb-2">Why not wait for your tracker to add this?</h3>
           <p className="text-muted-foreground leading-relaxed">
-            It may add more charts, and for one team in one tool those can be enough. Lighthouse does flow and forecasting only, works the same across trackers, and checks its own past forecasts. The source is public, so you are not locked in to us or to your tracker.
+            Maybe it will, and for one team in one tool its charts may be all you need. Lighthouse only does flow and forecasting, the same way across trackers, and it checks its own forecasts. Because the source is public, you're not locked in, to us or to your tracker.
           </p>
         </div>
       </div>

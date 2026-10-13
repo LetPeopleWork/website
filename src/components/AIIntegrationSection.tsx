@@ -17,7 +17,7 @@ const AIIntegrationSection = () => {
               Ask your AI assistant about your flow
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-              Lighthouse comes with an MCP server, so Claude, Copilot or any assistant that supports tool calling can read your metrics and run a forecast. Its answers come from your team's data in Lighthouse.
+              Lighthouse has an MCP server. Connect Claude, Copilot or any other assistant that can call tools, and ask it which team needs attention this week or whether the release still fits. It answers from your data in Lighthouse, so you can check every number.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <a
@@ -88,7 +88,7 @@ const AIIntegrationSection = () => {
               </div>
             </div>
             <figcaption className="text-xs text-muted-foreground mt-3 text-center">
-              Example conversation with made-up teams. Works with any assistant that supports MCP.
+              An example, with made-up teams.
             </figcaption>
           </figure>
         </div>

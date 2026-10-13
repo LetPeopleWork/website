@@ -36,7 +36,7 @@ describe("homepage hero", () => {
     renderHero();
     await userEvent.click(screen.getByRole("button", { name: "I need to check hosting and security" }));
 
-    expect(screen.getByTestId("hero-subhead")).toHaveTextContent(/Jira Cloud and Data Center/);
+    expect(screen.getByTestId("hero-subhead")).toHaveTextContent(/inside your network/);
     expect(screen.getByTestId("hero-path-link")).toHaveAttribute("href", "/lighthouse?for=security#where-it-runs");
     expect(window.location.search).toBe("?for=security");
     expect(trackEvent).toHaveBeenCalledWith("Path chosen", { path: "security", source: "home-hero" });

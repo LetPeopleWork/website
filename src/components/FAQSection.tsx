@@ -5,7 +5,7 @@ const faqs = [
   {
     question: "I need lots of data first.",
     answer:
-      "You need around ten finished work items to get a first useful forecast. Most teams already have that from two weeks of throughput, so a year of history is not needed.",
+      "About ten finished work items are enough for a first useful forecast. Most teams have that after two weeks.",
   },
   {
     question: "Our tracker is messy. I don't have clean data.",
@@ -15,12 +15,12 @@ const faqs = [
   {
     question: "IT will block it. Our Jira isn't even reachable from the internet.",
     answer:
-      "Lighthouse runs where you install it: your laptop, a VM, Docker or Kubernetes inside your network. It connects to Jira Cloud, and to Jira Server or Data Center with a personal access token. Your work items stay on your infrastructure, and Lighthouse sends nothing to us unless someone switches on usage data, which carries no content. To try it, it runs on your own laptop without a ticket to IT.",
+      "Then run Lighthouse inside your network too: on your laptop, a VM, Docker or Kubernetes. It connects to Jira Server and Data Center with a personal access token. Your work items stay on your systems, and nothing comes to us unless someone turns on usage data (which holds no content). For a first try, your own laptop is enough. No ticket to IT.",
   },
   {
     question: "Won't Jira or Azure DevOps just build this in?",
     answer:
-      "They may add more charts, and for one team in one tool those can be enough. Lighthouse does flow and forecasting only and works the same across Jira, Azure DevOps, Linear and ServiceNow. It checks its own past forecasts, so you know how far to trust them, and a feature worked by several teams gets one forecast that combines all of them. The source is public, so you are not locked in to us or to your tracker.",
+      "Maybe. For one team in one tool, its charts may be all you need. Lighthouse only does flow and forecasting, works the same way across Jira, Azure DevOps, Linear and ServiceNow, and checks its own forecasts against what really happened. A feature worked by three teams gets one forecast for all three. And the source is public, so you're not locked in, to us or to your tracker.",
   },
   {
     question: "My team's not mature enough for this.",
@@ -50,7 +50,7 @@ const faqs = [
   {
     question: "I tried something like this before and it didn't stick.",
     answer:
-      "Was it Actionable Agile, Nave, or Jira's native forecasting? Lighthouse is self-hosted, source available, and free to start, which removes most of the reasons these tools die in real orgs. IT blocks the SaaS, the budget gets cut, the champion leaves. None of those land the same way when the tool is free and runs on your laptop.",
+      "Was it ActionableAgile, Nave, or Jira's own forecasting? Most of these tools die in real organisations for boring reasons: IT blocks the SaaS, the budget gets cut, the champion leaves. Lighthouse runs on your own systems and is free to start, so none of that hits the same way.",
   },
   {
     question: "Is this even for me?",

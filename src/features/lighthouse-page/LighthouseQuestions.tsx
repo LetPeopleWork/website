@@ -20,7 +20,7 @@ const QUESTIONS: Question[] = [
     key: "when",
     question: "When will it be done?",
     answer:
-      "Pick the items and get dates with their odds. Or pick a date and see how many items will likely be done by then. Both come from your team's throughput, so nobody has to estimate.",
+      "Ask about 10 items and you get dates with their odds. Ask about a date and you get how many items will probably make it. Not a crystal ball: it assumes your next weeks look roughly like your last ones.",
     image: {
       src: lighthouseAsset("features/teamdetail.png"),
       alt: "Team forecast: when 10 work items will be done, with four dates and their probabilities, and the likelihood of a target date",
@@ -32,7 +32,7 @@ const QUESTIONS: Question[] = [
     key: "stuck",
     question: "What's stuck right now?",
     answer:
-      "Work in progress, item age, blocked and stale items, each with a red, amber or green signal. Items at risk of missing your service level expectation (SLE) are listed while there is still time.",
+      "Work in progress, item age, blocked and stale items, each red, amber or green, so you know where to look first. Items about to miss your service level expectation (SLE) show up while you can still do something about them.",
     image: {
       src: lighthouseAsset("features/metrics/metricsoverview.png"),
       alt: "Team metrics overview: work in progress, blocked and stale items, item age and throughput with red, amber and green signals",
@@ -44,7 +44,7 @@ const QUESTIONS: Question[] = [
     key: "release",
     question: "Which features make the release?",
     answer:
-      "One bar per feature, from forecast start to forecast finish, with dependencies drawn between them. Features that will not even start before the target date are marked.",
+      "One bar per feature, from the day work is forecast to start to the day it's forecast to finish, with dependencies drawn as lines. Features that won't even start before your target date get marked. That's usually the uncomfortable part.",
     image: {
       src: lighthouseAsset("features/deliveryTimeline.png"),
       alt: "Delivery timeline: one bar per feature from forecast start to finish, with dependency lines",
@@ -56,7 +56,7 @@ const QUESTIONS: Question[] = [
     key: "portfolio",
     question: "How is the portfolio doing?",
     answer:
-      "Feature forecasts across all the teams working on them, and the same flow metrics one level up. A feature worked by several teams gets one forecast that combines all of them.",
+      "The same flow metrics one level up, and a forecast for every feature. When three teams work on one feature, you get one forecast for all three. It's usually lower than any single team's odds, because all three have to make it.",
     image: {
       src: lighthouseAsset("features/portfoliodetail.png"),
       alt: "Portfolio view: features with progress, forecast dates per team, and dependencies",
@@ -68,7 +68,7 @@ const QUESTIONS: Question[] = [
     key: "refine",
     question: "How much should we refine?",
     answer:
-      "Lighthouse forecasts how many items the team will pull before the next refinement. The team then sizes each one with a single question: could we finish it within our SLE?",
+      "How many items will the team pull before the refinement after next? Lighthouse forecasts that, so you refine enough and leave the rest of the backlog alone. Then everyone answers one question per item: could we finish it within our SLE?",
     image: {
       src: lighthouseAsset("features/refinement.png"),
       alt: "Refinement tab: how many work items the next refinement needs, with sizing votes per item",
@@ -91,7 +91,7 @@ const LighthouseQuestions = ({ value, onValueChange }: LighthouseQuestionsProps)
           What it answers
         </span>
         <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight mb-4">
-          Pick a question, see the screen that answers it
+          Which question do you get asked?
         </h2>
       </div>
 

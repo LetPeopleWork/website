@@ -15,10 +15,10 @@ const RealityCheckSection = () => (
             Lighthouse checks its own forecasts
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-            A forecast is only useful if you know how far to trust it. Reality Check replays past forecasts against what the team then delivered, for each percentile and each sampling window, and shows which ones held.
+            Don't trust a forecast? Fair enough, we wouldn't either. Reality Check forecasts weeks that already happened, as if they hadn't, and compares the result with what your team really finished. You see it for every percentile and every sampling window.
           </p>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            So before you quote a date in a meeting, you know whether the 70th or the 85th percentile has been right for your team.
+            When Peter backtested his own team, the 85% forecast said 12 items for those two weeks. They finished 16. Better to find out how your forecasts hold up before the next steering committee than during it.
           </p>
         </div>
         <img

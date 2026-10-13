@@ -5,14 +5,14 @@ const StayConnected = () => {
     {
       icon: <MessageSquare className="h-8 w-8" />,
       title: "Slack Community",
-      description: "Join the community for real discussions, quick answers, and direct access to us and other practitioners.",
+      description: "Ask us and other practitioners directly.",
       cta: "Join Slack",
       link: "https://join.slack.com/t/let-people-work/shared_invite/zt-38df4z4sy-iqJEo6S8kmIgIfsgsV0J1A"
     },
     {
       icon: <Linkedin className="h-8 w-8" />,
       title: "LinkedIn",
-      description: "Follow us for industry insights, case studies, and updates on Flow and Obeya methodologies.",
+      description: "What we work on, and what we learn with teams.",
       cta: "Follow on LinkedIn",
       link: "https://www.linkedin.com/company/let-people-work/"
     },
@@ -26,14 +26,14 @@ const StayConnected = () => {
     {
       icon: <Youtube className="h-8 w-8" />,
       title: "YouTube",
-      description: "Watch Lighthouse Live and practical sessions on flow metrics, forecasting, and delivery.",
+      description: "Recorded Lighthouse Live sessions on real delivery data.",
       cta: "Watch on YouTube",
       link: "https://www.youtube.com/@LetPeopleWork/videos"
     },
     {
       icon: <Users className="h-8 w-8" />,
       title: "Meetup",
-      description: "Join our free community sessions and Lighthouse Live, online and open to everyone.",
+      description: "Free online sessions, open to everyone.",
       cta: "Join on Meetup",
       link: "https://www.meetup.com/lighthouselive/"
     }

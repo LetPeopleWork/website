@@ -39,7 +39,7 @@ export const PATHS: readonly Path[] = [
     key: "date",
     chip: "I need to give a date",
     subhead:
-      "Pick the items and get dates with their odds. Or pick the date and see how many items will likely be done by then. Lighthouse works it out from your team's finished work, so nobody has to estimate.",
+      "Ask about 10 items and you get dates with their odds. Ask about a date and you get how many items will probably make it. It all comes from what your team finished recently, so there's no estimation meeting.",
     image: {
       src: "/lighthouse-forecast.png",
       alt: "Lighthouse team forecast: when will 10 work items be done, four dates with their probabilities, and a 72% likelihood of making the target date",
@@ -54,7 +54,7 @@ export const PATHS: readonly Path[] = [
     key: "portfolio",
     chip: "I look after several teams",
     subhead:
-      "A feature worked by several teams gets one forecast that combines all of them. The delivery timeline shows which features will miss the date while you can still change the plan.",
+      "Three teams on one feature? Lighthouse combines their three forecasts into one. Taking the slowest team's date flatters you every time. The delivery timeline then shows which features miss the release, early enough to cut scope.",
     image: {
       src: lighthouseAsset("features/portfoliodetail.png"),
       alt: "Lighthouse portfolio view: features with their progress, forecast dates and dependencies",
@@ -69,7 +69,7 @@ export const PATHS: readonly Path[] = [
     key: "team",
     chip: "I'm on the team doing the work",
     subhead:
-      "Keep your burndown. Lighthouse adds what it does not show: which items are stuck, how long they have been ageing, and which ones are about to take longer than usual.",
+      "Keep your burndown. It shows how much is left. Lighthouse shows what's stuck: which items have been ageing for days, and which ones are about to take longer than your usual cycle time.",
     image: {
       src: lighthouseAsset("features/metrics/metricsoverview.png"),
       alt: "Lighthouse team metrics: work in progress, blocked and stale items, item age and throughput, each with a red, amber or green signal",
@@ -84,7 +84,7 @@ export const PATHS: readonly Path[] = [
     key: "security",
     chip: "I need to check hosting and security",
     subhead:
-      "Lighthouse runs on your own laptop, VM, Docker or Kubernetes. It connects to Jira Cloud and Data Center, Azure DevOps, Linear and ServiceNow directly, and the source is public on GitHub.",
+      "Jira only reachable inside your network? Then run Lighthouse there too, on a laptop, a VM, Docker or Kubernetes. Your work items stay on your systems. If IT wants to know what it does, the source is on GitHub.",
     visual: "where-it-runs",
     anchor: "where-it-runs",
     tab: "when",

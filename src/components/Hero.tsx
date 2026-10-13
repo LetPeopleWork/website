@@ -17,7 +17,7 @@ import {
 } from "@/features/paths/paths";
 
 const DEFAULT_SUBHEAD =
-  "Lighthouse answers from what your team has already finished in Jira, Azure DevOps, Linear or ServiceNow. You see the odds for any date while there is still time to act.";
+  "Lighthouse looks at what your team has finished in Jira, Azure DevOps, Linear or ServiceNow and tells you how likely each date is. Promising it to a customer? Use the 85% date and sleep well.";
 
 const DEFAULT_IMAGE = {
   src: "/lighthouse-forecast.png",
@@ -109,7 +109,7 @@ const Hero = () => {
           </div>
 
           <p className="text-sm text-muted-foreground mb-12">
-            Free for up to 3 teams. The Premium trial needs no signup and no credit card.
+            Free for up to 3 teams. You can try Premium for 30 days without signing up or giving us a credit card.
           </p>
         </div>
 

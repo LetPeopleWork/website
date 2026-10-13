@@ -15,19 +15,19 @@ const steps = [
     number: "01",
     title: "Connect your tracker",
     description:
-      "Install it on a laptop or a server inside your network, then connect Jira Cloud or Data Center, Azure DevOps, Linear or ServiceNow. A Jira behind your firewall works the same way.",
+      "Install it on your laptop or on a server inside your network and point it at Jira Cloud or Data Center, Azure DevOps, Linear or ServiceNow. A Jira behind a firewall is no problem.",
   },
   {
     number: "02",
     title: "See where work gets stuck",
     description:
-      "Cycle time, work in progress, throughput and item age, each with a red, amber or green signal, so you know where to look first.",
+      "Cycle time, WIP, throughput and work item age, with red, amber or green on every widget. Red means: ask about it in the next daily.",
   },
   {
     number: "03",
     title: "Forecast from what you finish",
     description:
-      "Lighthouse simulates the coming weeks from your team's past throughput and gives dates with odds, for example 85% by 28 March. No story points needed.",
+      "Monte Carlo simulation sounds fancy. In practice it's your team's past throughput, replayed many times. You get something like \"50% by 14 March, 85% by 28 March\". No story points needed.",
   },
 ];
 
@@ -93,7 +93,7 @@ const LighthouseSection = () => {
             The answer is already in your tracker
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-            Every finished ticket has a start and an end date. Lighthouse reads them to show where work gets stuck and when the rest is likely to be done.
+            Every ticket your team closed has a start date and an end date. That's all Lighthouse needs to show you where work gets stuck and when the rest will probably be done.
           </p>
         </div>
 
@@ -122,7 +122,7 @@ const LighthouseSection = () => {
             <div>
               <h3 className="text-xl font-bold text-foreground mb-2">Lighthouse checks its own forecasts</h3>
               <p className="text-muted-foreground leading-relaxed">
-                Forecast Reality Check replays past forecasts against what your team then delivered, so you know which percentile to trust before you quote a date.
+                Don't trust a forecast? Fair enough. Reality Check forecasts weeks that already happened and compares the result with what your team finished. When Peter backtested his own team, the 85% forecast said 12 items. They finished 16.
               </p>
             </div>
           </div>
@@ -130,7 +130,7 @@ const LighthouseSection = () => {
           <div className="rounded-2xl border border-border bg-gradient-subtle p-8 flex flex-col justify-center text-center" data-testid="lighthouse-home-cta">
             <h3 className="text-2xl font-bold text-foreground mb-2">Free for up to 3 teams and 1 portfolio</h3>
             <p className="text-muted-foreground mb-6">
-              Paid editions remove the limits. Every edition runs on your own infrastructure, with the source on GitHub.
+              You don't need a budget or anyone's permission to try it. Paid editions lift the limits when you need more.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
               <Button asChild size="lg" className="group rounded-full px-8">

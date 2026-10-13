@@ -32,7 +32,7 @@ const ACTIONS: Action[] = [
     icon: MessageSquare,
     title: "Join the community",
     description:
-      "Drop into our Slack to ask questions, share what you find, and join our office hours.",
+      "Ask us and other users in our Slack, or drop into the office hours.",
     cta: "Join on Slack",
     href: "https://join.slack.com/t/let-people-work/shared_invite/zt-38df4z4sy-iqJEo6S8kmIgIfsgsV0J1A",
     external: true,

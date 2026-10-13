@@ -726,7 +726,7 @@ const Lighthouse = () => {
 							Live demo, unedited
 						</span>
 						<h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight mb-4">
-							From nothing to a forecast, in under ten minutes.
+							From nothing to a forecast in under ten minutes
 						</h2>
 						<p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
 							Gabor Bittera set out to bust the myth that probabilistic
@@ -785,10 +785,10 @@ const Lighthouse = () => {
 							Pricing
 						</span>
 						<h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight leading-[1.08] mb-6">
-							Free to start, paid when you outgrow it
+							Free for up to 3 teams
 						</h2>
 						<p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-							Community is free for up to 3 teams and 1 portfolio. Self-Service removes the limits and adds sign-in, OAuth and the paid planning features. Enterprise adds priority support. Every edition is self-hosted, with the source on GitHub.
+							Community covers 3 teams and 1 portfolio. Self-Service lifts the limits and adds the paid features in the table below, like sign-in through your identity provider and rule-based deliveries. Enterprise is the same product with priority support. Every edition runs on your own systems.
 						</p>
 					</div>
 
@@ -800,7 +800,7 @@ const Lighthouse = () => {
 							<div className="flex items-baseline gap-2 mb-1">
 								<div className="text-4xl md:text-5xl font-semibold text-foreground tracking-tight">Free</div>
 							</div>
-							<div className="text-sm text-muted-foreground mb-6">Forever. Source available. Self-hosted.</div>
+							<div className="text-sm text-muted-foreground mb-6">Free, with no time limit.</div>
 							<p className="text-base text-foreground/80 leading-relaxed mb-6">
 								Everything you need to forecast and see your flow, up to a few teams.
 							</p>
@@ -831,7 +831,7 @@ const Lighthouse = () => {
 							</div>
 								<div className="text-sm text-muted-foreground mb-6">Annual license. Self-hosted.</div>
 							<p className="text-base text-foreground/80 leading-relaxed mb-6">
-								The full product, your way.<br />Run it, configure it, and scale it, with the community at your back.
+								Everything Lighthouse can do, for as many teams as you have.
 							</p>
 							<ul className="space-y-2.5 mb-8 flex-1 text-sm text-foreground/80">
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span><span className="font-semibold">Everything in Community</span>, no caps</span></li>
@@ -854,7 +854,7 @@ const Lighthouse = () => {
 								onClick={() => { setTrialSource("pricing-card"); trackEvent("Trial dialog opened", { source: "pricing-card" }); }}
 								className="mt-3 text-sm font-medium text-primary underline underline-offset-4 hover:text-primary-hover"
 							>
-								or try it free for 30 days &mdash; no signup, no credit card
+								or try it free for 30 days, without an account or a card
 							</button>
 						</div>
 
@@ -867,7 +867,7 @@ const Lighthouse = () => {
 							</div>
 								<div className="text-sm text-muted-foreground mb-6 mt-3">For teams that want priority.</div>
 							<p className="text-base text-foreground/80 leading-relaxed mb-6">
-								Everything in Self-Service, plus a faster, prioritised line to support when you need it.
+								Everything in Self-Service, plus a faster line to us when you need help.
 							</p>
 							<ul className="space-y-2.5 mb-8 flex-1 text-sm text-foreground/80">
 								<li className="flex gap-2"><Check className="w-4 h-4 text-primary mt-1 shrink-0" /><span><span className="font-semibold">Everything in Self-Service</span></span></li>
@@ -888,8 +888,8 @@ const Lighthouse = () => {
 
 					{/* No lock-in reassurance */}
 					<p className="text-center text-sm md:text-base text-muted-foreground max-w-2xl mx-auto mb-16">
-						Self-hosted, with the source public. If you ever stop paying, your data and the tool stay with you.
-						Help with setup is free for every edition, not only Enterprise.
+						If you ever stop paying, your data and Lighthouse stay where they are, on your systems.
+						And we help you set it up for free, whatever edition you use.
 					</p>
 
 					{/* Full feature comparison: collapsed by default, because most
@@ -975,18 +975,18 @@ const Lighthouse = () => {
 														feature: { label: "Continuous Forecasts for Portfolios", tooltip: "Every Feature is re-forecast on every refresh, so the dates move as soon as the work or the Throughput does." },
 														community: true, self: true, enterprise: true,
 													},
-													{ feature: "Source available — read and audit the code", community: true, self: true, enterprise: true },
+													{ feature: "Source available: read and audit the code", community: true, self: true, enterprise: true },
 													{ feature: "Connection to Jira, Azure DevOps, Linear & ServiceNow", community: true, self: true, enterprise: true },
 													{
 														feature: { label: "Refinement: need & sizing votes", tooltip: "See how many Work Items your team should have ready before the next Refinement, and size each one by voting whether it fits your SLE: Yes, Yes if…, or No. No story points." },
 														community: true, self: true, enterprise: true,
 													},
 													{
-														feature: { label: "Forecast Reality Check", tooltip: "Replay your Team's recent forecasts against what actually got done, and see whether your history window and confidence levels really hold." },
+														feature: { label: "Forecast Reality Check", tooltip: "Forecast weeks that already happened and compare with what your Team finished. You see whether your history window and percentiles hold up." },
 														community: true, self: true, enterprise: true,
 													},
 													{
-														feature: { label: "Forecasted Start Dates", tooltip: "See when work on each Feature is forecast to begin, not just when it finishes, from the same simulation." },
+														feature: { label: "Forecasted Start Dates", tooltip: "See when work on each Feature is forecast to begin, next to when it finishes. Both come from the same simulation." },
 														community: true, self: true, enterprise: true,
 													},
 													{
@@ -1037,15 +1037,15 @@ const Lighthouse = () => {
 														community: false, self: true, enterprise: true,
 													},
 													{
-														feature: { label: "Exclude Items for Throughput", tooltip: "Keep maintenance, support, and unplanned work out of your throughput so forecasts reflect the work your team actually delivers. The filter flows through every forecast and metric." },
+														feature: { label: "Exclude Items for Throughput", tooltip: "Keep maintenance, support and unplanned work out of your throughput, so forecasts are based on the work you plan for. The filter applies to every forecast and metric." },
 														community: false, self: true, enterprise: true,
 													},
 													{
-														feature: { label: "Rule-Based Deliveries", tooltip: "Define rules to automatically include your Features based on criteria like labels or custom fields, ensuring your deliveries are always up-to-date without manual updating." },
+														feature: { label: "Rule-Based Deliveries", tooltip: "Define rules that pick Features by label or custom field. The delivery updates itself as Features come and go." },
 														community: false, self: true, enterprise: true,
 													},
 													{
-														feature: { label: "Manual Feature Ordering", tooltip: "Decide the order Lighthouse forecasts your Features in, rather than inheriting whatever rank they carry in your work tracking system. Move any Feature to the top, up, down, or to the bottom, and the forecast updates straight away." },
+														feature: { label: "Manual Feature Ordering", tooltip: "Decide the order Lighthouse forecasts your Features in, independent of the rank in your work tracking system. Move any Feature to the top, up, down or to the bottom, and the forecast updates straight away." },
 														community: false, self: true, enterprise: true,
 													},
 													{
@@ -1135,7 +1135,7 @@ const Lighthouse = () => {
 					    Anchored: the assessment's next-step CTA lands here. */}
 					<div id="lighthouse-trial" className="text-center mt-12 scroll-mt-24">
 						<p className="text-lg text-foreground font-medium mb-1">Easier to just try it?</p>
-						<p className="text-sm text-muted-foreground mb-5">We&apos;ll send you a 30-day Premium license (Self-Service edition). No signup, no credit card &mdash; it expires on its own.</p>
+						<p className="text-sm text-muted-foreground mb-5">We&apos;ll email you a 30-day Premium license for the Self-Service edition. You don&apos;t sign up, we don&apos;t ask for a card, and after 30 days it expires on its own.</p>
 						<Button
 							variant="outline"
 							onClick={() => { setTrialSource("comparison"); trackEvent("Trial dialog opened", { source: "comparison" }); }}
@@ -1153,9 +1153,8 @@ const Lighthouse = () => {
 							Need to convince someone who decides?
 						</h3>
 						<p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
-							A short deck for your manager or steering committee: what
-							Lighthouse does, what it costs, and how it runs on your
-							infrastructure.
+							A short deck for your manager or steering committee. It covers
+							what Lighthouse does and what it costs.
 						</p>
 						<div className="mt-4">
 							<a
@@ -1352,9 +1351,8 @@ const Lighthouse = () => {
 							Want help setting it up?
 						</h3>
 						<p className="text-muted-foreground leading-relaxed mb-6">
-							We'll onboard you, free of charge. We help you get Lighthouse
-							running in your environment, connect Jira, Azure DevOps, ServiceNow, or
-							Linear, and walk your team through the tool.
+							We&apos;ll set it up with you for free, on any edition. That includes
+							connecting your tracker and a first walkthrough with your team.
 						</p>
 						<a
 							href="mailto:contact@letpeople.work?subject=Lighthouse%20onboarding"
@@ -1379,9 +1377,6 @@ const Lighthouse = () => {
 						</h2>
 						<p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
 							You can move from one edition to the other later. Just write to us.
-						</p>
-						<p className="text-sm text-muted-foreground/80 max-w-2xl mx-auto mt-4">
-							Self-hosted, with the source public. If you ever stop paying, your data and the tool stay with you.
 						</p>
 					</div>
 

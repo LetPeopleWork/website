@@ -22,7 +22,7 @@ const ClosingOffer = () => {
           Try it on your own team's data
         </h2>
         <p className="text-lg md:text-xl text-primary-foreground/85 leading-relaxed mb-9">
-          Community is free for up to 3 teams and 1 portfolio. Premium is free for 30 days, with no signup and no credit card.
+          Point the free Community edition at your own Jira or Azure DevOps and look at your forecast before you decide anything. Want to try everything? We'll email you a 30-day Premium license. You don't sign up, and we don't ask for a card.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
           <Button asChild size="lg" className="group rounded-full px-8 py-6 text-base bg-white text-primary hover:bg-white/90">

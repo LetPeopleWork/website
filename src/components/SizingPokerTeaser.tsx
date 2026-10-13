@@ -15,10 +15,10 @@ const SizingPokerTeaser = () => (
             Also free · Sizing Poker
           </span>
           <h3 className="text-xl md:text-2xl font-bold text-foreground tracking-tight mb-1">
-            Still sizing in story points? Ask one question per item instead
+            Still sizing in story points?
           </h3>
           <p className="text-muted-foreground">
-            One item at a time, one question, three answers. Runs in your browser, nothing leaves it.
+            Skip the hour arguing whether it's a 5 or an 8. Sizing Poker asks one question per item, and it runs in your browser.
           </p>
         </div>
         <Link
