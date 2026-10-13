@@ -5,7 +5,7 @@ const faqs = [
   {
     question: "I need lots of data first.",
     answer:
-      "You need around ten finished work items to get a first useful forecast. Most teams already have that from two weeks of throughput. You don't need a year of history. You need what you've already done.",
+      "You need around ten finished work items to get a first useful forecast. Most teams already have that from two weeks of throughput, so a year of history is not needed.",
   },
   {
     question: "Our tracker is messy. I don't have clean data.",
@@ -13,14 +13,19 @@ const faqs = [
       "Messy is normal. Lighthouse pulls from Jira, Azure DevOps, Linear, ServiceNow, or CSV, and the math holds up against noisy data. The signal you need is when items started and when they finished, and that survives even in trackers that have been through three reorgs.",
   },
   {
-    question: "I can't run this in my org. IT will block it.",
+    question: "IT will block it. Our Jira isn't even reachable from the internet.",
     answer:
-      "It runs on your laptop. Docker container or native .NET, with no external network calls by default. Your Jira, Azure DevOps, Linear, or ServiceNow data never leaves your machine. You don't need to file a ticket to try it for two weeks.",
+      "Lighthouse runs where you install it: your laptop, a VM, Docker or Kubernetes inside your network. It connects to Jira Cloud, and to Jira Server or Data Center with a personal access token. Your work items stay on your infrastructure, and Lighthouse sends nothing to us unless someone switches on usage data, which carries no content. To try it, it runs on your own laptop without a ticket to IT.",
+  },
+  {
+    question: "Won't Jira or Azure DevOps just build this in?",
+    answer:
+      "They may add more charts, and for one team in one tool those can be enough. Lighthouse does flow and forecasting only and works the same across Jira, Azure DevOps, Linear and ServiceNow. It checks its own past forecasts, so you know how far to trust them, and a feature worked by several teams gets one forecast that combines all of them. The source is public, so you are not locked in to us or to your tracker.",
   },
   {
     question: "My team's not mature enough for this.",
     answer:
-      "Probabilistic forecasting works on whatever flow you have today. Maturity is the result, not the requirement. The reason to start now is that the forecast shows you what to improve. Waiting until you feel ready means waiting forever.",
+      "Probabilistic forecasting works on whatever flow you have today. Starting early helps, because the forecast shows you what to improve first.",
   },
   {
     question: "I need management buy-in first.",
@@ -30,12 +35,12 @@ const faqs = [
   {
     question: "I'm just an IC, Scrum Master, or coach. This isn't my call.",
     answer:
-      "Most of Lighthouse's early users are exactly that: ICs, Scrum Masters, and coaches running it for their own team. The idea that you need permission to introduce a tool is your story, not your manager's. It installs on your laptop, and nobody else needs to know until you have something worth showing.",
+      "Most of Lighthouse's early users are exactly that: ICs, Scrum Masters, and coaches running it for their own team. It installs on your laptop, and nobody else needs to know until you have something worth showing.",
   },
   {
     question: "It looks complicated.",
     answer:
-      "Your first useful output is about thirty minutes from download. Pre-loaded sample data lets you see the shape of it before you connect anything. If you've ever opened Excel and built a pivot table, you're already past the hardest part.",
+      "Plan for half an hour from download to a first forecast. Gábor Bittera did it live in under ten minutes, which you can watch further up this page. Pre-loaded sample data lets you look around before you connect anything.",
   },
   {
     question: "Do you help with setup and onboarding?",
@@ -50,7 +55,7 @@ const faqs = [
   {
     question: "Is this even for me?",
     answer:
-      "We'd rather you not download Lighthouse than download it and bounce. It's probably not for you if you're a single team with no portfolio question, since a cycle-time chart in Jira will do. Or if your project is a one-off that's nearly done, because forecasting can't help after the fact. Or if you work in a hard fixed-deadline culture where the date is non-negotiable, because the math doesn't matter if the answer is always to work weekends. If that sounds like you, save yourself the download.",
+      "Maybe not if you are one team with nothing bigger than the next sprint to plan; the charts in your tracker may be enough. Or if your project is nearly done, because a forecast can't help after the fact. Fixed deadlines are different: when the date can't move, the useful question is how much will fit by then, and Lighthouse answers that.",
   },
 ];
 
@@ -85,13 +90,13 @@ const FAQSection = () => {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-4 block">
-              The honest answers
+              FAQ
             </span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-tight">
-              What's stopping you?
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 tracking-tight">
+              Questions people ask us
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-              We've heard every reason not to try Lighthouse. Here are the ones that come up most, and what we actually think about them.
+              The reasons people give for not trying Lighthouse, and what we think about each.
             </p>
           </div>
 

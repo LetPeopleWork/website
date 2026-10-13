@@ -1,7 +1,5 @@
 import {
 	ArrowRight,
-	Target,
-	FileText,
 	Download,
 	Monitor,
 	Smartphone,
@@ -17,10 +15,7 @@ import {
 	CheckCircle,
 	XCircle,
 	Info,
-	Hammer,
 	Calendar as CalendarIcon,
-	BarChart3,
-	ListChecks,
 	Command,
 	Terminal,
 	Laptop,
@@ -44,13 +39,6 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import {
-	Carousel,
-	CarouselContent,
-	CarouselItem,
-	CarouselNext,
-	CarouselPrevious,
-} from "@/components/ui/carousel";
-import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
@@ -64,7 +52,6 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import Navigation from "@/components/Navigation";
 import SimpleFooter from "@/components/SimpleFooter";
-import MediaCarousel from "@/components/MediaCarousel";
 import LegalInfoDialog from "@/components/LegalInfoDialog";
 import SEO from "@/components/SEO";
 import lighthouseLogo from "@/assets/LighthouseLogo.png";
@@ -77,7 +64,6 @@ import LighthouseWhatsNew from "@/components/LighthouseWhatsNew";
 import TrialRequestDialog from "@/features/trial/components/TrialRequestDialog";
 import { format } from "date-fns";
 import { lighthouseAsset } from "@/lib/lighthouseAsset";
-import gitHubImage from "@/assets/screenshots/GitHub.png";
 import {
 	findAssetByPattern,
 	LIGHTHOUSE_DOCKER_COMMAND,
@@ -86,6 +72,17 @@ import {
 } from "@/lib/lighthouseDownloads";
 import QuickDownloadBar from "@/components/QuickDownloadBar";
 import FilmFacade from "@/features/film/components/FilmFacade";
+import PathChips from "@/features/paths/PathChips";
+import {
+	findPath,
+	pathFromSearch,
+	writePathToUrl,
+	type PathKey,
+	type QuestionTab,
+} from "@/features/paths/paths";
+import LighthouseQuestions from "@/features/lighthouse-page/LighthouseQuestions";
+import RealityCheckSection from "@/features/lighthouse-page/RealityCheckSection";
+import WhereItRuns from "@/features/lighthouse-page/WhereItRuns";
 import { LIGHTHOUSE_FILM, filmSchema, isFilmAvailable } from "@/features/film/lighthouseFilm";
 import { trackDownload, trackEvent } from "@/lib/plausible";
 import { prices } from "@/lib/pricing";
@@ -240,6 +237,24 @@ const Lighthouse = () => {
 		description: "",
 	});
 	const [showLegalDialog, setShowLegalDialog] = useState(false);
+	const [legalTab, setLegalTab] = useState<"terms" | "privacy">("terms");
+	// Situation chips (?for=): which one is chosen, and which question tab
+	// it opens. A link from the homepage arrives with both set.
+	const [pathKey, setPathKey] = useState<PathKey | undefined>(
+		() => pathFromSearch(window.location.search)?.key,
+	);
+	const [questionTab, setQuestionTab] = useState<QuestionTab>(
+		() => pathFromSearch(window.location.search)?.tab ?? "when",
+	);
+	const chooseJump = (key: PathKey | undefined) => {
+		setPathKey(key);
+		writePathToUrl(key);
+		const path = findPath(key);
+		if (!path) return;
+		trackEvent("Path chosen", { path: path.key, source: "lighthouse-jump" });
+		setQuestionTab(path.tab);
+		document.getElementById(path.anchor)?.scrollIntoView({ behavior: "smooth", block: "start" });
+	};
 	// Which trial CTA opened the dialog; null = closed. Analytics only.
 	const [trialSource, setTrialSource] = useState<string | null>(null);
 	const { toast } = useToast();
@@ -376,169 +391,6 @@ const Lighthouse = () => {
 		}
 	};
 
-	// Screenshots come from the Lighthouse docs on the CDN, so they track the
-	// current UI without a website release. The April screencasts they replace
-	// showed a UI three redesigns old and weighed 185 MB in the bundle.
-	const lighthouseFeatures = [
-		{
-			title: "Visualize the Flow for Teams",
-			description:
-				"Work in progress, age, blocked and stale items, throughput, and a predictability score on one page, each with a red, amber or green signal so you know where to look first.",
-			image: lighthouseAsset("features/metrics/metricsoverview.png"),
-			alt: "Team metrics overview with flow widgets and RAG indicators",
-		},
-		{
-			title: "Visualize the Flow on Portfolio Level",
-			description:
-				"The same flow metrics one flight level up: features in progress, feature size, blocked work, and how predictable the portfolio is as a whole.",
-			image: lighthouseAsset("features/metrics/portfoliometricsoverview.png"),
-			alt: "Portfolio metrics overview",
-		},
-		{
-			title: "Run Forecasts for your Team",
-			description:
-				'Ask "when will these 10 items be done?" or "how many can we finish by the 11th?" and get an answer with its probability, from your own history, in seconds.',
-			image: lighthouseAsset("features/teamdetail.png"),
-			alt: "Team forecast answering when 10 items will be done and the likelihood of a target date",
-		},
-		{
-			title: "See the Delivery Timeline",
-			description:
-				"One bar per feature, from forecast start to forecast finish, dependencies drawn as lines between them, and the features that will not even start before the target date called out.",
-			image: lighthouseAsset("features/deliveryTimeline.png"),
-			alt: "Delivery timeline with one bar per feature and dependency lines",
-		},
-	];
-
-	const detailedFeatures = [
-		{
-			icon: <BarChart3 className="h-8 w-8" />,
-			title: "Visualize your Flow",
-			description:
-				"Take action based on real data - with Lighthouse you have all relevant Flow Metrics at your disposal",
-			extendedDescription: `Whether it's on team or on portfolio level, you can't have easier access to a complete overview over your Flow than with Lighthouse.
-      Whether you want to see the impact of a recent change, analyze how the last weeks went together with the team, or look for outliers to learn from - Lighthouse is making it easy for you!
-
-      You get the full set: Cycle Time, Throughput, Work In Progress, Work Item Aging with pace bands, Arrivals, and a Flow Overview that flags stale and blocked work at a glance. Newer additions like the Load Balance Matrix help you control WIP, while Time in State shows how long each item has been sitting right now. Premium teams can even define their own named cycle times: measure any start-to-end window, such as a full lead time from backlog to done, right alongside the default Cycle Time on the scatterplot and the Cumulative Time per State chart. Filter the date range, drill down to specific items, and jump straight to your connected system.
-
-      If you want to work data-driven, these are the metrics you need. And Lighthouse is the tool you want to visualize them!`,
-			callToAction: "Miss some specific Metric or Chart? Reach out!",
-			mediaItems: [
-				{
-					type: "image" as const,
-					src: lighthouseAsset("features/metrics/metricsoverview.png"),
-					alt: "Team Metrics",
-				},
-				{
-					type: "image" as const,
-					src: lighthouseAsset("features/metrics/portfoliometricsoverview.png"),
-					alt: "Projects Metrics",
-				},
-				{
-					type: "image" as const,
-					src: lighthouseAsset("features/metrics/sleRiskWidget.png"),
-					alt: "Items at risk of missing the service level expectation",
-				},
-			],
-		},
-		{
-			icon: <Target className="h-8 w-8" />,
-			title: "Forecast Delivery Dates",
-			description:
-				"Stop wasting time with guesses - Lighthouse is using your historical data to create realistic timelines in seconds",
-			extendedDescription: `Instead of spending time with detailed breakdowns or assigning made up points to things, start making use of the data you already have!
-      
-      Lighthouse is using Monte Carlo Simulations to create probabilistic forecasts. Those forecasts come with an associated probability, which will help you do proper risk management.
-      Like a Lighthouse that is consistently shining light into the darkness, the forecasts are updated continuously, so that you can take action once you notice that your initial plan may not work out anymore.
-
-      Those timelines follow the order of your Features, because that is the order your teams work them in. By default Lighthouse reads that order from your work tracking system. On a paid tier you can take it over instead: move any Feature to the top, up, down, or to the bottom, and see the dates move straight away, without touching the backlog everyone else is looking at.
-
-      You have the data already, now you just need Lighthouse and you will be able to create plans and timelines within seconds!`,
-			callToAction: "",
-			mediaItems: [
-				{
-					type: "image" as const,
-					src: lighthouseAsset("features/teamdetail.png"),
-					alt: "Team Forecasts",
-				},
-				{
-					type: "image" as const,
-					src: lighthouseAsset("features/portfoliodetail.png"),
-					alt: "Projects Forecasts",
-				},
-				{
-					type: "image" as const,
-					src: lighthouseAsset("features/realitycheck.png"),
-					alt: "Forecast Reality Check: backtested forecasts per percentile and sampling window",
-				},
-			],
-		},
-		{
-			icon: <ListChecks className="h-8 w-8" />,
-			title: "Refine just enough",
-			description:
-				"Stop over-refining - Lighthouse tells you how many Work Items the next Refinement needs, and whether each one fits your SLE",
-			extendedDescription: `Refining too little starves the team. Refining too much is waste: the backlog changes before anyone starts on it. Lighthouse turns "how much should we refine?" into a number.
-
-      Tell Lighthouse which states hold your refinement work and how often you refine. The Refinement tab then shows the range of Work Items your team is likely to pull until the Refinement after the next one, forecast from your own Throughput, and says whether you have too few, enough, or more than you need.
-
-      Sizing happens right in the list: everyone answers one question per Work Item - could we finish this within our SLE? Yes, "Yes, if…" with a condition, or No. Enough Yes votes make a Work Item ready, doubts send it to discussion, and comments keep open questions next to the work. You can vote from the lh CLI and from your AI assistant too.`,
-			callToAction: "",
-			mediaItems: [
-				{
-					type: "image" as const,
-					src: lighthouseAsset("features/refinement.png"),
-					alt: "Refinement tab: how many Work Items the next Refinement needs, with sizing votes per Work Item",
-				},
-				{
-					type: "image" as const,
-					src: lighthouseAsset("features/refinement_comments.png"),
-					alt: "Votes and comments on a Work Item in refinement",
-				},
-			],
-		},
-		{
-			icon: <ArrowRight className="h-8 w-8" />,
-			title: "Integrate with the tools you already use",
-			description:
-				"No need to maintain multiple data sources - Lighthouse connects to Jira, Azure DevOps, Linear, ServiceNow, and CSV",
-			extendedDescription: `You don't want to maintain your data in yet another tool. This is why Lighthouse connects to what you are already using: Jira, Azure DevOps, Linear, ServiceNow, or a simple CSV export.
-
-      Its flexible design lets Lighthouse work with your data source no matter how you set it up. Using custom fields or labels? Have special filters you want to apply? Lighthouse can cope with that. Connect with a Personal Access Token, or use OAuth for Jira and Azure DevOps on the paid tiers. ServiceNow connects at team level and reads whichever ITSM record classes your teams work - incidents, change requests, problems, catalog tasks.`,
-			callToAction: "Your System is not supported? Let us know!",
-			mediaItems: [
-				{
-					type: "image" as const,
-					src: lighthouseAsset("concepts/worktrackingsystem_AzureDevOps.png"),
-					alt: "ALM Connection",
-				},
-				{
-					type: "image" as const,
-					src: lighthouseAsset("concepts/azuredevops_team_wizard.png"),
-					alt: "Query Configuration",
-				},
-			],
-		},
-		{
-			icon: <FileText className="h-8 w-8" />,
-			title: "Full Transparency - Full Control",
-			description:
-				"No need to send your data to some cloud provider in a foreign country - Lighthouse runs fully on your infrastructure and will not send anything to the cloud",
-			extendedDescription: `We don't want our data to go uncontrolled in the Cloud. We assume you are the same. This is why there is no third-party cloud provider involved. Don't trust us? Check out the code yourself - the source is public on GitHub.
-      
-      It's 100% made in Switzerland, where we have many banks that have tight security constraints when it comes to Software. This is why we put effort into making it possible for everyone to be able to run it. All of this applies to the Community and the premium version.`,
-			callToAction:
-				"Struggle to get it approved in your company? Let us know and we will support you!",
-			mediaItems: [
-				{
-					type: "image" as const,
-					src: gitHubImage,
-					alt: "Github",
-				},
-			],
-		},
-	];
-
 	const handlePurchase = async () => {
 		if (
 			!purchaseForm.name ||
@@ -652,7 +504,6 @@ const Lighthouse = () => {
 		review: [
 			{
 				"@type": "Review",
-				datePublished: "2024-01-01",
 				author: {
 					"@type": "Person",
 					name: "Gonzalo Mendez",
@@ -668,7 +519,6 @@ const Lighthouse = () => {
 			},
 			{
 				"@type": "Review",
-				datePublished: "2024-01-01",
 				author: {
 					"@type": "Person",
 					name: "Lorenzo Santoro",
@@ -684,7 +534,6 @@ const Lighthouse = () => {
 			},
 			{
 				"@type": "Review",
-				datePublished: "2024-01-01",
 				author: {
 					"@type": "Person",
 					name: "Agnieszka Reginek",
@@ -700,7 +549,6 @@ const Lighthouse = () => {
 			},
 			{
 				"@type": "Review",
-				datePublished: "2024-01-01",
 				author: {
 					"@type": "Person",
 					name: "Chris Graves",
@@ -716,7 +564,6 @@ const Lighthouse = () => {
 			},
 			{
 				"@type": "Review",
-				datePublished: "2024-01-01",
 				author: {
 					"@type": "Person",
 					name: "Nicolas Brown",
@@ -732,7 +579,6 @@ const Lighthouse = () => {
 			},
 			{
 				"@type": "Review",
-				datePublished: "2024-01-01",
 				author: {
 					"@type": "Person",
 					name: "Gábor Bittera",
@@ -788,49 +634,68 @@ const Lighthouse = () => {
 			/>
 			<Navigation />
 
-			{/* Hero Section */}
-			<section className="pt-32 pb-20 bg-gradient-subtle">
-				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-					<div className="text-center">
-						<div className="flex justify-center mb-8">
-							<img
-								src={lighthouseLogo}
-								alt="Lighthouse Flow Metrics Tool Logo"
-								className="h-20 w-auto"
-								width="80"
-								height="80"
-								loading="eager"
-								fetchPriority="high"
-							/>
-						</div>
-						<h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-							<span className="bg-gradient-primary bg-clip-text text-transparent">
-								Lighthouse
-							</span>
-						</h1>
-						<p className="text-xl text-muted-foreground max-w-4xl mx-auto mb-12">
-							You're being asked when it'll be done. Right now, your honest
-							answer is a guess. Lighthouse turns your real history from Jira,
-							Azure DevOps, Linear, or ServiceNow into forecasts you can defend, from team
-							to portfolio, and shows you where delivery is losing speed so you
-							can fix it.
-						</p>
-
-						{/* Download CTA */}
-						<div className="mb-8">
-							<QuickDownloadBar
-								source="lighthouse-hero"
-								additionalLink={{
-									name: "View Documentation",
-									url: "https://docs.lighthouse.letpeople.work",
-									external: true,
-								}}
-							/>
-						</div>
-						<p className="text-xs text-muted-foreground">
-							No credit card required • Community Version Free forever
-						</p>
+			{/* Hero: what it is, where it runs, what it connects to, and what it
+			    costs, before anything else. Visitors evaluating a tool look for the
+			    price early, so it is one click away. */}
+			<section className="pt-32 pb-14 bg-gradient-subtle">
+				<div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+					<div className="flex items-center justify-center gap-3 mb-6">
+						<img
+							src={lighthouseLogo}
+							alt=""
+							className="h-10 w-auto"
+							width="40"
+							height="40"
+							loading="eager"
+							fetchPriority="high"
+						/>
+						<span className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+							Lighthouse
+						</span>
 					</div>
+					<h1 className="text-4xl md:text-6xl font-bold text-foreground tracking-tight leading-[1.08] mb-6">
+						Forecast delivery from what your teams have finished
+					</h1>
+					<p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-10">
+						Flow metrics and Monte Carlo forecasts for one team or a whole
+						portfolio. Lighthouse runs on your laptop or inside your network and
+						connects to Jira Cloud and Data Center, Azure DevOps, Linear and
+						ServiceNow.
+					</p>
+
+					<div className="mb-6">
+						<QuickDownloadBar
+							source="lighthouse-hero"
+							additionalLink={{
+								name: "View Documentation",
+								url: "https://docs.lighthouse.letpeople.work",
+								external: true,
+							}}
+						/>
+					</div>
+					<div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-semibold mb-4">
+						<button
+							type="button"
+							className="text-primary underline-offset-4 hover:underline"
+							onClick={() => { setTrialSource("lighthouse-hero"); trackEvent("Trial dialog opened", { source: "lighthouse-hero" }); }}
+						>
+							Try Premium free for 30 days
+						</button>
+						<a href="#lighthouse-premium" className="text-primary underline-offset-4 hover:underline">
+							See pricing
+						</a>
+					</div>
+					<p className="text-sm text-muted-foreground">
+						Community is free for up to 3 teams and 1 portfolio. Self-Service is {prices.selfService} a year.
+					</p>
+				</div>
+			</section>
+
+			{/* Situation chips: jump to the part of the page that answers why you
+			    came. Same choices as on the homepage, carried over in ?for=. */}
+			<section aria-label="Jump to what you came for" className="py-8 bg-background border-b border-border">
+				<div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+					<PathChips selected={pathKey} onSelect={chooseJump} />
 				</div>
 			</section>
 
@@ -850,6 +715,8 @@ const Lighthouse = () => {
 					</div>
 				</section>
 			)}
+
+			<LighthouseQuestions value={questionTab} onValueChange={setQuestionTab} />
 
 			{/* Proof: live, unedited setup demo */}
 			<section id="first-forecast" className="py-20 bg-gradient-subtle border-y border-border">
@@ -899,241 +766,9 @@ const Lighthouse = () => {
 				</div>
 			</section>
 
-			{/* Downloads */}
-			<section id="downloads" className="py-20 bg-background">
-				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-					<div className="text-center mb-12">
-						<h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-							Downloads
-						</h2>
-						{latestVersion && (
-							<p className="text-sm font-medium text-primary">
-								Latest: {latestVersion}
-							</p>
-						)}
-					</div>
+			<RealityCheckSection />
 
-					<div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-						{/* Standalone card */}
-						<Card>
-							<CardContent className="p-6">
-								<div className="flex items-center gap-3 mb-3">
-									<div className="w-10 h-10 bg-accent rounded-lg flex items-center justify-center text-primary">
-										<Laptop className="h-5 w-5" />
-									</div>
-									<div>
-										<h3 className="text-lg font-semibold text-foreground">
-											Standalone
-										</h3>
-										<p className="text-xs text-muted-foreground">
-											Desktop app with auto-updates
-										</p>
-									</div>
-								</div>
-								<p className="text-sm text-muted-foreground mb-5">
-									Best for personal use and getting started quickly. Runs as a
-									native desktop application.
-								</p>
-								<div className="space-y-0.5">
-									{standaloneDownloads.map((item) => (
-										<TooltipProvider key={`${item.os}-${item.label}`}>
-											<Tooltip>
-												<TooltipTrigger asChild>
-													<button
-														className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent/60 transition-colors text-left group"
-														onClick={() => {
-															trackDownload({
-																edition: "standalone",
-																platform: item.os,
-																format: item.format,
-																source: "downloads-section",
-															});
-															const url =
-																findAssetByPattern(
-																	releaseAssets,
-																	item.assetPattern!,
-																)?.browser_download_url ??
-																LIGHTHOUSE_GITHUB_RELEASES_URL;
-															window.open(url, "_blank");
-														}}
-													>
-														<span className="flex-shrink-0 w-5 h-5 flex items-center justify-center text-muted-foreground">
-															<OsIcon os={item.os} className="h-4 w-4" />
-														</span>
-														<span className="flex-1 text-sm">{item.label}</span>
-														<Download className="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-													</button>
-												</TooltipTrigger>
-												<TooltipContent side="right">
-													<p className="max-w-xs text-xs">{item.tooltip}</p>
-												</TooltipContent>
-											</Tooltip>
-										</TooltipProvider>
-									))}
-								</div>
-							</CardContent>
-						</Card>
-
-						{/* Server card */}
-						<Card>
-							<CardContent className="p-6">
-								<div className="flex items-center gap-3 mb-3">
-									<div className="w-10 h-10 bg-accent rounded-lg flex items-center justify-center text-primary">
-										<ServerIcon className="h-5 w-5" />
-									</div>
-									<div>
-										<h3 className="text-lg font-semibold text-foreground">
-											Server
-										</h3>
-										<p className="text-xs text-muted-foreground">
-											Centrally hosted for your team
-										</p>
-									</div>
-								</div>
-								<p className="text-sm text-muted-foreground mb-5">
-									Best for hosting Lighthouse centrally for multiple users.
-									Available for Windows, Linux, and as a Docker container.
-								</p>
-								<div className="space-y-0.5">
-									{serverDownloads.map((item) => {
-										const isDocker = item.os === "docker";
-										return (
-											<TooltipProvider key={`${item.os}-${item.label}`}>
-												<Tooltip>
-													<TooltipTrigger asChild>
-														<button
-															className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent/60 transition-colors text-left group"
-															onClick={() => {
-																if (isDocker) {
-																	trackEvent("Docker command copied", {
-																		source: "downloads-section",
-																	});
-																	copyToClipboard(LIGHTHOUSE_DOCKER_COMMAND);
-																} else {
-																	trackDownload({
-																		edition: "server",
-																		platform: item.os,
-																		format: item.format,
-																		source: "downloads-section",
-																	});
-																	const url =
-																		findAssetByPattern(
-																			releaseAssets,
-																			item.assetPattern!,
-																		)?.browser_download_url ??
-																		LIGHTHOUSE_GITHUB_RELEASES_URL;
-																	window.open(url, "_blank");
-																}
-															}}
-														>
-															<span className="flex-shrink-0 w-5 h-5 flex items-center justify-center text-muted-foreground">
-																<OsIcon os={item.os} className="h-4 w-4" />
-															</span>
-															<span className="flex-1 text-sm">
-																{item.label}
-															</span>
-															{isDocker ? (
-																copiedCommand ? (
-																	<Check className="h-3.5 w-3.5 text-green-500" />
-																) : (
-																	<Copy className="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-																)
-															) : (
-																<Download className="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-															)}
-														</button>
-													</TooltipTrigger>
-													<TooltipContent side="right">
-														<p className="max-w-xs text-xs">{item.tooltip}</p>
-													</TooltipContent>
-												</Tooltip>
-											</TooltipProvider>
-										);
-									})}
-								</div>
-							</CardContent>
-						</Card>
-					</div>
-
-					{latestVersion && (
-						<p className="text-center text-xs text-muted-foreground mt-8">
-							<a
-								href={LIGHTHOUSE_GITHUB_RELEASES_URL}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="underline underline-offset-4 hover:text-foreground"
-							>
-								View all releases on GitHub
-							</a>
-						</p>
-					)}
-
-					{/* Free onboarding offer */}
-					<div className="max-w-3xl mx-auto mt-12 rounded-2xl border border-primary/20 bg-accent/40 p-8 text-center">
-						<h3 className="text-xl font-bold text-foreground mb-3">
-							Rather not set it up alone?
-						</h3>
-						<p className="text-muted-foreground leading-relaxed mb-6">
-							We'll onboard you, free of charge. We help you get Lighthouse
-							running in your environment, connect Jira, Azure DevOps, ServiceNow, or
-							Linear, and walk your team through the tool. No catch: an easy
-							start is the best pitch for Lighthouse we have.
-						</p>
-						<a
-							href="mailto:contact@letpeople.work?subject=Lighthouse%20onboarding"
-							onClick={() => trackEvent("Onboarding enquiry", { source: "downloads-section" })}
-							className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold text-sm px-7 py-3.5 rounded-full shadow-soft hover:shadow-medium hover:bg-primary-hover transition-all duration-200 hover:-translate-y-0.5 no-underline"
-						>
-							Get free onboarding
-						</a>
-					</div>
-				</div>
-			</section>
-
-			{/* Overview Section with Screenshots */}
-			<section id="lighthouse-overview" className="py-20 bg-background">
-				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-					<div className="text-center mb-16">
-						<h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-							See Lighthouse in Action
-						</h2>
-						<p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-							See how teams go from defending guessed dates to forecasts they
-							can stand behind
-						</p>
-					</div>
-
-					<Carousel className="w-full max-w-6xl mx-auto">
-						<CarouselContent>
-							{lighthouseFeatures.map((feature) => (
-								<CarouselItem key={feature.title}>
-									<div className="grid lg:grid-cols-2 gap-12 p-6 min-h-[400px]">
-										<div className="flex flex-col justify-center space-y-6">
-											<h3 className="text-2xl font-bold text-foreground">
-												{feature.title}
-											</h3>
-											<p className="text-muted-foreground text-lg">
-												{feature.description}
-											</p>
-										</div>
-
-										<div className="flex flex-col justify-center items-center">
-											<img
-												src={feature.image}
-												alt={feature.alt}
-												className="w-full max-w-lg rounded-lg border border-border shadow-soft"
-												loading="lazy"
-											/>
-										</div>
-									</div>
-								</CarouselItem>
-							))}
-						</CarouselContent>
-						<CarouselPrevious />
-						<CarouselNext />
-					</Carousel>
-				</div>
-			</section>
+			<WhereItRuns onOpenPrivacy={() => { setLegalTab("privacy"); setShowLegalDialog(true); }} />
 
 			{/* Testimonials Section */}
 			<section id="lighthouse-testimonials" className="py-20 bg-background">
@@ -1142,9 +777,6 @@ const Lighthouse = () => {
 				</div>
 			</section>
 
-			{/* See-it-for-yourself: demo / walkthrough / community */}
-			<LighthouseLearnMore />
-
 			{/* Pricing Section — 3 tiers */}
 			<section id="lighthouse-premium" className="py-24 md:py-32 bg-gradient-subtle">
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1152,13 +784,11 @@ const Lighthouse = () => {
 						<span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-4 block">
 							Pricing
 						</span>
-						<h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.05] mb-6">
-							Three editions.
-							<br />
-							<span className="text-primary font-light">Same product. Different access.</span>
+						<h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight leading-[1.08] mb-6">
+							Free to start, paid when you outgrow it
 						</h2>
 						<p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-							Lighthouse stays source available and self-hosted across every edition.<br />Paid tiers unlock unlimited usage and choose how much of us you want alongside it.
+							Community is free for up to 3 teams and 1 portfolio. Self-Service removes the limits and adds sign-in, OAuth and the paid planning features. Enterprise adds priority support. Every edition is self-hosted, with the source on GitHub.
 						</p>
 					</div>
 
@@ -1192,7 +822,7 @@ const Lighthouse = () => {
 						{/* Self-Service — Recommended */}
 						<div className="relative flex flex-col rounded-3xl border-2 border-primary/50 bg-background p-8 md:p-10 shadow-medium md:scale-[1.02] md:-translate-y-2">
 							<span className="absolute -top-3 right-6 text-[11px] font-bold uppercase tracking-[0.15em] bg-primary text-primary-foreground px-3 py-1 rounded-full shadow-soft">
-								Most popular
+								Recommended
 							</span>
 							<div className="text-xs font-semibold uppercase tracking-[0.15em] text-primary mb-3">Self-Service</div>
 							<div className="flex items-baseline gap-2 mb-1">
@@ -1259,17 +889,23 @@ const Lighthouse = () => {
 					{/* No lock-in reassurance */}
 					<p className="text-center text-sm md:text-base text-muted-foreground max-w-2xl mx-auto mb-16">
 						Self-hosted, with the source public. If you ever stop paying, your data and the tool stay with you.
-						And guided onboarding is free for every edition, not just Enterprise: we help you get set up, no strings attached.
+						Help with setup is free for every edition, not only Enterprise.
 					</p>
 
-					{/* Full feature comparison table */}
-					<div className="bg-background rounded-2xl p-8 shadow-soft border border-border">
-						<h3 className="text-2xl font-bold text-foreground mb-2 text-center">
-							Feature comparison
-						</h3>
-						<p className="text-sm text-muted-foreground text-center mb-8">
-							Tiers split on access and support, not features. Paid tiers share the same product.
-						</p>
+					{/* Full feature comparison: collapsed by default, because most
+					    visitors decide on the three cards above. A native <details>
+					    keeps the table in the page for search engines. */}
+					<details id="feature-comparison" className="group bg-background rounded-2xl p-6 md:p-8 shadow-soft border border-border">
+						<summary className="flex cursor-pointer list-none items-center justify-between gap-4 [&::-webkit-details-marker]:hidden">
+							<span>
+								<span className="block text-xl md:text-2xl font-bold text-foreground">Compare all features</span>
+								<span className="block text-sm text-muted-foreground mt-1">
+									The flow metrics and forecasts are in every edition. Paid editions add the features marked below.
+								</span>
+							</span>
+							<ChevronDown className="h-6 w-6 shrink-0 text-primary transition-transform group-open:rotate-180" />
+						</summary>
+						<div className="mt-8">
 
 						<div className="overflow-x-auto">
 							<table className="w-full">
@@ -1491,7 +1127,8 @@ const Lighthouse = () => {
 								<span className="font-semibold text-foreground">Note:</span> New paid-tier features may be introduced for Self-Service and Enterprise first, before being made available in the Community edition. Community customers stay on the same feature line and just get there a release or two later.
 							</p>
 						</div>
-					</div>
+						</div>
+					</details>
 				</div>
 
 					{/* Post-comparison trial CTA: whoever read this far is evaluating.
@@ -1508,8 +1145,227 @@ const Lighthouse = () => {
 					</div>
 			</section>
 
+			{/* Pitch deck right after pricing: the person evaluating often has to convince someone who decides. */}
+			<section id="lighthouse-convince" className="py-12 bg-gradient-card">
+				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+					<div className="text-center mb-6">
+						<h3 className="text-2xl font-semibold text-foreground">
+							Need to convince someone who decides?
+						</h3>
+						<p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
+							A short deck for your manager or steering committee: what
+							Lighthouse does, what it costs, and how it runs on your
+							infrastructure.
+						</p>
+						<div className="mt-4">
+							<a
+								href="/Lighthouse_Pitch_Deck.pdf"
+									onClick={() => trackDownload({ edition: "pitch-deck", format: "pdf", source: "convince" })}
+										data-skip-autotrack
+								className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-white hover:opacity-90 transition-opacity"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<Download className="h-4 w-4" />
+								Pitch Deck (PDF)
+							</a>
+						</div>
+					</div>
+				</div>
+			</section>
+
 			{/* FAQ — objection-handling, placed right before the final license CTA */}
 			<FAQSection />
+
+			{/* Downloads */}
+			<section id="downloads" className="py-20 bg-background">
+				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+					<div className="text-center mb-12">
+						<h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+							Downloads
+						</h2>
+						{latestVersion && (
+							<p className="text-sm font-medium text-primary">
+								Latest: {latestVersion}
+							</p>
+						)}
+					</div>
+
+					<div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+						{/* Standalone card */}
+						<Card>
+							<CardContent className="p-6">
+								<div className="flex items-center gap-3 mb-3">
+									<div className="w-10 h-10 bg-accent rounded-lg flex items-center justify-center text-primary">
+										<Laptop className="h-5 w-5" />
+									</div>
+									<div>
+										<h3 className="text-lg font-semibold text-foreground">
+											Standalone
+										</h3>
+										<p className="text-xs text-muted-foreground">
+											Desktop app with auto-updates
+										</p>
+									</div>
+								</div>
+								<p className="text-sm text-muted-foreground mb-5">
+									Best for personal use and getting started quickly. Runs as a
+									native desktop application.
+								</p>
+								<div className="space-y-0.5">
+									{standaloneDownloads.map((item) => (
+										<TooltipProvider key={`${item.os}-${item.label}`}>
+											<Tooltip>
+												<TooltipTrigger asChild>
+													<button
+														className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent/60 transition-colors text-left group"
+														onClick={() => {
+															trackDownload({
+																edition: "standalone",
+																platform: item.os,
+																format: item.format,
+																source: "downloads-section",
+															});
+															const url =
+																findAssetByPattern(
+																	releaseAssets,
+																	item.assetPattern!,
+																)?.browser_download_url ??
+																LIGHTHOUSE_GITHUB_RELEASES_URL;
+															window.open(url, "_blank");
+														}}
+													>
+														<span className="flex-shrink-0 w-5 h-5 flex items-center justify-center text-muted-foreground">
+															<OsIcon os={item.os} className="h-4 w-4" />
+														</span>
+														<span className="flex-1 text-sm">{item.label}</span>
+														<Download className="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+													</button>
+												</TooltipTrigger>
+												<TooltipContent side="right">
+													<p className="max-w-xs text-xs">{item.tooltip}</p>
+												</TooltipContent>
+											</Tooltip>
+										</TooltipProvider>
+									))}
+								</div>
+							</CardContent>
+						</Card>
+
+						{/* Server card */}
+						<Card>
+							<CardContent className="p-6">
+								<div className="flex items-center gap-3 mb-3">
+									<div className="w-10 h-10 bg-accent rounded-lg flex items-center justify-center text-primary">
+										<ServerIcon className="h-5 w-5" />
+									</div>
+									<div>
+										<h3 className="text-lg font-semibold text-foreground">
+											Server
+										</h3>
+										<p className="text-xs text-muted-foreground">
+											Centrally hosted for your team
+										</p>
+									</div>
+								</div>
+								<p className="text-sm text-muted-foreground mb-5">
+									Best for hosting Lighthouse centrally for multiple users.
+									Available for Windows, Linux, and as a Docker container.
+								</p>
+								<div className="space-y-0.5">
+									{serverDownloads.map((item) => {
+										const isDocker = item.os === "docker";
+										return (
+											<TooltipProvider key={`${item.os}-${item.label}`}>
+												<Tooltip>
+													<TooltipTrigger asChild>
+														<button
+															className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent/60 transition-colors text-left group"
+															onClick={() => {
+																if (isDocker) {
+																	trackEvent("Docker command copied", {
+																		source: "downloads-section",
+																	});
+																	copyToClipboard(LIGHTHOUSE_DOCKER_COMMAND);
+																} else {
+																	trackDownload({
+																		edition: "server",
+																		platform: item.os,
+																		format: item.format,
+																		source: "downloads-section",
+																	});
+																	const url =
+																		findAssetByPattern(
+																			releaseAssets,
+																			item.assetPattern!,
+																		)?.browser_download_url ??
+																		LIGHTHOUSE_GITHUB_RELEASES_URL;
+																	window.open(url, "_blank");
+																}
+															}}
+														>
+															<span className="flex-shrink-0 w-5 h-5 flex items-center justify-center text-muted-foreground">
+																<OsIcon os={item.os} className="h-4 w-4" />
+															</span>
+															<span className="flex-1 text-sm">
+																{item.label}
+															</span>
+															{isDocker ? (
+																copiedCommand ? (
+																	<Check className="h-3.5 w-3.5 text-green-500" />
+																) : (
+																	<Copy className="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+																)
+															) : (
+																<Download className="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+															)}
+														</button>
+													</TooltipTrigger>
+													<TooltipContent side="right">
+														<p className="max-w-xs text-xs">{item.tooltip}</p>
+													</TooltipContent>
+												</Tooltip>
+											</TooltipProvider>
+										);
+									})}
+								</div>
+							</CardContent>
+						</Card>
+					</div>
+
+					{latestVersion && (
+						<p className="text-center text-xs text-muted-foreground mt-8">
+							<a
+								href={LIGHTHOUSE_GITHUB_RELEASES_URL}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="underline underline-offset-4 hover:text-foreground"
+							>
+								View all releases on GitHub
+							</a>
+						</p>
+					)}
+
+					{/* Free onboarding offer */}
+					<div className="max-w-3xl mx-auto mt-12 rounded-2xl border border-primary/20 bg-accent/40 p-8 text-center">
+						<h3 className="text-xl font-bold text-foreground mb-3">
+							Want help setting it up?
+						</h3>
+						<p className="text-muted-foreground leading-relaxed mb-6">
+							We'll onboard you, free of charge. We help you get Lighthouse
+							running in your environment, connect Jira, Azure DevOps, ServiceNow, or
+							Linear, and walk your team through the tool.
+						</p>
+						<a
+							href="mailto:contact@letpeople.work?subject=Lighthouse%20onboarding"
+							onClick={() => trackEvent("Onboarding enquiry", { source: "downloads-section" })}
+							className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold text-sm px-7 py-3.5 rounded-full shadow-soft hover:shadow-medium hover:bg-primary-hover transition-all duration-200 hover:-translate-y-0.5 no-underline"
+						>
+							Get free onboarding
+						</a>
+					</div>
+				</div>
+			</section>
 
 			{/* License Purchase Section */}
 			<section id="lighthouse-license" className="py-24 md:py-32 bg-background">
@@ -1518,13 +1374,11 @@ const Lighthouse = () => {
 						<span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-4 block">
 							Get a license
 						</span>
-						<h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.05] mb-6">
-							Self-Service today.
-							<br />
-							<span className="text-primary font-light">Enterprise when you're ready.</span>
+						<h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight leading-[1.08] mb-6">
+							Buy Self-Service, or talk to us about Enterprise
 						</h2>
 						<p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-							Pick the path that fits.<br />You can move up later, just write to us.
+							You can move from one edition to the other later. Just write to us.
 						</p>
 						<p className="text-sm text-muted-foreground/80 max-w-2xl mx-auto mt-4">
 							Self-hosted, with the source public. If you ever stop paying, your data and the tool stay with you.
@@ -1607,7 +1461,7 @@ const Lighthouse = () => {
 												<div className="mt-3 pt-3 border-t border-border">
 													<p className="text-xs mb-2">
 														<button
-															onClick={() => setShowLegalDialog(true)}
+															onClick={() => { setLegalTab("terms"); setShowLegalDialog(true); }}
 															className="text-primary hover:underline"
 														>
 															View full Terms & Conditions
@@ -1800,34 +1654,8 @@ const Lighthouse = () => {
 				</div>
 			</section>
 
-			{/* Small 'Convince Stakeholders' section - added to provide a downloadable pitch deck */}
-			<section id="lighthouse-convince" className="py-12 bg-gradient-card">
-				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-					<div className="text-center mb-6">
-						<h3 className="text-2xl font-semibold text-foreground">
-							Need something to convince people in your company?
-						</h3>
-						<p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
-							If you need a short, professional deck to share with stakeholders
-							and decision-makers, download our pitch deck and use it in your
-							next meeting.
-						</p>
-						<div className="mt-4">
-							<a
-								href="/Lighthouse_Pitch_Deck.pdf"
-									onClick={() => trackDownload({ edition: "pitch-deck", format: "pdf", source: "convince" })}
-										data-skip-autotrack
-								className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-white hover:opacity-90 transition-opacity"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								<Download className="h-4 w-4" />
-								Pitch Deck (PDF)
-							</a>
-						</div>
-					</div>
-				</div>
-			</section>
+			{/* See-it-for-yourself: demo / walkthrough / community */}
+			<LighthouseLearnMore />
 
 			{/* AI Integration Section */}
 			<section id="lighthouse-ai" className="py-20 bg-gradient-hero">
@@ -1837,7 +1665,7 @@ const Lighthouse = () => {
 							AI Integration
 						</span>
 						<h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-6">
-							Connect Your AI Assistant
+							Connect your AI assistant
 						</h2>
 						<p className="text-xl text-primary-foreground/80 max-w-3xl mx-auto leading-relaxed">
 							Lighthouse exposes your flow data through three integration points.
@@ -2012,103 +1840,6 @@ const Lighthouse = () => {
 			{/* Recently shipped / what's new */}
 			<LighthouseWhatsNew />
 
-			{/* Detailed Features Section */}
-			<section id="lighthouse-features" className="py-20 bg-gradient-subtle">
-				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-					<div className="text-center mb-16">
-						<h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-							Deep Dive into Key Features
-						</h2>
-						<p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-							Explore what makes Lighthouse the leading choice for Project
-							Managers, Internal Coaches, and external Consultants.
-						</p>
-						<p className="text-sm text-muted-foreground mt-4">
-							Find a full reference of all features in the{" "}
-							<a
-								href="https://docs.lighthouse.letpeople.work"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="text-primary hover:underline"
-							>
-								Lighthouse documentation
-							</a>
-						</p>
-					</div>
-
-					<div className="space-y-16">
-						{detailedFeatures.map((feature, index) => (
-							<div
-								key={feature.title}
-								className={`grid lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? "lg:grid-flow-col-dense" : ""}`}
-							>
-								<div className={index % 2 === 1 ? "lg:col-start-2" : ""}>
-									<div className="flex items-center space-x-4 mb-6">
-										<div className="w-16 h-16 bg-accent rounded-lg flex items-center justify-center text-primary">
-											{feature.icon}
-										</div>
-										<div>
-											<h3 className="text-2xl font-bold text-foreground">
-												{feature.title}
-											</h3>
-											<p className="text-muted-foreground">
-												{feature.description}
-											</p>
-										</div>
-									</div>
-
-									{/* Extended description - space for content to be added later */}
-									{feature.extendedDescription && (
-										<div className="mt-6">
-											<p className="text-muted-foreground leading-relaxed">
-												{feature.extendedDescription}
-											</p>
-										</div>
-									)}
-
-									{/* Call to Action Hint */}
-									{feature.callToAction && (
-										<div className="mt-6 p-4 bg-accent/20 border-l-4 border-muted-foreground/30 rounded-r-lg">
-											<p className="text-muted-foreground text-sm font-medium">
-												💡 {feature.callToAction}
-											</p>
-										</div>
-									)}
-								</div>
-
-								<div
-									className={
-										index % 2 === 1 ? "lg:col-start-1 lg:row-start-1" : ""
-									}
-								>
-									{/* Media Carousel - to be filled with content later */}
-									{feature.mediaItems.length > 0 ? (
-										<MediaCarousel
-											mediaItems={feature.mediaItems}
-											className="w-full h-80"
-											enableModal={true}
-										/>
-									) : (
-										<Card className="border-0 shadow-soft h-80">
-											<CardContent className="p-8 h-full flex items-center justify-center">
-												<div className="text-center text-muted-foreground">
-													<p>
-														Media carousel placeholder - content to be added
-														later
-													</p>
-												</div>
-											</CardContent>
-										</Card>
-									)}
-								</div>
-							</div>
-						))}
-					</div>
-				</div>
-			</section>
-
-			<SimpleFooter />
-
 			{/* Payment Result Dialog */}
 			<Dialog
 				open={paymentResult.show}
@@ -2189,7 +1920,7 @@ const Lighthouse = () => {
 			<LegalInfoDialog
 				open={showLegalDialog}
 				onOpenChange={setShowLegalDialog}
-				defaultTab="terms"
+				defaultTab={legalTab}
 			/>
 		</div>
 	);

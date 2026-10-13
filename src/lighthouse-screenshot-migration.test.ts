@@ -9,6 +9,7 @@ const readSource = (relativePath: string) =>
 
 const lighthousePage = () => readSource("pages/Lighthouse.tsx");
 const lighthouseSection = () => readSource("components/LighthouseSection.tsx");
+const lighthouseQuestions = () => readSource("features/lighthouse-page/LighthouseQuestions.tsx");
 
 const MIGRATED_BUNDLED_IMPORTS = [
   "Metrics_Team_1.png",
@@ -35,22 +36,24 @@ describe("Lighthouse marketing screenshots are served from the jsDelivr CDN", ()
     );
   });
 
-  it("Lighthouse.tsx serves the six migrated marketing slots via lighthouseAsset", () => {
-    const source = lighthousePage();
-    expect(source).toContain(
-      'lighthouseAsset("features/metrics/metricsoverview.png")',
-    );
-    expect(source).toContain(
-      'lighthouseAsset("features/metrics/portfoliometricsoverview.png")',
-    );
-    expect(source).toContain('lighthouseAsset("features/teamdetail.png")');
-    expect(source).toContain('lighthouseAsset("features/portfoliodetail.png")');
-    expect(source).toContain(
-      'lighthouseAsset("concepts/worktrackingsystem_AzureDevOps.png")',
-    );
-    expect(source).toContain(
-      'lighthouseAsset("concepts/azuredevops_team_wizard.png")',
-    );
+  // Since October 2026 the /lighthouse product screenshots live in the
+  // "What it answers" tabs, which replaced the carousel and the deep dive.
+  it("the /lighthouse question tabs serve their screenshots via lighthouseAsset", () => {
+    const source = lighthouseQuestions();
+    for (const asset of [
+      "features/teamdetail.png",
+      "features/metrics/metricsoverview.png",
+      "features/deliveryTimeline.png",
+      "features/portfoliodetail.png",
+      "features/refinement.png",
+    ]) {
+      expect(source).toContain(`lighthouseAsset("${asset}")`);
+    }
+  });
+
+  it("no /lighthouse source bundles a product screenshot", () => {
+    expect(lighthousePage()).not.toContain("@/assets/screenshots/");
+    expect(lighthouseQuestions()).not.toContain("@/assets/screenshots/");
   });
 
   it("LighthouseSection.tsx serves the team detail slot via lighthouseAsset", () => {
@@ -61,12 +64,6 @@ describe("Lighthouse marketing screenshots are served from the jsDelivr CDN", ()
 });
 
 describe("non-product surfaces stay website-hosted (DDD-9 / DDD-5 exclusions)", () => {
-  it("Lighthouse.tsx keeps GitHub.png as a bundled asset", () => {
-    expect(lighthousePage()).toContain(
-      'import gitHubImage from "@/assets/screenshots/GitHub.png"',
-    );
-  });
-
   it("Lighthouse.tsx keeps the OG/SEO image on the same origin, not the CDN", () => {
     const source = lighthousePage();
     expect(source).toContain("https://letpeople.work/lighthouse-forecast.png");

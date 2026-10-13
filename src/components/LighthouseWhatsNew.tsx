@@ -236,7 +236,7 @@ export default function LighthouseWhatsNew({ now = Date.now }: LighthouseWhatsNe
               Recently shipped
             </span>
             <h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight leading-[1.05]">
-              Lighthouse keeps moving.
+              Lighthouse keeps moving
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mt-5">
               A steady stream of releases, shaped by what practitioners actually ask for.

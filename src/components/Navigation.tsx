@@ -22,6 +22,7 @@ const Navigation = () => {
     { name: "Downloads", href: "#downloads" },
     { name: "Free 30-day trial", href: "#lighthouse-trial" },
     { name: "See it in 10 minutes", href: "#first-forecast" },
+    { name: "Where it runs", href: "#where-it-runs" },
     { name: "Pricing", href: "#lighthouse-premium" },
     { name: "Get a License", href: "#lighthouse-license" },
     { name: "FAQ", href: "#faq" },
