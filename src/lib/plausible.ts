@@ -32,17 +32,38 @@ export const canonicalUrl = (raw: string): string => {
   }
 };
 
-init({
-  domain: "letpeople.work",
-  // Pageviews follow the SPA's history changes on their own, and the
-  // engagement events (scroll depth, time on page) come with them.
-  autoCapturePageviews: true,
-  // Outbound links and file downloads are tracked by the delegated listener
-  // below, which keeps our event names and never blocks target="_blank".
-  outboundLinks: false,
-  fileDownloads: false,
-  transformRequest: (payload) => ({ ...payload, u: canonicalUrl(payload.u) }),
-});
+// Analytics must never be able to break the site. The tracker measures
+// scroll depth with ResizeObserver, so it only starts where that exists (every
+// current browser; not jsdom), and any failure leaves tracking switched off.
+let ready = false;
+try {
+  if (typeof window !== "undefined" && "ResizeObserver" in window) {
+    init({
+      domain: "letpeople.work",
+      // Pageviews follow the SPA's history changes on their own, and the
+      // engagement events (scroll depth, time on page) come with them.
+      autoCapturePageviews: true,
+      // Outbound links and file downloads are tracked by the delegated
+      // listener below, which keeps our event names and never blocks
+      // target="_blank".
+      outboundLinks: false,
+      fileDownloads: false,
+      transformRequest: (payload) => ({ ...payload, u: canonicalUrl(payload.u) }),
+    });
+    ready = true;
+  }
+} catch {
+  ready = false;
+}
+
+const send = (name: string, options: Parameters<typeof track>[1]) => {
+  if (!ready) return;
+  try {
+    track(name, options);
+  } catch {
+    // Swallowed on purpose: see above.
+  }
+};
 
 const toProps = (props?: Record<string, string | number | boolean>) =>
   props
@@ -54,7 +75,7 @@ export function trackEvent(
   props?: Record<string, string | number | boolean>,
   options?: { interactive?: boolean },
 ) {
-  track(name, { props: toProps(props), interactive: options?.interactive });
+  send(name, { props: toProps(props), interactive: options?.interactive });
 }
 
 // Values are lowercased so that "Windows" and "windows" stop showing up as two
@@ -73,7 +94,7 @@ export function trackDownload(data: {
   if (data.platform) props.platform = norm(data.platform);
   if (data.format) props.format = norm(data.format).replace(/^\./, "");
   if (data.source) props.source = data.source;
-  track("Download", { props });
+  send("Download", { props });
 }
 
 // Outbound links, mailto CTAs and raw file links.

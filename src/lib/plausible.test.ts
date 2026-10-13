@@ -1,6 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const { init, track } = vi.hoisted(() => ({ init: vi.fn(), track: vi.fn() }));
+const { init, track } = vi.hoisted(() => {
+  // jsdom has no ResizeObserver; the wrapper only starts the tracker where it exists.
+  (globalThis as { ResizeObserver?: unknown }).ResizeObserver = class {
+    observe() {}
+    disconnect() {}
+  };
+  return { init: vi.fn(), track: vi.fn() };
+});
 vi.mock("@plausible-analytics/tracker", () => ({ init, track }));
 
 import { canonicalUrl, trackDownload, trackEvent } from "./plausible";
@@ -51,5 +58,20 @@ describe("analytics wrapper", () => {
     expect(track).toHaveBeenCalledWith("Download", {
       props: { edition: "standalone", platform: "windows", format: "exe", source: "hero" },
     });
+  });
+});
+
+describe("analytics wrapper without a browser that supports it", () => {
+  it("does not start the tracker and never throws", async () => {
+    vi.resetModules();
+    const saved = (globalThis as { ResizeObserver?: unknown }).ResizeObserver;
+    delete (globalThis as { ResizeObserver?: unknown }).ResizeObserver;
+    init.mockClear();
+    track.mockClear();
+    const mod = await import("./plausible");
+    expect(init).not.toHaveBeenCalled();
+    expect(() => mod.trackEvent("Anything")).not.toThrow();
+    expect(track).not.toHaveBeenCalled();
+    (globalThis as { ResizeObserver?: unknown }).ResizeObserver = saved;
   });
 });
