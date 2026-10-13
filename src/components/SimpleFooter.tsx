@@ -4,8 +4,14 @@ import logo from "@/assets/LPW_Banner_White.png";
 
 const SimpleFooter = () => {
   const currentYear = new Date().getFullYear();
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<"impressum" | "privacy" | "terms">("impressum");
+  // A link like letpeople.work/?legal=privacy opens the dialog on that tab.
+  // The old /privacy-policy URL redirects there (public/privacy-policy/).
+  const legalFromUrl = (() => {
+    const value = new URLSearchParams(window.location.search).get("legal");
+    return value === "impressum" || value === "privacy" || value === "terms" ? value : undefined;
+  })();
+  const [dialogOpen, setDialogOpen] = useState(legalFromUrl !== undefined);
+  const [activeTab, setActiveTab] = useState<"impressum" | "privacy" | "terms">(legalFromUrl ?? "impressum");
 
   const openDialog = (tab: "impressum" | "privacy" | "terms") => {
     setActiveTab(tab);
