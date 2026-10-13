@@ -7,6 +7,7 @@ import { trackEvent } from "@/lib/plausible";
 import FilmLightbox from "@/features/film/components/FilmLightbox";
 import { LIGHTHOUSE_FILM, isFilmAvailable } from "@/features/film/lighthouseFilm";
 import PathChips from "@/features/paths/PathChips";
+import WhereItRunsDiagram from "@/features/lighthouse-page/WhereItRunsDiagram";
 import {
   findPath,
   lighthouseHref,
@@ -43,6 +44,7 @@ const Hero = () => {
 
   const path = findPath(pathKey);
   const image = path?.image ?? DEFAULT_IMAGE;
+  const showDiagram = path?.visual === "where-it-runs";
 
   const choosePath = (key: PathKey | undefined) => {
     setPathKey(key);
@@ -72,7 +74,12 @@ const Hero = () => {
             When will it be done?
           </h1>
 
-          <div className="max-w-2xl mx-auto mb-10 min-h-[5.5rem]" aria-live="polite">
+          {/* Directly under the question and above the text it changes, like
+              tabs above their panel: the change shows up right below the tap,
+              and nothing above the chips moves when the text gets longer. */}
+          <PathChips selected={pathKey} onSelect={choosePath} className="mb-7" />
+
+          <div className="max-w-2xl mx-auto mb-9 min-h-[7.5rem]" aria-live="polite">
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed" data-testid="hero-subhead">
               {path?.subhead ?? DEFAULT_SUBHEAD}
             </p>
@@ -101,18 +108,16 @@ const Hero = () => {
             </Button>
           </div>
 
-          <p className="text-sm text-muted-foreground mb-10">
+          <p className="text-sm text-muted-foreground mb-12">
             Free for up to 3 teams. The Premium trial needs no signup and no credit card.
           </p>
-
-          <PathChips selected={pathKey} onSelect={choosePath} className="mb-12" />
         </div>
 
         {/* The product, cropped at the bottom so the page reads on. With the
             film published, the shot doubles as its poster: one click, a
             lightbox, sound on. */}
         <div className="relative mx-auto max-w-5xl">
-          {isFilmAvailable() && (
+          {isFilmAvailable() && !showDiagram && (
             <button
               type="button"
               onClick={openFilm}
@@ -126,19 +131,25 @@ const Hero = () => {
               </span>
             </button>
           )}
-          <div className="rounded-t-2xl border border-b-0 border-border bg-card shadow-medium overflow-hidden">
-            <img
-              key={image.src}
-              src={image.src}
-              alt={image.alt}
-              className="w-full h-auto block"
-              width={image.width}
-              height={image.height}
-              loading="eager"
-              fetchPriority="high"
-              data-testid="hero-product-shot"
-            />
-          </div>
+          {showDiagram ? (
+            <div className="rounded-t-2xl border border-b-0 border-border bg-card shadow-medium p-5 md:p-8 pb-16 md:pb-20 text-left">
+              <WhereItRunsDiagram layout="wide" />
+            </div>
+          ) : (
+            <div className="rounded-t-2xl border border-b-0 border-border bg-card shadow-medium overflow-hidden">
+              <img
+                key={image.src}
+                src={image.src}
+                alt={image.alt}
+                className="w-full h-auto block"
+                width={image.width}
+                height={image.height}
+                loading="eager"
+                fetchPriority="high"
+                data-testid="hero-product-shot"
+              />
+            </div>
+          )}
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent" />
         </div>
       </div>

@@ -15,7 +15,7 @@ type Question = {
 // screenshots carry the explanation, the full feature reference lives in the
 // docs. Screenshots come from the Lighthouse docs on the CDN, so they follow
 // the current UI without a website release.
-export const QUESTIONS: Question[] = [
+const QUESTIONS: Question[] = [
   {
     key: "when",
     question: "When will it be done?",

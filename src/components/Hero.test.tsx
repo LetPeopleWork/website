@@ -42,6 +42,13 @@ describe("homepage hero", () => {
     expect(trackEvent).toHaveBeenCalledWith("Path chosen", { path: "security", source: "home-hero" });
   });
 
+  it("shows where Lighthouse runs instead of a screenshot for the hosting question", async () => {
+    renderHero();
+    await userEvent.click(screen.getByRole("button", { name: "I need to check hosting and security" }));
+    expect(screen.getByTestId("where-it-runs-diagram")).toBeInTheDocument();
+    expect(screen.queryByTestId("hero-product-shot")).toBeNull();
+  });
+
   it("goes back to the default when the chosen chip is pressed again", async () => {
     renderHero();
     const chip = screen.getByRole("button", { name: "I look after several teams" });

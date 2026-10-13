@@ -23,7 +23,9 @@ export type Path = {
   /** Replaces the homepage hero subhead while the chip is selected. */
   subhead: string;
   /** Replaces the homepage hero screenshot. */
-  image: { src: string; alt: string; width: number; height: number };
+  image?: { src: string; alt: string; width: number; height: number };
+  /** Shows a diagram instead of a screenshot, where a picture of the UI says less. */
+  visual?: "where-it-runs";
   /** Where on /lighthouse this situation is answered. */
   anchor: string;
   /** Which "What Lighthouse answers" tab opens first on /lighthouse. */
@@ -83,12 +85,7 @@ export const PATHS: readonly Path[] = [
     chip: "I need to check hosting and security",
     subhead:
       "Lighthouse runs on your own laptop, VM, Docker or Kubernetes. It connects to Jira Cloud and Data Center, Azure DevOps, Linear and ServiceNow directly, and the source is public on GitHub.",
-    image: {
-      src: "/lighthouse-forecast.png",
-      alt: "Lighthouse team forecast: when will 10 work items be done, four dates with their probabilities, and a 72% likelihood of making the target date",
-      width: 1920,
-      height: 1080,
-    },
+    visual: "where-it-runs",
     anchor: "where-it-runs",
     tab: "when",
     linkLabel: "See where it runs",
