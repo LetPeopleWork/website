@@ -114,8 +114,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="LetPeopleWork - Lighthouse: flow metrics and forecasts you can defend"
-        description="Lighthouse turns your real delivery data into flow metrics and Monte Carlo forecasts you can defend. Source available, self-hosted, free to start, and a 30-day Self-Service trial with no signup and no credit card. Also from LetPeopleWork: Sizing Poker."
+        title="LetPeopleWork - Lighthouse flow metrics and delivery forecasts"
+        description="Lighthouse forecasts when work will be done from what your teams have already finished in Jira, Azure DevOps, Linear or ServiceNow. Self-hosted, source available, free for up to 3 teams, with a 30-day Premium trial that needs no signup. Also from LetPeopleWork: Sizing Poker."
         keywords="flow metrics, delivery forecasting, lighthouse tool, flow metrics tool, Monte Carlo forecasting, predictability, throughput, cycle time, lead time, sizing poker, right sizing, no estimates, backlog refinement"
         structuredData={structuredData}
         breadcrumbs={[

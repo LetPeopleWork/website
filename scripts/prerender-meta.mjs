@@ -29,12 +29,12 @@ const seoRoutes = [
     path: "lighthouse",
     title: "Lighthouse - Flow Metrics & Forecasting Tool | LetPeopleWork",
     description:
-      "Self-hosted, open-source flow metrics and probabilistic forecasting. Connects to Jira, Azure DevOps, Linear, and ServiceNow. Turn your real delivery history into forecasts you can defend, from team to portfolio.",
+      "Self-hosted, source-available flow metrics and Monte Carlo forecasting. Connects to Jira Cloud and Data Center, Azure DevOps, Linear and ServiceNow. Forecast when work will be done from your teams' own history, from one team to a portfolio.",
     noscript: `
       <h1>Lighthouse by LetPeopleWork</h1>
-      <p>Lighthouse is an open-source, self-hosted flow metrics and Monte Carlo forecasting tool for software delivery teams. It is a free, self-hosted alternative to ActionableAgile and Nave.</p>
-      <p>It connects to Jira, Azure DevOps, and Linear, turns a team's real delivery history into probabilistic delivery forecasts, and shows where the delivery system is losing speed, including blocked work and predictability trends over time. AI assistants can query the flow data directly over MCP (Model Context Protocol). It runs as a native desktop app (Windows, macOS, Linux), as a Docker container, or on Kubernetes via an official Helm chart.</p>
-      <p>Editions, all self-hosted and open source: Community is free forever (up to 3 teams and 1 portfolio). Self-Service is CHF 2,000 per year, with unlimited teams and portfolios. Enterprise is CHF 10,000 per year with prioritised support. Your data always stays on your own infrastructure.</p>
+      <p>Lighthouse is a self-hosted, source-available flow metrics and Monte Carlo forecasting tool for software delivery teams. It is a self-hosted alternative to ActionableAgile and Nave, free for up to 3 teams.</p>
+      <p>It connects to Jira Cloud and Data Center, Azure DevOps, Linear and ServiceNow, turns a team's real delivery history into probabilistic delivery forecasts, and shows where the delivery system is losing speed, including blocked work and predictability trends over time. AI assistants can query the flow data directly over MCP (Model Context Protocol). It runs as a native desktop app (Windows, macOS, Linux), as a Docker container, or on Kubernetes via an official Helm chart.</p>
+      <p>Editions, all self-hosted with the source public: Community is free forever (up to 3 teams and 1 portfolio). Self-Service is CHF 2,000 per year, with unlimited teams and portfolios. Enterprise is CHF 10,000 per year with prioritised support. Your data always stays on your own infrastructure.</p>
       <p>A comparison with ActionableAgile and Nave is at <a href="https://letpeople.work/compare/">https://letpeople.work/compare/</a>, and a machine-readable summary at https://letpeople.work/llms.txt</p>
     `,
   },
@@ -61,7 +61,7 @@ const seoRoutes = [
     noscript: `
       <h1>Delivery Predictability Assessment</h1>
       <p>A free, honest, five-minute read on how predictable your delivery really is, across what you measure and how you forecast. Six questions, one clear score, and a concrete next step. No email required.</p>
-      <p>The assessment is grounded in flow metrics and probabilistic forecasting, the same foundations behind Lighthouse, LetPeopleWork's open-source flow metrics and forecasting tool: https://letpeople.work/lighthouse</p>
+      <p>The assessment is grounded in flow metrics and probabilistic forecasting, the same foundations behind Lighthouse, LetPeopleWork's source-available flow metrics and forecasting tool: https://letpeople.work/lighthouse</p>
     `,
   },
   {

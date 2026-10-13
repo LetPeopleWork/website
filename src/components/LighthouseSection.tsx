@@ -48,7 +48,7 @@ function Step({ step, i }: { step: (typeof steps)[number]; i: number }) {
         <h3 className="text-xl md:text-2xl font-bold text-foreground tracking-tight leading-tight mb-2">
           {step.title}
         </h3>
-        <p className="text-base text-muted-foreground leading-relaxed font-light">
+        <p className="text-base text-muted-foreground leading-relaxed">
           {step.description}
         </p>
       </div>
@@ -95,7 +95,7 @@ const LighthouseSection = () => {
               Forecast it with confidence.
             </span>
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed">
+          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
             Most teams already have the data. They just can't see what it's telling them, so the same delays keep surprising them, quarter after quarter.
           </p>
         </div>

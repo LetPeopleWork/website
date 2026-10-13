@@ -776,7 +776,7 @@ const Lighthouse = () => {
 			<SEO
 				title="Lighthouse - Flow Metrics & Forecasting Tool for Agile Teams"
 				description="Lighthouse is a source-available, self-hosted tool for visualizing flow metrics and forecasting delivery dates using Monte Carlo simulations. Connects to Jira, Azure DevOps, Linear, and ServiceNow. AI integration via MCP, so you can ask Claude or Copilot questions about your delivery data. Free community version available."
-				keywords="lighthouse flow metrics, agile forecasting tool, Monte Carlo simulation, delivery forecasting, when will it be done, how much can we do, Jira flow metrics, Azure DevOps metrics, Linear integration, ServiceNow integration, ITSM flow metrics, AI integration, MCP, Model Context Protocol, agile AI assistant, throughput, cycle time, lead time, WIP, work in progress, team velocity, sprint forecasting, agile metrics dashboard, kanban metrics, scrum metrics, project forecasting, portfolio forecasting, open source agile, predictability, self-hosted forecasting, agile analytics"
+				keywords="lighthouse flow metrics, agile forecasting tool, Monte Carlo simulation, delivery forecasting, when will it be done, how much can we do, Jira flow metrics, Azure DevOps metrics, Linear integration, ServiceNow integration, ITSM flow metrics, AI integration, MCP, Model Context Protocol, agile AI assistant, throughput, cycle time, lead time, WIP, work in progress, team velocity, sprint forecasting, agile metrics dashboard, kanban metrics, scrum metrics, project forecasting, portfolio forecasting, source available, Jira Data Center, predictability, self-hosted forecasting, agile analytics"
 				ogImage="https://letpeople.work/lighthouse-forecast.png"
 				ogType="website"
 				canonicalUrl="https://letpeople.work/lighthouse"
@@ -1157,7 +1157,7 @@ const Lighthouse = () => {
 							<br />
 							<span className="text-primary font-light">Same product. Different access.</span>
 						</h2>
-						<p className="text-lg md:text-xl text-muted-foreground font-light max-w-2xl mx-auto leading-relaxed">
+						<p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
 							Lighthouse stays source available and self-hosted across every edition.<br />Paid tiers unlock unlimited usage and choose how much of us you want alongside it.
 						</p>
 					</div>
@@ -1523,10 +1523,10 @@ const Lighthouse = () => {
 							<br />
 							<span className="text-primary font-light">Enterprise when you're ready.</span>
 						</h2>
-						<p className="text-lg md:text-xl text-muted-foreground font-light max-w-2xl mx-auto">
+						<p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
 							Pick the path that fits.<br />You can move up later, just write to us.
 						</p>
-						<p className="text-sm text-muted-foreground/80 font-light max-w-2xl mx-auto mt-4">
+						<p className="text-sm text-muted-foreground/80 max-w-2xl mx-auto mt-4">
 							Self-hosted, with the source public. If you ever stop paying, your data and the tool stay with you.
 						</p>
 					</div>

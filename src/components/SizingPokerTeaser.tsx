@@ -17,7 +17,7 @@ const SizingPokerTeaser = () => (
           <h3 className="text-xl md:text-2xl font-bold text-foreground tracking-tight mb-1">
             Sizing Poker: size a backlog without estimating it
           </h3>
-          <p className="text-muted-foreground font-light">
+          <p className="text-muted-foreground">
             One item at a time, one question, three answers. Runs in your browser, nothing leaves it.
           </p>
         </div>

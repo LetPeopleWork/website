@@ -245,7 +245,7 @@ const AI = () => {
               <br />
               More working AI.
             </h1>
-            <p className="text-lg md:text-2xl text-primary-foreground/75 font-light leading-relaxed text-pretty max-w-3xl mx-auto mb-11">
+            <p className="text-lg md:text-2xl text-primary-foreground/75 leading-relaxed text-pretty max-w-3xl mx-auto mb-11">
               We are practitioners in flow, forecasting, and delivery, and we use AI
               every day to run our business and ship our product. We help teams and
               non-technical businesses put AI to work in a grounded, practical way.
@@ -279,7 +279,7 @@ const AI = () => {
             <h2 className="text-4xl md:text-6xl font-bold text-foreground tracking-[-0.02em] leading-[1.02] text-balance mb-6">
               Practice over promises.
             </h2>
-            <p className="text-lg md:text-2xl text-muted-foreground font-light leading-relaxed text-pretty">
+            <p className="text-lg md:text-2xl text-muted-foreground leading-relaxed text-pretty">
               We work with AI the same way we work with delivery: small steps, real
               evidence, and a healthy dose of scepticism. Two angles we care about.
             </p>
@@ -334,7 +334,7 @@ const AI = () => {
               <br className="hidden sm:block" />
               We call it obAIa.
             </h2>
-            <p className="text-lg md:text-2xl text-muted-foreground font-light leading-relaxed text-pretty">
+            <p className="text-lg md:text-2xl text-muted-foreground leading-relaxed text-pretty">
               obAIa is our AI-augmented big room. Decisions get pressure-tested by
               three perspectives, commercial, marketing, and go-to-market, and are
               kept with their reasoning. It keeps our work, pipeline, and dates in
@@ -379,7 +379,7 @@ const AI = () => {
             <h2 className="text-4xl md:text-6xl font-bold text-foreground tracking-[-0.02em] leading-[1.02] text-balance mb-6">
               Two toolkits we built and use ourselves.
             </h2>
-            <p className="text-lg md:text-2xl text-muted-foreground font-light leading-relaxed text-pretty">
+            <p className="text-lg md:text-2xl text-muted-foreground leading-relaxed text-pretty">
               Free, open source, and shaped by how we actually work. Read them,
               run them, and verify them before you trust them.
             </p>
@@ -487,7 +487,7 @@ const AI = () => {
             <h2 className="text-4xl md:text-6xl font-bold text-foreground tracking-[-0.02em] leading-[1.02] text-balance mb-6">
               Why learn AI with us?
             </h2>
-            <p className="text-lg md:text-2xl text-muted-foreground font-light leading-relaxed text-pretty">
+            <p className="text-lg md:text-2xl text-muted-foreground leading-relaxed text-pretty">
               Most AI training is someone reading the docs back to you. We teach it
               the way we use it every day, to run our own business with obAIa and to
               ship our own product. You learn from people who live with the results,
@@ -540,7 +540,7 @@ const AI = () => {
             <h2 className="text-4xl md:text-6xl font-bold text-foreground tracking-[-0.02em] leading-[1.02] text-balance mb-6">
               An AI journey we build with you.
             </h2>
-            <p className="text-lg md:text-2xl text-muted-foreground font-light leading-relaxed text-pretty">
+            <p className="text-lg md:text-2xl text-muted-foreground leading-relaxed text-pretty">
               Everyone has AI open in a tab. Almost none of it becomes work. This is
               the path from "huh, neat" to AI doing real work across your business.
               Four steps, each bookable on its own, at pilot pricing while it lasts.
@@ -655,7 +655,7 @@ const AI = () => {
             <h2 className="text-4xl md:text-6xl font-bold text-primary-foreground tracking-[-0.02em] leading-[1.04] text-balance mb-7">
               Want to put AI to work?
             </h2>
-            <p className="text-lg md:text-2xl text-primary-foreground/75 font-light leading-relaxed text-pretty mb-11">
+            <p className="text-lg md:text-2xl text-primary-foreground/75 leading-relaxed text-pretty mb-11">
               Try the open-source plugins we built and use ourselves, or write to us
               about putting AI to work in your team.
             </p>

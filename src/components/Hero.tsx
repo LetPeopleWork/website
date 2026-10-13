@@ -43,7 +43,7 @@ const Hero = () => {
             <span className="font-light">with confidence.</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed font-light">
+          <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
             You're being asked when it'll be done, and{" "}
             <em className="text-foreground/80 not-italic font-normal">
               every guess that slips costs you a little more trust

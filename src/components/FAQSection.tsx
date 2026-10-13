@@ -90,7 +90,7 @@ const FAQSection = () => {
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-tight">
               What's stopping you?
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed">
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
               We've heard every reason not to try Lighthouse. Here are the ones that come up most, and what we actually think about them.
             </p>
           </div>

@@ -89,7 +89,7 @@ export default function LighthouseLearnMore() {
           <h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight leading-[1.05]">
             Three easy ways in.
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed mt-5">
+          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mt-5">
             Download it and play, see it in action, or just talk to us first.
             <br />
             Whatever suits you.
