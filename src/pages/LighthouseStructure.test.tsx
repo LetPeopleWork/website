@@ -32,7 +32,7 @@ describe("/lighthouse as an evaluation page", () => {
   it("says in the hero what it is, where it runs, what it connects to and what it costs", () => {
     renderPage();
     const h1 = screen.getByRole("heading", { level: 1 });
-    expect(h1).toHaveTextContent("Forecast delivery from what your teams have finished");
+    expect(h1).toHaveTextContent("Know how likely your date is before you promise it");
     const hero = h1.closest("section")!;
     expect(hero).toHaveTextContent(/inside your network/);
     expect(hero).toHaveTextContent(/Jira Cloud and Data Center, Azure DevOps, Linear and ServiceNow/);
@@ -43,7 +43,8 @@ describe("/lighthouse as an evaluation page", () => {
   it("answers the private-Jira question and the 'tracker will build it' question", () => {
     renderPage();
     const where = document.getElementById("where-it-runs")!;
-    expect(where).toHaveTextContent(/Jira Server and Data Center connect with a personal access token/);
+    expect(where).toHaveTextContent(/Jira Server or Data Center/);
+    expect(where).toHaveTextContent(/personal access token/);
     expect(where).toHaveTextContent(/Why not wait for your tracker to add this\?/);
     expect(screen.getByText(/Won't Jira or Azure DevOps just build this in\?/)).toBeInTheDocument();
   });

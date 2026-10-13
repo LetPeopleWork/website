@@ -2,7 +2,8 @@ import { ArrowUpRight, Github } from "lucide-react";
 import WhereItRunsDiagram from "./WhereItRunsDiagram";
 
 // Answers the two questions an evaluator raises before anything else: "can it
-// reach our private Jira?" and "won't our tracker just build this?". Until
+// reach a Jira that only lives inside our network?" and "won't our tracker
+// just build this?". Until
 // October 2026 neither was answered anywhere on the site.
 //
 // Every claim here is checked against the Lighthouse docs and the privacy
@@ -32,12 +33,6 @@ const WhereItRuns = ({ onOpenPrivacy }: { onOpenPrivacy: () => void }) => (
         </div>
 
         <dl className="lg:col-span-2 space-y-7">
-          <div>
-            <dt className="text-lg font-bold text-foreground mb-1.5">Private Jira works</dt>
-            <dd className="text-muted-foreground leading-relaxed">
-              Jira Server and Data Center connect with a personal access token. Jira Cloud and Azure DevOps can also use OAuth on paid editions.
-            </dd>
-          </div>
           <div>
             <dt className="text-lg font-bold text-foreground mb-1.5">Your work items stay with you</dt>
             <dd className="text-muted-foreground leading-relaxed">

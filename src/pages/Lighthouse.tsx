@@ -654,7 +654,7 @@ const Lighthouse = () => {
 						</span>
 					</div>
 					<h1 className="text-4xl md:text-6xl font-bold text-foreground tracking-tight leading-[1.08] mb-6">
-						Forecast delivery from what your teams have finished
+						Know how likely your date is before you promise it
 					</h1>
 					<p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-10">
 						Flow metrics and Monte Carlo forecasts for one team or a whole
