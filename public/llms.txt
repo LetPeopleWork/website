@@ -1,14 +1,14 @@
 # LetPeopleWork - Lighthouse and Sizing Poker
 
-> LetPeopleWork GmbH builds tools for delivery teams: Lighthouse, the source-available flow metrics and forecasting tool, and Sizing Poker, a free browser tool for sizing a backlog without estimating it. Founded by Peter Zylka-Greger and Benjamin Huser-Berta in Switzerland, we help organizations stop guessing about delivery and start making decisions grounded in real data.
+> LetPeopleWork GmbH builds tools for software delivery teams: Lighthouse, a self-hosted, source-available flow metrics and Monte Carlo forecasting tool, and Sizing Poker, a free browser tool for sizing a backlog without story points. Founded by Peter Zylka-Greger and Benjamin Huser-Berta in Zürich, Switzerland.
 
 ## About LetPeopleWork
 
 **What does LetPeopleWork do?**
-LetPeopleWork helps delivery teams answer two questions: why is delivery slow, and when will it be done? We do this with tools: Lighthouse for flow metrics and probabilistic forecasting, and Sizing Poker for sizing a backlog without estimates. Teams move from gut-feel estimates to data-backed forecasts they can bring to steering committees with confidence.
+LetPeopleWork helps delivery teams answer two questions: when will it be done, and why is delivery slow? Lighthouse answers the first with Monte Carlo forecasts from the team's own throughput, and the second with flow metrics. Sizing Poker sizes a backlog without estimates.
 
-**What makes LetPeopleWork unique?**
-We build the tools we recommend. Our founders have 15+ years of hands-on experience, have trained over 500 professionals, and are active practitioners — not theorists. Lighthouse is used by teams worldwide and is trusted by enterprise organizations and small teams alike.
+**Who builds the tools?**
+Two practitioners who use them with teams themselves. Benjamin Huser-Berta is the main developer of Lighthouse; Peter Zylka-Greger works with teams and leaders on flow and forecasting. The blog at https://blog.letpeople.work explains how the forecasts work, with worked examples.
 
 **Who are the founders?**
 - Peter Zylka-Greger: Expert in Flow, Kanban, and organizational transformation. Trains teams and leaders in data-driven delivery.
@@ -35,18 +35,24 @@ Product Owners, Scrum Masters and teams doing backlog refinement who want to rep
 **What is Lighthouse?**
 Lighthouse is a source-available flow metrics and probabilistic forecasting tool. It connects to your ALM system (Jira, Azure DevOps, Linear, or ServiceNow), visualizes how work flows through your teams, and generates Monte Carlo-based delivery forecasts grounded in your actual throughput history. It runs entirely on your own infrastructure — no cloud dependency, no data leaving your environment.
 
+**What questions does Lighthouse answer?**
+- When will these work items be done? Dates with probabilities (for example 50% by 14 March, 85% by 28 March), from a Monte Carlo simulation over the team's past throughput. No story points needed.
+- How many items will be done by a given date?
+- What is stuck right now? Work in progress, work item age, blocked and stale items, and items at risk of missing the team's service level expectation (SLE).
+- Which features make the release? A delivery timeline shows each feature's forecast start and finish, with dependencies read from the tracker.
+- How is the portfolio doing? Feature forecasts that combine every team working on a feature into one joint probability.
+- How much should we refine? A refinement forecast plus sizing votes per item.
+
 **Key features of Lighthouse:**
-1. Visualize flow metrics: throughput, cycle time, work item age, work in progress
-2. Generate realistic delivery forecasts using Monte Carlo simulations and historical data
-3. Connect to Jira, Azure DevOps, Linear, and ServiceNow
-4. Track both team-level and portfolio/project-level metrics
-5. AI integration via MCP (Model Context Protocol) — let your AI assistant query Lighthouse data directly
-6. CLI integration for use in shell scripts, CI/CD pipelines, and automated workflows
-7. Source available and self-hosted
-8. Community Edition is free forever; paid tiers unlock unlimited usage (see licensing below)
-9. Predictability trends: Percentiles Over Time and Process Behaviour Charts (PBC) Over Time show whether your delivery is becoming more or less predictable
-10. Blocked work tracking: rule-based blocked definition, blocked duration per item, and a Blocked Over Time chart for teams and portfolios
-11. Kubernetes support: official public Helm chart for the Server edition, with optional OIDC login and horizontal scaling
+1. Monte Carlo forecasts for teams ("how many" and "when") and for features, deliveries and portfolios
+2. Forecast Reality Check: backtests past forecasts against what the team delivered, per percentile and sampling window
+3. Forecasted start dates next to completion dates, and a delivery timeline per delivery
+4. Dependencies read from Jira (is blocked by), Azure DevOps (predecessor) and Linear, and taken into account in forecasts on paid editions
+5. Flow metrics: cycle time, throughput, work in progress, work item age with pace bands, blocked and stale items, risk of missing the SLE, process behaviour charts, percentiles over time, cumulative time in state
+6. Connects to Jira Cloud, Jira Server and Data Center, Azure DevOps, Linear, ServiceNow and CSV
+7. AI integration via MCP (Model Context Protocol), a command line client and agent skills
+8. Self-hosted: desktop app (Windows, macOS, Linux), Docker, or Kubernetes with the official Helm chart
+9. Source available on GitHub; free Community edition for up to 3 teams and 1 portfolio
 
 **What is AI integration in Lighthouse?**
 Lighthouse exposes your flow data to AI assistants through three integration methods:
@@ -67,7 +73,7 @@ AI integration is available as a downloadable skill for compatible clients and w
 - Full setup guide: https://docs.lighthouse.letpeople.work/aiintegration.html
 
 **What are Lighthouse's licensing options?**
-Three editions, same product, different access. All editions are source available and self-hosted; if you ever stop paying, your data and the tool stay with you.
+Three editions. The flow metrics and forecasts are in every edition; paid editions lift the limits and add features such as sign-in, role-based access, rule-based deliveries, data sync mappings and dependency-aware forecasts. All editions are self-hosted with the source public; if you ever stop paying, your data and the tool stay with you.
 - Community Edition: Free forever. All core flow metrics and Monte Carlo forecasts, up to 3 teams, 1 portfolio, 1 delivery.
 - Self-Service: CHF 2,000/year. Unlimited teams, portfolios, and deliveries, all paid features, community Slack support. One flat rate, no per-seat pricing.
 - Enterprise: CHF 10,000/year. Everything in Self-Service plus prioritised support, 24h acknowledgement on async requests, onboarding calls, and named contacts.
@@ -86,7 +92,16 @@ Available for:
 Download from GitHub releases: https://github.com/LetPeopleWork/Lighthouse/releases
 
 **What systems does Lighthouse integrate with?**
-Jira, Azure DevOps, Linear, and ServiceNow (team level only). AI assistants via MCP (any tool-calling compatible AI including Claude and GitHub Copilot).
+Jira Cloud, Jira Server and Jira Data Center (with a personal access token), Azure DevOps, Linear, ServiceNow (team level) and CSV files. OAuth for Jira Cloud and Azure DevOps on paid editions. AI assistants via MCP (any tool-calling AI, including Claude and GitHub Copilot).
+
+**Does Lighthouse work with a Jira that is only reachable inside our network?**
+Yes. Lighthouse runs where you install it (a laptop, a VM, Docker or Kubernetes inside your network) and connects to Jira Server or Data Center directly with a personal access token. Work items stay on your systems.
+
+**Won't Jira or Azure DevOps build this in?**
+For one team in one tool, their built-in charts may be enough. Lighthouse does flow and forecasting only, works the same way across Jira, Azure DevOps, Linear and ServiceNow, combines several teams into one forecast, and checks its own forecasts against what really happened. The source is public, so there is no lock-in.
+
+**How accurate are Lighthouse forecasts?**
+A forecast is a range with probabilities, not a promise. Lighthouse assumes the next weeks look roughly like the last ones, and Forecast Reality Check lets you test that on your own history. In one backtest Peter Zylka-Greger ran on his team, the 85% forecast said 12 items for two weeks and the team finished 16.
 
 **How does Lighthouse compare to ActionableAgile and Nave?**
 All three provide flow metrics (cycle time, throughput, WIP, work item age) and data-driven forecasting. The key differences:
@@ -94,8 +109,22 @@ All three provide flow metrics (cycle time, throughput, WIP, work item age) and 
 - Lighthouse has a free-forever Community edition and flat per-organisation pricing (Self-Service CHF 2,000/year; Enterprise CHF 10,000/year). ActionableAgile is priced per user; Nave is priced per connected board.
 - Lighthouse connects to Jira, Azure DevOps, Linear, and ServiceNow; ActionableAgile to Jira and Azure DevOps; Nave to Jira, Trello, and Azure DevOps.
 - Lighthouse has native AI integration via MCP and CLI; that is not a core feature of the others.
-- With Lighthouse your delivery data never leaves your own infrastructure.
+- With Lighthouse your delivery data stays on your own infrastructure.
 Full, honest comparison table: https://letpeople.work/compare/
+
+## Questions people ask when looking for a tool like this
+
+**Is there a free Monte Carlo forecasting tool for Jira?**
+Lighthouse's Community edition is free for up to 3 teams and 1 portfolio. It connects to Jira Cloud and Jira Data Center, runs on your own machine or server, and forecasts "when" and "how many" from the team's throughput.
+
+**What is a self-hosted alternative to ActionableAgile or Nave?**
+Lighthouse. It covers the same flow metrics (cycle time, throughput, WIP, work item age) and Monte Carlo forecasting, runs on your own infrastructure, and has flat per-organisation pricing. Comparison: https://letpeople.work/compare/
+
+**How can we forecast delivery dates in Azure DevOps without story points?**
+Lighthouse reads finished work items from Azure DevOps and forecasts from throughput, so no estimates are needed. It also reads Predecessor links as dependencies.
+
+**How do we forecast a feature that several teams work on?**
+Lighthouse combines the simulations of every contributing team into one joint probability, which is more realistic than taking the slowest team's date.
 
 ## AI at LetPeopleWork
 
@@ -120,7 +149,7 @@ A separate "AI for Engineers" track (software engineering with agents) is coming
 **Is there help with getting started?**
 - Free Delivery Predictability Assessment (https://letpeople.work/assessment/): a five-minute, six-question self-assessment that scores how you measure flow and how you forecast, with a concrete next step. No email required.
 - Lighthouse Setup & Onboarding: free of charge, for every edition. We help you get Lighthouse running, connect Jira, Azure DevOps, Linear, or ServiceNow, and walk your team through the tool. Contact contact@letpeople.work with subject "Lighthouse onboarding".
-- Self-Service trial: a 30-day license of Lighthouse Self-Service, no signup and no credit card. Request it on the Lighthouse page.
+- Premium trial: a 30-day license for the Self-Service edition, sent by email. No account and no credit card. Request it on https://letpeople.work/lighthouse/
 
 **How can I contact LetPeopleWork?**
 - General inquiries: contact@letpeople.work
@@ -143,7 +172,7 @@ LetPeopleWork GmbH, Mühlackerstrasse 108, 8046 Zürich, Switzerland.
 - Lighthouse Documentation: https://docs.lighthouse.letpeople.work
 
 **What is LetPeopleWork's mission?**
-To help teams stop guessing and start delivering with confidence. We believe the data to improve delivery is already in your tools — Lighthouse surfaces it, and Sizing Poker helps you act on it in refinement.
+To let people work: fewer guessed dates, fewer status meetings, more finished work. The data to improve delivery is already in your tracker. Lighthouse shows it, and Sizing Poker helps you act on it in refinement.
 
 ## Technical Details
 
@@ -154,7 +183,7 @@ To help teams stop guessing and start delivering with confidence. We believe the
 No - Lighthouse is source available. The source is public on GitHub and you can read, audit, run and modify it, but it is not open source under the Open Source Initiative definition: competing products and hosted resale are restricted. Releases up to v26.9.9.9 remain MIT licensed. https://github.com/LetPeopleWork/Lighthouse
 
 **Where does Lighthouse store data?**
-All data is stored locally using SQLite. Nothing is transmitted to external cloud services. You own your data.
+In its own database on your infrastructure: SQLite by default, and PostgreSQL is supported (the Helm chart bundles it). Lighthouse sends nothing to LetPeopleWork unless someone turns on usage data, which is opt-in and never contains work items, names or queries.
 
 **What is MCP?**
 MCP (Model Context Protocol) is an open standard for connecting AI assistants to external data sources. Lighthouse implements MCP so that AI tools like Claude and GitHub Copilot can query your flow data directly — no copy-paste, no exports.

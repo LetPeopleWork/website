@@ -12,6 +12,7 @@
 
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
+import { homeBody, lighthouseBody, loadFaq, simpleBody } from "./seo-content.mjs";
 
 const DIST = "dist";
 const SITE = "https://letpeople.work";
@@ -156,6 +157,29 @@ function applyMeta(html, { title, description, url, image, imageAlt, noindex, no
   return out;
 }
 
+// Puts the route's readable content inside #root, where crawlers that do not
+// run JavaScript find it as normal page text. The head snippet in index.html
+// hides .prerender as soon as JavaScript runs, and React's createRoot replaces
+// it on mount, so visitors with JavaScript never see it. The <noscript> block
+// is no longer needed for content then; it keeps one line.
+const PRERENDER_NOSCRIPT = `
+      <p>The interactive parts of this page need JavaScript. The text below covers the content.</p>
+    `;
+const withBody = (html, body) => {
+  if (!html.includes('<div id="root"></div>')) {
+    throw new Error("[prerender-meta] template has no empty #root to fill");
+  }
+  return swapNoscript(html, PRERENDER_NOSCRIPT).replace(
+    '<div id="root"></div>',
+    () => `<div id="root"><div class="prerender">\n${body}\n</div></div>`,
+  );
+};
+
+const faqs = loadFaq();
+const bodies = {
+  lighthouse: lighthouseBody(faqs),
+};
+
 function writeRoute(routePath, html) {
   mkdirSync(join(DIST, routePath), { recursive: true });
   writeFileSync(join(DIST, routePath, "index.html"), html);
@@ -164,9 +188,16 @@ function writeRoute(routePath, html) {
 for (const r of seoRoutes) {
   // GitHub Pages 301s /route to /route/, so canonical/og URLs use the
   // trailing-slash form to match what is actually served.
-  writeRoute(r.path, applyMeta(template, { ...r, url: `${SITE}/${r.path}/` }));
-  console.log(`[prerender-meta] wrote /${r.path} with page meta`);
+  const html = applyMeta(template, { ...r, url: `${SITE}/${r.path}/` });
+  const body = bodies[r.path] ?? simpleBody(r.noscript);
+  writeRoute(r.path, withBody(html, body));
+  console.log(`[prerender-meta] wrote /${r.path} with page meta and readable body`);
 }
+
+// The homepage is the template itself; it gets its readable body last, after
+// every route above was derived from the untouched template.
+writeFileSync(join(DIST, "index.html"), withBody(template, homeBody()));
+console.log("[prerender-meta] wrote / readable body");
 for (const { path, title } of fallbackRoutes) {
   let html = template
     .replace(/(<meta name="robots" content=")[\s\S]*?(")/, "$1noindex, nofollow$2")

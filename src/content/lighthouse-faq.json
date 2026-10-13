@@ -1,0 +1,46 @@
+[
+  {
+    "question": "I need lots of data first.",
+    "answer": "About ten finished work items are enough for a first useful forecast. Most teams have that after two weeks."
+  },
+  {
+    "question": "Our tracker is messy. I don't have clean data.",
+    "answer": "Messy is normal. Lighthouse pulls from Jira, Azure DevOps, Linear, ServiceNow, or CSV, and the math holds up against noisy data. The signal you need is when items started and when they finished, and that survives even in trackers that have been through three reorgs."
+  },
+  {
+    "question": "IT will block it. Our Jira isn't even reachable from the internet.",
+    "answer": "Then run Lighthouse inside your network too: on your laptop, a VM, Docker or Kubernetes. It connects to Jira Server and Data Center with a personal access token. Your work items stay on your systems, and nothing comes to us unless someone turns on usage data (which holds no content). For a first try, your own laptop is enough. No ticket to IT."
+  },
+  {
+    "question": "Won't Jira or Azure DevOps just build this in?",
+    "answer": "Maybe. For one team in one tool, its charts may be all you need. Lighthouse only does flow and forecasting, works the same way across Jira, Azure DevOps, Linear and ServiceNow, and checks its own forecasts against what really happened. A feature worked by three teams gets one forecast for all three. And the source is public, so you're not locked in, to us or to your tracker."
+  },
+  {
+    "question": "My team's not mature enough for this.",
+    "answer": "Probabilistic forecasting works on whatever flow you have today. Starting early helps, because the forecast shows you what to improve first."
+  },
+  {
+    "question": "I need management buy-in first.",
+    "answer": "Not to try it. Maybe to roll it out. Try it on your own, produce a forecast you couldn't have produced before, then decide whether to share it. The cheapest way to show the value is to run it yourself."
+  },
+  {
+    "question": "I'm just an IC, Scrum Master, or coach. This isn't my call.",
+    "answer": "Most of Lighthouse's early users are exactly that: ICs, Scrum Masters, and coaches running it for their own team. It installs on your laptop, and nobody else needs to know until you have something worth showing."
+  },
+  {
+    "question": "It looks complicated.",
+    "answer": "Plan for half an hour from download to a first forecast. Gábor Bittera did it live in under ten minutes, which you can watch further up this page. Pre-loaded sample data lets you look around before you connect anything."
+  },
+  {
+    "question": "Do you help with setup and onboarding?",
+    "answer": "Yes, and it's free. We help you get Lighthouse running, connect Jira, Azure DevOps, Linear, or ServiceNow, and walk your team through the tool, at no cost and for every edition. Write to contact@letpeople.work with the subject \"Lighthouse onboarding\". Enterprise licenses also include structured onboarding calls."
+  },
+  {
+    "question": "I tried something like this before and it didn't stick.",
+    "answer": "Was it ActionableAgile, Nave, or Jira's own forecasting? Most of these tools die in real organisations for boring reasons: IT blocks the SaaS, the budget gets cut, the champion leaves. Lighthouse runs on your own systems and is free to start, so none of that hits the same way."
+  },
+  {
+    "question": "Is this even for me?",
+    "answer": "Maybe not if you are one team with nothing bigger than the next sprint to plan; the charts in your tracker may be enough. Or if your project is nearly done, because a forecast can't help after the fact. Fixed deadlines are different: when the date can't move, the useful question is how much will fit by then, and Lighthouse answers that."
+  }
+]
