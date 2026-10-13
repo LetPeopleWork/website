@@ -27,7 +27,7 @@ const steps = [
     number: "03",
     title: "Forecast from what you finish",
     description:
-      "Monte Carlo simulation sounds fancy. In practice it's your team's past throughput, replayed many times. You get something like \"50% by 14 March, 85% by 28 March\". No story points needed.",
+      "Monte Carlo simulation sounds fancy. In practice it's your team's past throughput, replayed many times. You get something like \"50% by 14 March, 85% by 28 March\". Promising a customer? Use the 85% date and sleep well.",
   },
 ];
 

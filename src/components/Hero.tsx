@@ -17,7 +17,7 @@ import {
 } from "@/features/paths/paths";
 
 const DEFAULT_SUBHEAD =
-  "Lighthouse looks at what your team has finished in Jira, Azure DevOps, Linear or ServiceNow and tells you how likely each date is. Promising it to a customer? Use the 85% date and sleep well.";
+  "Every guess that slips costs you a little more trust. Lighthouse looks at what your team has finished in Jira, Azure DevOps, Linear or ServiceNow and tells you how likely each date is.";
 
 const DEFAULT_IMAGE = {
   src: "/lighthouse-forecast.png",
