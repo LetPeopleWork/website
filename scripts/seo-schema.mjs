@@ -97,13 +97,8 @@ const breadcrumbs = (...items) => ({
   })),
 });
 
-const yearly = (price) => ({
-  "@type": "UnitPriceSpecification",
-  price,
-  priceCurrency: "CHF",
-  unitText: "year",
-});
-
+// The paid editions are yearly; the description says so. Google's software
+// app check rejects a UnitPriceSpecification here, so there is none.
 const lighthouseOffers = (prices) =>
   [
     {
@@ -115,14 +110,12 @@ const lighthouseOffers = (prices) =>
     {
       name: "Lighthouse Self-Service",
       price: prices.selfServiceAmount,
-      priceSpecification: yearly(prices.selfServiceAmount),
       description:
         "Yearly licence with unlimited teams and portfolios, sign-in through your identity provider, role-based access, rule-based deliveries and data sync mappings.",
     },
     {
       name: "Lighthouse Enterprise",
       price: prices.enterpriseAmount,
-      priceSpecification: yearly(prices.enterpriseAmount),
       description:
         "Yearly licence with everything in Self-Service, plus a prioritised support queue, 24h acknowledgement on async requests, two 60-minute onboarding calls in the first 90 days and named contacts.",
     },
@@ -150,12 +143,16 @@ const lighthouseCore = (prices) => ({
 
 const isoDuration = (seconds) => `PT${Math.floor(seconds / 60)}M${seconds % 60}S`;
 
+// Google wants a full date and time with a time zone. The JSON holds the
+// YouTube publish date only, so midnight UTC stands in for the time.
+const isoDateTime = (date) => (date.includes("T") ? date : `${date}T00:00:00Z`);
+
 export const filmVideo = (film) => ({
   "@type": "VideoObject",
   name: film.title,
   description: film.description,
   thumbnailUrl: [film.posterUrl, `https://i.ytimg.com/vi/${film.youtubeId}/maxresdefault.jpg`],
-  uploadDate: film.uploadDate,
+  uploadDate: isoDateTime(film.uploadDate),
   duration: isoDuration(film.durationSeconds),
   embedUrl: `https://www.youtube-nocookie.com/embed/${film.youtubeId}`,
   url: `https://www.youtube.com/watch?v=${film.youtubeId}`,

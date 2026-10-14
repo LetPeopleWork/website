@@ -39,6 +39,8 @@ describe("static structured data", () => {
       expect(offerPrice(offers, "Lighthouse Community")).toBe("0");
       expect(offerPrice(offers, "Lighthouse Self-Service")).toBe(prices.selfServiceAmount);
       expect(offerPrice(offers, "Lighthouse Enterprise")).toBe(prices.enterpriseAmount);
+      // Google's Rich Results Test rejects a UnitPriceSpecification on these offers.
+      expect(JSON.stringify(offers)).not.toContain("priceSpecification");
     }
   });
 
@@ -69,6 +71,8 @@ describe("static structured data", () => {
     const filmVideo = videos.find((v) => v.name === film.title);
     expect(filmVideo).toBeDefined();
     expect(filmVideo?.duration).toBe("PT1M15S");
+    // Google's Rich Results Test flags an upload date without a time zone.
+    expect(filmVideo?.uploadDate).toBe(`${film.uploadDate}T00:00:00Z`);
     expect((filmVideo?.thumbnailUrl as string[])[0]).toBe(film.posterUrl);
   });
 
