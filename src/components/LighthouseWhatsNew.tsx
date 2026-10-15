@@ -16,6 +16,14 @@ type Item = {
 // https://github.com/LetPeopleWork/Lighthouse/releases
 const ITEMS: Item[] = [
   {
+    tag: "Reporting",
+    title: "Did the change work?",
+    description:
+      "Every Team and Portfolio gets a Reports tab. The first report type, Then & Now, freezes a window from before a change, even one that ended long ago, and compares it with a window that moves with today: Cycle Time, Throughput, WIP and Work Item Age, with a summary of what changed. Edit or delete a report whenever you like, and find your reports on the Overview. Community includes one report of each type per Team and Portfolio; Self-Service and Enterprise have no limit. More report types are coming.",
+    version: null,
+    released: null,
+  },
+  {
     tag: "Refinement",
     title: "Refine enough, then stop",
     description:

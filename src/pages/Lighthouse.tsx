@@ -801,6 +801,10 @@ const Lighthouse = () => {
 														community: true, self: true, enterprise: true,
 													},
 													{
+														feature: { label: "Reporting", tooltip: "A Reports tab on every Team and Portfolio. The first report type, Then & Now, sets Cycle Time, Throughput, WIP and Work Item Age from before a change beside the same metrics today, with a summary of what changed. More report types are coming." },
+														community: true, self: true, enterprise: true,
+													},
+													{
 														feature: { label: "Forecast Reality Check", tooltip: "Forecast weeks that already happened and compare with what your Team finished. You see whether your history window and percentiles hold up." },
 														community: true, self: true, enterprise: true,
 													},
@@ -838,6 +842,7 @@ const Lighthouse = () => {
 													{ feature: "CSV Support", community: "Max 1 Team", self: "Unlimited", enterprise: "Unlimited" },
 													{ feature: "Demo Data", community: "Basic Scenarios", self: "Advanced Scenarios", enterprise: "Advanced Scenarios" },
 													{ feature: "Deliveries", community: "1 per Portfolio", self: "Unlimited", enterprise: "Unlimited" },
+													{ feature: "Reports", community: "1 per type per Team / Portfolio", self: "Unlimited", enterprise: "Unlimited" },
 													{
 														feature: { label: "Additional Fields", tooltip: "Add custom fields to capture additional metadata specific to your workflow and requirements." },
 														community: "1 Field", self: "Unlimited", enterprise: "Unlimited",

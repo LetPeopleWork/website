@@ -46,6 +46,7 @@ describe("Lighthouse marketing screenshots are served from the jsDelivr CDN", ()
       "features/deliveryTimeline.png",
       "features/portfoliodetail.png",
       "features/refinement.png",
+      "features/report_thenandnow.png",
     ]) {
       expect(source).toContain(`lighthouseAsset("${asset}")`);
     }

@@ -180,6 +180,7 @@ const lighthouseFull = ({ prices, film }) => ({
     "Blocked and stale items, and the risk of missing the service level expectation",
     "Feature forecasts across several teams and a delivery timeline per release",
     "Portfolio flow metrics and process behaviour charts",
+    "Reports for every team and portfolio, starting with Then & Now: flow metrics from before a change next to today's",
     "Connects to Jira Cloud, Jira Server and Data Center, Azure DevOps, Linear, ServiceNow and CSV",
     "MCP server for AI assistants and the lh command line client",
     "Self-hosted: desktop app, Docker container or Kubernetes with the official Helm chart",

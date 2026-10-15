@@ -8,6 +8,7 @@ type Question = {
   question: string;
   answer: string;
   image: { src: string; alt: string; width: number; height: number };
+  docs?: { href: string; label: string };
 };
 
 // One question per tab, one screenshot per question. This replaces the
@@ -76,6 +77,22 @@ const QUESTIONS: Question[] = [
       height: 1080,
     },
   },
+  {
+    key: "change",
+    question: "Did the change work?",
+    answer:
+      "Months after you limited WIP or started coaching a team, someone asks whether it helped. The Reports tab on every team and portfolio answers that. The first report type, Then & Now, freezes a window from before the change, even one that ended long ago, and sets it beside a window that moves with today: cycle time, throughput, WIP and work item age, and a summary of what changed. More report types are coming.",
+    image: {
+      src: lighthouseAsset("features/report_thenandnow.png"),
+      alt: "Then & Now report: cycle time, throughput and WIP for a window before a change next to the last 30 days, with what improved and what got worse",
+      width: 1920,
+      height: 1080,
+    },
+    docs: {
+      href: "https://docs.lighthouse.letpeople.work/reports/reports.html",
+      label: "How reports work",
+    },
+  },
 ];
 
 interface LighthouseQuestionsProps {
@@ -114,6 +131,17 @@ const LighthouseQuestions = ({ value, onValueChange }: LighthouseQuestionsProps)
               <div className="lg:col-span-2">
                 <h3 className="text-2xl font-bold text-foreground tracking-tight mb-3">{q.question}</h3>
                 <p className="text-lg text-muted-foreground leading-relaxed">{q.answer}</p>
+                {q.docs && (
+                  <a
+                    href={q.docs.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary underline-offset-4 hover:underline"
+                  >
+                    {q.docs.label}
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </a>
+                )}
               </div>
               <div className="lg:col-span-3">
                 <img
