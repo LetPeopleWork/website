@@ -1,0 +1,18 @@
+{
+  "refinement": {
+    "youtubeId": "c5lpXeO30MQ",
+    "title": "Refinement in Lighthouse: refine what is relevant",
+    "description": "How much should your team refine before the next Refinement? Lighthouse answers from the team's own history, and everyone votes on one question per item before the meeting: could we finish it within our SLE?",
+    "durationSeconds": 60,
+    "uploadDate": "2026-10-14",
+    "posterUrl": "https://cdn.jsdelivr.net/gh/LetPeopleWork/Lighthouse@main/docs/assets/features/refinement.png"
+  },
+  "install": {
+    "youtubeId": "aI9iod9Qa7Y",
+    "title": "Lighthouse: from installation to data in 60 seconds",
+    "description": "How quickly you get from installing Lighthouse on your own machine to the first data from your tracker.",
+    "durationSeconds": 72,
+    "uploadDate": "2026-02-15",
+    "posterUrl": "https://letpeople.work/lighthouse-forecast.png"
+  }
+}

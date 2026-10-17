@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import faqs from "@/content/lighthouse-faq.json";
 import film from "@/content/lighthouse-film.json";
 import journey from "@/content/ai-journey.json";
+import videos from "@/content/videos.json";
 import prices from "@/lib/pricing.json";
 // @ts-expect-error - plain .mjs build script without type declarations
 import { jsonLdTag, schemaFor } from "../scripts/seo-schema.mjs";
@@ -12,7 +13,7 @@ import { jsonLdTag, schemaFor } from "../scripts/seo-schema.mjs";
 // <head>. It has to agree with what the pages show, and appear once per page.
 type Node = Record<string, unknown> & { "@type": string };
 
-const data = { prices, film, faqs, journey };
+const data = { prices, film, faqs, journey, videos };
 const graph = (route: string): Node[] => schemaFor(route, data)["@graph"];
 const ofType = (route: string, type: string) => graph(route).filter((n) => n["@type"] === type);
 const offerPrice = (offers: Array<{ name: string; price: string }>, name: string) =>
@@ -74,6 +75,8 @@ describe("static structured data", () => {
     // Google's Rich Results Test flags an upload date without a time zone.
     expect(filmVideo?.uploadDate).toBe(`${film.uploadDate}T00:00:00Z`);
     expect((filmVideo?.thumbnailUrl as string[])[0]).toBe(film.posterUrl);
+    // The Refinement video plays on the Refinement tab of the same page.
+    expect(videos.map((v) => v.name)).toContain(data.videos.refinement.title);
   });
 
   it("lists every AI workshop at the pilot price the page shows", () => {

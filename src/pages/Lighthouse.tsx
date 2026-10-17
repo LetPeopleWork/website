@@ -76,6 +76,7 @@ import PathChips from "@/features/paths/PathChips";
 import {
 	findPath,
 	pathFromSearch,
+	questionFromSearch,
 	writePathToUrl,
 	type PathKey,
 	type QuestionTab,
@@ -243,8 +244,12 @@ const Lighthouse = () => {
 	const [pathKey, setPathKey] = useState<PathKey | undefined>(
 		() => pathFromSearch(window.location.search)?.key,
 	);
+	// ?question= (from Sizing Poker, for example) names the tab directly.
 	const [questionTab, setQuestionTab] = useState<QuestionTab>(
-		() => pathFromSearch(window.location.search)?.tab ?? "when",
+		() =>
+			questionFromSearch(window.location.search) ??
+			pathFromSearch(window.location.search)?.tab ??
+			"when",
 	);
 	const chooseJump = (key: PathKey | undefined) => {
 		setPathKey(key);
@@ -338,12 +343,13 @@ const Lighthouse = () => {
 	useEffect(() => {
 		const hash = window.location.hash;
 		if (hash) {
-			// Small delay to ensure the page has rendered
+			// Small delay to ensure the page has rendered. An instant jump, not a
+			// smooth scroll: someone arriving on a deep link (a guide's download
+			// button, Sizing Poker's link to the Refinement tab) wants to be
+			// there, and a smooth scroll never runs in a tab that isn't visible
+			// yet, which left those visitors at the top of the page.
 			setTimeout(() => {
-				const element = document.querySelector(hash);
-				if (element) {
-					element.scrollIntoView({ behavior: "smooth" });
-				}
+				document.querySelector(hash)?.scrollIntoView();
 			}, 100);
 		}
 	}, []);

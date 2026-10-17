@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { VIDEOS, videoWatchUrl } from "@/features/film/videos";
+import { trackEvent } from "@/lib/plausible";
 
 type Item = {
   tag: string;
@@ -10,6 +12,11 @@ type Item = {
   version: string | null;
   /** ISO date the release was published; null while unreleased. */
   released: string | null;
+  /** Links under the text: a video on YouTube, or a page on this site. */
+  links?: Array<
+    | { kind: "video"; href: string; label: string }
+    | { kind: "page"; to: string; label: string; event: string }
+  >;
 };
 
 // TODO(peter): keep this list fresh as new releases ship. Full notes live at
@@ -30,6 +37,19 @@ const ITEMS: Item[] = [
       "The Refinement tab tells your team how many Work Items to have ready before the next Refinement, a range from your own Throughput with a below, in or above verdict, and lets everyone vote on each one: doable within our SLE? Yes, Yes if…, or No. No story points.",
     version: "v26.10.10.1",
     released: "2026-10-10",
+    links: [
+      {
+        kind: "video",
+        href: videoWatchUrl(VIDEOS.refinement),
+        label: `Watch it in ${VIDEOS.refinement.durationSeconds} seconds`,
+      },
+      {
+        kind: "page",
+        to: "/sizing-poker",
+        label: "How does it work? Try Sizing Poker",
+        event: "Sizing Poker link clicked",
+      },
+    ],
   },
   {
     tag: "Forecasting",
@@ -199,6 +219,34 @@ function NewsCard({ item, index }: { item: Item; index: number }) {
       <p className="text-sm text-muted-foreground leading-relaxed">
         {item.description}
       </p>
+      {item.links && (
+        <div className="mt-3 flex flex-col items-start gap-1.5">
+          {item.links.map((link) =>
+            link.kind === "video" ? (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-sm font-semibold text-primary underline-offset-4 hover:underline"
+              >
+                {link.label}
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+            ) : (
+              <a
+                key={link.label}
+                href={link.to}
+                onClick={() => trackEvent(link.event, { source: "whats-new" })}
+                className="inline-flex items-center gap-1 text-sm font-semibold text-primary underline-offset-4 hover:underline"
+              >
+                {link.label}
+                <ArrowRight className="w-3.5 h-3.5" />
+              </a>
+            ),
+          )}
+        </div>
+      )}
       {item.version && (
         <a
           href={`https://github.com/LetPeopleWork/Lighthouse/releases/tag/${item.version}`}

@@ -1,4 +1,8 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import FilmFacade from "@/features/film/components/FilmFacade";
+import { VIDEOS, type VideoKey } from "@/features/film/videos";
+import { trackEvent } from "@/lib/plausible";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { lighthouseAsset } from "@/lib/lighthouseAsset";
 import type { QuestionTab } from "@/features/paths/paths";
@@ -9,6 +13,10 @@ type Question = {
   answer: string;
   image: { src: string; alt: string; width: number; height: number };
   docs?: { href: string; label: string };
+  /** A short video that answers the question; the screenshot becomes its poster. */
+  video?: VideoKey;
+  /** A link elsewhere on the site, counted in Plausible under `event`. */
+  related?: { to: string; label: string; event: string };
 };
 
 // One question per tab, one screenshot per question. This replaces the
@@ -76,6 +84,14 @@ const QUESTIONS: Question[] = [
       width: 1920,
       height: 1080,
     },
+    video: "refinement",
+    // Sizing Poker is the free, no-install version of the same question, and
+    // the place to try it before connecting a tracker (weekly, 16 Oct 2026).
+    related: {
+      to: "/sizing-poker",
+      label: "How does it work? Try the question in Sizing Poker",
+      event: "Sizing Poker link clicked",
+    },
   },
   {
     key: "change",
@@ -142,16 +158,36 @@ const LighthouseQuestions = ({ value, onValueChange }: LighthouseQuestionsProps)
                     <ArrowUpRight className="h-3.5 w-3.5" />
                   </a>
                 )}
+                {q.related && (
+                  <Link
+                    to={q.related.to}
+                    onClick={() => trackEvent(q.related!.event, { source: `question-${q.key}` })}
+                    className="mt-4 flex items-center gap-1 text-sm font-semibold text-primary underline-offset-4 hover:underline"
+                    data-testid={`question-related-${q.key}`}
+                  >
+                    {q.related.label}
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                )}
               </div>
               <div className="lg:col-span-3">
-                <img
-                  src={q.image.src}
-                  alt={q.image.alt}
-                  width={q.image.width}
-                  height={q.image.height}
-                  loading="lazy"
-                  className="w-full h-auto rounded-xl border border-border shadow-soft bg-card"
-                />
+                {q.video ? (
+                  <FilmFacade
+                    source={`question-${q.key}`}
+                    video={{ ...VIDEOS[q.video], posterUrl: q.image.src }}
+                    posterSize={{ width: q.image.width, height: q.image.height }}
+                    className="shadow-soft"
+                  />
+                ) : (
+                  <img
+                    src={q.image.src}
+                    alt={q.image.alt}
+                    width={q.image.width}
+                    height={q.image.height}
+                    loading="lazy"
+                    className="w-full h-auto rounded-xl border border-border shadow-soft bg-card"
+                  />
+                )}
               </div>
             </div>
           </TabsContent>

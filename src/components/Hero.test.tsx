@@ -8,6 +8,7 @@ vi.mock("@/lib/plausible", () => ({ trackEvent, trackDownload: vi.fn() }));
 vi.mock("@/integrations/supabase/client", () => ({ supabase: { functions: { invoke: vi.fn() } } }));
 
 import Hero from "./Hero";
+import { VIDEOS } from "@/features/film/videos";
 
 const renderHero = () =>
   render(
@@ -40,6 +41,21 @@ describe("homepage hero", () => {
     expect(screen.getByTestId("hero-path-link")).toHaveAttribute("href", "/lighthouse?for=security#where-it-runs");
     expect(window.location.search).toBe("?for=security");
     expect(trackEvent).toHaveBeenCalledWith("Path chosen", { path: "security", source: "home-hero" });
+  });
+
+  it("offers the install video on the hosting question and plays it in the lightbox", async () => {
+    renderHero();
+    expect(screen.queryByTestId("hero-path-video")).toBeNull();
+    await userEvent.click(screen.getByRole("button", { name: "I need to check hosting and security" }));
+
+    const play = screen.getByTestId("hero-path-video");
+    expect(play).toHaveTextContent(`Watch it go from install to data · ${VIDEOS.install.durationSeconds} s`);
+    await userEvent.click(play);
+    expect(trackEvent).toHaveBeenCalledWith("Video play", { video: "install", source: "hero" });
+    expect(screen.getByTitle(VIDEOS.install.title)).toHaveAttribute(
+      "src",
+      expect.stringContaining(`youtube-nocookie.com/embed/${VIDEOS.install.youtubeId}`),
+    );
   });
 
   it("shows where Lighthouse runs instead of a screenshot for the hosting question", async () => {

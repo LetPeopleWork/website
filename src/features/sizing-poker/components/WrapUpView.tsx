@@ -1,5 +1,8 @@
 import { useState } from "react";
+import { Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import FilmLightbox from "@/features/film/components/FilmLightbox";
+import { VIDEOS, trackVideoPlay } from "@/features/film/videos";
 import { sizingPokerContent } from "../content/sizingPokerContent";
 import type { RoundStats } from "../core/roundStats";
 import { formatDuration, splitWidths, summaryText } from "../core/roundStats";
@@ -57,6 +60,8 @@ const WrapUpView = ({
 }: WrapUpViewProps) => {
   const width = splitWidths(stats);
   const [copied, setCopied] = useState(false);
+  const [videoOpen, setVideoOpen] = useState(false);
+  const refinementVideo = VIDEOS.refinement;
 
   const copySummary = async () => {
     await navigator.clipboard.writeText(summaryText(stats, targetDays));
@@ -173,17 +178,34 @@ const WrapUpView = ({
               <p className="mb-3 text-[15px] leading-relaxed text-muted-foreground">
                 {step.answer}
               </p>
-              <a
-                href={step.href}
-                onClick={() => onNextStepClick(step.question)}
-                className="text-[15px] font-medium text-primary underline underline-offset-4"
-              >
-                {step.linkLabel}
-              </a>
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+                <a
+                  href={step.href}
+                  onClick={() => onNextStepClick(step.question)}
+                  className="text-[15px] font-medium text-primary underline underline-offset-4"
+                >
+                  {step.linkLabel}
+                </a>
+                {step.video && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      trackVideoPlay(refinementVideo, "sizing-wrap-up");
+                      setVideoOpen(true);
+                    }}
+                    className="inline-flex items-center gap-1.5 text-[15px] font-medium text-primary underline underline-offset-4"
+                    data-testid="sizing-refinement-video"
+                  >
+                    <Play className="h-3.5 w-3.5 fill-current" />
+                    Watch it in {refinementVideo.durationSeconds} seconds
+                  </button>
+                )}
+              </div>
             </div>
           ))}
         </div>
       </section>
+      <FilmLightbox open={videoOpen} onOpenChange={setVideoOpen} video={refinementVideo} />
     </div>
   );
 };

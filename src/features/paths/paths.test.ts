@@ -1,5 +1,26 @@
 import { afterEach, describe, expect, it } from "vitest";
-import { PATHS, findPath, lighthouseHref, pathFromSearch, writePathToUrl } from "./paths";
+import {
+  PATHS,
+  findPath,
+  lighthouseHref,
+  lighthouseQuestionHref,
+  pathFromSearch,
+  questionFromSearch,
+  writePathToUrl,
+} from "./paths";
+
+describe("question tab links", () => {
+  it("opens a named question tab from ?question=, and ignores unknown ones", () => {
+    expect(questionFromSearch("?question=refine")).toBe("refine");
+    expect(questionFromSearch("?question=nonsense")).toBeUndefined();
+    expect(questionFromSearch("")).toBeUndefined();
+    expect(lighthouseQuestionHref("refine")).toBe("/lighthouse?question=refine#lighthouse-overview");
+  });
+
+  it("offers the install video where hosting is the question", () => {
+    expect(findPath("security")!.video?.key).toBe("install");
+  });
+});
 
 describe("situation paths", () => {
   afterEach(() => window.history.replaceState(null, "", "/"));

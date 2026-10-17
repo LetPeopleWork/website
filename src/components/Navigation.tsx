@@ -13,7 +13,9 @@ const Navigation = () => {
   // Tools first, company second. Home is the logo.
   const navItems = [
     { name: "AI", href: "/ai", isHash: false },
-    { name: "Sizing Poker", href: "/sizing-poker", isHash: false },
+    // Sizing Poker left the top menu in October 2026 (weekly, 16 Oct): about
+    // three visits a week. It stays live and is linked from the footer, the
+    // homepage teaser, the Jira guide and Lighthouse's Refinement tab.
   ];
 
   // Trimmed from ten anchors to the ones a visitor actually looks for; the

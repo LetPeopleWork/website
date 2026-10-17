@@ -6,6 +6,7 @@ import TrialRequestDialog from "@/features/trial/components/TrialRequestDialog";
 import { trackEvent } from "@/lib/plausible";
 import FilmLightbox from "@/features/film/components/FilmLightbox";
 import { LIGHTHOUSE_FILM, isFilmAvailable } from "@/features/film/lighthouseFilm";
+import { VIDEOS, trackVideoPlay, type Video } from "@/features/film/videos";
 import PathChips from "@/features/paths/PathChips";
 import WhereItRunsDiagram from "@/features/lighthouse-page/WhereItRunsDiagram";
 import {
@@ -37,6 +38,8 @@ const DEFAULT_IMAGE = {
 const Hero = () => {
   const [trialOpen, setTrialOpen] = useState(false);
   const [filmOpen, setFilmOpen] = useState(false);
+  // What the lightbox plays: the film, or the chosen situation's own video.
+  const [lightboxVideo, setLightboxVideo] = useState<Video>(VIDEOS.film);
   // A link like letpeople.work/?for=portfolio arrives pre-sorted.
   const [pathKey, setPathKey] = useState<PathKey | undefined>(
     () => pathFromSearch(window.location.search)?.key,
@@ -51,10 +54,13 @@ const Hero = () => {
     writePathToUrl(key);
     if (key) trackEvent("Path chosen", { path: key, source: "home-hero" });
   };
-  const openFilm = () => {
-    trackEvent("Film played", { source: "hero" });
+  const openVideo = (video: Video) => {
+    trackVideoPlay(video, "hero");
+    setLightboxVideo(video);
     setFilmOpen(true);
   };
+  const openFilm = () => openVideo(VIDEOS.film);
+  const pathVideo = path?.video ? { ...path.video, video: VIDEOS[path.video.key] } : undefined;
   const openTrial = () => {
     trackEvent("Trial dialog opened", { source: "hero" });
     setTrialOpen(true);
@@ -92,6 +98,17 @@ const Hero = () => {
                 {path.linkLabel}
                 <ArrowRight className="h-4 w-4" />
               </Link>
+            )}
+            {pathVideo && (
+              <button
+                type="button"
+                onClick={() => openVideo(pathVideo.video)}
+                className="mt-3 ml-0 sm:ml-5 inline-flex items-center gap-1.5 text-base font-semibold text-primary underline-offset-4 hover:underline"
+                data-testid="hero-path-video"
+              >
+                <Play className="h-4 w-4 fill-current" />
+                {pathVideo.label} · {pathVideo.video.durationSeconds} s
+              </button>
             )}
           </div>
 
@@ -155,7 +172,7 @@ const Hero = () => {
       </div>
 
       <TrialRequestDialog open={trialOpen} onOpenChange={setTrialOpen} source="hero" />
-      <FilmLightbox open={filmOpen} onOpenChange={setFilmOpen} />
+      <FilmLightbox open={filmOpen} onOpenChange={setFilmOpen} video={lightboxVideo} />
     </section>
   );
 };

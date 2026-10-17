@@ -4,6 +4,7 @@ import SimpleFooter from "@/components/SimpleFooter";
 import SEO from "@/components/SEO";
 import { trackEvent } from "@/lib/plausible";
 import IntroStep from "@/features/sizing-poker/components/IntroStep";
+import LighthouseNote from "@/features/sizing-poker/components/LighthouseNote";
 import ConfigStep from "@/features/sizing-poker/components/ConfigStep";
 import RunStep from "@/features/sizing-poker/components/RunStep";
 import GuidedHighlight from "@/features/sizing-poker/components/GuidedHighlight";
@@ -145,10 +146,13 @@ const SizingPoker = ({ now = Date.now }: SizingPokerProps) => {
       <main className="flex-1 px-4 pb-16 pt-28">
         <div className="mx-auto w-full max-w-2xl">
           {state.phase === "intro" && (
-            <IntroStep
-              onBegin={() => dispatch({ type: "begin" })}
-              onBeginGuided={handleBeginGuided}
-            />
+            <>
+              <IntroStep
+                onBegin={() => dispatch({ type: "begin" })}
+                onBeginGuided={handleBeginGuided}
+              />
+              <LighthouseNote />
+            </>
           )}
 
           {state.phase === "config" && (

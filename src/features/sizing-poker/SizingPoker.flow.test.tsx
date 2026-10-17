@@ -54,6 +54,15 @@ describe("the way in", () => {
     expect(screen.queryByTestId("sizing-config")).not.toBeInTheDocument();
   });
 
+  it("says, below the intro, that Lighthouse asks the same question on real work items", () => {
+    renderPage(makeClock().now);
+
+    const note = screen.getByTestId("sizing-lighthouse-note");
+    expect(note).toHaveTextContent(/Free in every edition/);
+    expect(within(note).getByRole("link")).toHaveAttribute("href", "/lighthouse?question=refine#lighthouse-overview");
+    expect(screen.getByTestId("sizing-intro")).not.toContainElement(note);
+  });
+
   it("keeps the intro under 50 words, since the first reviewer skipped past it unread", () => {
     renderPage(makeClock().now);
 
@@ -291,6 +300,22 @@ describe("the wrap-up", () => {
     expect(nextSteps).toHaveTextContent(/Work Item Age/i);
     expect(nextSteps).toHaveTextContent(/Refinement/i);
     expect(within(nextSteps).getAllByRole("link")).toHaveLength(3);
+  });
+
+  it("sends the real-backlog question straight to Lighthouse's Refinement tab, with its video", async () => {
+    const user = userEvent.setup();
+    renderPage(makeClock().now);
+
+    await setUpRound(user, ["One thing"]);
+    await user.keyboard("1");
+
+    const nextSteps = screen.getByTestId("sizing-next-steps");
+    expect(within(nextSteps).getByRole("link", { name: "See Refinement in Lighthouse" })).toHaveAttribute(
+      "href",
+      "/lighthouse?question=refine#lighthouse-overview",
+    );
+    await user.click(within(nextSteps).getByTestId("sizing-refinement-video"));
+    expect(trackEvent).toHaveBeenCalledWith("Video play", { video: "refinement", source: "sizing-wrap-up" });
   });
 
   it("copies all three lists as plain text for the PO's tracker", async () => {

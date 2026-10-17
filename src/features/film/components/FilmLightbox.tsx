@@ -1,10 +1,12 @@
 import { X } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle, DialogClose } from "@/components/ui/dialog";
-import { LIGHTHOUSE_FILM, filmEmbedUrl } from "../lighthouseFilm";
+import { VIDEOS, videoEmbedUrl, type Video } from "../videos";
 
 interface FilmLightboxProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  /** Which video to play; the film unless a situation has its own. */
+  video?: Video;
 }
 
 // The film in a modal, for the homepage hero: the page stays light and quiet,
@@ -15,7 +17,7 @@ interface FilmLightboxProps {
 // Focus goes to our own close button, never the iframe: once an iframe holds
 // focus, key presses stay inside YouTube's document and Escape never reaches
 // the dialog. The button is first in DOM order and gets focus on open.
-const FilmLightbox = ({ open, onOpenChange }: FilmLightboxProps) => (
+const FilmLightbox = ({ open, onOpenChange, video = VIDEOS.film }: FilmLightboxProps) => (
   <Dialog open={open} onOpenChange={onOpenChange}>
     <DialogContent
       className="max-w-5xl border-0 bg-black p-0 sm:rounded-2xl overflow-visible [&>button:last-child]:hidden"
@@ -25,11 +27,11 @@ const FilmLightbox = ({ open, onOpenChange }: FilmLightboxProps) => (
         (event.currentTarget as HTMLElement).querySelector<HTMLElement>("[data-film-close]")?.focus();
       }}
     >
-      <DialogTitle className="sr-only">{LIGHTHOUSE_FILM.title}</DialogTitle>
+      <DialogTitle className="sr-only">{video.title}</DialogTitle>
       <DialogClose
         data-film-close
         className="absolute -top-10 right-0 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-medium text-white/80 transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
-        aria-label="Close film"
+        aria-label="Close video"
       >
         Close <X className="h-4 w-4" />
       </DialogClose>
@@ -37,8 +39,8 @@ const FilmLightbox = ({ open, onOpenChange }: FilmLightboxProps) => (
         <div className="aspect-video w-full overflow-hidden sm:rounded-2xl">
           <iframe
             className="h-full w-full"
-            src={filmEmbedUrl()}
-            title={LIGHTHOUSE_FILM.title}
+            src={videoEmbedUrl(video)}
+            title={video.title}
             allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
             allowFullScreen
             referrerPolicy="strict-origin-when-cross-origin"

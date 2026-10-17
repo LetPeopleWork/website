@@ -1,4 +1,5 @@
 import { lighthouseAsset } from "@/lib/lighthouseAsset";
+import type { VideoKey } from "@/features/film/videos";
 
 // "What brings you here?" chips (homepage hero and /lighthouse).
 //
@@ -14,7 +15,8 @@ import { lighthouseAsset } from "@/lib/lighthouseAsset";
 
 export type PathKey = "date" | "portfolio" | "team" | "security";
 
-export type QuestionTab = "when" | "stuck" | "release" | "portfolio" | "refine" | "change";
+export const QUESTION_TABS = ["when", "stuck", "release", "portfolio", "refine", "change"] as const;
+export type QuestionTab = (typeof QUESTION_TABS)[number];
 
 export type Path = {
   key: PathKey;
@@ -32,6 +34,12 @@ export type Path = {
   tab: QuestionTab;
   /** Link text under the subhead, pointing to that answer. */
   linkLabel: string;
+  /**
+   * A short video that answers this situation, offered under the subhead.
+   * Without one, the hero keeps the film. Short videos only; add one here
+   * when it exists (a Deliveries video for "several teams" is the next).
+   */
+  video?: { key: VideoKey; label: string };
 };
 
 export const PATHS: readonly Path[] = [
@@ -89,6 +97,7 @@ export const PATHS: readonly Path[] = [
     anchor: "where-it-runs",
     tab: "when",
     linkLabel: "See where it runs",
+    video: { key: "install", label: "Watch it go from install to data" },
   },
 ];
 
@@ -113,3 +122,16 @@ export const writePathToUrl = (key: PathKey | undefined) => {
 
 /** Link to the /lighthouse section that answers a situation. */
 export const lighthouseHref = (path: Path) => `/lighthouse?for=${path.key}#${path.anchor}`;
+
+/** The ?question= value from a search string, or undefined when absent or unknown. */
+export const questionFromSearch = (search: string): QuestionTab | undefined => {
+  const value = new URLSearchParams(search).get("question");
+  return QUESTION_TABS.find((tab) => tab === value);
+};
+
+/**
+ * Link to one "Which question do you get asked?" tab on /lighthouse, opened
+ * and scrolled to. Sizing Poker uses it to land on Refinement directly.
+ */
+export const lighthouseQuestionHref = (tab: QuestionTab) =>
+  `/lighthouse?question=${tab}#lighthouse-overview`;

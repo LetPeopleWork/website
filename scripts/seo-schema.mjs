@@ -33,6 +33,7 @@ const readJson = (path) => JSON.parse(readFileSync(path, "utf8"));
 export const loadSchemaData = () => ({
   prices: readJson("src/lib/pricing.json"),
   film: readJson("src/content/lighthouse-film.json"),
+  videos: readJson("src/content/videos.json"),
   faqs: readJson("src/content/lighthouse-faq.json"),
   journey: readJson("src/content/ai-journey.json"),
 });
@@ -171,7 +172,20 @@ const demoVideo = {
   publisher: orgRef,
 };
 
-const lighthouseFull = ({ prices, film }) => ({
+// A short YouTube video shown on the page (src/content/videos.json).
+const youtubeVideo = (v) => ({
+  "@type": "VideoObject",
+  name: v.title,
+  description: v.description,
+  thumbnailUrl: [v.posterUrl, `https://i.ytimg.com/vi/${v.youtubeId}/maxresdefault.jpg`],
+  uploadDate: isoDateTime(v.uploadDate),
+  duration: isoDuration(v.durationSeconds),
+  embedUrl: `https://www.youtube-nocookie.com/embed/${v.youtubeId}`,
+  url: `https://www.youtube.com/watch?v=${v.youtubeId}`,
+  publisher: orgRef,
+});
+
+const lighthouseFull = ({ prices, film, videos }) => ({
   ...lighthouseCore(prices),
   featureList: [
     "Monte Carlo forecasts: when will these items be done, and how many items by a date",
@@ -188,7 +202,8 @@ const lighthouseFull = ({ prices, film }) => ({
   screenshot: `${SITE}/lighthouse-forecast.png`,
   downloadUrl: `${REPO}/releases`,
   softwareHelp: { "@type": "CreativeWork", url: DOCS },
-  video: [...(film.youtubeId ? [filmVideo(film)] : []), demoVideo],
+  // The Refinement video plays on the "How much should we refine?" tab.
+  video: [...(film.youtubeId ? [filmVideo(film)] : []), demoVideo, ...(videos ? [youtubeVideo(videos.refinement)] : [])],
 });
 
 const faqPage = (faqs, id = `${SITE}/lighthouse/#faq`) => ({

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { lighthouseQuestionHref } from "@/features/paths/paths";
 
 // Copy lives here, validated at module load, so a typo in a label fails the build
 // rather than shipping.
@@ -21,6 +22,8 @@ const nextStepSchema = z.object({
   answer: z.string().min(1),
   href: z.string().min(1),
   linkLabel: z.string().min(1),
+  /** A short video next to the link (src/content/videos.json). */
+  video: z.enum(["refinement"]).optional(),
 });
 
 const contentSchema = z.object({
@@ -30,6 +33,14 @@ const contentSchema = z.object({
     lede: z.string().min(1).max(220),
     cta: z.string().min(1),
     aside: z.string().min(1),
+    // The same question now lives in Lighthouse, on the team's real work
+    // items (weekly, 16 Oct 2026). One short note, under the buttons, so it
+    // never stands between a visitor and the round.
+    lighthouseNote: z.object({
+      text: z.string().min(1).max(240),
+      linkLabel: z.string().min(1),
+      href: z.string().min(1),
+    }),
   }),
   config: z.object({
     heading: z.string().min(1),
@@ -112,6 +123,11 @@ const raw = {
     lede: "One question per work item, three possible answers, no story points. You run it: on your own, or with your team round a shared screen.",
     cta: "Try it out",
     aside: "Free, no signup. Nothing leaves your browser.",
+    lighthouseNote: {
+      text: "Sizing your real backlog? Lighthouse's Refinement tab asks the same question on your team's work items and keeps everyone's votes, so nobody writes them down. Free in every edition.",
+      linkLabel: "See Refinement in Lighthouse",
+      href: lighthouseQuestionHref("refine"),
+    },
   },
 
   config: {
@@ -179,9 +195,10 @@ const raw = {
       {
         question: "How do you do this on your real backlog?",
         answer:
-          "Lighthouse asks the same question on the Work Items your team is refining, against your measured SLE, and anyone can answer whenever they have a minute instead of in one long meeting. It also tells you how many Work Items the next Refinement needs, so you refine enough and then stop.",
-        href: "/lighthouse",
+          "Lighthouse asks the same question on the Work Items your team is refining, against your measured SLE, and anyone can answer whenever they have a minute instead of in one long meeting. The votes stay with each Work Item, so there's no list to copy. It also tells you how many Work Items the next Refinement needs, so you refine enough and then stop. The Refinement tab is in every edition, including the free one.",
+        href: lighthouseQuestionHref("refine"),
         linkLabel: "See Refinement in Lighthouse",
+        video: "refinement",
       },
     ],
   },

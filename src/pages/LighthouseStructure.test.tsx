@@ -71,6 +71,18 @@ describe("/lighthouse as an evaluation page", () => {
     expect(screen.getByRole("button", { name: "I'm on the team doing the work" })).toHaveAttribute("aria-pressed", "true");
   });
 
+  it("opens the Refinement tab from ?question=refine, with its video and the way to Sizing Poker", () => {
+    window.history.replaceState(null, "", "/lighthouse?question=refine");
+    renderPage();
+    expect(screen.getByRole("tab", { name: "How much should we refine?" })).toHaveAttribute("aria-selected", "true");
+    const panel = screen.getByRole("tabpanel");
+    expect(within(panel).getByRole("link", { name: /Try the question in Sizing Poker/ })).toHaveAttribute(
+      "href",
+      "/sizing-poker",
+    );
+    expect(within(panel).getByRole("button", { name: /Play: Refinement in Lighthouse/ })).toBeInTheDocument();
+  });
+
   it("jumps to the answering section and tab when a chip is chosen on the page", async () => {
     renderPage();
     await userEvent.click(screen.getByRole("button", { name: "I look after several teams" }));
