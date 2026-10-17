@@ -6,7 +6,8 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 // still needs faces behind it, and these are the people answering the
 // support mail. The bios are the founders' own words; the closing line was
 // rewritten when consulting left the site. Each `track` line says what the
-// person has actually done, and only what their own blog posts show.
+// person does at LetPeopleWork, with a link to something they wrote. Keep
+// anecdotes and numbers out of bios; they belong with the proof.
 const founders = [
   {
     name: "Peter Zylka-Greger",
@@ -16,7 +17,7 @@ const founders = [
       "Years with teams worldwide taught me that people want to contribute and be part of something successful. We just need to let them work.",
     ],
     track: {
-      text: "Forecasts his own team's work with Lighthouse and backtested it: the 85% forecast said 12 items, the team finished 16.",
+      text: "Co-founder. Works with teams and leaders on making delivery predictable, and writes about what he learns.",
       href: "https://blog.letpeople.work/p/how-lighthouse-changed-the-way-i",
       label: "How Lighthouse changed the way I work",
     },
@@ -29,7 +30,7 @@ const founders = [
       "Software engineer and Scrum Master. Work can be creative and fun when we reduce waste and focus on delivering value.",
     ],
     track: {
-      text: "Builds Lighthouse. He ran Monte Carlo forecasts against Azure DevOps with a nightly script in 2023, and writes the step-by-step guides on the blog.",
+      text: "Co-founder. Designs and builds Lighthouse, and writes the step-by-step guides to Monte Carlo forecasting.",
       href: "https://blog.letpeople.work/p/an-introduction-and-step-by-step-guide-to-monte-carlo-simulations",
       label: "His Monte Carlo guide",
     },

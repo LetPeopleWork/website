@@ -497,11 +497,11 @@ slides.push(
   <div class="team">
     <div class="person">
       <img src="${asset("src/assets/Benji.png")}" alt="" />
-      <div><strong>Benjamin Huser-Berta</strong><p>Professional Kanban Trainer and software engineer. Builds Lighthouse and ships a new release about once a week. First ran Monte Carlo forecasts against Azure DevOps with a nightly script in 2023.</p></div>
+      <div><strong>Benjamin Huser-Berta</strong><span class="role">Co-founder · Product and engineering</span><p>Software engineer and Professional Kanban Trainer. Benjamin designs and builds Lighthouse, ships a new release about once a week, and writes the step-by-step guides to Monte Carlo forecasting on our blog.</p></div>
     </div>
     <div class="person">
       <img src="${asset("src/assets/Peter.png")}" alt="" />
-      <div><strong>Peter Zylka-Greger</strong><p>Delivery coach and speaker on flow and forecasting. Forecasts his own team's work with Lighthouse and backtested it: 12 items forecast at 85%, 16 finished.</p></div>
+      <div><strong>Peter Zylka-Greger</strong><span class="role">Co-founder · Clients and coaching</span><p>Delivery coach, trainer and speaker on flow and forecasting. Peter works with teams and leaders on making delivery predictable, and leads how we bring Lighthouse to the teams who need it.</p></div>
     </div>
   </div>
   <div class="why">
@@ -685,8 +685,9 @@ table.cmp thead th.us { background: var(--green); color: #fff; border-bottom-col
 .why p { margin: 0; font-size: 16px; line-height: 1.55; color: var(--ink); }
 .person { display: grid; grid-template-columns: 140px 1fr; gap: 20px; border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
 .person img { width: 140px; height: 140px; object-fit: cover; border-radius: 10px; }
-.person strong { font-size: 19px; color: var(--ink); }
-.person p { margin: 8px 0 0; font-size: 15px; line-height: 1.5; }
+.person strong { display: block; font-size: 19px; color: var(--ink); }
+.person .role { display: block; margin-top: 4px; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); }
+.person p { margin: 10px 0 0; font-size: 15px; line-height: 1.5; }
 `;
 
 const html = `<!DOCTYPE html>
