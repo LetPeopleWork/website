@@ -86,7 +86,6 @@ describe("/lighthouse as an evaluation page", () => {
     window.history.replaceState(null, "", "/lighthouse?for=team");
     renderPage();
     expect(screen.getByRole("tab", { name: "What's stuck right now?" })).toHaveAttribute("aria-selected", "true");
-    expect(screen.getByRole("button", { name: "I'm on the team doing the work" })).toHaveAttribute("aria-pressed", "true");
   });
 
   it("opens the Refinement tab from ?question=refine, with its video and the way to Sizing Poker", () => {
@@ -101,11 +100,9 @@ describe("/lighthouse as an evaluation page", () => {
     expect(within(panel).getByRole("button", { name: /Play: Refinement in Lighthouse/ })).toBeInTheDocument();
   });
 
-  it("jumps to the answering section and tab when a chip is chosen on the page", async () => {
+  it("asks the visitor to pick only once: no chip row above the question list", () => {
     renderPage();
-    await userEvent.click(screen.getByRole("button", { name: "I look after several teams" }));
-    expect(screen.getByRole("tab", { name: "Which features make the release?" })).toHaveAttribute("aria-selected", "true");
-    expect(Element.prototype.scrollIntoView).toHaveBeenCalled();
-    expect(window.location.search).toBe("?for=portfolio");
+    expect(screen.queryByRole("group", { name: "What brings you here?" })).toBeNull();
+    expect(screen.getByRole("tablist")).toHaveAttribute("aria-orientation", "vertical");
   });
 });

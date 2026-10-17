@@ -75,13 +75,9 @@ import FilmLightbox from "@/features/film/components/FilmLightbox";
 import { trackVideoPlay, VIDEOS } from "@/features/film/videos";
 import ForecastShot from "@/features/lighthouse-page/ForecastShot";
 import { CALL_LABEL, CALL_URL } from "@/lib/contact";
-import PathChips from "@/features/paths/PathChips";
 import {
-	findPath,
 	pathFromSearch,
 	questionFromSearch,
-	writePathToUrl,
-	type PathKey,
 	type QuestionTab,
 } from "@/features/paths/paths";
 import LighthouseQuestions from "@/features/lighthouse-page/LighthouseQuestions";
@@ -247,27 +243,17 @@ const Lighthouse = () => {
 		setFilmOpen(true);
 	};
 	const [legalTab, setLegalTab] = useState<"terms" | "privacy">("terms");
-	// Situation chips (?for=): which one is chosen, and which question tab
-	// it opens. A link from the homepage arrives with both set.
-	const [pathKey, setPathKey] = useState<PathKey | undefined>(
-		() => pathFromSearch(window.location.search)?.key,
-	);
-	// ?question= (from Sizing Poker, for example) names the tab directly.
+	// Which question tab opens first. ?question= (from Sizing Poker, for
+	// example) names it directly; a homepage chip arrives as ?for= and opens
+	// the tab that answers its situation. The page has no chip row of its own
+	// any more: right above "Which question do you get asked?" it asked the
+	// visitor to pick twice in a row.
 	const [questionTab, setQuestionTab] = useState<QuestionTab>(
 		() =>
 			questionFromSearch(window.location.search) ??
 			pathFromSearch(window.location.search)?.tab ??
 			"when",
 	);
-	const chooseJump = (key: PathKey | undefined) => {
-		setPathKey(key);
-		writePathToUrl(key);
-		const path = findPath(key);
-		if (!path) return;
-		trackEvent("Path chosen", { path: path.key, source: "lighthouse-jump" });
-		setQuestionTab(path.tab);
-		document.getElementById(path.anchor)?.scrollIntoView({ behavior: "smooth", block: "start" });
-	};
 	// Which trial CTA opened the dialog; null = closed. Analytics only.
 	const [trialSource, setTrialSource] = useState<string | null>(null);
 	const { toast } = useToast();
@@ -535,14 +521,6 @@ const Lighthouse = () => {
 				</div>
 			</section>
 			<FilmLightbox open={filmOpen} onOpenChange={setFilmOpen} />
-
-			{/* Situation chips: jump to the part of the page that answers why you
-			    came. Same choices as on the homepage, carried over in ?for=. */}
-			<section aria-label="Jump to what you came for" className="py-8 bg-background border-b border-border">
-				<div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-					<PathChips selected={pathKey} onSelect={chooseJump} />
-				</div>
-			</section>
 
 			<LighthouseQuestions value={questionTab} onValueChange={setQuestionTab} />
 

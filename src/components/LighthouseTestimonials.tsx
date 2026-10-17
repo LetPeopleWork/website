@@ -1,7 +1,7 @@
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Quote } from "lucide-react";
 
 export interface Testimonial {
-    /** A phrase from the quote, word for word, shown as the card's headline. */
+    /** A phrase from the quote, word for word, marked where it stands in the quote. */
     highlight: string;
     quote: string;
     author: string;
@@ -77,50 +77,79 @@ const LinkedInIcon = () => (
     </svg>
 );
 
+// The quote in full, with its strongest phrase marked where it stands, so
+// nothing is said twice. The phrase is always part of the quote (tested).
+const QuoteWithHighlight = ({ quote, highlight }: { quote: string; highlight: string }) => {
+    const at = quote.indexOf(highlight);
+    if (at < 0) return <>{quote}</>;
+    return (
+        <>
+            {quote.slice(0, at)}
+            <mark className="rounded-sm bg-accent px-0.5 font-semibold text-foreground [box-decoration-break:clone]">
+                {highlight}
+            </mark>
+            {quote.slice(at + highlight.length)}
+        </>
+    );
+};
+
+const initials = (name: string) =>
+    name
+        .split(/\s+/)
+        .map((part) => part[0])
+        .slice(0, 2)
+        .join("");
+
 const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => (
-    <figure className="flex h-full flex-col rounded-2xl border border-border bg-card p-6 shadow-soft">
-        <blockquote className="flex-1">
-            <p className="mb-3 text-lg font-semibold leading-snug text-foreground">
-                “{testimonial.highlight}”
-            </p>
-            <p className="text-sm leading-relaxed text-muted-foreground">{testimonial.quote}</p>
+    <figure className="group relative flex h-full flex-col rounded-2xl border border-border bg-card p-7 shadow-soft transition-shadow duration-300 hover:shadow-medium">
+        <Quote className="mb-4 h-7 w-7 text-primary/25" aria-hidden="true" />
+        <blockquote className="flex-1 text-[15px] leading-relaxed text-foreground/80">
+            <QuoteWithHighlight quote={testimonial.quote} highlight={testimonial.highlight} />
         </blockquote>
-        <figcaption className="mt-5 border-t border-border pt-4 text-sm">
-            <span className="font-semibold text-foreground">
-                {testimonial.authorUrl ? (
-                    <a
-                        href={testimonial.authorUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 hover:text-primary transition-colors"
-                    >
-                        {testimonial.author}
-                        <LinkedInIcon />
-                    </a>
-                ) : (
-                    testimonial.author
-                )}
+        <figcaption className="mt-6 flex items-center gap-3 border-t border-border pt-5">
+            <span
+                className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary/10 text-sm font-bold text-primary"
+                aria-hidden="true"
+            >
+                {initials(testimonial.author)}
             </span>
-            <span className="block text-muted-foreground">
-                {testimonial.role}
-                {testimonial.company && (
-                    <>
-                        {" at "}
-                        {testimonial.companyUrl ? (
-                            <a
-                                href={testimonial.companyUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 hover:text-primary transition-colors"
-                            >
-                                {testimonial.company}
-                                <ExternalLink className="h-3 w-3" />
-                            </a>
-                        ) : (
-                            testimonial.company
-                        )}
-                    </>
-                )}
+            <span className="min-w-0 text-sm">
+                <span className="block font-semibold text-foreground">
+                    {testimonial.authorUrl ? (
+                        <a
+                            href={testimonial.authorUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 hover:text-primary transition-colors"
+                        >
+                            {testimonial.author}
+                            <LinkedInIcon />
+                        </a>
+                    ) : (
+                        testimonial.author
+                    )}
+                </span>
+                <span className="block text-muted-foreground">
+                    {testimonial.role}
+                    {testimonial.company && (
+                        <>
+                            {" · "}
+                            {testimonial.companyUrl ? (
+                                <a
+                                    href={testimonial.companyUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1 font-medium text-foreground/80 hover:text-primary transition-colors"
+                                >
+                                    {testimonial.company}
+                                    <ExternalLink className="h-3 w-3" />
+                                </a>
+                            ) : (
+                                testimonial.company
+                            )}
+                        </>
+                    )}
+                </span>
             </span>
         </figcaption>
     </figure>

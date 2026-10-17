@@ -27,6 +27,14 @@ describe("testimonials", () => {
     expect(within(grid).getAllByRole("figure")).toHaveLength(testimonials.length);
   });
 
+  it("marks the strongest phrase inside the quote instead of repeating it", () => {
+    const { container } = render(<LighthouseTestimonials limit={1} />);
+    const marks = container.querySelectorAll("mark");
+    expect(marks).toHaveLength(1);
+    expect(marks[0].textContent).toBe(testimonials[0].highlight);
+    expect(container.querySelector("blockquote")!.textContent).toBe(testimonials[0].quote);
+  });
+
   it("shows three on the homepage and links to the rest", () => {
     render(<TestimonialsSection />);
     expect(within(screen.getByTestId("testimonial-grid")).getAllByRole("figure")).toHaveLength(3);

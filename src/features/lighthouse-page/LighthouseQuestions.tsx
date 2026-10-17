@@ -116,43 +116,55 @@ interface LighthouseQuestionsProps {
   onValueChange: (value: QuestionTab) => void;
 }
 
+// The questions as a list on the left and the answer on the right, like a
+// table of contents: a row of pill buttons here sat right under the
+// homepage-style chips and looked like the same choice asked twice. On a
+// phone the list becomes one row that scrolls sideways.
 const LighthouseQuestions = ({ value, onValueChange }: LighthouseQuestionsProps) => (
   <section id="lighthouse-overview" className="py-20 md:py-24 bg-background scroll-mt-24">
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="text-center max-w-2xl mx-auto mb-10">
+      <div className="max-w-2xl mb-10 md:mb-12">
         <span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-4 block">
           What it answers
         </span>
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
           Which question do you get asked?
         </h2>
       </div>
 
-      <Tabs value={value} onValueChange={(next) => onValueChange(next as QuestionTab)}>
-        <TabsList className="flex h-auto flex-wrap justify-center gap-2 bg-transparent p-0 mb-8">
-          {QUESTIONS.map((q) => (
+      <Tabs
+        value={value}
+        onValueChange={(next) => onValueChange(next as QuestionTab)}
+        orientation="vertical"
+        className="grid gap-8 lg:grid-cols-12 lg:gap-12"
+      >
+        <TabsList className="-mx-4 flex h-auto justify-start gap-2 overflow-x-auto bg-transparent px-4 pb-1 [scrollbar-width:none] lg:col-span-4 lg:mx-0 lg:flex-col lg:items-stretch lg:gap-1 lg:overflow-visible lg:border-l lg:border-border lg:px-0 lg:pb-0 [&::-webkit-scrollbar]:hidden">
+          {QUESTIONS.map((q, i) => (
             <TabsTrigger
               key={q.key}
               value={q.key}
-              className="rounded-full border border-border px-4 py-2 text-sm font-medium data-[state=active]:border-primary data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-none"
+              className="group shrink-0 justify-start gap-3 whitespace-nowrap rounded-full border border-border px-4 py-2 text-left text-sm font-medium text-muted-foreground shadow-none transition-colors hover:text-foreground data-[state=active]:border-primary data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-none lg:-ml-px lg:whitespace-normal lg:rounded-none lg:rounded-r-xl lg:border-0 lg:border-l-2 lg:border-transparent lg:px-5 lg:py-3.5 lg:text-base lg:data-[state=active]:border-primary lg:data-[state=active]:bg-accent lg:data-[state=active]:text-foreground"
             >
+              <span aria-hidden="true" className="hidden text-xs font-semibold tabular-nums text-primary/60 lg:inline group-data-[state=active]:text-primary">
+                {String(i + 1).padStart(2, "0")}
+              </span>
               {q.question}
             </TabsTrigger>
           ))}
         </TabsList>
 
         {QUESTIONS.map((q) => (
-          <TabsContent key={q.key} value={q.key} className="mt-0">
-            <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 items-center">
-              <div className="lg:col-span-2">
-                <h3 className="text-2xl font-bold text-foreground tracking-tight mb-3">{q.question}</h3>
-                <p className="text-lg text-muted-foreground leading-relaxed">{q.answer}</p>
+          <TabsContent key={q.key} value={q.key} className="mt-0 lg:col-span-8">
+            <h3 className="text-2xl font-bold text-foreground tracking-tight mb-3">{q.question}</h3>
+            <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl">{q.answer}</p>
+            {(q.docs || q.related) && (
+              <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2">
                 {q.docs && (
                   <a
                     href={q.docs.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary underline-offset-4 hover:underline"
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-primary underline-offset-4 hover:underline"
                   >
                     {q.docs.label}
                     <ArrowUpRight className="h-3.5 w-3.5" />
@@ -162,7 +174,7 @@ const LighthouseQuestions = ({ value, onValueChange }: LighthouseQuestionsProps)
                   <Link
                     to={q.related.to}
                     onClick={() => trackEvent(q.related!.event, { source: `question-${q.key}` })}
-                    className="mt-4 flex items-center gap-1 text-sm font-semibold text-primary underline-offset-4 hover:underline"
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-primary underline-offset-4 hover:underline"
                     data-testid={`question-related-${q.key}`}
                   >
                     {q.related.label}
@@ -170,31 +182,31 @@ const LighthouseQuestions = ({ value, onValueChange }: LighthouseQuestionsProps)
                   </Link>
                 )}
               </div>
-              <div className="lg:col-span-3">
-                {q.video ? (
-                  <FilmFacade
-                    source={`question-${q.key}`}
-                    video={{ ...VIDEOS[q.video], posterUrl: q.image.src }}
-                    posterSize={{ width: q.image.width, height: q.image.height }}
-                    className="shadow-soft"
-                  />
-                ) : (
-                  <img
-                    src={q.image.src}
-                    alt={q.image.alt}
-                    width={q.image.width}
-                    height={q.image.height}
-                    loading="lazy"
-                    className="w-full h-auto rounded-xl border border-border shadow-soft bg-card"
-                  />
-                )}
-              </div>
+            )}
+            <div className="mt-6">
+              {q.video ? (
+                <FilmFacade
+                  source={`question-${q.key}`}
+                  video={{ ...VIDEOS[q.video], posterUrl: q.image.src }}
+                  posterSize={{ width: q.image.width, height: q.image.height }}
+                  className="shadow-soft"
+                />
+              ) : (
+                <img
+                  src={q.image.src}
+                  alt={q.image.alt}
+                  width={q.image.width}
+                  height={q.image.height}
+                  loading="lazy"
+                  className="w-full h-auto rounded-xl border border-border shadow-soft bg-card"
+                />
+              )}
             </div>
           </TabsContent>
         ))}
       </Tabs>
 
-      <p className="text-center text-sm text-muted-foreground mt-10">
+      <p className="text-sm text-muted-foreground mt-10">
         Every feature in detail, with setup steps:{" "}
         <a
           href="https://docs.lighthouse.letpeople.work"
