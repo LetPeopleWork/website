@@ -58,6 +58,14 @@ describe("homepage hero", () => {
     );
   });
 
+  it("opens on a forecast you can read, with its percentiles spelled out and the film a click away", () => {
+    renderHero();
+    const shot = screen.getByTestId("forecast-shot");
+    expect(screen.getByAltText(/72\.68%/)).toHaveAttribute("src", "/lighthouse-forecast-panel.png");
+    expect(shot).toHaveTextContent("85% likely");
+    expect(screen.getByTestId("hero-film-play")).toHaveTextContent("Watch the film");
+  });
+
   it("shows where Lighthouse runs instead of a screenshot for the hosting question", async () => {
     renderHero();
     await userEvent.click(screen.getByRole("button", { name: "I need to check hosting and security" }));
@@ -71,7 +79,8 @@ describe("homepage hero", () => {
     await userEvent.click(chip);
     expect(screen.getByTestId("hero-product-shot").getAttribute("src")).toContain("portfoliodetail.png");
     await userEvent.click(chip);
-    expect(screen.getByTestId("hero-product-shot")).toHaveAttribute("src", "/lighthouse-forecast.png");
+    expect(screen.getByTestId("forecast-shot")).toBeInTheDocument();
+    expect(screen.queryByTestId("hero-product-shot")).toBeNull();
     expect(window.location.search).toBe("");
   });
 

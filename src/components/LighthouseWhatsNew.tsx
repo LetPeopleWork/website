@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { VIDEOS, videoWatchUrl } from "@/features/film/videos";
@@ -267,8 +267,40 @@ interface LighthouseWhatsNewProps {
   now?: () => number;
 }
 
+// The monthly round-up on Substack ("What's new in Lighthouse: ..."), found in
+// the blog feed the nightly sync writes to /blog-data.json. Falls back to the
+// blog itself when no edition is among the latest posts.
+const BLOG_URL = "https://blog.letpeople.work/";
+const useLatestEdition = () => {
+  const [edition, setEdition] = useState<{ title: string; link: string } | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("/blog-data.json");
+        if (!res.ok) return;
+        const data: { posts?: Array<{ title: string; link: string }> } = await res.json();
+        const post = data.posts?.find((p) => /^What's new in Lighthouse/i.test(p.title));
+        if (post && !cancelled) setEdition(post);
+      } catch {
+        // No feed, no edition: the link points at the blog instead.
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+  return edition;
+};
+
+// Three cards first: the section used to run to some 2,000 pixels at the
+// very end of a long page. The rest is one click away.
+const FIRST_CARDS = 3;
+
 export default function LighthouseWhatsNew({ now = Date.now }: LighthouseWhatsNewProps) {
   const { ref, revealed } = useScrollReveal<HTMLDivElement>();
+  const [showAll, setShowAll] = useState(false);
+  const edition = useLatestEdition();
   const [rangeKey, setRangeKey] = useState("90");
   const range = RANGES.find((r) => r.key === rangeKey) ?? RANGES[1];
   const today = now();
@@ -295,22 +327,34 @@ export default function LighthouseWhatsNew({ now = Date.now }: LighthouseWhatsNe
               Lighthouse keeps moving
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mt-5">
-              A steady stream of releases, shaped by what practitioners actually ask for.
+              A new release about once a week. Every month the blog sums them up, with videos.
               <br />
               <span className="font-medium text-foreground" data-testid="whats-new-release-count">
                 {releaseCountLine(range, today)}
               </span>
             </p>
           </div>
-          <a
-            href="https://github.com/LetPeopleWork/Lighthouse/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-hover whitespace-nowrap"
-          >
-            See all release notes
-            <ArrowUpRight className="w-4 h-4" />
-          </a>
+          <div className="flex flex-col items-start gap-2 md:items-end">
+            <a
+              href={edition?.link ?? BLOG_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-hover whitespace-nowrap"
+              data-testid="whats-new-edition"
+            >
+              {edition ? "Read this month's round-up" : "Monthly round-ups on the blog"}
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
+            <a
+              href="https://github.com/LetPeopleWork/Lighthouse/releases"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-hover whitespace-nowrap"
+            >
+              See all release notes
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
+          </div>
         </div>
 
         <div className="flex flex-wrap gap-2 mb-10 md:mb-12" role="group" aria-label="Shipped within">
@@ -332,11 +376,24 @@ export default function LighthouseWhatsNew({ now = Date.now }: LighthouseWhatsNe
         </div>
 
         {visible.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {visible.map((item, i) => (
-              <NewsCard key={item.title} item={item} index={i} />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {(showAll ? visible : visible.slice(0, FIRST_CARDS)).map((item, i) => (
+                <NewsCard key={item.title} item={item} index={i} />
+              ))}
+            </div>
+            {!showAll && visible.length > FIRST_CARDS && (
+              <div className="mt-8 text-center">
+                <button
+                  type="button"
+                  onClick={() => setShowAll(true)}
+                  className="rounded-full border border-border px-5 py-2 text-sm font-semibold text-foreground transition-colors hover:border-primary hover:text-primary"
+                >
+                  Show {visible.length - FIRST_CARDS} more
+                </button>
+              </div>
+            )}
+          </>
         ) : (
           <p className="text-muted-foreground">
             Nothing shipped in the {range.label.toLowerCase()}.{" "}

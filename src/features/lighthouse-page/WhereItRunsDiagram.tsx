@@ -65,8 +65,8 @@ const WhereItRunsDiagram = ({ layout = "stacked" }: { layout?: "stacked" | "wide
           <Connector label="Reads work items" wide={wide} />
           <Node
             icon={Database}
-            title="Jira Server or Data Center"
-            detail="Or any tracker inside your network, connected with a personal access token"
+            title="Your tracker, on your servers"
+            detail="Jira Data Center, Azure DevOps Server or another tracker inside your network, connected with a personal access token"
           />
         </div>
       </div>
@@ -74,7 +74,7 @@ const WhereItRunsDiagram = ({ layout = "stacked" }: { layout?: "stacked" | "wide
         {!wide && <Connector label="For hosted trackers, Lighthouse calls their API" />}
         <Node
           icon={Building2}
-          title="Jira Cloud, Azure DevOps, Linear, ServiceNow"
+          title="Jira Cloud, Azure DevOps Services, Linear, ServiceNow"
           detail="Hosted trackers are reached through their API"
           tone="outside"
         />
@@ -88,7 +88,7 @@ const WhereItRunsDiagram = ({ layout = "stacked" }: { layout?: "stacked" | "wide
         </div>
       </div>
       <figcaption className="sr-only">
-        Your browser, Lighthouse and an on-premise Jira all sit inside your network. Lighthouse calls hosted trackers through their API. LetPeopleWork receives nothing unless usage data is turned on.
+        Your browser, Lighthouse and a tracker on your own servers, such as Jira Data Center or Azure DevOps Server, all sit inside your network. Lighthouse calls hosted trackers through their API. LetPeopleWork receives nothing unless usage data is turned on.
       </figcaption>
     </figure>
   );

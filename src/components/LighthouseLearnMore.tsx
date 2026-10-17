@@ -1,5 +1,6 @@
 import { CalendarDays, PlayCircle, MessageSquare, ArrowRight } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { CALL_URL } from "@/lib/contact";
 
 type Action = {
   icon: typeof CalendarDays;
@@ -13,11 +14,11 @@ type Action = {
 const ACTIONS: Action[] = [
   {
     icon: CalendarDays,
-    title: "Book a demo",
+    title: "Talk to us for 20 minutes",
     description:
-      "Want a guided tour with your own questions answered?\nWe'll walk you through Lighthouse on a quick call.",
-    cta: "Request a demo",
-    href: "mailto:contact@letpeople.work?subject=Book%20a%20Lighthouse%20demo",
+      "Bring your own questions, about your teams, your tracker or your setup.\nWe'll answer them on a short call.",
+    cta: "Ask for a call",
+    href: CALL_URL,
   },
   {
     icon: PlayCircle,

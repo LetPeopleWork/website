@@ -5,7 +5,8 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 // The two founders, kept from the former services section: a product page
 // still needs faces behind it, and these are the people answering the
 // support mail. The bios are the founders' own words; the closing line was
-// rewritten when consulting left the site.
+// rewritten when consulting left the site. Each `track` line says what the
+// person has actually done, and only what their own blog posts show.
 const founders = [
   {
     name: "Peter Zylka-Greger",
@@ -14,6 +15,11 @@ const founders = [
     paragraphs: [
       "Years with teams worldwide taught me that people want to contribute and be part of something successful. We just need to let them work.",
     ],
+    track: {
+      text: "Forecasts his own team's work with Lighthouse and backtested it: the 85% forecast said 12 items, the team finished 16.",
+      href: "https://blog.letpeople.work/p/how-lighthouse-changed-the-way-i",
+      label: "How Lighthouse changed the way I work",
+    },
   },
   {
     name: "Benjamin Huser-Berta",
@@ -22,6 +28,11 @@ const founders = [
     paragraphs: [
       "Software engineer and Scrum Master. Work can be creative and fun when we reduce waste and focus on delivering value.",
     ],
+    track: {
+      text: "Builds Lighthouse. He ran Monte Carlo forecasts against Azure DevOps with a nightly script in 2023, and writes the step-by-step guides on the blog.",
+      href: "https://blog.letpeople.work/p/an-introduction-and-step-by-step-guide-to-monte-carlo-simulations",
+      label: "His Monte Carlo guide",
+    },
   },
 ];
 
@@ -29,7 +40,7 @@ const WhoBuildsThis = () => {
   const { ref, revealed } = useScrollReveal<HTMLDivElement>();
   return (
     <section id="about" className="bg-background">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 md:pt-12 md:pb-24">
         <div
           ref={ref}
           className={`text-center rounded-2xl p-8 md:p-12 border border-border transition-all duration-700 ease-out ${
@@ -62,6 +73,17 @@ const WhoBuildsThis = () => {
                     {text}
                   </p>
                 ))}
+                <p className="text-sm text-foreground">
+                  {founder.track.text}{" "}
+                  <a
+                    href={founder.track.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-primary underline-offset-4 hover:underline"
+                  >
+                    {founder.track.label}
+                  </a>
+                </p>
               </div>
             ))}
           </div>

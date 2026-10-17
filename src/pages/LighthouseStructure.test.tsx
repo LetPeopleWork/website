@@ -4,6 +4,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import Lighthouse from "./Lighthouse";
+import { CALL_LABEL, CALL_URL } from "@/lib/contact";
 
 vi.mock("@/integrations/supabase/client", () => ({
   supabase: { functions: { invoke: vi.fn() } },
@@ -40,10 +41,27 @@ describe("/lighthouse as an evaluation page", () => {
     expect(within(hero).getByRole("link", { name: "See pricing" })).toHaveAttribute("href", "#lighthouse-premium");
   });
 
+  it("opens with one download button, the trial, a call and a forecast you can read", () => {
+    renderPage();
+    const hero = screen.getByRole("heading", { level: 1 }).closest("section")!;
+    expect(within(hero).getByRole("button", { name: "Download Lighthouse free" })).toBeInTheDocument();
+    expect(within(hero).getByRole("button", { name: "Try Premium free for 30 days" })).toBeInTheDocument();
+    expect(within(hero).getByRole("link", { name: CALL_LABEL })).toHaveAttribute("href", CALL_URL);
+    expect(within(hero).getByTestId("forecast-shot")).toBeInTheDocument();
+    expect(hero).not.toHaveTextContent(/n\/a on macOS/);
+  });
+
+  it("puts the purchase form right after the prices, and the downloads before the FAQ", () => {
+    renderPage();
+    const ids = [...document.querySelectorAll("section[id]")].map((s) => s.id);
+    expect(ids.indexOf("lighthouse-license")).toBe(ids.indexOf("lighthouse-premium") + 1);
+    expect(ids.indexOf("downloads")).toBeLessThan(ids.indexOf("faq"));
+  });
+
   it("answers the private-Jira question and the 'tracker will build it' question", () => {
     renderPage();
     const where = document.getElementById("where-it-runs")!;
-    expect(where).toHaveTextContent(/Jira Server or Data Center/);
+    expect(where).toHaveTextContent(/Jira Data Center, Azure DevOps Server or another tracker inside your network/);
     expect(where).toHaveTextContent(/personal access token/);
     expect(where).toHaveTextContent(/Why not wait for your tracker to add this\?/);
     expect(screen.getByText(/Won't Jira or Azure DevOps just build this in\?/)).toBeInTheDocument();

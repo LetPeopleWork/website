@@ -1,8 +1,8 @@
-import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { ExternalLink } from "lucide-react";
 
 export interface Testimonial {
+    /** A phrase from the quote, word for word, shown as the card's headline. */
+    highlight: string;
     quote: string;
     author: string;
     role: string;
@@ -11,58 +11,59 @@ export interface Testimonial {
     companyUrl?: string;
 }
 
-const testimonials: Testimonial[] = [
+// In a fixed order, not shuffled: the ones that name an outcome and a
+// company come first, because a buyer looks for "did it work, and for whom".
+// `highlight` is a phrase taken word for word from the quote (the test checks
+// that); the quotes themselves are the customers' words and stay as given.
+// Hendra Gunawan (VP Engineering) is not listed until his quote arrives.
+export const testimonials: Testimonial[] = [
     {
-        quote: "The ability of Lighthouse to continuous forecast is a game changer. It transforms something complex and time consuming in a continuous activity which enlightens both your project planning and tracking.",
-        author: "Lorenzo Santoro",
-        role: "Project Manager",
-        company: "",
-        authorUrl: "https://www.linkedin.com/in/lorenzo-santoro-57172626/",
-        companyUrl: ""
-    },
-    {
+        highlight: "from guesstimations and overcommitment to data-driven PI Planning",
         quote: "Lighthouse transformed how our Agile Release Train operates: moving us from guesstimations and overcommitment to data-driven PI Planning. It streamlined progress tracking across teams, making delivery more transparent and predictable. With continuous forecasting, we're now better equipped to anticipate risks, align expectations, and deliver value with confidence.",
         author: "Agnieszka Reginek",
         role: "Professional Kanban Trainer | Scrum Master",
-        company: "",
         authorUrl: "https://www.linkedin.com/in/agnieszka-reginek/",
-        companyUrl: ""
     },
     {
+        highlight: "a lean, cost‑effective way to surface risk and enable better decisions",
         quote: "Lighthouse has transformed how we approach delivery. By prompting the right questions earlier and using the default feature size function to quickly forecast “how much?”, it provides a lean, cost‑effective way to surface risk and enable better decisions.",
         author: "Chris Graves",
         role: "Agile Coach",
         company: "Focusrite",
         authorUrl: "https://www.linkedin.com/in/chris-graves-23455ab8/",
-        companyUrl: "https://focusrite.com/"
+        companyUrl: "https://focusrite.com/",
     },
     {
+        highlight: "We’re now more predictable, efficient, and responsive",
         quote: "Lighthouse helped us be more on to it. We’re now more predictable, efficient, and responsive when it comes to delivering value and serving our customers. It’s made planning sessions run smoother and helped set clearer expectations with our stakeholders. The insights we get from the data really sharpen our conversations and keep us focused on what matters.",
         author: "Gonzalo Mendez",
         role: "Scrum Master",
-        authorUrl: "https://www.linkedin.com/in/gonzalo-mendez-nz/",
         company: "Mitre 10 (New Zealand) Ltd.",
-        companyUrl: "https://www.mitre10.co.nz/"
+        authorUrl: "https://www.linkedin.com/in/gonzalo-mendez-nz/",
+        companyUrl: "https://www.mitre10.co.nz/",
     },
     {
-        quote: "Very few tools out there are able to distill what  is going on in your system to act effectively as your mission control  for all things delivery related. If John Anderton designed a system for  flow, this would be it.",
-        author: "Nicolas Brown",
-        role: "Author of ‘Real World Agility’ | Consultant | Speaker",
-        authorUrl: "https://www.linkedin.com/in/nicolasjmbrown/",
-        company: "Thrivve",
-        companyUrl: "https://thrivve.partners/"
-    },
-    {
+        highlight: "answer critical questions in a matter of minutes",
         quote: "Whenever I am asked to assess the delivery health of a team, Lighthouse is my go-to tool as a consultant. Its quick, no-faff setup enables me to answer critical questions in a matter of minutes — shifting the conversation from gut-feel to data, and from wishful thinking to delivery risks and probabilities. For any coach trying to make risk visible and discussable, this is the tool that earns its place",
         author: "Gábor Bittera",
         role: "Scrum Master",
-        authorUrl: "https://www.linkedin.com/in/gaborbittera/"
+        authorUrl: "https://www.linkedin.com/in/gaborbittera/",
     },
     {
-        quote: "",
-        author: "Hendra Gunawan",
-        role: "VP Engineering",
-        authorUrl: "https://www.linkedin.com/in/hendragunawan823/"
+        highlight: "your mission control for all things delivery related",
+        quote: "Very few tools out there are able to distill what is going on in your system to act effectively as your mission control for all things delivery related. If John Anderton designed a system for flow, this would be it.",
+        author: "Nicolas Brown",
+        role: "Author of ‘Real World Agility’ | Consultant | Speaker",
+        company: "Thrivve",
+        authorUrl: "https://www.linkedin.com/in/nicolasjmbrown/",
+        companyUrl: "https://thrivve.partners/",
+    },
+    {
+        highlight: "a continuous activity which enlightens both your project planning and tracking",
+        quote: "The ability of Lighthouse to continuous forecast is a game changer. It transforms something complex and time consuming in a continuous activity which enlightens both your project planning and tracking.",
+        author: "Lorenzo Santoro",
+        role: "Project Manager",
+        authorUrl: "https://www.linkedin.com/in/lorenzo-santoro-57172626/",
     }
 ];
 
@@ -76,137 +77,83 @@ const LinkedInIcon = () => (
     </svg>
 );
 
-const TestimonialCard = ({
-    testimonial
-}: {
-    testimonial: Testimonial;
-}) => (
-    <Card className="border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 bg-card">
-        <CardContent className="p-8">
-            <blockquote className="text-lg text-card-foreground mb-6 italic text-center font-medium">
-                "{testimonial.quote}"
-            </blockquote>
-            <div className="text-center">
-                <div className="flex items-center justify-center gap-2 mb-1">
-                    <span className="font-semibold text-card-foreground">
-                        {testimonial.authorUrl ? (
-                            <a 
-                                href={testimonial.authorUrl} 
-                                target="_blank" 
+const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => (
+    <figure className="flex h-full flex-col rounded-2xl border border-border bg-card p-6 shadow-soft">
+        <blockquote className="flex-1">
+            <p className="mb-3 text-lg font-semibold leading-snug text-foreground">
+                “{testimonial.highlight}”
+            </p>
+            <p className="text-sm leading-relaxed text-muted-foreground">{testimonial.quote}</p>
+        </blockquote>
+        <figcaption className="mt-5 border-t border-border pt-4 text-sm">
+            <span className="font-semibold text-foreground">
+                {testimonial.authorUrl ? (
+                    <a
+                        href={testimonial.authorUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 hover:text-primary transition-colors"
+                    >
+                        {testimonial.author}
+                        <LinkedInIcon />
+                    </a>
+                ) : (
+                    testimonial.author
+                )}
+            </span>
+            <span className="block text-muted-foreground">
+                {testimonial.role}
+                {testimonial.company && (
+                    <>
+                        {" at "}
+                        {testimonial.companyUrl ? (
+                            <a
+                                href={testimonial.companyUrl}
+                                target="_blank"
                                 rel="noopener noreferrer"
-                                className="hover:text-primary transition-colors flex items-center gap-1"
+                                className="inline-flex items-center gap-1 hover:text-primary transition-colors"
                             >
-                                {testimonial.author}
-                                <LinkedInIcon />
+                                {testimonial.company}
+                                <ExternalLink className="h-3 w-3" />
                             </a>
                         ) : (
-                            testimonial.author
+                            testimonial.company
                         )}
-                    </span>
-                </div>
-                <div className="text-sm text-muted-foreground">
-                    {testimonial.role}
-                    {testimonial.company && (
-                        <>
-                            {" at "}
-                            {testimonial.companyUrl ? (
-                                <a 
-                                    href={testimonial.companyUrl} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    className="hover:text-primary transition-colors inline-flex items-center gap-1"
-                                >
-                                    {testimonial.company}
-                                    <ExternalLink className="h-3 w-3" />
-                                </a>
-                            ) : (
-                                testimonial.company
-                            )}
-                        </>
-                    )}
-                </div>
-            </div>
-        </CardContent>
-    </Card>
+                    </>
+                )}
+            </span>
+        </figcaption>
+    </figure>
 );
 
-const NavigationButton = ({
-    onClick,
-    direction
-}: {
-    onClick: () => void;
-    direction: 'prev' | 'next';
-}) => (
-    <button
-        onClick={onClick}
-        className={`absolute ${direction === 'prev' ? 'left-4' : 'right-4'} top-1/2 transform -translate-y-1/2 bg-background/90 backdrop-blur-sm border border-border/50 rounded-full p-2 hover:bg-background hover:shadow-md transition-all duration-200`}
-    >
-        {direction === 'prev' ? (
-            <ChevronLeft className="text-primary h-5 w-5" />
-        ) : (
-            <ChevronRight className="text-primary h-5 w-5" />
-        )}
-    </button>
-);
+interface LighthouseTestimonialsProps {
+    /** Show only the first few, for example three on the homepage. */
+    limit?: number;
+    /** A link under the cards, for example to the rest on the Lighthouse page. */
+    more?: { href: string; label: string };
+}
 
-const LighthouseTestimonials = () => {
-    // Filter out testimonials with empty quotes and shuffle once on mount
-    const [shuffledTestimonials] = useState(() => {
-        const validTestimonials = testimonials.filter(testimonial => 
-            testimonial.quote && testimonial.quote.trim() !== ''
-        );
-        const shuffled = [...validTestimonials];
-        for (let i = shuffled.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-        }
-        return shuffled;
-    });
-
-    const [currentTestimonial, setCurrentTestimonial] = useState(0);
-
-    const nextTestimonial = () => {
-        setCurrentTestimonial((prev) => (prev + 1) % shuffledTestimonials.length);
-    };
-
-    const prevTestimonial = () => {
-        setCurrentTestimonial((prev) => (prev - 1 + shuffledTestimonials.length) % shuffledTestimonials.length);
-    };
-
-    const title = "What teams say about Lighthouse";
-
+// All quotes visible at once, in a grid: one card at a time in a carousel
+// hid five of the six, and a visitor rarely clicks through a carousel.
+const LighthouseTestimonials = ({ limit, more }: LighthouseTestimonialsProps) => {
+    const shown = limit ? testimonials.slice(0, limit) : testimonials;
     return (
-        <div className="mb-16">
-            <div className="text-center mb-12">
-                <h2 className="text-2xl font-bold text-foreground mb-12">
-                    {title}
-                </h2>
+        <div>
+            <h2 className="text-center text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-10">
+                What teams say about Lighthouse
+            </h2>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-testid="testimonial-grid">
+                {shown.map((t) => (
+                    <TestimonialCard key={t.author} testimonial={t} />
+                ))}
             </div>
-
-            <div className="relative max-w-4xl mx-auto">
-                <TestimonialCard testimonial={shuffledTestimonials[currentTestimonial]} />
-
-                <NavigationButton
-                    onClick={prevTestimonial}
-                    direction="prev"
-                />
-                <NavigationButton
-                    onClick={nextTestimonial}
-                    direction="next"
-                />
-
-                {/* Dots indicator */}
-                <div className="flex justify-center space-x-2 mt-6">
-                    {shuffledTestimonials.map((testimonial, testimonialIndex) => (
-                        <button
-                            key={`dot-${testimonial.author}`}
-                            onClick={() => setCurrentTestimonial(testimonialIndex)}
-                            className={`w-2 h-2 rounded-full transition-colors ${testimonialIndex === currentTestimonial ? 'bg-primary' : 'bg-muted-foreground/30'
-                                }`}
-                        />
-                    ))}
-                </div>
-            </div>
+            {more && (
+                <p className="mt-8 text-center">
+                    <a href={more.href} className="text-sm font-semibold text-primary underline-offset-4 hover:underline">
+                        {more.label}
+                    </a>
+                </p>
+            )}
         </div>
     );
 };

@@ -9,6 +9,7 @@ import { LIGHTHOUSE_FILM, isFilmAvailable } from "@/features/film/lighthouseFilm
 import { VIDEOS, trackVideoPlay, type Video } from "@/features/film/videos";
 import PathChips from "@/features/paths/PathChips";
 import WhereItRunsDiagram from "@/features/lighthouse-page/WhereItRunsDiagram";
+import ForecastShot from "@/features/lighthouse-page/ForecastShot";
 import {
   findPath,
   lighthouseHref,
@@ -48,6 +49,8 @@ const Hero = () => {
   const path = findPath(pathKey);
   const image = path?.image ?? DEFAULT_IMAGE;
   const showDiagram = path?.visual === "where-it-runs";
+  // With no chip, or "I need to give a date": the readable forecast panel.
+  const showForecast = !path || path.visual === "forecast";
 
   const choosePath = (key: PathKey | undefined) => {
     setPathKey(key);
@@ -133,6 +136,14 @@ const Hero = () => {
         {/* The product, cropped at the bottom so the page reads on. With the
             film published, the shot doubles as its poster: one click, a
             lightbox, sound on. */}
+        {showForecast ? (
+          <div className="relative mx-auto max-w-5xl pb-6 md:pb-16">
+            <ForecastShot
+              onPlayFilm={isFilmAvailable() ? openFilm : undefined}
+              filmSeconds={LIGHTHOUSE_FILM.durationSeconds}
+            />
+          </div>
+        ) : (
         <div className="relative mx-auto max-w-5xl">
           {isFilmAvailable() && !showDiagram && (
             <button
@@ -169,6 +180,7 @@ const Hero = () => {
           )}
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent" />
         </div>
+        )}
       </div>
 
       <TrialRequestDialog open={trialOpen} onOpenChange={setTrialOpen} source="hero" />

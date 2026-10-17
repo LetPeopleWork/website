@@ -18,9 +18,16 @@ interface AdditionalLink {
 }
 
 interface QuickDownloadBarProps {
-	additionalLink: AdditionalLink;
+	additionalLink?: AdditionalLink;
 	/** Where this bar sits, sent to analytics (e.g. "lighthouse-hero", "home"). */
 	source?: string;
+	/**
+	 * Only the one button most visitors need: the desktop app for their
+	 * system, labelled "Download free". Server, Docker and the rest are in the
+	 * Downloads section. Used in the Lighthouse hero, where four buttons (one
+	 * of them greyed out on a Mac) read as a choice nobody asked for.
+	 */
+	compact?: boolean;
 }
 
 const WindowsIcon = ({ className }: { className?: string }) => (
@@ -38,7 +45,7 @@ const OsChip = ({ os, ext }: { os: ClientOs; ext: string }) => (
 	</span>
 );
 
-const QuickDownloadBar = ({ additionalLink, source }: QuickDownloadBarProps) => {
+const QuickDownloadBar = ({ additionalLink, source, compact = false }: QuickDownloadBarProps) => {
 	const [latestVersion, setLatestVersion] = useState("");
 	const [releaseAssets, setReleaseAssets] = useState<ReleaseAsset[]>([]);
 	const [isLoadingVersion, setIsLoadingVersion] = useState(false);
@@ -113,6 +120,23 @@ const QuickDownloadBar = ({ additionalLink, source }: QuickDownloadBarProps) => 
 		window.open(url ?? LIGHTHOUSE_GITHUB_RELEASES_URL, "_blank");
 	};
 
+	if (compact) {
+		return (
+			<Button
+				variant="hero"
+				size="lg"
+				disabled={isLoadingVersion}
+				onClick={() => openQuickDownload("standalone")}
+				aria-label="Download Lighthouse free"
+				className="rounded-full px-7"
+			>
+				<Download className="mr-2 h-4 w-4" />
+				Download free
+				{standaloneExt && <OsChip os={clientOs} ext={standaloneExt} />}
+			</Button>
+		);
+	}
+
 	return (
 		<div className="flex flex-col sm:flex-row gap-4 justify-center">
 			<Button
@@ -158,6 +182,7 @@ const QuickDownloadBar = ({ additionalLink, source }: QuickDownloadBarProps) => 
 					<Copy className="ml-2 h-4 w-4" />
 				)}
 			</Button>
+			{additionalLink && (
 			<Button variant="outline" size="lg" asChild>
 				{additionalLink.external ? (
 					<a href={additionalLink.url} target="_blank" rel="noopener noreferrer">
@@ -167,6 +192,7 @@ const QuickDownloadBar = ({ additionalLink, source }: QuickDownloadBarProps) => 
 					<a href={additionalLink.url}>{additionalLink.name}</a>
 				)}
 			</Button>
+			)}
 		</div>
 	);
 };

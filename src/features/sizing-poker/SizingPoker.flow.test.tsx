@@ -61,6 +61,7 @@ describe("the way in", () => {
     expect(note).toHaveTextContent(/Free in every edition/);
     expect(within(note).getByRole("link")).toHaveAttribute("href", "/lighthouse?question=refine#lighthouse-overview");
     expect(screen.getByTestId("sizing-intro")).not.toContainElement(note);
+    expect(within(note).getByTestId("sizing-intro-refinement-video")).toHaveTextContent("Watch it in 60 seconds");
   });
 
   it("keeps the intro under 50 words, since the first reviewer skipped past it unread", () => {

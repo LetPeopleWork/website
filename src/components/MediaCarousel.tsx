@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, PlayCircle } from "lucide-react";
+import { ChevronLeft, ChevronRight, Maximize2, PlayCircle } from "lucide-react";
 
 interface MediaItem {
   type: 'image' | 'video';
@@ -72,11 +72,12 @@ const MediaCarousel = ({
             width="800"
             height="600"
           />
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black/20 rounded-lg">
-            <div className="bg-white/90 rounded-full px-3 py-1">
-              <span className="text-sm font-medium text-gray-900">Click to expand</span>
-            </div>
-          </div>
+          {/* Always visible, not only on hover: the screenshots are too small
+              to read in place, and on a phone there is no hover at all. */}
+          <span className="pointer-events-none absolute bottom-2 right-2 inline-flex items-center gap-1.5 rounded-full bg-foreground/85 px-3 py-1 text-xs font-semibold text-background shadow-soft">
+            <Maximize2 className="h-3 w-3" aria-hidden="true" />
+            Click to enlarge
+          </span>
         </button>
       );
     }

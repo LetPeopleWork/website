@@ -26,8 +26,12 @@ export type Path = {
   subhead: string;
   /** Replaces the homepage hero screenshot. */
   image?: { src: string; alt: string; width: number; height: number };
-  /** Shows a diagram instead of a screenshot, where a picture of the UI says less. */
-  visual?: "where-it-runs";
+  /**
+   * Shows something other than a full screenshot: the readable forecast
+   * panel ("forecast", also the default with no chip), or the diagram of
+   * where Lighthouse runs, where a picture of the UI says less.
+   */
+  visual?: "where-it-runs" | "forecast";
   /** Where on /lighthouse this situation is answered. */
   anchor: string;
   /** Which "What Lighthouse answers" tab opens first on /lighthouse. */
@@ -48,12 +52,7 @@ export const PATHS: readonly Path[] = [
     chip: "I need to give a date",
     subhead:
       "Ask about 10 items and you get dates with their odds. Ask about a date and you get how many items will probably make it. It all comes from what your team finished recently, so there's no estimation meeting.",
-    image: {
-      src: "/lighthouse-forecast.png",
-      alt: "Lighthouse team forecast: when will 10 work items be done, four dates with their probabilities, and a 72% likelihood of making the target date",
-      width: 1920,
-      height: 1080,
-    },
+    visual: "forecast",
     anchor: "lighthouse-overview",
     tab: "when",
     linkLabel: "See how the forecast works",

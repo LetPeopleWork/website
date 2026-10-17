@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import TrialRequestDialog from "@/features/trial/components/TrialRequestDialog";
 import { trackEvent } from "@/lib/plausible";
+import { CALL_LABEL, CALL_URL } from "@/lib/contact";
 
 // The homepage used to end on five equal social cards with no way forward.
 // This is the closing offer, and it carries the page's one strong background:
@@ -41,7 +42,15 @@ const ClosingOffer = () => {
           </Button>
         </div>
         <p className="text-sm text-primary-foreground/80">
-          Not sure where you stand?{" "}
+          Rather talk it through first?{" "}
+          <a
+            href={CALL_URL}
+            onClick={() => trackEvent("Call link clicked", { source: "home-closing" })}
+            className="font-semibold text-primary-foreground underline underline-offset-4"
+          >
+            {CALL_LABEL}
+          </a>
+          {" · "}Not sure where you stand?{" "}
           <Link to="/assessment" className="font-semibold text-primary-foreground underline underline-offset-4">
             Take the five-minute flow assessment
           </Link>
