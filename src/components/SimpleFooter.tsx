@@ -25,6 +25,9 @@ const SimpleFooter = () => {
     { name: "AI", href: "/ai" },
     { name: "Flow Assessment", href: "/assessment" },
     { name: "Compare", href: "/compare/" },
+    // Static guide pages (scripts/guides), so plain links, not router links.
+    { name: "Jira without story points", href: "/jira-forecasting-without-story-points/" },
+    { name: "Azure DevOps forecasting", href: "/azure-devops-forecasting/" },
     { name: "Connect", href: "/#stay-connected" },
     { name: "Blog", href: "https://blog.letpeople.work", external: true },
     { name: "YouTube", href: "https://www.youtube.com/@LetPeopleWork/videos", external: true },

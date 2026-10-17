@@ -20,6 +20,13 @@ const SizingPokerTeaser = () => (
           <p className="text-muted-foreground">
             Skip the hour arguing whether it's a 5 or an 8. Sizing Poker asks one question per item, and it runs in your browser.
           </p>
+          {/* A static guide page, so a plain link rather than a router link. */}
+          <a
+            href="/jira-forecasting-without-story-points/"
+            className="mt-2 inline-block text-sm text-primary underline-offset-4 hover:underline"
+          >
+            Forecasting without story points works too. Here's how.
+          </a>
         </div>
         <Link
           to="/sizing-poker"

@@ -14,7 +14,10 @@
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { homeBody, lighthouseBody, loadFaq, loadPrices, simpleBody } from "./seo-content.mjs";
-import { jsonLdTag, loadSchemaData, schemaFor } from "./seo-schema.mjs";
+import { guideSchema, jsonLdTag, loadSchemaData, schemaFor } from "./seo-schema.mjs";
+import { renderGuidePage } from "./guide-page.mjs";
+import { loadGuides } from "./guides/index.mjs";
+import { buildLlmsFull } from "./llms-full.mjs";
 
 const DIST = "dist";
 const SITE = "https://letpeople.work";
@@ -220,4 +223,22 @@ for (const { path, title } of fallbackRoutes) {
   writeRoute(path, html);
   console.log(`[prerender-meta] wrote /${path} (SPA fallback, noindex)`);
 }
+// Guide pages: complete static HTML, no app behind them (guide-page.mjs).
+const guides = loadGuides(prices);
+for (const guide of guides) {
+  writeRoute(guide.path, renderGuidePage(guide, guides, jsonLdTag(guideSchema(guide))));
+  console.log(`[prerender-meta] wrote /${guide.path} (guide page)`);
+}
+
+// llms-full.txt, from the same sources as the pages.
+writeFileSync(
+  join(DIST, "llms-full.txt"),
+  buildLlmsFull({
+    llms: readFileSync(join(DIST, "llms.txt"), "utf8"),
+    lighthouseHtml: bodies.lighthouse,
+    guides,
+    date: new Date().toISOString().slice(0, 10),
+  }),
+);
+console.log("[prerender-meta] wrote /llms-full.txt");
 console.log("[prerender-meta] done");

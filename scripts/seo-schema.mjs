@@ -190,9 +190,9 @@ const lighthouseFull = ({ prices, film }) => ({
   video: [...(film.youtubeId ? [filmVideo(film)] : []), demoVideo],
 });
 
-const faqPage = (faqs) => ({
+const faqPage = (faqs, id = `${SITE}/lighthouse/#faq`) => ({
   "@type": "FAQPage",
-  "@id": `${SITE}/lighthouse/#faq`,
+  "@id": id,
   mainEntity: faqs.map((f) => ({
     "@type": "Question",
     name: f.question,
@@ -275,6 +275,38 @@ const graphs = {
     website,
     breadcrumbs(["Delivery Predictability Assessment", "/assessment/"]),
   ],
+};
+
+// The guide pages (scripts/guides/*.mjs): an article about Lighthouse, with
+// its questions as a FAQPage. The author is the company; the guides draw on
+// the founders' blog posts, which they link to.
+export const guideSchema = (guide) => {
+  const url = `${SITE}/${guide.path}/`;
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      organization({ full: false }),
+      website,
+      breadcrumbs([guide.navLabel, `/${guide.path}/`]),
+      {
+        "@type": "TechArticle",
+        "@id": `${url}#article`,
+        headline: guide.h1,
+        description: guide.description,
+        url,
+        mainEntityOfPage: url,
+        inLanguage: "en",
+        image: guide.ogImage ?? `${SITE}/lighthouse-forecast.png`,
+        datePublished: isoDateTime(guide.published),
+        dateModified: isoDateTime(guide.updated),
+        author: orgRef,
+        publisher: orgRef,
+        isPartOf: { "@id": WEBSITE_ID },
+        about: { "@id": LIGHTHOUSE_ID },
+      },
+      ...(guide.faqs.length ? [faqPage(guide.faqs, `${url}#questions`)] : []),
+    ],
+  };
 };
 
 export const schemaFor = (route, data) => {

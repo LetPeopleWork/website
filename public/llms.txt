@@ -21,6 +21,10 @@ Two practitioners who use them with teams themselves. Benjamin Huser-Berta is th
 - [Sizing Poker](https://letpeople.work/sizing-poker/): Free browser tool that sizes a backlog by asking one question per item instead of estimating it
 - [AI at LetPeopleWork](https://letpeople.work/ai/): obAIa, open-source Claude Code plugins, and the AI workshop journey
 - [Delivery Predictability Assessment](https://letpeople.work/assessment/): Free five-minute self-assessment of how predictable your delivery is
+- [Lighthouse vs ActionableAgile vs Nave](https://letpeople.work/compare/): Side-by-side comparison of hosting, data location, pricing model and integrations, for teams looking for a self-hosted alternative
+- [Forecasting Jira without story points](https://letpeople.work/jira-forecasting-without-story-points/): How to forecast Jira releases from throughput with Monte Carlo instead of estimating, step by step
+- [Azure DevOps delivery forecasting](https://letpeople.work/azure-devops-forecasting/): How Lighthouse connects to Azure DevOps and forecasts from your work items, without story points
+- [llms-full.txt](https://letpeople.work/llms-full.txt): This summary plus the full product page, FAQ and guides in one file
 
 ## Sizing Poker - Backlog Sizing Without Estimates
 

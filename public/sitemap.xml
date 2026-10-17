@@ -57,18 +57,36 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- Comparison: Lighthouse vs ActionableAgile vs Nave -->
+  <!-- Guides (static pages, scripts/guides) -->
   <url>
     <loc>https://letpeople.work/compare/</loc>
-    <lastmod>2026-07-16</lastmod>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://letpeople.work/jira-forecasting-without-story-points/</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://letpeople.work/azure-devops-forecasting/</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 
   <!-- LLM-Friendly Resources -->
   <url>
     <loc>https://letpeople.work/llms.txt</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://letpeople.work/llms-full.txt</loc>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

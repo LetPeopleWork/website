@@ -36,6 +36,8 @@ const nav = `<nav aria-label="Site">
 <a href="${SITE}/lighthouse/">Lighthouse</a> ·
 <a href="${SITE}/sizing-poker/">Sizing Poker</a> ·
 <a href="${SITE}/compare/">Lighthouse vs ActionableAgile vs Nave</a> ·
+<a href="${SITE}/jira-forecasting-without-story-points/">Forecasting Jira without story points</a> ·
+<a href="${SITE}/azure-devops-forecasting/">Azure DevOps delivery forecasting</a> ·
 <a href="${DOCS}">Documentation</a> ·
 <a href="${GITHUB}">Source on GitHub</a>
 </nav>`;
