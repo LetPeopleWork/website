@@ -14,7 +14,7 @@ import { lighthouseAsset } from "@/lib/lighthouseAsset";
 
 export type PathKey = "date" | "portfolio" | "team" | "security";
 
-export type QuestionTab = "when" | "stuck" | "release" | "portfolio" | "refine";
+export type QuestionTab = "when" | "stuck" | "release" | "portfolio" | "refine" | "change";
 
 export type Path = {
   key: PathKey;

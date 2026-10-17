@@ -81,6 +81,8 @@ export const lighthouseBody = (faqs, prices) => `${nav}
 <p>The same flow metrics one level up, and a forecast for every feature. When several teams work on one feature, Lighthouse combines their simulations into one probability, which is lower than any single team's odds because all of them have to make it.</p>
 <h3>How much should we refine?</h3>
 <p>Lighthouse forecasts how many items the team will pull before the refinement after next, and the team sizes each item with one question: could we finish it within our SLE?</p>
+<h3>Did the change work?</h3>
+<p>Every team and portfolio has a Reports tab. The first report type, Then &amp; Now, freezes a window from before a change, even one that ended long ago, and compares it with a window that moves with today: cycle time, throughput, WIP and work item age, with a summary of what changed. Reports can be edited and deleted, and they show on the Overview. The Community edition includes one report of each type per team and portfolio; Self-Service and Enterprise have no limit. More report types are coming. <a href="${DOCS}/reports/reports.html">How reports work</a>.</p>
 
 <h2>Forecasts you can check</h2>
 <p>Forecast Reality Check forecasts weeks that already happened, as if they had not, and compares the result with what the team really finished, for every percentile and sampling window. When Peter Zylka-Greger backtested his own team, the 85% forecast said 12 items for two weeks; the team finished 16.</p>

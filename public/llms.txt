@@ -46,6 +46,7 @@ Lighthouse is a source-available flow metrics and probabilistic forecasting tool
 - Which features make the release? A delivery timeline shows each feature's forecast start and finish, with dependencies read from the tracker.
 - How is the portfolio doing? Feature forecasts that combine every team working on a feature into one joint probability.
 - How much should we refine? A refinement forecast plus sizing votes per item.
+- Did the change work? Reports on every team and portfolio. The first report type, Then & Now, freezes a window from before a change (it may have ended long ago) and compares it with a window that moves with today: cycle time, throughput, WIP and work item age, with a summary of what changed. Community includes one report of each type per team and portfolio; paid editions have no limit. More report types are coming. https://docs.lighthouse.letpeople.work/reports/reports.html
 
 **Key features of Lighthouse:**
 1. Monte Carlo forecasts for teams ("how many" and "when") and for features, deliveries and portfolios
@@ -53,10 +54,11 @@ Lighthouse is a source-available flow metrics and probabilistic forecasting tool
 3. Forecasted start dates next to completion dates, and a delivery timeline per delivery
 4. Dependencies read from Jira (is blocked by), Azure DevOps (predecessor) and Linear, and taken into account in forecasts on paid editions
 5. Flow metrics: cycle time, throughput, work in progress, work item age with pace bands, blocked and stale items, risk of missing the SLE, process behaviour charts, percentiles over time, cumulative time in state
-6. Connects to Jira Cloud, Jira Server and Data Center, Azure DevOps, Linear, ServiceNow and CSV
-7. AI integration via MCP (Model Context Protocol), a command line client and agent skills
-8. Self-hosted: desktop app (Windows, macOS, Linux), Docker, or Kubernetes with the official Helm chart
-9. Source available on GitHub; free Community edition for up to 3 teams and 1 portfolio
+6. Reporting: a Reports tab on every team and portfolio, starting with Then & Now, which compares flow metrics from before a change with today's
+7. Connects to Jira Cloud, Jira Server and Data Center, Azure DevOps, Linear, ServiceNow and CSV
+8. AI integration via MCP (Model Context Protocol), a command line client and agent skills
+9. Self-hosted: desktop app (Windows, macOS, Linux), Docker, or Kubernetes with the official Helm chart
+10. Source available on GitHub; free Community edition for up to 3 teams and 1 portfolio
 
 **What is AI integration in Lighthouse?**
 Lighthouse exposes your flow data to AI assistants through three integration methods:

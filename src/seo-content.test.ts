@@ -18,7 +18,7 @@ describe("crawler-readable page content", () => {
 
   it("says what Lighthouse is, where it runs and what it connects to", () => {
     expect(lighthouse).toMatch(/<h1>[^<]*Monte Carlo/);
-    for (const fact of ["Jira Server or Data Center", "Azure DevOps", "Linear", "ServiceNow", "Helm chart", "MCP server", "Forecast Reality Check"]) {
+    for (const fact of ["Jira Server or Data Center", "Azure DevOps", "Linear", "ServiceNow", "Helm chart", "MCP server", "Forecast Reality Check", "Reports tab"]) {
       expect(lighthouse).toContain(fact);
     }
   });
