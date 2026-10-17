@@ -22,6 +22,8 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, "..");
 const prices = JSON.parse(readFileSync(join(root, "src/lib/pricing.json"), "utf8"));
+// The founders' bios in their own words, the same file the homepage reads.
+const founders = JSON.parse(readFileSync(join(root, "src/content/founders.json"), "utf8"));
 const asset = (p) => pathToFileURL(join(root, p)).href;
 const cdn = (p) => `https://cdn.jsdelivr.net/gh/LetPeopleWork/Lighthouse@main/docs/assets/${p}`;
 const BLOG = "blog.letpeople.work";
@@ -495,14 +497,16 @@ slides.push(
     title: "Built by two practitioners who use it with their own teams",
     body: `
   <div class="team">
-    <div class="person">
-      <img src="${asset("src/assets/Benji.png")}" alt="" />
-      <div><strong>Benjamin Huser-Berta</strong><span class="role">Co-founder · Product and engineering</span><p>Software engineer and Professional Kanban Trainer. Benjamin designs and builds Lighthouse, ships a new release about once a week, and writes the step-by-step guides to Monte Carlo forecasting on our blog.</p></div>
-    </div>
-    <div class="person">
-      <img src="${asset("src/assets/Peter.png")}" alt="" />
-      <div><strong>Peter Zylka-Greger</strong><span class="role">Co-founder · Clients and coaching</span><p>Delivery coach, trainer and speaker on flow and forecasting. Peter works with teams and leaders on making delivery predictable, and leads how we bring Lighthouse to the teams who need it.</p></div>
-    </div>
+    ${founders
+      .slice()
+      .reverse()
+      .map(
+        (f) => `<div class="person">
+      <img src="${asset(`src/assets/${f.photo}`)}" alt="" />
+      <div><strong>${esc(f.name)}</strong><span class="role">${esc(f.role)}</span><p>${esc(f.bio)}</p></div>
+    </div>`,
+      )
+      .join("\n")}
   </div>
   <div class="why">
     <h3>Why we built it</h3>

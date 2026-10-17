@@ -1,41 +1,16 @@
 import PeterImage from "../assets/Peter.png";
 import BenjiImage from "../assets/Benji.png";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import foundersData from "@/content/founders.json";
 
 // The two founders, kept from the former services section: a product page
 // still needs faces behind it, and these are the people answering the
-// support mail. The bios are the founders' own words; the closing line was
-// rewritten when consulting left the site. Each `track` line says what the
-// person does at LetPeopleWork, with a link to something they wrote. Keep
-// anecdotes and numbers out of bios; they belong with the proof.
-const founders = [
-  {
-    name: "Peter Zylka-Greger",
-    image: PeterImage,
-    alt: "Peter Zylka-Greger - Flow and Kanban Expert",
-    paragraphs: [
-      "Years with teams worldwide taught me that people want to contribute and be part of something successful. We just need to let them work.",
-    ],
-    track: {
-      text: "Co-founder. Works with teams and leaders on making delivery predictable, and writes about what he learns.",
-      href: "https://blog.letpeople.work/p/how-lighthouse-changed-the-way-i",
-      label: "How Lighthouse changed the way I work",
-    },
-  },
-  {
-    name: "Benjamin Huser-Berta",
-    image: BenjiImage,
-    alt: "Benjamin Huser-Berta - Software Engineer and Scrum Master",
-    paragraphs: [
-      "Software engineer and Scrum Master. Work can be creative and fun when we reduce waste and focus on delivering value.",
-    ],
-    track: {
-      text: "Co-founder. Designs and builds Lighthouse, and writes the step-by-step guides to Monte Carlo forecasting.",
-      href: "https://blog.letpeople.work/p/an-introduction-and-step-by-step-guide-to-monte-carlo-simulations",
-      label: "His Monte Carlo guide",
-    },
-  },
-];
+// support mail. The bios are the founders' own words, in
+// src/content/founders.json, which the pitch deck reads too
+// (deck/build-deck.mjs), so both always say the same. Keep anecdotes and
+// numbers out of bios; they belong with the proof.
+const PHOTOS: Record<string, string> = { "Peter.png": PeterImage, "Benji.png": BenjiImage };
+const founders = foundersData.map((f) => ({ ...f, image: PHOTOS[f.photo] }));
 
 const WhoBuildsThis = () => {
   const { ref, revealed } = useScrollReveal<HTMLDivElement>();
@@ -59,7 +34,8 @@ const WhoBuildsThis = () => {
             {founders.map((founder) => (
               <div key={founder.name} className="space-y-4">
                 <div className="text-center mb-6">
-                  <h3 className="text-xl font-semibold text-primary mb-3">{founder.name}</h3>
+                  <h3 className="text-xl font-semibold text-primary">{founder.name}</h3>
+                  <p className="mt-1 mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{founder.role}</p>
                   <img
                     src={founder.image}
                     alt={founder.alt}
@@ -69,22 +45,15 @@ const WhoBuildsThis = () => {
                     loading="lazy"
                   />
                 </div>
-                {founder.paragraphs.map((text) => (
-                  <p key={text.slice(0, 24)} className="text-muted-foreground">
-                    {text}
-                  </p>
-                ))}
-                <p className="text-sm text-foreground">
-                  {founder.track.text}{" "}
-                  <a
-                    href={founder.track.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-medium text-primary underline-offset-4 hover:underline"
-                  >
-                    {founder.track.label}
-                  </a>
-                </p>
+                <p className="text-muted-foreground">{founder.bio}</p>
+                <a
+                  href={founder.link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block text-sm font-medium text-primary underline-offset-4 hover:underline"
+                >
+                  {founder.link.label}
+                </a>
               </div>
             ))}
           </div>

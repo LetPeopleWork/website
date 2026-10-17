@@ -1,0 +1,24 @@
+[
+  {
+    "name": "Peter Zylka-Greger",
+    "role": "Co-founder · Clients and coaching",
+    "photo": "Peter.png",
+    "alt": "Peter Zylka-Greger, co-founder of LetPeopleWork",
+    "bio": "Years with teams around the world taught me that people want to contribute and be part of something successful. We just need to let them work. I coach teams and leaders on flow and forecasting, and make sure Lighthouse fits how they really deliver.",
+    "link": {
+      "href": "https://blog.letpeople.work/p/how-lighthouse-changed-the-way-i",
+      "label": "How Lighthouse changed the way I work"
+    }
+  },
+  {
+    "name": "Benjamin Huser-Berta",
+    "role": "Co-founder · Product and engineering",
+    "photo": "Benji.png",
+    "alt": "Benjamin Huser-Berta, co-founder of LetPeopleWork",
+    "bio": "Software engineer and Scrum Master. Work can be creative and fun when we reduce waste and focus on delivering value. That's how I build Lighthouse: small releases, about one a week, shaped by what teams ask for.",
+    "link": {
+      "href": "https://blog.letpeople.work/p/an-introduction-and-step-by-step-guide-to-monte-carlo-simulations",
+      "label": "An introduction to Monte Carlo simulations"
+    }
+  }
+]
