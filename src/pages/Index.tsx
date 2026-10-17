@@ -7,7 +7,6 @@ import AIIntegrationSection from "@/components/AIIntegrationSection";
 import WhoBuildsThis from "@/components/WhoBuildsThis";
 import ClosingOffer from "@/components/ClosingOffer";
 import BlogSection from "@/components/BlogSection";
-import StayConnected from "@/components/StayConnected";
 import SimpleFooter from "@/components/SimpleFooter";
 import SEO from "@/components/SEO";
 
@@ -28,7 +27,6 @@ const Index = () => {
       <WhoBuildsThis />
       <ClosingOffer />
       <BlogSection />
-      <StayConnected />
       <SimpleFooter />
     </div>
   );
