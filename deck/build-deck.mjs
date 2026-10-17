@@ -13,44 +13,78 @@
 // Style: consulting-style action titles (the headline states the point),
 // one message per slide, an executive summary up front, sources on every
 // exhibit. Voice rules from the website apply: no em dashes, no slogans.
+//
+// A tailored version for one organisation (used by the obAIa pitch-deck skill):
+//
+//   node deck/build-deck.mjs --config briefing.json --out ~/somewhere/briefing.pdf
+//
+// The config is JSON; every field is optional and anything left out stays as
+// in the public deck. Prices, bios, screenshots and quotes still come from this
+// repo, so a tailored deck never carries stale facts.
+//   customer            name shown on the cover and in the footer
+//   edition             e.g. "November 2026" (default below)
+//   slides              slide ids in the order to show them (default: all, see SLIDE_IDS)
+//   cover               { title, subtitle }
+//   summary             { title, points: [{ lead, text }] }
+//   context             { title, heard: [..], answer: [..] } for the "context" slide
+//   integrations        { highlight: ["Jira Cloud", ...] }
+//   quotes              names to keep, in order, e.g. ["Chris Graves"]
+//   start               { title, phases: [[when, what, detail], ...], it: [[title, text], ...] }
+//   closing             { title, subtitle, contact }
+//   notes               { slideId: "one callout line added below that slide's content" }
 
 import { execFileSync } from "node:child_process";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, "..");
+
+const arg = (name) => {
+  const i = process.argv.indexOf(name);
+  return i > 0 ? process.argv[i + 1] : undefined;
+};
+const configPath = arg("--config");
+const cfg = configPath ? JSON.parse(readFileSync(resolve(configPath), "utf8")) : {};
+const outArg = arg("--out");
+if (configPath && !outArg) {
+  console.error("[deck] a tailored deck needs --out, so it never overwrites the public PDF");
+  process.exit(1);
+}
 const prices = JSON.parse(readFileSync(join(root, "src/lib/pricing.json"), "utf8"));
 // The founders' bios in their own words, the same file the homepage reads.
 const founders = JSON.parse(readFileSync(join(root, "src/content/founders.json"), "utf8"));
 const asset = (p) => pathToFileURL(join(root, p)).href;
 const cdn = (p) => `https://cdn.jsdelivr.net/gh/LetPeopleWork/Lighthouse@main/docs/assets/${p}`;
 const BLOG = "blog.letpeople.work";
-const EDITION = "October 2026";
+const EDITION = cfg.edition || "October 2026";
 
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const BRIEFING = cfg.customer ? `Lighthouse briefing for ${esc(cfg.customer)}` : "Lighthouse executive briefing";
 
 // ---------------------------------------------------------------------------
 // Slide frame
 
 let pageNo = 0;
+let currentId = "";
 const slide = ({ tracker, title, body, source, dark = false, cls = "" }) => {
   pageNo += 1;
   if (dark) {
     return `<section class="slide dark ${cls}">${body}</section>`;
   }
+  const note = cfg.notes?.[currentId];
   return `<section class="slide ${cls}">
   <header>
     ${tracker ? `<p class="tracker">${esc(tracker)}</p>` : ""}
     <h2>${title}</h2>
   </header>
-  <div class="content">${body}</div>
+  <div class="content">${body}${note ? `<div class="callout wide custom">${esc(note)}</div>` : ""}</div>
   <footer>
     <div class="source">${source ? `Source: ${source}` : ""}</div>
     <div class="foot">
       <img class="wordmark" src="${asset("src/assets/LPW_Banner_White.png")}" alt="LetPeopleWork" />
-      <span>Lighthouse executive briefing · ${EDITION}</span>
+      <span>${BRIEFING} · ${EDITION}</span>
       <span class="num">${String(pageNo).padStart(2, "0")}</span>
     </div>
   </footer>
@@ -100,31 +134,32 @@ ${items}</svg>`;
 // ---------------------------------------------------------------------------
 // The slides
 
-const slides = [];
+const defs = {};
 
 // 1. Cover
-slides.push(
+defs["cover"] = () =>
   slide({
     dark: true,
     cls: "cover",
     body: `
-  <div class="cover-top">${wordmarkDark}<span class="cover-kicker">Executive briefing · ${EDITION}</span></div>
+  <div class="cover-top">${wordmarkDark}<span class="cover-kicker">${cfg.customer ? `Briefing for ${esc(cfg.customer)}` : "Executive briefing"} · ${EDITION}</span></div>
   <div class="cover-main">
     <img class="cover-logo" src="${asset("src/assets/LighthouseLogo.png")}" alt="" />
     <p class="cover-product">Lighthouse</p>
-    <h1>Know how likely your date is before you promise it</h1>
-    <p class="cover-sub">Flow metrics and Monte Carlo forecasts for software delivery, running on your own systems</p>
+    <h1>${esc(cfg.cover?.title ?? "Know how likely your date is before you promise it")}</h1>
+    <p class="cover-sub">${esc(cfg.cover?.subtitle ?? "Flow metrics and Monte Carlo forecasts for software delivery, running on your own systems")}</p>
   </div>
   <div class="cover-bottom"><span>letpeople.work/lighthouse</span><span>LetPeopleWork GmbH · Zürich</span></div>`,
-  }),
-);
+  });
 
 // 2. Executive summary
-slides.push(
+defs["summary"] = () =>
   slide({
     tracker: "Executive summary",
-    title: "Lighthouse replaces estimated dates with forecasts you can check, without moving your data",
-    body: `
+    title: cfg.summary?.title ? esc(cfg.summary.title) : "Lighthouse replaces estimated dates with forecasts you can check, without moving your data",
+    body: cfg.summary?.points
+      ? `<ol class="summary">${cfg.summary.points.map((p, i) => `<li><span class="n">${i + 1}</span><div><strong>${esc(p.lead)}</strong> ${esc(p.text ?? "")}</div></li>`).join("")}</ol>`
+      : `
   <ol class="summary">
     <li><span class="n">1</span><div><strong>Dates built on estimates miss.</strong> Story points barely track how long work really takes, and a forecast from an average promises more than the team delivers.</div></li>
     <li><span class="n">2</span><div><strong>Lighthouse forecasts from what teams have already finished.</strong> It turns their throughput into dates with odds, for one team or a whole portfolio, with no estimation meetings.</div></li>
@@ -132,11 +167,10 @@ slides.push(
     <li><span class="n">4</span><div><strong>It runs inside your network.</strong> One installation connects Jira, Azure DevOps, Linear and ServiceNow, and the work items stay in its own database on your systems.</div></li>
     <li><span class="n">5</span><div><strong>It is free to start.</strong> Community covers 3 teams. Self-Service is ${esc(prices.selfService)} and Enterprise ${esc(prices.enterprise)} a year, flat, not per user.</div></li>
   </ol>`,
-  }),
-);
+  });
 
 // 3. The problem: estimates
-slides.push(
+defs["estimates"] = () =>
   slide({
     tracker: "The problem",
     title: "The same story-point estimate covers work that takes a few days and work that takes almost half a year",
@@ -169,11 +203,10 @@ slides.push(
     </div>
   </div>`,
     source: `Peter Zylka-Greger, "Reality check through scatter plotting" (2024); "The hidden cost of noise in your delivery predictions" (2026), ${BLOG}`,
-  }),
-);
+  });
 
 // 4. Averages
-slides.push(
+defs["averages"] = () =>
   slide({
     tracker: "The problem",
     title: "An average promised 37.5 items in 30 days; the team finished 30, close to the 85% forecast of 31",
@@ -203,11 +236,10 @@ slides.push(
     </div>
   </div>`,
     source: `Benjamin Huser-Berta, "The flaw of averages: comparing Monte Carlo simulations with estimates based on averages" (2023), ${BLOG}`,
-  }),
-);
+  });
 
 // 5. How it works
-slides.push(
+defs["how"] = () =>
   slide({
     tracker: "The solution",
     title: "Lighthouse turns the work a team has finished into dates with their odds",
@@ -234,11 +266,10 @@ slides.push(
     </figure>
   </div>`,
     source: "Lighthouse documentation, How Lighthouse forecasts (docs.lighthouse.letpeople.work)",
-  }),
-);
+  });
 
 // 6. Reality Check
-slides.push(
+defs["reality-check"] = () =>
   slide({
     tracker: "The solution",
     title: "Lighthouse checks its own forecasts against weeks that already happened",
@@ -262,11 +293,10 @@ slides.push(
     </figure>
   </div>`,
     source: `Peter Zylka-Greger, "How Lighthouse changed the way I work" (2026), ${BLOG}; Lighthouse documentation`,
-  }),
-);
+  });
 
 // 7. Portfolio odds
-slides.push(
+defs["portfolio"] = () =>
   slide({
     tracker: "Portfolio",
     title: "When several teams work on one feature, the odds of making a date drop fast; Lighthouse shows the joint probability",
@@ -296,11 +326,10 @@ slides.push(
     </div>
   </div>`,
     source: `Benjamin Huser-Berta, "An introduction and step-by-step guide to multi-team Monte Carlo simulations" (2026), ${BLOG}; arithmetic as shown`,
-  }),
-);
+  });
 
 // 8. Flow metrics
-slides.push(
+defs["flow"] = () =>
   slide({
     tracker: "Flow metrics",
     title: "Flow metrics show where work gets stuck while there is still time to act",
@@ -321,11 +350,10 @@ slides.push(
     </div>
   </div>`,
     source: "Lighthouse documentation (docs.lighthouse.letpeople.work)",
-  }),
-);
+  });
 
 // 9. Where it runs
-slides.push(
+defs["hosting"] = () =>
   slide({
     tracker: "Security and hosting",
     title: "Lighthouse runs where your data lives, so a tracker inside your network needs no way out",
@@ -352,11 +380,10 @@ slides.push(
     </div>
   </div>`,
     source: "Lighthouse documentation; LetPeopleWork privacy policy",
-  }),
-);
+  });
 
 // 10. Integrations and AI
-slides.push(
+defs["integrations"] = () =>
   slide({
     tracker: "Integrations",
     title: "One installation connects the trackers your teams already use, and your AI assistant",
@@ -372,16 +399,15 @@ slides.push(
       ["CSV", "For anything else"],
       ["AI assistants", "MCP server for Claude, Copilot and others, and the lh command line"],
     ]
-      .map(([t, d], i) => `<div class="tile${i === 7 ? " accent" : ""}"><strong>${t}</strong><span>${d}</span></div>`)
+      .map(([t, d], i) => `<div class="tile${(cfg.integrations?.highlight ? cfg.integrations.highlight.includes(t) : i === 7) ? " accent" : ""}"><strong>${t}</strong><span>${d}</span></div>`)
       .join("")}
   </div>
   <div class="callout wide">Teams on different trackers end up in one portfolio forecast. On paid editions, Lighthouse can write forecasts such as the 85% date back into a field in Jira or Azure DevOps.</div>`,
     source: "Lighthouse documentation, work tracking systems and AI integration",
-  }),
-);
+  });
 
 // 11. Comparison
-slides.push(
+defs["compare"] = () =>
   slide({
     tracker: "Alternatives",
     title: "Compared with ActionableAgile and Nave, Lighthouse is the option that runs on your own systems at a flat price",
@@ -398,11 +424,10 @@ slides.push(
     </tbody>
   </table>`,
     source: "Vendors' public pages and the Atlassian and Visual Studio marketplaces, checked October 2026; letpeople.work/compare",
-  }),
-);
+  });
 
 // 12. Pricing
-slides.push(
+defs["pricing"] = () =>
   slide({
     tracker: "Editions and pricing",
     title: "Start free, then pay one flat yearly licence, whatever the number of users",
@@ -424,74 +449,77 @@ slides.push(
   </div>
   <p class="note center">The paid features are called Premium in the app; both paid editions include all of them. Setup help is free for every edition. Premium can be tried for 30 days without signing up.</p>`,
     source: "letpeople.work/lighthouse, pricing",
-  }),
-);
+  });
 
 // 13. Testimonials (verbatim)
 const quote = (text, mark, who, role) => {
   const i = text.indexOf(mark);
   const html = i < 0 ? esc(text) : `${esc(text.slice(0, i))}<mark>${esc(mark)}</mark>${esc(text.slice(i + mark.length))}`;
-  return `<figure class="quote"><blockquote>${html}</blockquote><figcaption><strong>${esc(who)}</strong><span>${esc(role)}</span></figcaption></figure>`;
+  return `<figure class="quote" data-who="${esc(who)}"><blockquote>${html}</blockquote><figcaption><strong>${esc(who)}</strong><span>${esc(role)}</span></figcaption></figure>`;
 };
-slides.push(
+// Keep the quotes named in the config, in that order (all three by default).
+const pickQuotes = (all) => {
+  if (!cfg.quotes) return all.join("\n");
+  const by = Object.fromEntries(all.map((q) => [q.match(/data-who="([^"]*)"/)[1], q]));
+  return cfg.quotes.map((n) => by[esc(n)] ?? (() => { throw new Error(`[deck] unknown quote: ${n}`); })()).join("\n");
+};
+defs["quotes"] = () =>
   slide({
     tracker: "What teams say",
     title: "Teams use Lighthouse to plan across release trains, surface risk earlier and set clearer expectations",
     body: `
   <div class="quotes">
-    ${quote(
+    ${pickQuotes([quote(
       "Lighthouse transformed how our Agile Release Train operates: moving us from guesstimations and overcommitment to data-driven PI Planning. It streamlined progress tracking across teams, making delivery more transparent and predictable. With continuous forecasting, we're now better equipped to anticipate risks, align expectations, and deliver value with confidence.",
       "from guesstimations and overcommitment to data-driven PI Planning",
       "Agnieszka Reginek",
       "Professional Kanban Trainer, Scrum Master",
-    )}
-    ${quote(
+    ),
+    quote(
       "Lighthouse has transformed how we approach delivery. By prompting the right questions earlier and using the default feature size function to quickly forecast “how much?”, it provides a lean, cost‑effective way to surface risk and enable better decisions.",
       "a lean, cost‑effective way to surface risk and enable better decisions",
       "Chris Graves",
       "Agile Coach, Focusrite",
-    )}
-    ${quote(
+    ),
+    quote(
       "Lighthouse helped us be more on to it. We’re now more predictable, efficient, and responsive when it comes to delivering value and serving our customers. It’s made planning sessions run smoother and helped set clearer expectations with our stakeholders. The insights we get from the data really sharpen our conversations and keep us focused on what matters.",
       "We’re now more predictable, efficient, and responsive",
       "Gonzalo Mendez",
       "Scrum Master, Mitre 10 (New Zealand)",
-    )}
+    )])}
   </div>`,
     source: "Quotes as given by the people named; letpeople.work/lighthouse",
-  }),
-);
+  });
 
 // 14. How to start
-slides.push(
+defs["start"] = () =>
   slide({
     tracker: "Next steps",
-    title: "A first forecast on your own data takes an afternoon, and the decision can wait until it has proven itself",
+    title: cfg.start?.title ? esc(cfg.start.title) : "A first forecast on your own data takes an afternoon, and the decision can wait until it has proven itself",
     body: `
   <div class="timeline">
-    ${[
+    ${(cfg.start?.phases ?? [
       ["Day 1", "Install and connect", "On a laptop or a server, next to your tracker. Plan for about half an hour; in a recorded session, a Scrum Master did it in under ten minutes."],
       ["Week 1", "First forecasts", "Forecasts and flow metrics for up to 3 teams, free. We help with setup at no cost."],
       ["Weeks 2 to 4", "Check the forecasts", "Run Forecast Reality Check on your history. Try Premium for 30 days for the portfolio views."],
       ["Then", "Decide", "Stay on Community, or choose Self-Service or Enterprise."],
-    ]
-      .map(([when, what, detail], i) => `<div class="phase"><span class="dot">${i + 1}</span><p class="when">${when}</p><p class="what">${what}</p><p class="detail">${detail}</p></div>`)
+    ])
+      .map(([when, what, detail], i) => `<div class="phase"><span class="dot">${i + 1}</span><p class="when">${esc(when)}</p><p class="what">${esc(what)}</p><p class="detail">${esc(detail)}</p></div>`)
       .join("")}
   </div>
   <div class="it-box">
     <p class="it-title">What it needs from IT</p>
     <div class="it-grid">
-      <div><strong>A machine</strong><span>A laptop, a VM, a Docker host or a Kubernetes cluster inside your network</span></div>
+      ${cfg.start?.it ? cfg.start.it.map(([t, d]) => `<div><strong>${esc(t)}</strong><span>${esc(d)}</span></div>`).join("") : `<div><strong>A machine</strong><span>A laptop, a VM, a Docker host or a Kubernetes cluster inside your network</span></div>
       <div><strong>Read access to the tracker</strong><span>An API token or a personal access token for the projects in question</span></div>
-      <div><strong>Nothing opened to the internet</strong><span>Lighthouse calls your tracker; LetPeopleWork receives no work items</span></div>
+      <div><strong>Nothing opened to the internet</strong><span>Lighthouse calls your tracker; LetPeopleWork receives no work items</span></div>`}
     </div>
   </div>`,
     source: "Lighthouse documentation; Lighthouse Live session with Gábor Bittera (May 2026)",
-  }),
-);
+  });
 
 // 15. Team
-slides.push(
+defs["team"] = () =>
   slide({
     tracker: "Who we are",
     title: "Built by two practitioners who use it with their own teams",
@@ -513,24 +541,44 @@ slides.push(
     <p>The tools we found were fragmented, expensive and tied to the cloud, and their price grew with every user. So we built one that runs where the data lives, with the source public, and use it with our own teams first.</p>
   </div>
   <div class="callout wide">LetPeopleWork GmbH, Zürich. We write about forecasting and flow, with step-by-step guides and real team data, at ${BLOG}.</div>`,
-  }),
-);
+  });
 
 // 16. Closing
-slides.push(
+defs["closing"] = () =>
   slide({
     dark: true,
     cls: "cover closing",
     body: `
   <div class="cover-top">${wordmarkDark}<span class="cover-kicker">Next step</span></div>
   <div class="cover-main">
-    <h1>See your own forecast before you decide anything</h1>
-    <p class="cover-sub">Download Lighthouse free at letpeople.work/lighthouse, or ask us for a 20-minute call.</p>
-    <p class="contact">contact@letpeople.work · +41 79 471 82 33</p>
+    <h1>${esc(cfg.closing?.title ?? "See your own forecast before you decide anything")}</h1>
+    <p class="cover-sub">${esc(cfg.closing?.subtitle ?? "Download Lighthouse free at letpeople.work/lighthouse, or ask us for a 20-minute call.")}</p>
+    <p class="contact">${esc(cfg.closing?.contact ?? "contact@letpeople.work · +41 79 471 82 33")}</p>
   </div>
   <div class="cover-bottom"><span>letpeople.work</span><span>LetPeopleWork GmbH · Zürich</span></div>`,
-  }),
-);
+  });
+
+// Tailored decks only: what we heard from this organisation, and what answers it.
+defs["context"] = () =>
+  slide({
+    tracker: cfg.customer ? `What we heard from ${cfg.customer}` : "What we heard",
+    title: esc(cfg.context?.title ?? "What you told us, and where Lighthouse fits"),
+    body: `
+  <div class="two-col">
+    <div class="side"><h3>What we heard</h3><ul class="ticks">${(cfg.context?.heard ?? []).map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div>
+    <div class="side"><h3>What Lighthouse does about it</h3><ul class="ticks">${(cfg.context?.answer ?? []).map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div>
+  </div>`,
+    source: cfg.context?.source ? esc(cfg.context.source) : "",
+  });
+
+// The public deck: every slide except the tailored context slide, in this order.
+const SLIDE_IDS = ["cover", "summary", "estimates", "averages", "how", "reality-check", "portfolio", "flow", "hosting", "integrations", "compare", "pricing", "quotes", "start", "team", "closing"];
+const order = cfg.slides ?? (cfg.context ? ["cover", "summary", "context", ...SLIDE_IDS.slice(2)] : SLIDE_IDS);
+const slides = order.map((id) => {
+  if (!defs[id]) throw new Error(`[deck] unknown slide "${id}"; known: ${Object.keys(defs).join(", ")}`);
+  currentId = id;
+  return defs[id]();
+});
 
 // ---------------------------------------------------------------------------
 // Styles
@@ -695,21 +743,22 @@ table.cmp thead th.us { background: var(--green); color: #fff; border-bottom-col
 `;
 
 const html = `<!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8" /><title>Lighthouse executive briefing</title><style>${css}</style></head>
+<html lang="en"><head><meta charset="utf-8" /><title>${BRIEFING}</title><style>${css}</style></head>
 <body>
 ${slides.join("\n")}
 </body></html>`;
 
-const htmlPath = join(here, "lighthouse-pitch.html");
+const pdfPath = outArg ? resolve(outArg) : join(root, "public", "Lighthouse_Pitch_Deck.pdf");
+mkdirSync(dirname(pdfPath), { recursive: true });
+const htmlPath = outArg ? pdfPath.replace(/\.pdf$/i, "") + ".html" : join(here, "lighthouse-pitch.html");
 writeFileSync(htmlPath, html);
 console.log(`[deck] wrote ${htmlPath} (${slides.length} slides)`);
 
-const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+const CHROME = process.env.CHROME || "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 if (!existsSync(CHROME)) {
   console.error("[deck] Google Chrome not found; open the HTML file and print it to PDF instead.");
   process.exit(1);
 }
-const pdfPath = join(root, "public", "Lighthouse_Pitch_Deck.pdf");
 execFileSync(
   CHROME,
   [
