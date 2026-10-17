@@ -105,19 +105,19 @@ const lighthouseOffers = (prices) =>
       name: "Lighthouse Community",
       price: "0",
       description:
-        "Free for up to 3 teams, 1 portfolio and 1 delivery, with all core flow metrics and Monte Carlo forecasts.",
+        "Free for up to 3 teams and 1 portfolio with 1 delivery, with all core flow metrics and Monte Carlo forecasts.",
     },
     {
       name: "Lighthouse Self-Service",
       price: prices.selfServiceAmount,
       description:
-        "Yearly licence with unlimited teams and portfolios, sign-in through your identity provider, role-based access, rule-based deliveries and data sync mappings.",
+        "Yearly Premium licence: unlimited teams and portfolios, sign-in through your identity provider, role-based access, rule-based deliveries and data sync mappings.",
     },
     {
       name: "Lighthouse Enterprise",
       price: prices.enterpriseAmount,
       description:
-        "Yearly licence with everything in Self-Service, plus a prioritised support queue, 24h acknowledgement on async requests, two 60-minute onboarding calls in the first 90 days and named contacts.",
+        "Yearly Premium licence with everything in Self-Service, plus a prioritised support queue, 24h acknowledgement on async requests, two 60-minute onboarding calls in the first 90 days and named contacts.",
     },
   ].map((offer) => ({
     "@type": "Offer",

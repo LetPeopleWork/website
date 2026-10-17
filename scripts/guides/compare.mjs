@@ -42,8 +42,8 @@ export const compare = (prices) => ({
 <tr><th>Trackers</th><td>Jira Cloud, Jira Server and Data Center, Azure DevOps Services and Server, Linear, ServiceNow, CSV</td><td>Jira Cloud, Jira Data Center, Azure DevOps Services, Trello, file upload</td><td>Jira, Azure DevOps (Server through exports), Trello, Asana, CSV and JSON</td></tr>
 <tr><th>Forecasting</th><td>Monte Carlo "when" and "how many" per team, continuous forecasts for every feature in a portfolio, features shared by several teams, and a backtest of its own forecasts</td><td>Monte Carlo "when" and "how many". Multi-team views come with Portfolio Forecaster, a separate product for Jira Cloud.</td><td>Monte Carlo completion dates and "how many" at 50, 85 and 95%</td></tr>
 <tr><th>Source code</th><td>Public on GitHub under a source-available licence</td><td>Not public</td><td>Not public</td></tr>
-<tr><th>Free to use</th><td>Community edition, free for up to 3 teams and 1 portfolio. Premium trial for 30 days, no sign-up or credit card.</td><td>30-day trial with all features for up to 3 users. No free edition.</td><td>14-day trial, no credit card. No free edition.</td></tr>
-<tr><th>Pricing model</th><td>Flat yearly licence, not per user: Self-Service ${prices.selfService} a year, Enterprise ${prices.enterprise} a year</td><td>Per user, monthly or yearly</td><td>Per connected board, with unlimited users</td></tr>
+<tr><th>Free to use</th><td>Community edition, free for up to 3 teams and 1 portfolio with 1 delivery. Premium trial for 30 days, no sign-up or credit card.</td><td>30-day trial with all features for up to 3 users. No free edition.</td><td>14-day trial, no credit card. No free edition.</td></tr>
+<tr><th>Pricing model</th><td>Flat yearly Premium licence, not per user: Self-Service ${prices.selfService} a year, or Enterprise ${prices.enterprise} a year with priority support</td><td>Per user, monthly or yearly</td><td>Per connected board, with unlimited users</td></tr>
 </tbody>
 </table>
 </div>
@@ -76,7 +76,7 @@ export const compare = (prices) => ({
     },
     {
       question: "Does Lighthouse charge per user?",
-      answer: `No. The Community edition is free for up to 3 teams and 1 portfolio. Self-Service costs ${prices.selfService} a year with no limits on teams or portfolios, and Enterprise costs ${prices.enterprise} a year and adds priority support.`,
+      answer: `No. The Community edition is free for up to 3 teams and 1 portfolio with 1 delivery. The paid features are called Premium in the app and the documentation, and two licences include them: Self-Service at ${prices.selfService} a year, and Enterprise at ${prices.enterprise} a year, which adds priority support. Neither has limits on teams or portfolios.`,
     },
   ],
 });

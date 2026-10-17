@@ -107,9 +107,10 @@ export const lighthouseBody = (faqs, prices) => `${nav}
 
 <h2>Editions and pricing</h2>
 <ul>
-<li>Community: free, up to 3 teams, 1 portfolio and 1 delivery, all core flow metrics and Monte Carlo forecasts.</li>
+<li>Community: free, up to 3 teams and 1 portfolio with 1 delivery, all core flow metrics and Monte Carlo forecasts.</li>
 <li>Self-Service: ${prices.selfService} a year, unlimited teams and portfolios, sign-in and role-based access, rule-based deliveries, data sync mappings.</li>
 <li>Enterprise: ${prices.enterprise} a year, everything in Self-Service plus priority support and onboarding calls.</li>
+<li>In the app and the documentation the paid features are called Premium. Self-Service and Enterprise both include all of them; Enterprise adds the support.</li>
 <li>Try Premium free for 30 days: the license comes by email, with no account and no credit card.</li>
 </ul>
 <p>Compared with ActionableAgile and Nave: <a href="${SITE}/compare/">${SITE}/compare/</a></p>

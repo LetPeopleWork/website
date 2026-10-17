@@ -607,7 +607,7 @@ const Lighthouse = () => {
 							Free for up to 3 teams
 						</h2>
 						<p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-							Community covers 3 teams and 1 portfolio. Self-Service lifts the limits and adds the paid features in the table below, like sign-in through your identity provider and rule-based deliveries. Enterprise is the same product with priority support. Every edition runs on your own systems.
+							Community covers 3 teams and 1 portfolio with 1 delivery. Self-Service lifts the limits and adds the paid features in the table below, like sign-in through your identity provider and rule-based deliveries. Enterprise is the same product with priority support. In the app and the documentation, those paid features are called Premium: both Self-Service and Enterprise include all of them. Every edition runs on your own systems.
 						</p>
 					</div>
 

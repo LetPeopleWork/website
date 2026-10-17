@@ -75,7 +75,7 @@ export const azureDevOpsForecasting = () => ({
     {
       question: "What does it cost?",
       answer:
-        "The Community edition is free for up to 3 teams and 1 portfolio, with Monte Carlo forecasts and flow metrics. Paid editions add unlimited teams and portfolios, OAuth sign-in and writing forecasts back to Azure DevOps.",
+        "The Community edition is free for up to 3 teams and 1 portfolio, with Monte Carlo forecasts and flow metrics. A Premium license, sold as Self-Service or Enterprise, adds unlimited teams and portfolios, OAuth sign-in and writing forecasts back to Azure DevOps.",
     },
   ],
 });
