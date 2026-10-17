@@ -11,7 +11,8 @@
     "test:watch": "vitest",
     "lint": "eslint .",
     "preview": "vite preview",
-    "og": "./scripts/og/render.sh"
+    "og": "./scripts/og/render.sh",
+    "deck": "node deck/build-deck.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
