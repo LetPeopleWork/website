@@ -1,4 +1,6 @@
-import { Building2, Database, Globe, Laptop, ShieldCheck } from "lucide-react";
+import type { ReactNode } from "react";
+import { Link } from "react-router-dom";
+import { Database, Globe, Laptop, ShieldCheck } from "lucide-react";
 
 type Tone = "inside" | "outside" | "us";
 
@@ -10,7 +12,7 @@ const Node = ({
 }: {
   icon: typeof Laptop;
   title: string;
-  detail: string;
+  detail: ReactNode;
   tone?: Tone;
 }) => (
   <div
@@ -53,42 +55,45 @@ const WhereItRunsDiagram = ({ layout = "stacked" }: { layout?: "stacked" | "wide
   return (
     <figure aria-label="Where Lighthouse runs" data-testid="where-it-runs-diagram">
       <div className="rounded-2xl border-2 border-dashed border-primary/40 p-5 md:p-6">
-        <div className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-4 text-left">Your network</div>
+        <div className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-4 text-left">Your environment</div>
         <div className={wide ? "md:grid md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-stretch" : ""}>
-          <Node icon={Globe} title="Your browser" detail="Opens Lighthouse like any internal web app" />
-          <Connector label="Your login" wide={wide} />
+          <Node icon={Globe} title="Your browser or the Standalone App" detail="Use Lighthouse in any browser, or as a desktop app on your own machine" />
+          <Connector label="Connect to Lighthouse" wide={wide} />
           <Node
             icon={Laptop}
             title="Lighthouse"
-            detail="Desktop app, Docker container, or Kubernetes with our Helm chart. Its database stays with it."
+            detail={
+              <>
+                Calculates your metrics and forecasts. Stores them locally and never sends your data anywhere you don't want it sent. Available as{" "}
+                <Link
+                  to="/lighthouse#downloads"
+                  onClick={() => document.getElementById("downloads")?.scrollIntoView({ behavior: "smooth" })}
+                  className="text-primary underline-offset-4 hover:underline"
+                >
+                  Standalone, Server, Docker and Helm chart
+                </Link>
+                .
+              </>
+            }
           />
-          <Connector label="Reads work items" wide={wide} />
+          <Connector label="Reads data" wide={wide} />
           <Node
             icon={Database}
-            title="Your tracker, on your servers"
-            detail="Jira Data Center, Azure DevOps Server or another tracker inside your network, connected with a personal access token"
+            title="Your Work Tracking System"
+            detail="Jira (Cloud and Data Center), Azure DevOps, Linear, ServiceNow, and CSV. Connected via access tokens or OAuth."
           />
         </div>
       </div>
-      <div className={wide ? "mt-4 grid gap-3 md:grid-cols-2" : ""}>
-        {!wide && <Connector label="For hosted trackers, Lighthouse calls their API" />}
+      <div className="mt-4">
         <Node
-          icon={Building2}
-          title="Jira Cloud, Azure DevOps Services, Linear, ServiceNow"
-          detail="Hosted trackers are reached through their API"
-          tone="outside"
+          icon={ShieldCheck}
+          title="LetPeopleWork"
+          detail="Gets nothing from your Lighthouse. Usage data is off unless someone turns it on, and it never holds work items, names or queries."
+          tone="us"
         />
-        <div className={wide ? "" : "mt-4"}>
-          <Node
-            icon={ShieldCheck}
-            title="LetPeopleWork"
-            detail="Gets nothing from your Lighthouse. Usage data is off unless someone turns it on, and it never holds work items, names or queries."
-            tone="us"
-          />
-        </div>
       </div>
       <figcaption className="sr-only">
-        Your browser, Lighthouse and a tracker on your own servers, such as Jira Data Center or Azure DevOps Server, all sit inside your network. Lighthouse calls hosted trackers through their API. LetPeopleWork receives nothing unless usage data is turned on.
+        You open Lighthouse in your browser or as the Standalone App. Lighthouse calculates your metrics and forecasts, stores them locally, and reads data from your work tracking system: Jira Cloud or Data Center, Azure DevOps, Linear, ServiceNow or CSV. LetPeopleWork receives nothing unless usage data is turned on.
       </figcaption>
     </figure>
   );

@@ -22,7 +22,7 @@ const WhereItRuns = ({ onOpenPrivacy }: { onOpenPrivacy: () => void }) => (
           Runs where your data lives
         </h2>
         <p className="text-lg text-muted-foreground leading-relaxed">
-          You install Lighthouse yourself, on a laptop or a server. It talks to your tracker directly, so a Jira that only lives inside your network works just like Jira Cloud.
+          Install Lighthouse on your own machine, in your network, or with your favorite cloud provider. Then connect it to your work tracker, whether it's cloud-based or self-hosted.
         </p>
       </div>
 

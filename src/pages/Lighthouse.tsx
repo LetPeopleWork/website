@@ -20,6 +20,8 @@ import {
 	Terminal,
 	Laptop,
 	Server as ServerIcon,
+	Anchor,
+	ArrowUpRight,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
@@ -68,6 +70,9 @@ import {
 	findAssetByPattern,
 	LIGHTHOUSE_DOCKER_COMMAND,
 	LIGHTHOUSE_GITHUB_RELEASES_URL,
+	LIGHTHOUSE_HELM_COMMAND,
+	LIGHTHOUSE_HELM_DOCS_URL,
+	LIGHTHOUSE_SERVER_DOCS_URL,
 	type ReleaseAsset,
 } from "@/lib/lighthouseDownloads";
 import QuickDownloadBar from "@/components/QuickDownloadBar";
@@ -108,15 +113,18 @@ const OsIcon = ({ os, className }: { os: string; className?: string }) => {
 			return <Terminal className={className} />;
 		case "docker":
 			return <Container className={className} />;
+		case "helm":
+			return <Anchor className={className} />;
 		default:
 			return <Monitor className={className} />;
 	}
 };
 
 type DownloadEntry = {
-	os: "windows" | "macos" | "linux" | "docker";
+	os: "windows" | "macos" | "linux" | "docker" | "helm";
 	label: string;
 	tooltip: string;
+	command?: string;
 	assetPattern?: string;
 	format?: string;
 };
@@ -184,6 +192,14 @@ const serverDownloads: DownloadEntry[] = [
 		label: "Docker Container",
 		tooltip:
 			"Copies the docker run command to your clipboard. Runs the server edition as a container.",
+		command: LIGHTHOUSE_DOCKER_COMMAND,
+	},
+	{
+		os: "helm",
+		label: "Kubernetes (Helm Chart)",
+		tooltip:
+			"Copies the Helm quick-start to your clipboard: bundled PostgreSQL, no Ingress. Keep the generated encryption key. For production, follow the Kubernetes guide.",
+		command: LIGHTHOUSE_HELM_COMMAND,
 	},
 ];
 
@@ -216,7 +232,7 @@ const agentSkills = [
 const Lighthouse = () => {
 	const [latestVersion, setLatestVersion] = useState<string>("");
 	const [releaseAssets, setReleaseAssets] = useState<ReleaseAsset[]>([]);
-	const [copiedCommand, setCopiedCommand] = useState(false);
+	const [copiedCommand, setCopiedCommand] = useState<string | null>(null);
 	const [showLicenseDetails, setShowLicenseDetails] = useState(false);
 	const [purchaseForm, setPurchaseForm] = useState({
 		name: "",
@@ -353,8 +369,8 @@ const Lighthouse = () => {
 			// Check if clipboard API is available (requires HTTPS)
 			if (navigator.clipboard && window.isSecureContext) {
 				await navigator.clipboard.writeText(text);
-				setCopiedCommand(true);
-				setTimeout(() => setCopiedCommand(false), 2000);
+				setCopiedCommand(text);
+				setTimeout(() => setCopiedCommand(null), 2000);
 			} else {
 				// Fallback for HTTP sites
 				const textArea = document.createElement("textarea");
@@ -368,8 +384,8 @@ const Lighthouse = () => {
 
 				try {
 					document.execCommand("copy");
-					setCopiedCommand(true);
-					setTimeout(() => setCopiedCommand(false), 2000);
+					setCopiedCommand(text);
+					setTimeout(() => setCopiedCommand(null), 2000);
 				} catch (err) {
 					console.error("Fallback copy failed:", err);
 					toast({
@@ -1357,17 +1373,18 @@ const Lighthouse = () => {
 											Server
 										</h3>
 										<p className="text-xs text-muted-foreground">
-											Centrally hosted for your team
+											Host Lighthouse yourself
 										</p>
 									</div>
 								</div>
 								<p className="text-sm text-muted-foreground mb-5">
 									Best for hosting Lighthouse centrally for multiple users.
-									Available for Windows, Linux, and as a Docker container.
+									Available for Windows, Linux, as a Docker container, and on
+									Kubernetes with our Helm chart.
 								</p>
 								<div className="space-y-0.5">
 									{serverDownloads.map((item) => {
-										const isDocker = item.os === "docker";
+										const command = item.command;
 										return (
 											<TooltipProvider key={`${item.os}-${item.label}`}>
 												<Tooltip>
@@ -1375,11 +1392,14 @@ const Lighthouse = () => {
 														<button
 															className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent/60 transition-colors text-left group"
 															onClick={() => {
-																if (isDocker) {
-																	trackEvent("Docker command copied", {
-																		source: "downloads-section",
-																	});
-																	copyToClipboard(LIGHTHOUSE_DOCKER_COMMAND);
+																if (command) {
+																	trackEvent(
+																		item.os === "helm"
+																			? "Helm command copied"
+																			: "Docker command copied",
+																		{ source: "downloads-section" },
+																	);
+																	copyToClipboard(command);
 																} else {
 																	trackDownload({
 																		edition: "server",
@@ -1403,8 +1423,8 @@ const Lighthouse = () => {
 															<span className="flex-1 text-sm">
 																{item.label}
 															</span>
-															{isDocker ? (
-																copiedCommand ? (
+															{command ? (
+																copiedCommand === command ? (
 																	<Check className="h-3.5 w-3.5 text-green-500" />
 																) : (
 																	<Copy className="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -1422,6 +1442,26 @@ const Lighthouse = () => {
 										);
 									})}
 								</div>
+								<p className="mt-4 px-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-primary">
+									<a
+										href={LIGHTHOUSE_SERVER_DOCS_URL}
+										target="_blank"
+										rel="noopener noreferrer"
+										className="inline-flex items-center gap-1 underline-offset-4 hover:underline"
+									>
+										Server installation guide
+										<ArrowUpRight className="h-3 w-3" />
+									</a>
+									<a
+										href={LIGHTHOUSE_HELM_DOCS_URL}
+										target="_blank"
+										rel="noopener noreferrer"
+										className="inline-flex items-center gap-1 underline-offset-4 hover:underline"
+									>
+										Kubernetes guide
+										<ArrowUpRight className="h-3 w-3" />
+									</a>
+								</p>
 							</CardContent>
 						</Card>
 					</div>

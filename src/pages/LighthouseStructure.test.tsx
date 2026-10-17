@@ -61,8 +61,8 @@ describe("/lighthouse as an evaluation page", () => {
   it("answers the private-Jira question and the 'tracker will build it' question", () => {
     renderPage();
     const where = document.getElementById("where-it-runs")!;
-    expect(where).toHaveTextContent(/Jira Data Center, Azure DevOps Server or another tracker inside your network/);
-    expect(where).toHaveTextContent(/personal access token/);
+    expect(where).toHaveTextContent(/whether it's cloud-based or self-hosted/);
+    expect(where).toHaveTextContent(/Jira \(Cloud and Data Center\), Azure DevOps, Linear, ServiceNow, and CSV/);
     expect(where).toHaveTextContent(/Why not wait for your tracker to add this\?/);
     expect(screen.getByText(/Won't Jira or Azure DevOps just build this in\?/)).toBeInTheDocument();
   });

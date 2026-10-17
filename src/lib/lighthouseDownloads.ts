@@ -6,6 +6,16 @@ export const LIGHTHOUSE_GITHUB_REPO = "LetPeopleWork/Lighthouse";
 export const LIGHTHOUSE_GITHUB_REPO_URL = `https://github.com/${LIGHTHOUSE_GITHUB_REPO}`;
 export const LIGHTHOUSE_GITHUB_RELEASES_URL = `${LIGHTHOUSE_GITHUB_REPO_URL}/releases`;
 
+export const LIGHTHOUSE_DOCS_URL = "https://docs.lighthouse.letpeople.work";
+export const LIGHTHOUSE_SERVER_DOCS_URL = `${LIGHTHOUSE_DOCS_URL}/Installation/server.html`;
+export const LIGHTHOUSE_HELM_DOCS_URL = `${LIGHTHOUSE_DOCS_URL}/Installation/kubernetes.html`;
+
+// The quick-start from the Kubernetes docs: bundled Postgres, no Ingress. It
+// generates the encryption key inline, as the docs do; production installs
+// follow LIGHTHOUSE_HELM_DOCS_URL instead.
+export const LIGHTHOUSE_HELM_COMMAND =
+	"helm repo add letpeoplework https://docs.lighthouse.letpeople.work/charts && helm repo update && helm install l8e letpeoplework/lighthouse --set postgresql.auth.password='change-me' --set encryption.key=$(openssl rand -base64 32) --set ingress.enabled=false --wait --timeout 5m";
+
 export const LIGHTHOUSE_DOCKER_COMMAND =
 	'docker run -d -p 8081:443 -p 8080:80 -v lighthouse-data:/app/data -v lighthouse-logs:/app/logs -e "Database__ConnectionString=Data Source=/app/data/LighthouseAppContext.db" ghcr.io/letpeoplework/lighthouse:latest';
 
