@@ -239,7 +239,7 @@ const aiGraph = ({ prices, journey }) => [
     serviceType: "AI consulting and training",
     url: `${SITE}/ai/`,
     description:
-      "AI from LetPeopleWork: the obAIa way of working, the open-source LetPeopleWorkShop and LetPeopleGrow plugins for Claude Code, and hands-on AI workshops.",
+      "LetPeopleWork helps companies set up obAIa, an AI-supported big room kept as files in git, inside their own environment; plus the open-source LetPeopleWorkShop, LetPeopleGrow and LetPeopleAlign plugins for Claude Code, and hands-on AI workshops.",
   },
   ...journey.map((step) => ({
     "@type": "Course",

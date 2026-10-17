@@ -46,15 +46,16 @@ const seoRoutes = [
   },
   {
     path: "ai",
-    title: "Less Hype. More Working AI. | LetPeopleWork",
+    title: "Run your company with AI, in your own environment | LetPeopleWork",
     description:
-      "Practical AI from LetPeopleWork: obAIa, our open-source Claude Code plugins, and a hands-on AI workshop journey that turns AI from an open browser tab into real work.",
+      "obAIa is how LetPeopleWork runs itself: decisions and work as files in git, AI agents that argue the hard calls, people who decide. We help companies set it up in their own environment.",
     image: `${SITE}/og/ai.png`,
     imageAlt: "Less hype. More working AI. AI at LetPeopleWork.",
     noscript: `
-      <h1>Less Hype. More Working AI. - AI at LetPeopleWork</h1>
-      <p>Practical AI from LetPeopleWork: obAIa, our open-source Claude Code plugins, and a hands-on AI workshop journey that turns AI from an open browser tab into real work.</p>
-      <p>LetPeopleWork GmbH is a Swiss consultancy in flow, forecasting, and delivery. Details on the tooling and workshops are at https://letpeople.work/ai, with a machine-readable summary at https://letpeople.work/llms.txt</p>
+      <h1>We run our company with AI. We can help you set it up in yours.</h1>
+      <p>obAIa is the big room of LetPeopleWork, kept as plain Markdown files in a private git repository: decisions, cards, contacts, notes and dates. A Claude Code session on top of it is how the founders work with it, by typing. Three agents with a marketing, a social and a commercial lens argue hard decisions; each decision is kept with its reasoning and a date to revisit it. Views such as the board are computed from the records, and the weekly review agenda is drafted from them. People make every decision.</p>
+      <p>LetPeopleWork helps companies set up the same way of working inside their own environment: start with one kind of record, a design day, a build day with Claude Code, one or two connected tools and one scheduled agent, then the weekly habit and a follow-up. So far obAIa runs at LetPeopleWork only; the first setups elsewhere run as pilots.</p>
+      <p>Open-source Claude Code plugins (MIT): LetPeopleWorkShop for workshops, LetPeopleGrow for 1:1s, LetPeopleAlign for meeting transcripts. Lighthouse, the flow metrics and forecasting tool, connects to the same agents through its MCP server. AI workshops: four steps at a pilot price of CHF 2,500 per team. Details at https://letpeople.work/ai/ and https://letpeople.work/llms.txt</p>
     `,
   },
   {

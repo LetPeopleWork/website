@@ -135,12 +135,16 @@ Lighthouse combines the simulations of every contributing team into one joint pr
 ## AI at LetPeopleWork
 
 **How does LetPeopleWork use AI?**
-We run our own company with AI and call the setup obAIa: an AI-augmented "big room" where decisions get pressure-tested by three perspectives (commercial, marketing, go-to-market) and are kept with their reasoning. It holds our work, pipeline, and dates in one place and surfaces what needs attention. We teach AI the way we use it every day, not from a slide deck.
+We run our own company with AI and call the setup obAIa (Obeya with AI in the middle, pronounced "Obeya"). Our big room is a private git repository of plain Markdown files: decisions, cards, contacts, notes, themes and dates. A Claude Code session on top of it is how we work with it, by typing: it proposes where a thought belongs and writes it only after we confirm. Views such as the board and the pipeline are computed from the records. Three agents with a marketing, a social and a commercial lens argue hard decisions, and each decision is kept with its reasoning and a date to revisit it. A scheduled radar agent finds discussions worth joining. People make every decision, and everything posted, published or booked. Write-up: https://blog.letpeople.work/p/our-obeya-lives-in-git-now-and-it
+
+**Can LetPeopleWork set up obAIa in our company?**
+Yes, as a pilot: obAIa is not software you buy and so far runs at LetPeopleWork only. We build it with you inside your environment, on your accounts and in your repository: start with one kind of record (decisions), a design day (which records matter, who decides what, which lenses you need), a build day with Claude Code, one or two connected tools and one scheduled agent, then the weekly review habit and a follow-up. You need Claude Code for everyone who works in it, a private git repository with access control, each person's own logins for connected tools, and written consent before any meeting is analysed. Ask at contact@letpeople.work. Details: https://letpeople.work/ai/
 
 **What open-source AI plugins does LetPeopleWork provide?**
-Two Claude-Code-native plugins, free and open source:
+Three Claude-Code-native plugins, free and MIT-licensed:
 - LetPeopleWorkShop (https://github.com/LetPeopleWork/LetPeopleWorkShop): Design, prepare, and learn from workshops, all in markdown. Agents: designer, executor, feedback. Includes a facilitation-practices library (Liberating Structures, Training from the BACK of the Room). Install: `/plugin marketplace add LetPeopleWork/LetPeopleWorkShop` then `/plugin install let-people-workshop@letpeoplework`.
 - LetPeopleGrow (https://github.com/LetPeopleWork/LetPeopleGrow): Prepare for, capture, and learn from 1:1s. Coaching support, never a performance dossier. Agents: prep, capture, growth, patterns. Includes a conversation-practices library (GROW, SBI, NVC, career conversations).
+- LetPeopleAlign (https://github.com/LetPeopleWork/LetPeopleAlign): Turn transcribed meetings into grounded notes with owned actions, missing-action flags, follow-up drafts and cross-meeting observations. Consent first, local only, no network. Agents: analyze, drift, improve, prep, decisions. Install: `claude plugin marketplace add LetPeopleWork/LetPeopleAlign` then `claude plugin install let-people-align`.
 
 **What AI workshops does LetPeopleWork offer?**
 A four-step AI journey for businesses. Each workshop is a private 1-day session for one organisation, on-site or remote, bookable on its own or as the full journey. Pilot price: CHF 2,500 per team (covers the entire team, not a seat), subject to change once the pilot cohorts fill up.
