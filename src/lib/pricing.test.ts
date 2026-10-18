@@ -8,7 +8,7 @@ describe("prices", () => {
       selfServiceAmount: "2000",
       enterprise: "CHF 10,000",
       enterpriseAmount: "10000",
-      pilot: "CHF 3,000",
+      pilot: "CHF 3,500",
       assessment: "CHF 4,500",
       aiWorkshopPilot: "CHF 2,500",
       aiWorkshopPilotAmount: "2500",

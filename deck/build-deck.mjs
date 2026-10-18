@@ -3,7 +3,8 @@
 //
 //   node deck/build-deck.mjs        writes deck/lighthouse-pitch.html and the PDF
 //
-// The slides are HTML, printed to PDF by the local Google Chrome (headless),
+// The slides are HTML, printed to PDF by a local Chrome or Chromium (headless;
+// found on macOS, Windows and Linux, or set CHROME=<path>),
 // so they use the site's brand: its colours, the #LetPeople.Work wordmark and
 // the product screenshots from the Lighthouse docs. Prices come from
 // src/lib/pricing.json, like everywhere else on the site. Every number on a
@@ -35,7 +36,7 @@
 
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { delimiter, dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -754,9 +755,26 @@ const htmlPath = outArg ? pdfPath.replace(/\.pdf$/i, "") + ".html" : join(here, 
 writeFileSync(htmlPath, html);
 console.log(`[deck] wrote ${htmlPath} (${slides.length} slides)`);
 
-const CHROME = process.env.CHROME || "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
-if (!existsSync(CHROME)) {
-  console.error("[deck] Google Chrome not found; open the HTML file and print it to PDF instead.");
+// Chrome's usual install paths per OS, then Chrome or Chromium on the PATH.
+function findChrome() {
+  if (process.env.CHROME) return process.env.CHROME;
+  const winDirs = [process.env.PROGRAMFILES, process.env["PROGRAMFILES(X86)"], process.env.LOCALAPPDATA];
+  const installed = {
+    darwin: [
+      "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+      "/Applications/Chromium.app/Contents/MacOS/Chromium",
+    ],
+    win32: winDirs.filter(Boolean).map((dir) => join(dir, "Google", "Chrome", "Application", "chrome.exe")),
+  }[process.platform] ?? [];
+  const onPath = ["google-chrome", "google-chrome-stable", "chromium", "chromium-browser"].flatMap((name) =>
+    (process.env.PATH ?? "").split(delimiter).map((dir) => join(dir, name)),
+  );
+  return [...installed, ...onPath].find((path) => existsSync(path));
+}
+
+const CHROME = findChrome();
+if (!CHROME || !existsSync(CHROME)) {
+  console.error("[deck] Chrome or Chromium not found (set CHROME=<path>); open the HTML file and print it to PDF instead.");
   process.exit(1);
 }
 execFileSync(
