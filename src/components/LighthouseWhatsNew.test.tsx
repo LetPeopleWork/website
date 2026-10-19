@@ -58,15 +58,15 @@ describe("Lighthouse What's New", () => {
   });
 
   it("counts the releases inside the chosen range", async () => {
-    render(<LighthouseWhatsNew now={at("2026-10-16")} />);
+    render(<LighthouseWhatsNew now={at("2026-10-19")} />);
     const count = screen.getByTestId("whats-new-release-count");
-    expect(count).toHaveTextContent("13 releases in the last 90 days.");
+    expect(count).toHaveTextContent("14 releases in the last 90 days.");
 
     await userEvent.click(screen.getByRole("button", { name: "Last 30 days" }));
-    expect(count).toHaveTextContent("5 releases in the last 30 days.");
+    expect(count).toHaveTextContent("6 releases in the last 30 days.");
 
     await userEvent.click(screen.getByRole("button", { name: "All" }));
-    expect(count).toHaveTextContent("23 releases since May 2026.");
+    expect(count).toHaveTextContent("24 releases since May 2026.");
   });
 
   it("narrows the cards to the last 30 days", async () => {
