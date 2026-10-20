@@ -23,16 +23,20 @@
 // in the public deck. Prices, bios, screenshots and quotes still come from this
 // repo, so a tailored deck never carries stale facts.
 //   customer            name shown on the cover and in the footer
+//   label               footer text instead of "Lighthouse briefing for <customer>"
 //   edition             e.g. "November 2026" (default below)
 //   slides              slide ids in the order to show them (default: all, see SLIDE_IDS)
-//   cover               { title, subtitle }
+//   cover               { kicker, title, subtitle }
 //   summary             { title, points: [{ lead, text }] }
 //   context             { title, heard: [..], answer: [..] } for the "context" slide
 //   integrations        { highlight: ["Jira Cloud", ...] }
 //   quotes              names to keep, in order, e.g. ["Chris Graves"]
-//   start               { title, phases: [[when, what, detail], ...], it: [[title, text], ...] }
-//   closing             { title, subtitle, contact }
+//   start               { tracker, title, phases: [[when, what, detail], ...], itTitle, it: [[title, text], ...], source }
+//   closing             { kicker, title, subtitle, contact }
 //   notes               { slideId: "one callout line added below that slide's content" }
+//   pages               { slideId: { tracker, title, intro, cards: [{ lead, text, url, link }], source } }
+//                       extra slides of link cards (e.g. an onboarding deck); list their
+//                       ids in `slides`. `link` is the visible link text, `url` the target.
 
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -62,7 +66,7 @@ const BLOG = "blog.letpeople.work";
 const EDITION = cfg.edition || "October 2026";
 
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-const BRIEFING = cfg.customer ? `Lighthouse briefing for ${esc(cfg.customer)}` : "Lighthouse executive briefing";
+const BRIEFING = cfg.label ? esc(cfg.label) : cfg.customer ? `Lighthouse briefing for ${esc(cfg.customer)}` : "Lighthouse executive briefing";
 
 // ---------------------------------------------------------------------------
 // Slide frame
@@ -143,7 +147,7 @@ defs["cover"] = () =>
     dark: true,
     cls: "cover",
     body: `
-  <div class="cover-top">${wordmarkDark}<span class="cover-kicker">${cfg.customer ? `Briefing for ${esc(cfg.customer)}` : "Executive briefing"} · ${EDITION}</span></div>
+  <div class="cover-top">${wordmarkDark}<span class="cover-kicker">${cfg.cover?.kicker ? esc(cfg.cover.kicker) : cfg.customer ? `Briefing for ${esc(cfg.customer)}` : "Executive briefing"} · ${EDITION}</span></div>
   <div class="cover-main">
     <img class="cover-logo" src="${asset("src/assets/LighthouseLogo.png")}" alt="" />
     <p class="cover-product">Lighthouse</p>
@@ -495,7 +499,7 @@ defs["quotes"] = () =>
 // 14. How to start
 defs["start"] = () =>
   slide({
-    tracker: "Next steps",
+    tracker: cfg.start?.tracker ?? "Next steps",
     title: cfg.start?.title ? esc(cfg.start.title) : "A first forecast on your own data takes an afternoon, and the decision can wait until it has proven itself",
     body: `
   <div class="timeline">
@@ -509,14 +513,14 @@ defs["start"] = () =>
       .join("")}
   </div>
   <div class="it-box">
-    <p class="it-title">What it needs from IT</p>
+    <p class="it-title">${esc(cfg.start?.itTitle ?? "What it needs from IT")}</p>
     <div class="it-grid">
       ${cfg.start?.it ? cfg.start.it.map(([t, d]) => `<div><strong>${esc(t)}</strong><span>${esc(d)}</span></div>`).join("") : `<div><strong>A machine</strong><span>A laptop, a VM, a Docker host or a Kubernetes cluster inside your network</span></div>
       <div><strong>Read access to the tracker</strong><span>An API token or a personal access token for the projects in question</span></div>
       <div><strong>Nothing opened to the internet</strong><span>Lighthouse calls your tracker; LetPeopleWork receives no work items</span></div>`}
     </div>
   </div>`,
-    source: "Lighthouse documentation; Lighthouse Live session with Gábor Bittera (May 2026)",
+    source: cfg.start?.source != null ? esc(cfg.start.source) : "Lighthouse documentation; Lighthouse Live session with Gábor Bittera (May 2026)",
   });
 
 // 15. Team
@@ -550,7 +554,7 @@ defs["closing"] = () =>
     dark: true,
     cls: "cover closing",
     body: `
-  <div class="cover-top">${wordmarkDark}<span class="cover-kicker">Next step</span></div>
+  <div class="cover-top">${wordmarkDark}<span class="cover-kicker">${esc(cfg.closing?.kicker ?? "Next step")}</span></div>
   <div class="cover-main">
     <h1>${esc(cfg.closing?.title ?? "See your own forecast before you decide anything")}</h1>
     <p class="cover-sub">${esc(cfg.closing?.subtitle ?? "Download Lighthouse free at letpeople.work/lighthouse, or ask us for a 20-minute call.")}</p>
@@ -575,6 +579,20 @@ defs["context"] = () =>
 // The public deck: every slide except the tailored context slide, in this order.
 const SLIDE_IDS = ["cover", "summary", "estimates", "averages", "how", "reality-check", "portfolio", "flow", "hosting", "integrations", "compare", "pricing", "quotes", "start", "team", "closing"];
 const order = cfg.slides ?? (cfg.context ? ["cover", "summary", "context", ...SLIDE_IDS.slice(2)] : SLIDE_IDS);
+// Tailored decks only: slides of link cards, one per entry in cfg.pages.
+for (const [id, p] of Object.entries(cfg.pages ?? {})) {
+  defs[id] ??= () =>
+    slide({
+      tracker: p.tracker,
+      title: esc(p.title ?? ""),
+      body: `${p.intro ? `<p class="lead">${esc(p.intro)}</p>` : ""}
+  <div class="cards cards-${(p.cards ?? []).length === 4 ? 2 : Math.min((p.cards ?? []).length, 3)}">${(p.cards ?? [])
+    .map((c) => `<div class="card"><strong>${esc(c.lead)}</strong>${c.text ? `<span>${esc(c.text)}</span>` : ""}${c.url ? `<a href="${esc(c.url)}">${esc(c.link ?? c.url.replace(/^https?:\/\//, ""))}</a>` : ""}</div>`)
+    .join("")}</div>`,
+      source: p.source ? esc(p.source) : "",
+    });
+}
+
 const slides = order.map((id) => {
   if (!defs[id]) throw new Error(`[deck] unknown slide "${id}"; known: ${Object.keys(defs).join(", ")}`);
   currentId = id;
@@ -638,6 +656,15 @@ ul.ticks.tight li { font-size: 14px; margin-bottom: 8px; }
 .bar-value, .col-value { font-size: 15px; fill: var(--ink); font-weight: 600; }
 .bar-value.strong { fill: var(--green); font-weight: 700; }
 .axis-title { font-size: 12px; fill: var(--muted); }
+
+/* link cards (cfg.pages) */
+.cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+.cards.cards-3 { grid-template-columns: repeat(3, 1fr); }
+.cards.cards-1 { grid-template-columns: 1fr; }
+.card { display: flex; flex-direction: column; gap: 8px; border: 1px solid var(--line); border-top: 4px solid var(--green); border-radius: 6px; padding: 16px 18px; }
+.card strong { font-size: 17px; color: var(--ink); }
+.card span { font-size: 14px; line-height: 1.45; }
+.card a { margin-top: auto; font-size: 14px; font-weight: 700; color: var(--green); text-decoration: none; word-break: break-all; }
 
 /* summary */
 ol.summary { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
