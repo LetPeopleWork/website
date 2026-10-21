@@ -227,6 +227,13 @@ const agentSkills = [
 		edition: "ai-skill-daily-flow-review",
 		released: true,
 	},
+	{
+		name: "Reports",
+		description: "Turn a saved report into a dashboard, slide or document for someone outside Lighthouse, with every number, date and word as Lighthouse shows it.",
+		zip: "lighthouse-reports-skill.zip",
+		edition: "ai-skill-reports",
+		released: false,
+	},
 ];
 
 const Lighthouse = () => {
@@ -806,6 +813,10 @@ const Lighthouse = () => {
 													},
 													{
 														feature: { label: "Reporting", tooltip: "A Reports tab on every Team and Portfolio. The first report type, Then & Now, sets Cycle Time, Throughput, WIP and Work Item Age from before a change beside the same metrics today, with a summary of what changed. More report types are coming." },
+														community: true, self: true, enterprise: true,
+													},
+													{
+														feature: { label: "Export any report as a branded PDF", tooltip: "One click turns a report into a dated PDF for people who never open Lighthouse: its Team or Portfolio, both windows and when it was produced on every page, with the Lighthouse mark. Anyone who can read the report can export it." },
 														community: true, self: true, enterprise: true,
 													},
 													{

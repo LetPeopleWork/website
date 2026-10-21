@@ -37,7 +37,7 @@ afterEach(() => {
 });
 
 describe("Lighthouse agent skills", () => {
-  it("offers every skill the clients release carries for download", () => {
+  it("offers every skill the clients release carries for download, and marks the rest coming soon", () => {
     render(
       <HelmetProvider>
         <MemoryRouter initialEntries={["/lighthouse"]}>
@@ -58,6 +58,8 @@ describe("Lighthouse agent skills", () => {
     }
     expect(screen.getByText(/Get a Team ready for its next Refinement/)).toBeInTheDocument();
     expect(screen.getByText("Daily Flow Review")).toBeInTheDocument();
-    expect(screen.queryByText("Coming soon")).toBeNull();
+    expect(screen.getByText(/Turn a saved report into a dashboard/)).toBeInTheDocument();
+    expect(screen.getAllByText("Coming soon")).toHaveLength(1);
+    expect(screen.queryByRole("link", { name: /reports-skill\.zip/ })).toBeNull();
   });
 });
