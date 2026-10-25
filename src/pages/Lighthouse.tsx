@@ -232,7 +232,7 @@ const agentSkills = [
 		description: "Turn a saved report into a dashboard, slide or document for someone outside Lighthouse, with every number, date and word as Lighthouse shows it.",
 		zip: "lighthouse-reports-skill.zip",
 		edition: "ai-skill-reports",
-		released: false,
+		released: true,
 	},
 ];
 
