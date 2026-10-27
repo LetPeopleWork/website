@@ -1,8 +1,7 @@
 name: CI
 
 # The check Renovate waits for before it merges a dependency update
-# (renovate.json). Lint is not part of it yet: the codebase has open
-# react-hooks/set-state-in-effect errors; add `bun run lint` once they are fixed.
+# (renovate.json): lint, tests and the production build.
 on:
   pull_request:
   push:
@@ -26,6 +25,9 @@ jobs:
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
+
+      - name: Lint
+        run: bun run lint
 
       - name: Test
         run: bun run test

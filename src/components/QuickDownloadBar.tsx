@@ -50,7 +50,7 @@ const QuickDownloadBar = ({ additionalLink, source, compact = false }: QuickDown
 	const [releaseAssets, setReleaseAssets] = useState<ReleaseAsset[]>([]);
 	const [isLoadingVersion, setIsLoadingVersion] = useState(false);
 	const [copiedCommand, setCopiedCommand] = useState(false);
-	const [clientOs, setClientOs] = useState<ClientOs>("unknown");
+	const [clientOs] = useState<ClientOs>(detectClientOs);
 
 	useEffect(() => {
 		const fetchLatestVersion = async () => {
@@ -69,10 +69,6 @@ const QuickDownloadBar = ({ additionalLink, source, compact = false }: QuickDown
 			}
 		};
 		fetchLatestVersion();
-	}, []);
-
-	useEffect(() => {
-		setClientOs(detectClientOs());
 	}, []);
 
 	const copyToClipboard = async (text: string) => {

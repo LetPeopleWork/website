@@ -8,15 +8,12 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
   options: IntersectionObserverInit = { threshold: 0.15, rootMargin: "0px 0px -10% 0px" },
 ) {
   const ref = useRef<T | null>(null);
-  const [revealed, setRevealed] = useState(false);
+  // Without IntersectionObserver there is nothing to wait for: start revealed.
+  const [revealed, setRevealed] = useState(() => typeof IntersectionObserver === "undefined");
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
-    if (typeof IntersectionObserver === "undefined") {
-      setRevealed(true);
-      return;
-    }
+    if (!el || typeof IntersectionObserver === "undefined") return;
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {

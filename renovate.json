@@ -8,7 +8,7 @@
   "commitMessagePrefix": "deps:",
   "packageRules": [
     {
-      "description": "Every update merges itself once the CI verify check (tests + build) is green, majors included. Renovate merges the PR itself instead of GitHub auto-merge: main has no branch protection (the blog and events sync workflows push to it directly), so GitHub auto-merge would not wait for CI.",
+      "description": "Every update merges itself once the CI verify check (lint, tests, build) is green, majors included. Renovate merges the PR itself instead of GitHub auto-merge: main has no branch protection (the blog and events sync workflows push to it directly), so GitHub auto-merge would not wait for CI.",
       "matchPackageNames": ["*"],
       "automerge": true,
       "automergeType": "pr",

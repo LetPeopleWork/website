@@ -236,16 +236,49 @@ const agentSkills = [
 	},
 ];
 
+// The dialog a Stripe checkout return (?payment=success|canceled) opens with.
+function paymentResultFromSearch(search: string): {
+	show: boolean;
+	type: "success" | "canceled";
+	title: string;
+	description: string;
+} {
+	const paymentStatus = new URLSearchParams(search).get("payment");
+	if (paymentStatus === "success") {
+		return {
+			show: true,
+			type: "success",
+			title: "Upgrade Complete! 🎉",
+			description:
+				"Your payment has been processed successfully. We're preparing your premium license and will send it to your email shortly from licensing@lighthouse.letpeople.work.\n\nExpected it within the next 4 hours. Please check your inbox and spam folder.\n\nHaven't received it? No worries – just drop us a line at licensing@letpeople.work and we'll sort it out.",
+		};
+	}
+	if (paymentStatus === "canceled") {
+		return {
+			show: true,
+			type: "canceled",
+			title: "Payment Canceled",
+			description: "Your payment was canceled. You can try again anytime.",
+		};
+	}
+	return { show: false, type: "success", title: "", description: "" };
+}
+
 const Lighthouse = () => {
 	const [latestVersion, setLatestVersion] = useState<string>("");
 	const [releaseAssets, setReleaseAssets] = useState<ReleaseAsset[]>([]);
 	const [copiedCommand, setCopiedCommand] = useState<string | null>(null);
 	const [showLicenseDetails, setShowLicenseDetails] = useState(false);
-	const [purchaseForm, setPurchaseForm] = useState({
-		name: "",
-		email: "",
-		organization: "",
-		validFrom: new Date(), // Default to today
+	// Pre-filled from URL parameters (name, email, organization, validFrom).
+	const [purchaseForm, setPurchaseForm] = useState(() => {
+		const urlParams = new URLSearchParams(window.location.search);
+		const validFrom = urlParams.get("validFrom");
+		return {
+			name: urlParams.get("name") || "",
+			email: urlParams.get("email") || "",
+			organization: urlParams.get("organization") || "",
+			validFrom: validFrom ? new Date(validFrom) : new Date(), // Default to today
+		};
 	});
 	const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 	const [paymentResult, setPaymentResult] = useState<{
@@ -253,12 +286,7 @@ const Lighthouse = () => {
 		type: "success" | "canceled";
 		title: string;
 		description: string;
-	}>({
-		show: false,
-		type: "success",
-		title: "",
-		description: "",
-	});
+	}>(() => paymentResultFromSearch(window.location.search));
 	const [showLegalDialog, setShowLegalDialog] = useState(false);
 	const [filmOpen, setFilmOpen] = useState(false);
 	const openFilm = () => {
@@ -281,24 +309,6 @@ const Lighthouse = () => {
 	const [trialSource, setTrialSource] = useState<string | null>(null);
 	const { toast } = useToast();
 
-	// Pre-fill form from URL parameters on mount
-	useEffect(() => {
-		const urlParams = new URLSearchParams(window.location.search);
-		const name = urlParams.get("name");
-		const email = urlParams.get("email");
-		const organization = urlParams.get("organization");
-		const validFrom = urlParams.get("validFrom");
-
-		if (name || email || organization || validFrom) {
-			setPurchaseForm((prev) => ({
-				name: name || prev.name,
-				email: email || prev.email,
-				organization: organization || prev.organization,
-				validFrom: validFrom ? new Date(validFrom) : prev.validFrom,
-			}));
-		}
-	}, []);
-
 	// Fetch latest version from GitHub releases
 	useEffect(() => {
 		const fetchLatestVersion = async () => {
@@ -318,42 +328,19 @@ const Lighthouse = () => {
 		fetchLatestVersion();
 	}, []);
 
-	// Check for Stripe payment result and show appropriate dialog
+	// Stripe payment result: the dialog state comes from the URL at first
+	// render (paymentResultFromSearch); here we only track it and clear the
+	// URL parameters once the dialog shows.
 	useEffect(() => {
-		const urlParams = new URLSearchParams(window.location.search);
-		const paymentStatus = urlParams.get("payment");
-		if (paymentStatus === "success") {
-			trackEvent("License purchased", { source: "stripe-return" });
-			// Show success dialog first
-			setPaymentResult({
-				show: true,
-				type: "success",
-				title: "Upgrade Complete! 🎉",
-				description:
-					"Your payment has been processed successfully. We're preparing your premium license and will send it to your email shortly from licensing@lighthouse.letpeople.work.\n\nExpected it within the next 4 hours. Please check your inbox and spam folder.\n\nHaven't received it? No worries – just drop us a line at licensing@letpeople.work and we'll sort it out.",
-			});
-
-			// Clear the URL parameters after showing the dialog
-			setTimeout(() => {
-				const newUrl = window.location.pathname;
-				window.history.replaceState({}, document.title, newUrl);
-			}, 1000); // Increased delay to ensure dialog shows
-		} else if (paymentStatus === "canceled") {
-			trackEvent("Checkout canceled", { source: "stripe-return" });
-			// Show canceled dialog first
-			setPaymentResult({
-				show: true,
-				type: "canceled",
-				title: "Payment Canceled",
-				description: "Your payment was canceled. You can try again anytime.",
-			});
-
-			// Clear the URL parameters after showing the dialog
-			setTimeout(() => {
-				const newUrl = window.location.pathname;
-				window.history.replaceState({}, document.title, newUrl);
-			}, 1000); // Increased delay to ensure dialog shows
-		}
+		const paymentStatus = new URLSearchParams(window.location.search).get("payment");
+		if (paymentStatus !== "success" && paymentStatus !== "canceled") return;
+		trackEvent(paymentStatus === "success" ? "License purchased" : "Checkout canceled", {
+			source: "stripe-return",
+		});
+		setTimeout(() => {
+			const newUrl = window.location.pathname;
+			window.history.replaceState({}, document.title, newUrl);
+		}, 1000); // Increased delay to ensure dialog shows
 	}, []);
 
 	// Handle anchor navigation
