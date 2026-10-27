@@ -331,10 +331,10 @@ export default function LighthouseWhatsNew({ now = Date.now }: LighthouseWhatsNe
             <span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-5 block">
               Recently shipped
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight leading-[1.05]">
+            <h2 className="text-4xl md:text-5xl/none font-bold text-foreground tracking-tight leading-[1.05]">
               Lighthouse keeps moving
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mt-5">
+            <p className="text-lg md:text-xl/7 text-muted-foreground leading-relaxed mt-5">
               A new release about once a week. Every month the blog sums them up, with videos.
               <br />
               <span className="font-medium text-foreground" data-testid="whats-new-release-count">

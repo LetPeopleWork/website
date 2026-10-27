@@ -45,7 +45,7 @@ function Step({ step, i }: { step: (typeof steps)[number]; i: number }) {
         {step.number}
       </div>
       <div>
-        <h3 className="text-xl md:text-2xl font-bold text-foreground tracking-tight leading-tight mb-2">
+        <h3 className="text-xl md:text-2xl/8 font-bold text-foreground tracking-tight leading-tight mb-2">
           {step.title}
         </h3>
         <p className="text-base text-muted-foreground leading-relaxed">
@@ -92,7 +92,7 @@ const LighthouseSection = () => {
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6 tracking-tight">
             The answer is already in your tracker
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+          <p className="text-lg md:text-xl/7 text-muted-foreground leading-relaxed">
             Every ticket your team closed has a start date and an end date. That's all Lighthouse needs to show you where work gets stuck and when the rest will probably be done.
           </p>
         </div>

@@ -103,7 +103,7 @@ const MediaCarousel = ({
   return (
     <>
       <div className={`relative group ${className}`}>
-        <div className="absolute -inset-2 bg-gradient-primary rounded-lg blur opacity-25 group-hover:opacity-40 transition duration-300"></div>
+        <div className="absolute -inset-2 bg-gradient-primary rounded-lg blur-sm opacity-25 group-hover:opacity-40 transition duration-300"></div>
         
         {currentItem.type === "image" ? (
           renderImage()
@@ -130,14 +130,14 @@ const MediaCarousel = ({
           <>
             <button
               onClick={prevMedia}
-              className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-background/80 backdrop-blur-sm rounded-full p-2 hover:bg-background transition-colors z-10"
+              className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-background/80 backdrop-blur-xs rounded-full p-2 hover:bg-background transition-colors z-10"
               aria-label="Previous media"
             >
               <ChevronLeft className="h-5 w-5 text-primary" />
             </button>
             <button
               onClick={nextMedia}
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-background/80 backdrop-blur-sm rounded-full p-2 hover:bg-background transition-colors z-10"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-background/80 backdrop-blur-xs rounded-full p-2 hover:bg-background transition-colors z-10"
               aria-label="Next media"
             >
               <ChevronRight className="h-5 w-5 text-primary" />
@@ -147,7 +147,7 @@ const MediaCarousel = ({
         
         {/* Media type indicator */}
         {showIndicators && mediaItems.length > 1 && (
-          <div className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm rounded-full px-3 py-1 text-sm text-primary flex items-center space-x-1">
+          <div className="absolute top-4 right-4 bg-background/80 backdrop-blur-xs rounded-full px-3 py-1 text-sm text-primary flex items-center space-x-1">
             {currentItem.type === "video" ? <PlayCircle className="h-4 w-4" /> : <span>📷</span>}
             <span>{currentMedia + 1}/{mediaItems.length}</span>
           </div>
@@ -158,7 +158,7 @@ const MediaCarousel = ({
       {isModalOpen && enableModal && (
         <dialog 
           open
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm border-0 p-0 w-full h-full max-w-none max-h-none" 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-xs border-0 p-0 w-full h-full max-w-none max-h-none" 
           aria-labelledby="modal-title"
         >
           <div className="relative max-w-[90vw] max-h-[90vh] p-4">

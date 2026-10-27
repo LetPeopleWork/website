@@ -138,7 +138,7 @@ const LighthouseQuestions = ({ value, onValueChange }: LighthouseQuestionsProps)
         orientation="vertical"
         className="grid gap-8 lg:grid-cols-12 lg:gap-12"
       >
-        <TabsList className="-mx-4 flex h-auto justify-start gap-2 overflow-x-auto bg-transparent px-4 pb-1 [scrollbar-width:none] lg:col-span-4 lg:mx-0 lg:flex-col lg:items-stretch lg:gap-1 lg:overflow-visible lg:border-l lg:border-border lg:px-0 lg:pb-0 [&::-webkit-scrollbar]:hidden">
+        <TabsList className="-mx-4 flex h-auto justify-start gap-2 overflow-x-auto bg-transparent px-4 pb-1 scrollbar-none lg:col-span-4 lg:mx-0 lg:flex-col lg:items-stretch lg:gap-1 lg:overflow-visible lg:border-l lg:border-border lg:px-0 lg:pb-0 [&::-webkit-scrollbar]:hidden">
           {QUESTIONS.map((q, i) => (
             <TabsTrigger
               key={q.key}

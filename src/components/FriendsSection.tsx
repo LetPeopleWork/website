@@ -52,7 +52,7 @@ const FriendsSection = () => {
                   href={friend.link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block text-sm font-medium text-primary underline-offset-4 hover:underline"
+                  className="mx-auto block w-fit text-sm font-medium text-primary underline-offset-4 hover:underline"
                 >
                   {friend.link.label}
                 </a>

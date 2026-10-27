@@ -41,7 +41,7 @@ const Connector = ({ label, wide = false }: { label: string; wide?: boolean }) =
     aria-hidden="true"
   >
     <span className={`bg-primary/40 ${wide ? "h-4 w-px md:h-px md:w-6" : "h-4 w-px"}`} />
-    <span className={wide ? "md:max-w-[6rem] md:text-center" : ""}>{label}</span>
+    <span className={wide ? "md:max-w-24 md:text-center" : ""}>{label}</span>
     <span className={`bg-primary/40 ${wide ? "h-4 w-px md:h-px md:w-6" : "h-4 w-px"}`} />
   </div>
 );

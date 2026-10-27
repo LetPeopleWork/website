@@ -26,7 +26,7 @@ interface ForecastShotProps {
 
 const ForecastShot = ({ onPlayFilm, filmSeconds, className = "" }: ForecastShotProps) => (
   <figure className={`relative mx-auto w-full max-w-[920px] text-left ${className}`} data-testid="forecast-shot">
-    <div className="relative [container-type:inline-size]">
+    <div className="relative @container">
       <img
         src="/lighthouse-forecast-panel.png"
         alt="Lighthouse team forecast for a demo team: 10 work items are 95% likely done by 16 October, 85% by 13 October, 70% by 10 October and 50% by 8 October. The likelihood to close all 10 by 11 October is 72.68%."
@@ -51,7 +51,7 @@ const ForecastShot = ({ onPlayFilm, filmSeconds, className = "" }: ForecastShotP
         <button
           type="button"
           onClick={onPlayFilm}
-          className="absolute right-2 top-2 inline-flex items-center gap-1.5 rounded-full bg-foreground/90 px-3 py-1.5 text-xs font-semibold text-background shadow-medium ring-1 ring-white/20 backdrop-blur-sm transition-transform hover:scale-105 hover:bg-foreground sm:right-4 sm:top-4 sm:gap-2 sm:px-4 sm:py-2 sm:text-sm"
+          className="absolute right-2 top-2 inline-flex items-center gap-1.5 rounded-full bg-foreground/90 px-3 py-1.5 text-xs font-semibold text-background shadow-medium ring-1 ring-white/20 backdrop-blur-xs transition-transform hover:scale-105 hover:bg-foreground sm:right-4 sm:top-4 sm:gap-2 sm:px-4 sm:py-2 sm:text-sm"
           aria-label="Play the film: Lighthouse in 75 seconds"
           data-testid="hero-film-play"
         >

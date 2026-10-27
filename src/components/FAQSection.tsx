@@ -24,7 +24,7 @@ const FAQSection = () => {
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 tracking-tight">
               Questions people ask us
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+            <p className="text-lg md:text-xl/7 text-muted-foreground leading-relaxed">
               The reasons people give for not trying Lighthouse, and what we think about each.
             </p>
           </div>
@@ -44,7 +44,7 @@ const FAQSection = () => {
                   className="w-full flex items-center justify-between px-6 py-5 text-left gap-4"
                   aria-expanded={openIndex === i}
                 >
-                  <span className="text-base md:text-lg font-semibold text-foreground leading-snug">
+                  <span className="text-base md:text-lg/7 font-semibold text-foreground leading-snug">
                     "{faq.question}"
                   </span>
                   <ChevronDown
@@ -59,7 +59,7 @@ const FAQSection = () => {
                     openIndex === i ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
                   }`}
                 >
-                  <p className="px-6 pb-6 text-muted-foreground leading-relaxed text-base md:text-lg">
+                  <p className="px-6 pb-6 text-muted-foreground leading-relaxed text-base md:text-lg/7">
                     {faq.answer}
                   </p>
                 </div>

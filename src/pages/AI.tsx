@@ -290,24 +290,24 @@ const AI = () => {
         <div className="absolute inset-0 hero-mesh" aria-hidden="true" />
         <div className="absolute inset-0 bg-grid-faint" aria-hidden="true" />
         <div
-          className="absolute -top-24 -left-24 w-[34rem] h-[34rem] rounded-full bg-white/10 blur-3xl animate-float pointer-events-none"
+          className="absolute -top-24 -left-24 w-136 h-136 rounded-full bg-white/10 blur-3xl animate-float pointer-events-none"
           aria-hidden="true"
         />
         <div
-          className="absolute -bottom-32 right-0 w-[30rem] h-[30rem] rounded-full bg-emerald-300/10 blur-3xl pointer-events-none"
+          className="absolute -bottom-32 right-0 w-120 h-120 rounded-full bg-emerald-300/10 blur-3xl pointer-events-none"
           aria-hidden="true"
         />
 
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="animate-fade-in">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-foreground/80 mb-8">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-xs px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-foreground/80 mb-8">
               <Sparkles className="w-3.5 h-3.5" />
               AI at LetPeopleWork · obAIa
             </span>
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold text-primary-foreground tracking-[-0.03em] leading-[0.98] text-balance mb-7">
+            <h1 className="text-5xl sm:text-6xl/none md:text-7xl/none font-bold text-primary-foreground tracking-[-0.03em] leading-[0.98] text-balance mb-7">
               We run our company with AI. We can help you set it up in yours.
             </h1>
-            <p className="text-lg md:text-2xl text-primary-foreground/80 leading-relaxed text-pretty max-w-3xl mx-auto mb-11">
+            <p className="text-lg md:text-2xl/8 text-primary-foreground/80 leading-relaxed text-pretty max-w-3xl mx-auto mb-11">
               obAIa is the big room of LetPeopleWork, kept as plain files in a private git repository.
               AI agents read it, argue the hard decisions and prepare the weekly review. The two of us
               decide. We help companies build the same thing inside their own environment, with their own
@@ -338,10 +338,10 @@ const AI = () => {
               <Bot className="w-3.5 h-3.5" />
               obAIa, how we run ourselves
             </Eyebrow>
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-[-0.02em] leading-[1.05] text-balance mb-6">
+            <h2 className="text-4xl md:text-5xl/none font-bold text-foreground tracking-[-0.02em] leading-[1.05] text-balance mb-6">
               An Obeya that lives in git and thinks along
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed text-pretty">
+            <p className="text-lg md:text-xl/7 text-muted-foreground leading-relaxed text-pretty">
               Obeya is the lean "big room" where work, decisions and problems stay visible. Ours used to
               be a Miro board. Now it is a folder of Markdown files, and a Claude Code session on top of it
               is how we work with it, by typing. The name is Obeya with AI in the middle, and it's
@@ -412,7 +412,7 @@ const AI = () => {
                 <CalendarClock className="w-3.5 h-3.5" />
                 A week with obAIa
               </Eyebrow>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-[-0.02em] leading-[1.1] mb-10">
+              <h2 className="text-3xl md:text-4xl/10 font-bold text-foreground tracking-[-0.02em] leading-[1.1] mb-10">
                 What it does while we do the work
               </h2>
             </Reveal>
@@ -420,11 +420,11 @@ const AI = () => {
               {WEEK.map((item, i) => (
                 <Reveal key={item.when} delay={i * 60}>
                   <li className="relative">
-                    <span className="absolute -left-[41px] top-0.5 grid h-5 w-5 place-items-center rounded-full border-2 border-primary bg-background" aria-hidden="true">
+                    <span className="absolute left-[-41px] top-0.5 grid h-5 w-5 place-items-center rounded-full border-2 border-primary bg-background" aria-hidden="true">
                       <span className="h-1.5 w-1.5 rounded-full bg-primary" />
                     </span>
                     <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary mb-1.5">{item.when}</p>
-                    <p className="text-base md:text-lg text-foreground/85 leading-relaxed">{item.what}</p>
+                    <p className="text-base md:text-lg/7 text-foreground/85 leading-relaxed">{item.what}</p>
                   </li>
                 </Reveal>
               ))}
@@ -477,10 +477,10 @@ const AI = () => {
               <GitBranch className="w-3.5 h-3.5" />
               obAIa for your company
             </Eyebrow>
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-[-0.02em] leading-[1.05] text-balance mb-6">
+            <h2 className="text-4xl md:text-5xl/none font-bold text-foreground tracking-[-0.02em] leading-[1.05] text-balance mb-6">
               We build yours with you, inside your environment
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed text-pretty">
+            <p className="text-lg md:text-xl/7 text-muted-foreground leading-relaxed text-pretty">
               obAIa isn't software you buy. It's a way of working, and every company needs a different one:
               which records matter, who decides what, which perspectives are missing when you decide. We set
               it up with you, on your accounts and in your repository, and hand it over.
@@ -545,7 +545,7 @@ const AI = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid gap-10 lg:grid-cols-2 lg:items-center">
           <Reveal>
             <Eyebrow>From our product · Lighthouse</Eyebrow>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-[-0.02em] leading-[1.1] mb-5">
+            <h2 className="text-3xl md:text-4xl/10 font-bold text-foreground tracking-[-0.02em] leading-[1.1] mb-5">
               Your delivery data in the same room
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed text-pretty mb-6">
@@ -597,10 +597,10 @@ const AI = () => {
               <Boxes className="w-3.5 h-3.5" />
               Open source, Claude Code native
             </Eyebrow>
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-[-0.02em] leading-[1.05] text-balance mb-6">
+            <h2 className="text-4xl md:text-5xl/none font-bold text-foreground tracking-[-0.02em] leading-[1.05] text-balance mb-6">
               Three toolkits we built and use, free to take
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed text-pretty">
+            <p className="text-lg md:text-xl/7 text-muted-foreground leading-relaxed text-pretty">
               Free, MIT-licensed and shaped by how we work. Read them, run them, and check them before you
               trust them.
             </p>
@@ -622,7 +622,7 @@ const AI = () => {
                       />
                     </div>
                   ) : (
-                    <div className="grid aspect-[16/9] place-items-center border-b border-border bg-gradient-subtle">
+                    <div className="grid aspect-video place-items-center border-b border-border bg-gradient-subtle">
                       <div className="text-center">
                         <Users className="mx-auto mb-3 h-10 w-10 text-primary/70" aria-hidden="true" />
                         <p className="font-mono text-sm text-primary">analyze · drift · improve · prep · decisions</p>
@@ -672,10 +672,10 @@ const AI = () => {
               <Users className="w-3.5 h-3.5" />
               Why us
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-[-0.02em] leading-[1.05] text-balance mb-6">
+            <h2 className="text-4xl md:text-5xl/none font-bold text-foreground tracking-[-0.02em] leading-[1.05] text-balance mb-6">
               We teach and build what we use ourselves
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed text-pretty">
+            <p className="text-lg md:text-xl/7 text-muted-foreground leading-relaxed text-pretty">
               Most AI training is someone reading the docs back to you. We teach it the way we use it every
               day, to run our own business with obAIa and to ship our own product.
             </p>
@@ -689,7 +689,7 @@ const AI = () => {
                     <div className="text-lg font-bold text-foreground tracking-tight">{f.name}</div>
                     <div className="text-sm font-medium text-primary">{f.role}</div>
                   </div>
-                  <p className="text-base md:text-lg text-muted-foreground leading-relaxed text-pretty">{f.brings}</p>
+                  <p className="text-base md:text-lg/7 text-muted-foreground leading-relaxed text-pretty">{f.brings}</p>
                 </div>
               </Reveal>
             ))}
@@ -705,10 +705,10 @@ const AI = () => {
               <GraduationCap className="w-3.5 h-3.5" />
               AI workshops
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-[-0.02em] leading-[1.05] text-balance mb-6">
+            <h2 className="text-4xl md:text-5xl/none font-bold text-foreground tracking-[-0.02em] leading-[1.05] text-balance mb-6">
               Or start with your people: an AI journey in four workshops
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed text-pretty">
+            <p className="text-lg md:text-xl/7 text-muted-foreground leading-relaxed text-pretty">
               Everyone has AI open in a tab. Almost none of it becomes work. This is the path from "huh,
               neat" to AI doing real work across your business. Four steps, each bookable on its own, at
               pilot pricing while it lasts.
@@ -733,8 +733,8 @@ const AI = () => {
                         </span>
                       </div>
                       <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight text-balance mb-3">{step.title}</h3>
-                      <p className="text-base md:text-lg text-foreground/80 leading-relaxed text-pretty mb-3">{step.loss}</p>
-                      <p className="text-base md:text-lg text-muted-foreground leading-relaxed text-pretty">{step.change}</p>
+                      <p className="text-base md:text-lg/7 text-foreground/80 leading-relaxed text-pretty mb-3">{step.loss}</p>
+                      <p className="text-base md:text-lg/7 text-muted-foreground leading-relaxed text-pretty">{step.change}</p>
                       <a
                         href={`${CONTACT_URL}?subject=${encodeURIComponent(`Workshop booking: ${step.title}`)}`}
                         className="group mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary no-underline"
@@ -750,7 +750,7 @@ const AI = () => {
           </div>
 
           <Reveal className="text-center max-w-2xl mx-auto mt-16">
-            <p className="text-base md:text-lg text-muted-foreground leading-relaxed text-pretty mb-8">
+            <p className="text-base md:text-lg/7 text-muted-foreground leading-relaxed text-pretty mb-8">
               Every workshop is {PILOT_PRICE} at pilot pricing, and that covers your entire team, not a seat.
               Pricing is subject to change once the pilot cohorts fill up. Each one stands on its own: book a
               single workshop, or design the whole journey with us.
@@ -794,10 +794,10 @@ const AI = () => {
         <div className="absolute inset-0 bg-grid-faint" aria-hidden="true" />
         <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Reveal>
-            <h2 className="text-4xl md:text-5xl font-bold text-primary-foreground tracking-[-0.02em] leading-[1.06] text-balance mb-7">
+            <h2 className="text-4xl md:text-5xl/none font-bold text-primary-foreground tracking-[-0.02em] leading-[1.06] text-balance mb-7">
               Want an obAIa of your own?
             </h2>
-            <p className="text-lg md:text-xl text-primary-foreground/80 leading-relaxed text-pretty mb-11">
+            <p className="text-lg md:text-xl/7 text-primary-foreground/80 leading-relaxed text-pretty mb-11">
               Write to us. We'll show you ours, live, and work out with you what yours would need.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
