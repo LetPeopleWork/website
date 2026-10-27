@@ -11,7 +11,6 @@ import {
   FileText,
   GitBranch,
   GraduationCap,
-  Github,
   Layers,
   LibraryBig,
   MessageSquareText,
@@ -21,6 +20,7 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
+import { Github } from "@/components/icons/BrandIcons";
 import workshopGraphic from "@/assets/ai/letpeopleworkshop.svg";
 import growGraphic from "@/assets/ai/letpeoplegrow.svg";
 import journeyData from "@/content/ai-journey.json";

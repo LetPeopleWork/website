@@ -1,4 +1,5 @@
-import { ArrowUpRight, Github } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import { Github } from "@/components/icons/BrandIcons";
 import WhereItRunsDiagram from "./WhereItRunsDiagram";
 
 // Answers the two questions an evaluator raises before anything else: "can it

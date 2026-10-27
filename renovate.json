@@ -9,6 +9,11 @@
   "commitMessagePrefix": "deps:",
   "packageRules": [
     {
+      "description": "TypeScript 7 is the native (Go) compiler and typescript-eslint cannot load it yet, so lint crashes. Stay on 6.x until typescript-eslint supports 7, then remove this rule.",
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<7"
+    },
+    {
       "description": "Every update merges itself once the CI verify check (lint and build without warnings, tests) is green, majors included. Renovate merges the PR itself instead of GitHub auto-merge: main has no branch protection (the blog and events sync workflows push to it directly), so GitHub auto-merge would not wait for CI.",
       "matchPackageNames": ["*"],
       "automerge": true,

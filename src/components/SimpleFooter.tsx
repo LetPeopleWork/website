@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Github, Linkedin, Mail, MessageSquare, Users, Youtube } from "lucide-react";
+import { Mail, MessageSquare, Users } from "lucide-react";
+import { Github, Linkedin, Youtube } from "@/components/icons/BrandIcons";
 import LegalInfoDialog from "./LegalInfoDialog";
 import logo from "@/assets/LPW_Banner_White.png";
 
