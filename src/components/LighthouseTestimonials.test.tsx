@@ -1,7 +1,8 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import TestimonialsSection from "./TestimonialsSection";
-import LighthouseTestimonials, { testimonials } from "./LighthouseTestimonials";
+import LighthouseTestimonials from "./LighthouseTestimonials";
+import { testimonials } from "@/content/testimonials";
 
 // The quotes are the customers' words. The bold line on each card is a
 // phrase lifted from the quote, never a summary we wrote for them.

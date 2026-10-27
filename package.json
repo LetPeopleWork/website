@@ -9,7 +9,7 @@
     "build:dev": "vite build --mode development",
     "test": "vitest run",
     "test:watch": "vitest",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings 0",
     "preview": "vite preview",
     "og": "./scripts/og/render.sh",
     "deck": "node deck/build-deck.mjs"

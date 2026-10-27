@@ -1,6 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import FriendsSection, { friends } from "./FriendsSection";
+import FriendsSection from "./FriendsSection";
+import { friends } from "@/content/friends";
 
 describe("friends of LetPeopleWork", () => {
   it("has a logo for every friend in friends.json", () => {

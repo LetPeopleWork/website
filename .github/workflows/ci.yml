@@ -1,7 +1,8 @@
 name: CI
 
 # The check Renovate waits for before it merges a dependency update
-# (renovate.json): lint, tests and the production build.
+# (renovate.json): lint with zero warnings, tests, and a production build
+# that prints no warnings. Runs on every pull request and on main.
 on:
   pull_request:
   push:
@@ -32,5 +33,13 @@ jobs:
       - name: Test
         run: bun run test
 
-      - name: Build
-        run: bun run build
+      # Vite has no "warnings are errors" switch, so the log is checked: a
+      # warning (Tailwind's "warn -", Rollup's "(!)") fails the check.
+      - name: Build (no warnings)
+        shell: bash
+        run: |
+          bun run build 2>&1 | tee build.log
+          if grep -inE 'warn|\(!\)' build.log; then
+            echo "::error::The build printed warnings (listed above). CI treats them as errors."
+            exit 1
+          fi
