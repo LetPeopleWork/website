@@ -50,7 +50,7 @@ export const AdminLoginForm = ({ onSignIn }: AdminLoginFormProps) => {
       <CardContent>
         <form onSubmit={submit} className="space-y-4" noValidate>
           <div className="space-y-2">
-            <Label htmlFor={emailId}>Email</Label>
+            <Label className="leading-6" htmlFor={emailId}>Email</Label>
             <Input
               id={emailId}
               type="email"
@@ -60,7 +60,7 @@ export const AdminLoginForm = ({ onSignIn }: AdminLoginFormProps) => {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor={passwordId}>Password</Label>
+            <Label className="leading-6" htmlFor={passwordId}>Password</Label>
             <Input
               id={passwordId}
               type="password"

@@ -87,10 +87,10 @@ export default function LighthouseLearnMore() {
           <span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-5 block">
             Before you decide
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight leading-[1.08]">
+          <h2 className="text-4xl md:text-5xl/none font-bold text-foreground tracking-tight leading-[1.08]">
             Want to see it with your own questions?
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mt-5">
+          <p className="text-lg md:text-xl/7 text-muted-foreground leading-relaxed mt-5">
             Book a demo, watch recorded sessions on real delivery data, or ask in our Slack.
           </p>
         </div>

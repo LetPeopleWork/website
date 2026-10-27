@@ -50,7 +50,7 @@ const VerdictPopup = ({ verdict, item, targetDays, onDismiss }: VerdictPopupProp
     data-testid="verdict-popup"
   >
     <div
-      className={`w-full max-w-md rounded-2xl border border-border border-l-[4px] bg-card p-6 shadow-soft ${ACCENTS[verdict]}`}
+      className={`w-full max-w-md rounded-2xl border border-border border-l-4 bg-card p-6 shadow-soft ${ACCENTS[verdict]}`}
       role="dialog"
       aria-modal="true"
     >

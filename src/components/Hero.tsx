@@ -71,7 +71,7 @@ const Hero = () => {
 
   return (
     <section id="home" className="relative overflow-hidden bg-background pt-32 pb-0 md:pt-40">
-      <div className="absolute inset-0 z-0 bg-gradient-to-b from-accent/60 via-background to-background" />
+      <div className="absolute inset-0 z-0 bg-linear-to-b from-accent/60 via-background to-background" />
 
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="animate-fade-in">
@@ -79,7 +79,7 @@ const Hero = () => {
             Lighthouse · flow metrics and delivery forecasts
           </span>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-[1.05] tracking-tight">
+          <h1 className="text-4xl sm:text-5xl/none lg:text-6xl/none font-bold text-foreground mb-6 leading-[1.05] tracking-tight">
             When will it be done?
           </h1>
 
@@ -88,8 +88,8 @@ const Hero = () => {
               and nothing above the chips moves when the text gets longer. */}
           <PathChips selected={pathKey} onSelect={choosePath} className="mb-7" />
 
-          <div className="max-w-2xl mx-auto mb-9 min-h-[7.5rem]" aria-live="polite">
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed" data-testid="hero-subhead">
+          <div className="max-w-2xl mx-auto mb-9 min-h-30" aria-live="polite">
+            <p className="text-lg md:text-xl/7 text-muted-foreground leading-relaxed" data-testid="hero-subhead">
               {path?.subhead ?? DEFAULT_SUBHEAD}
             </p>
             {path && (
@@ -153,7 +153,7 @@ const Hero = () => {
               aria-label={`Play: ${LIGHTHOUSE_FILM.title}`}
               data-testid="hero-film-play"
             >
-              <span className="inline-flex items-center gap-3 rounded-full bg-foreground/90 px-6 py-3 text-base font-semibold text-background shadow-medium ring-1 ring-white/20 backdrop-blur-sm transition-transform group-hover:scale-105 group-hover:bg-foreground">
+              <span className="inline-flex items-center gap-3 rounded-full bg-foreground/90 px-6 py-3 text-base font-semibold text-background shadow-medium ring-1 ring-white/20 backdrop-blur-xs transition-transform group-hover:scale-105 group-hover:bg-foreground">
                 <Play className="h-5 w-5 fill-current" />
                 Watch the film · {LIGHTHOUSE_FILM.durationSeconds} s
               </span>
@@ -178,7 +178,7 @@ const Hero = () => {
               />
             </div>
           )}
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-background to-transparent" />
         </div>
         )}
       </div>

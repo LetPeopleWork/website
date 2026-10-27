@@ -142,7 +142,7 @@ const Exchange = ({ errorMessage, onSubmit, onBack }: ExchangeProps) => {
           {wantsTrial ? (
             <>
               <div className="space-y-2">
-                <Label htmlFor={emailId}>
+                <Label className="leading-6" htmlFor={emailId}>
                   Email for your free premium trial
                 </Label>
                 <Input
@@ -159,7 +159,7 @@ const Exchange = ({ errorMessage, onSubmit, onBack }: ExchangeProps) => {
                 </p>
               ) : null}
               <div className="space-y-2">
-                <Label htmlFor={organizationId}>Organization</Label>
+                <Label className="leading-6" htmlFor={organizationId}>Organization</Label>
                 <Input
                   id={organizationId}
                   type="text"

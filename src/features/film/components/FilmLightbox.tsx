@@ -30,7 +30,7 @@ const FilmLightbox = ({ open, onOpenChange, video = VIDEOS.film }: FilmLightboxP
       <DialogTitle className="sr-only">{video.title}</DialogTitle>
       <DialogClose
         data-film-close
-        className="absolute -top-10 right-0 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-medium text-white/80 transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+        className="absolute -top-10 right-0 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-medium text-white/80 transition-colors hover:text-white focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white"
         aria-label="Close video"
       >
         Close <X className="h-4 w-4" />

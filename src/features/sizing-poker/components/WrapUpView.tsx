@@ -81,7 +81,7 @@ const WrapUpView = ({
       <div className="flex flex-col gap-6 rounded-2xl border border-border bg-card p-6 shadow-soft">
         <div className="py-1 text-center">
           <div
-            className="text-6xl font-bold leading-none tracking-tighter text-primary tabular-nums md:text-7xl"
+            className="text-6xl font-bold leading-none tracking-tighter text-primary tabular-nums md:text-7xl/none"
             data-testid="sizing-seconds-per-item"
           >
             {stats.secondsPerItem.toFixed(1)}

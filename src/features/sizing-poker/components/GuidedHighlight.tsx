@@ -42,7 +42,7 @@ const GuidedHighlight = ({ anchor, text, onNext }: GuidedHighlightProps) => {
     <>
       <div className="pointer-events-none fixed inset-0 z-40" data-testid="guided-highlight">
         <div
-          className="absolute rounded-2xl outline outline-2 outline-offset-4 outline-primary transition-all duration-300"
+          className="absolute rounded-2xl outline-solid outline-2 outline-offset-4 outline-primary transition-all duration-300"
           style={{
             left: rect.left - pad,
             top: rect.top - pad,

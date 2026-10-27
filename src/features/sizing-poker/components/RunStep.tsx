@@ -110,7 +110,7 @@ const RunStep = ({
       )}
 
       <p
-        className="mb-3 flex min-h-[2.4em] items-center text-balance text-2xl font-semibold leading-tight tracking-tight text-foreground md:text-3xl"
+        className="mb-3 flex min-h-[2.4em] items-center text-balance text-2xl font-semibold leading-tight tracking-tight text-foreground md:text-3xl/9"
         data-testid="sizing-item"
       >
         {item}

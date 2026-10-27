@@ -59,7 +59,7 @@ const FilmFacade = ({
             height={posterSize.height}
           />
           <span className="absolute inset-0 grid place-items-center">
-            <span className="inline-flex items-center gap-3 rounded-full bg-foreground/90 px-6 py-3 text-base font-semibold text-background shadow-medium ring-1 ring-white/20 backdrop-blur-sm transition-transform group-hover:scale-105 group-hover:bg-foreground">
+            <span className="inline-flex items-center gap-3 rounded-full bg-foreground/90 px-6 py-3 text-base font-semibold text-background shadow-medium ring-1 ring-white/20 backdrop-blur-xs transition-transform group-hover:scale-105 group-hover:bg-foreground">
               <Play className="h-5 w-5 fill-current" />
               {label} · {video.durationSeconds} s
             </span>

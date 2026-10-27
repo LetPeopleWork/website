@@ -485,10 +485,10 @@ const Lighthouse = () => {
 							Lighthouse
 						</span>
 					</div>
-					<h1 className="text-4xl md:text-6xl font-bold text-foreground tracking-tight leading-[1.08] mb-6">
+					<h1 className="text-4xl md:text-6xl/none font-bold text-foreground tracking-tight leading-[1.08] mb-6">
 						Know how likely your date is before you promise it
 					</h1>
-					<p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-10">
+					<p className="text-lg md:text-xl/7 text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-10">
 						Flow metrics and Monte Carlo forecasts for one team or a whole
 						portfolio. Lighthouse runs on your laptop or inside your network and
 						connects to Jira Cloud and Data Center, Azure DevOps, Linear and
@@ -600,10 +600,10 @@ const Lighthouse = () => {
 						<span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-4 block">
 							Pricing
 						</span>
-						<h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight leading-[1.08] mb-6">
+						<h2 className="text-4xl md:text-5xl/none font-bold text-foreground tracking-tight leading-[1.08] mb-6">
 							Free for up to 3 teams
 						</h2>
-						<p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+						<p className="text-lg md:text-xl/7 text-muted-foreground max-w-2xl mx-auto leading-relaxed">
 							Every edition runs on your own systems. Self-Service lifts the Community limits and adds sign-in, rule-based deliveries and more. Enterprise adds priority support.
 						</p>
 					</div>
@@ -979,7 +979,7 @@ const Lighthouse = () => {
 						<span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-4 block">
 							Get a license
 						</span>
-						<h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight leading-[1.08] mb-6">
+						<h2 className="text-4xl md:text-5xl/none font-bold text-foreground tracking-tight leading-[1.08] mb-6">
 							Buy Self-Service, or talk to us about Enterprise
 						</h2>
 						<p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -1084,7 +1084,7 @@ const Lighthouse = () => {
 
 									<div className="space-y-4 mb-8">
 										<div className="space-y-2">
-											<Label
+											<Label className="leading-6"
 												htmlFor="name"
 												className="flex items-center space-x-2"
 											>
@@ -1105,7 +1105,7 @@ const Lighthouse = () => {
 										</div>
 
 										<div className="space-y-2">
-											<Label
+											<Label className="leading-6"
 												htmlFor="email"
 												className="flex items-center space-x-2"
 											>
@@ -1127,7 +1127,7 @@ const Lighthouse = () => {
 										</div>
 
 										<div className="space-y-2">
-											<Label
+											<Label className="leading-6"
 												htmlFor="organization"
 												className="flex items-center space-x-2"
 											>
@@ -1148,7 +1148,7 @@ const Lighthouse = () => {
 										</div>
 
 										<div className="space-y-2">
-											<Label
+											<Label className="leading-6"
 												htmlFor="validFrom"
 												className="flex items-center space-x-2"
 											>
@@ -1222,17 +1222,17 @@ const Lighthouse = () => {
 					</Card>
 
 					{/* Enterprise enquiry card */}
-					<div className="mt-8 rounded-3xl border-2 border-primary/30 bg-gradient-to-br from-white to-accent/30 p-8 md:p-12 relative overflow-hidden">
+					<div className="mt-8 rounded-3xl border-2 border-primary/30 bg-linear-to-br from-white to-accent/30 p-8 md:p-12 relative overflow-hidden">
 						<div className="absolute -top-20 -right-20 w-60 h-60 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 						<div className="relative grid lg:grid-cols-2 gap-10 items-center">
 							<div>
 								<span className="text-xs font-semibold uppercase tracking-[0.15em] text-primary mb-3 block">
 									Enterprise
 								</span>
-								<h3 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight leading-tight mb-4">
+								<h3 className="text-3xl md:text-4xl/10 font-bold text-foreground tracking-tight leading-tight mb-4">
 										Want priority support?
 								</h3>
-								<p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-2">
+								<p className="text-base md:text-lg/7 text-muted-foreground leading-relaxed mb-2">
 									Enterprise gives you the same product as Self-Service, plus a prioritised support queue, a 24h acknowledgement on async requests, and onboarding calls.
 								</p>
 							</div>
@@ -1342,7 +1342,7 @@ const Lighthouse = () => {
 															window.open(url, "_blank");
 														}}
 													>
-														<span className="flex-shrink-0 w-5 h-5 flex items-center justify-center text-muted-foreground">
+														<span className="shrink-0 w-5 h-5 flex items-center justify-center text-muted-foreground">
 															<OsIcon os={item.os} className="h-4 w-4" />
 														</span>
 														<span className="flex-1 text-sm">{item.label}</span>
@@ -1415,7 +1415,7 @@ const Lighthouse = () => {
 																}
 															}}
 														>
-															<span className="flex-shrink-0 w-5 h-5 flex items-center justify-center text-muted-foreground">
+															<span className="shrink-0 w-5 h-5 flex items-center justify-center text-muted-foreground">
 																<OsIcon os={item.os} className="h-4 w-4" />
 															</span>
 															<span className="flex-1 text-sm">
