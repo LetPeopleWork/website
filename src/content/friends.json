@@ -1,0 +1,24 @@
+[
+  {
+    "name": "Thrivve Partners",
+    "location": "London, United Kingdom",
+    "logo": "thrivve-partners.svg",
+    "alt": "Thrivve Partners logo",
+    "description": "An agile consultancy from Soho, London. Thrivve coach organisations on flow, product leadership and delivery, and run Loft Learning, free hands-on learning days for practitioners. We run workshops together.",
+    "link": {
+      "href": "https://thrivve.partners/",
+      "label": "thrivve.partners"
+    }
+  },
+  {
+    "name": "Lil Agile Monster",
+    "location": "United States",
+    "logo": "lil-agile-monster.png",
+    "alt": "Lil Agile Monster logo",
+    "description": "Liz Rettig's practice for Kanban, flow metrics and portfolio forecasting, paired with agentic AI. Liz is a ProKanban-certified trainer and helps teams and portfolios deliver predictably.",
+    "link": {
+      "href": "https://lilagilemonster.com/",
+      "label": "lilagilemonster.com"
+    }
+  }
+]

@@ -5,6 +5,7 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import LighthouseSection from "@/components/LighthouseSection";
 import AIIntegrationSection from "@/components/AIIntegrationSection";
 import WhoBuildsThis from "@/components/WhoBuildsThis";
+import FriendsSection from "@/components/FriendsSection";
 import ClosingOffer from "@/components/ClosingOffer";
 import BlogSection from "@/components/BlogSection";
 import SimpleFooter from "@/components/SimpleFooter";
@@ -25,6 +26,7 @@ const Index = () => {
       <SizingPokerTeaser />
       <AIIntegrationSection />
       <WhoBuildsThis />
+      <FriendsSection />
       <ClosingOffer />
       <BlogSection />
       <SimpleFooter />
