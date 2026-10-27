@@ -240,7 +240,7 @@ function Reveal({
     <div
       ref={ref}
       style={{ transitionDelay: revealed ? `${delay}ms` : "0ms" }}
-      className={`transition-all duration-[900ms] ease-out-expo ${
+      className={`transition-all duration-900 ease-out-expo ${
         revealed ? shown : hidden
       } ${className}`}
     >

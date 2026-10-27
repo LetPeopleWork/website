@@ -1,18 +1,11 @@
-import ThrivveLogo from "../assets/friends/thrivve-partners.svg";
-import LilAgileMonsterLogo from "../assets/friends/lil-agile-monster.png";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import friendsData from "@/content/friends.json";
+import { friends } from "@/content/friends";
 
 // Partners we know, like and recommend. Not a sales channel and not paid
 // placement: a friend is someone we have worked with and would send a
-// client to. Add one by dropping a logo in src/assets/friends/ and an entry
-// in src/content/friends.json. Logos sit on a white tile so logos with their
-// own background colours still look tidy side by side.
-const LOGOS: Record<string, string> = {
-  "thrivve-partners.svg": ThrivveLogo,
-  "lil-agile-monster.png": LilAgileMonsterLogo,
-};
-export const friends = friendsData.map((f) => ({ ...f, image: LOGOS[f.logo] }));
+// client to. Add one in src/content/friends.json (+ its logo in
+// src/content/friends.ts). Logos sit on a white tile so logos with their own
+// background colours still look tidy side by side.
 
 const FriendsSection = () => {
   const { ref, revealed } = useScrollReveal<HTMLDivElement>();

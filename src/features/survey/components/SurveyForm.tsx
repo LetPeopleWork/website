@@ -1,5 +1,5 @@
 import { useEffect, useId, useReducer, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -115,14 +115,14 @@ const Exchange = ({ errorMessage, onSubmit, onBack }: ExchangeProps) => {
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     formState: { errors },
   } = useForm<ExchangeValues>({
     resolver: zodResolver(exchangeSchema),
     mode: "onSubmit",
     defaultValues: { wantsTrial: false, email: "", organization: "" },
   });
-  const wantsTrial = watch("wantsTrial");
+  const wantsTrial = useWatch({ control, name: "wantsTrial" });
   const submit = handleSubmit((values) => onSubmit(trialFrom(values)));
 
   return (
