@@ -49,7 +49,7 @@ jobs:
         run: bun install
         
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v6
         
       # Build runs prerender-meta.mjs, which writes a per-route index.html
       # (with each route's own <head> meta) into dist, replacing the old
