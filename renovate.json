@@ -7,6 +7,11 @@
   "minimumReleaseAge": "7 days",
   "internalChecksFilter": "strict",
   "commitMessagePrefix": "deps:",
+  "rangeStrategy": "bump",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am on monday"]
+  },
   "packageRules": [
     {
       "description": "TypeScript 7 is the native (Go) compiler and typescript-eslint cannot load it yet, so lint crashes. Stay on 6.x until typescript-eslint supports 7, then remove this rule.",
