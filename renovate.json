@@ -1,0 +1,23 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "timezone": "Europe/Zurich",
+  "dependencyDashboard": true,
+  "minimumReleaseAge": "7 days",
+  "internalChecksFilter": "strict",
+  "commitMessagePrefix": "deps:",
+  "packageRules": [
+    {
+      "description": "Every update merges itself once the CI verify check (tests + build) is green, majors included. Renovate merges the PR itself instead of GitHub auto-merge: main has no branch protection (the blog and events sync workflows push to it directly), so GitHub auto-merge would not wait for CI.",
+      "matchPackageNames": ["*"],
+      "automerge": true,
+      "automergeType": "pr",
+      "platformAutomerge": false,
+      "ignoreTests": false
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "labels": ["security"],
+    "automerge": true
+  }
+}
