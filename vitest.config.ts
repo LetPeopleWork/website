@@ -1,13 +1,13 @@
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react-swc";
-import path from "path";
+import { fileURLToPath } from "node:url";
 
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
-      "@shared": path.resolve(__dirname, "./supabase/_shared"),
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+      "@shared": fileURLToPath(new URL("./supabase/_shared", import.meta.url)),
     },
   },
   test: {

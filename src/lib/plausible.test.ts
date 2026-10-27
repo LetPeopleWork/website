@@ -1,12 +1,15 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const { init, track } = vi.hoisted(() => {
+const { init, initCalls, track } = vi.hoisted(() => {
   // jsdom has no ResizeObserver; the wrapper only starts the tracker where it exists.
   (globalThis as { ResizeObserver?: unknown }).ResizeObserver = class {
     observe() {}
     disconnect() {}
   };
-  return { init: vi.fn(), track: vi.fn() };
+  // The wrapper calls init() once, when the module loads. Those calls are kept
+  // outside the mock: vitest 5 resets mock state before each test.
+  const initCalls: unknown[][] = [];
+  return { init: vi.fn((...args: unknown[]) => void initCalls.push(args)), initCalls, track: vi.fn() };
 });
 vi.mock("@plausible-analytics/tracker", () => ({ init, track }));
 
@@ -16,8 +19,8 @@ describe("analytics wrapper", () => {
   beforeEach(() => track.mockClear());
 
   it("initialises the official tracker once, with automatic pageviews and engagement", () => {
-    expect(init).toHaveBeenCalledTimes(1);
-    expect(init).toHaveBeenCalledWith(
+    expect(initCalls).toHaveLength(1);
+    expect(initCalls[0][0]).toEqual(
       expect.objectContaining({ domain: "letpeople.work", autoCapturePageviews: true }),
     );
   });
@@ -31,7 +34,9 @@ describe("analytics wrapper", () => {
   });
 
   it("applies the canonical URL to outgoing events, engagement included", () => {
-    const { transformRequest } = init.mock.calls[0][0];
+    const { transformRequest } = initCalls[0][0] as {
+      transformRequest: (payload: Record<string, string>) => { u: string };
+    };
     expect(transformRequest({ n: "engagement", u: "https://letpeople.work/ai", d: "letpeople.work" }).u).toBe(
       "https://letpeople.work/ai/",
     );
