@@ -62,7 +62,7 @@
     "react-helmet-async": "^3.0.0",
     "react-hook-form": "^7.90.0",
     "react-is": "^19.3.1",
-    "react-resizable-panels": "^4.14.7",
+    "react-resizable-panels": "^4.14.8",
     "react-router-dom": "^7.18.4",
     "recharts": "^3.10.1",
     "rss-parser": "^3.13.0",
