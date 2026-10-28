@@ -28,7 +28,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: '24.22.0'
+          node-version: '24.22.1'
 
       # Zero-dependency script (native fetch), no npm install needed.
       - name: Fetch latest blog posts
