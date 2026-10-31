@@ -807,6 +807,10 @@ const Lighthouse = () => {
 														community: true, self: true, enterprise: true,
 													},
 													{
+														feature: { label: "Every report in one place", tooltip: "A Reports page lists every report across your Teams and Portfolios. Pick several and print them into one PDF, or remove them in one go." },
+														community: true, self: true, enterprise: true,
+													},
+													{
 														feature: { label: "Forecast Reality Check", tooltip: "Forecast weeks that already happened and compare with what your Team finished. You see whether your history window and percentiles hold up." },
 														community: true, self: true, enterprise: true,
 													},
@@ -900,6 +904,10 @@ const Lighthouse = () => {
 													},
 													{
 														feature: { label: "Follow a Jira Release", tooltip: "A Delivery that follows a Jira Release (fixVersion), picks up its Features by itself, and writes the forecast back to it." },
+														community: false, self: true, enterprise: true,
+													},
+													{
+														feature: { label: "Create reports in bulk", tooltip: "Create reports for many Teams and Portfolios at once, with the same settings for each, and see which were created and why any were not." },
 														community: false, self: true, enterprise: true,
 													},
 													{
