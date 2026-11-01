@@ -1,6 +1,13 @@
 {
   "posts": [
     {
+      "title": "The chains were never locked",
+      "link": "https://blog.letpeople.work/p/chains-never-locked-from-sprints-to-pull",
+      "date": "2026-10-31T12:11:02.000Z",
+      "displayDate": "31 Oct 2026",
+      "excerpt": "One session, no transformation, and what a team did once they noticed they were free"
+    },
+    {
       "title": "What's new in Lighthouse: Refinement, Delivery Timeline, and more",
       "link": "https://blog.letpeople.work/p/whats-new-in-lighthouse-refinement",
       "date": "2026-10-14T13:37:36.000Z",
@@ -13,13 +20,6 @@
       "date": "2026-08-07T07:21:39.000Z",
       "displayDate": "7 Aug 2026",
       "excerpt": "Mo Teams Mo Problems?"
-    },
-    {
-      "title": "Our Obeya Lives in Git Now. And It Thinks Along.",
-      "link": "https://blog.letpeople.work/p/our-obeya-lives-in-git-now-and-it",
-      "date": "2026-07-30T12:04:00.000Z",
-      "displayDate": "30 Jul 2026",
-      "excerpt": "For a while, the business side of LetPeopleWork ran on a Miro board."
     }
   ]
 }
