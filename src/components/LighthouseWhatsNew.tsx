@@ -23,6 +23,14 @@ type Item = {
 // https://github.com/LetPeopleWork/Lighthouse/releases
 const ITEMS: Item[] = [
   {
+    tag: "Portfolio",
+    title: "Parents from more than one place",
+    description:
+      "Some Features hang under their parent through Jira's Parent, others through a link or a custom field. List up to five places in order on Jira and Azure DevOps, and the first one that names a parent wins.",
+    version: "v26.11.8.1",
+    released: "2026-11-08",
+  },
+  {
     tag: "Reporting",
     title: "Every report in one place",
     description:
@@ -168,7 +176,7 @@ const ITEMS: Item[] = [
 // Every published Lighthouse release since May 2026, newest first. Add the
 // date of each new release here, together with its card above.
 const RELEASE_DATES: string[] = [
-  "2026-11-01", "2026-10-25", "2026-10-19", "2026-10-16", "2026-10-10", "2026-10-03", "2026-09-24", "2026-09-20", "2026-09-09", "2026-09-01",
+  "2026-11-08", "2026-11-01", "2026-10-25", "2026-10-19", "2026-10-16", "2026-10-10", "2026-10-03", "2026-09-24", "2026-09-20", "2026-09-09", "2026-09-01",
   "2026-08-31", "2026-08-14", "2026-08-08", "2026-08-03", "2026-08-01",
   "2026-07-26", "2026-07-12", "2026-07-03", "2026-06-16", "2026-06-12",
   "2026-06-07", "2026-05-29", "2026-05-24", "2026-05-19", "2026-05-14",
