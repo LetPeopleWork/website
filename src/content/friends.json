@@ -20,5 +20,16 @@
       "href": "https://lilagilemonster.com/",
       "label": "lilagilemonster.com"
     }
+  },
+  {
+    "name": "Value Talks",
+    "location": "Switzerland",
+    "logo": "value-talks.svg",
+    "alt": "Value Talks logo",
+    "description": "Value Talks is a consultancy for organisation development, founded by Ari Byland. It works with senior management on product organisation, co-leadership, decision-making and AI. Besides consulting, Value Talks runs trainings, workshops and a podcast.",
+    "link": {
+      "href": "https://valuetalks.ch/",
+      "label": "valuetalks.ch"
+    }
   }
 ]
