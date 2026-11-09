@@ -29,3 +29,6 @@ deck/lighthouse-pitch.html
 # nWave activation marker (keep .nwave/local-config.json trackable)
 .nwave/*
 !.nwave/local-config.json
+# nWave config (keep .nwave/config.json trackable)
+.nwave/*
+!.nwave/config.json
