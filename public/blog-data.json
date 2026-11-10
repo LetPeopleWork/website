@@ -1,6 +1,13 @@
 {
   "posts": [
     {
+      "title": "What's new in Lighthouse: Then & Now reports, PDF export, and more",
+      "link": "https://blog.letpeople.work/p/whats-new-in-lighthouse-then-and",
+      "date": "2026-11-10T09:55:00.000Z",
+      "displayDate": "10 Nov 2026",
+      "excerpt": "November 2026 edition"
+    },
+    {
       "title": "The chains were never locked",
       "link": "https://blog.letpeople.work/p/chains-never-locked-from-sprints-to-pull",
       "date": "2026-10-31T12:11:02.000Z",
@@ -13,13 +20,6 @@
       "date": "2026-10-14T13:37:36.000Z",
       "displayDate": "14 Oct 2026",
       "excerpt": "October 2026 edition"
-    },
-    {
-      "title": "An Introduction and Step-by-Step Guide to Multi-Team Monte Carlo Simulations",
-      "link": "https://blog.letpeople.work/p/an-introduction-and-step-by-step",
-      "date": "2026-08-07T07:21:39.000Z",
-      "displayDate": "7 Aug 2026",
-      "excerpt": "Mo Teams Mo Problems?"
     }
   ]
 }
