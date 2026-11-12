@@ -35,7 +35,8 @@ export const AdminLoginForm = ({ onSignIn }: AdminLoginFormProps) => {
   const submit = handleSubmit(async (values) => {
     setServerError(null);
     const result = await onSignIn(values.email, values.password);
-    if (!result.ok) {
+    // "=== false", not "!": without strictNullChecks only the comparison narrows the union.
+    if (result.ok === false) {
       setServerError(result.error);
     }
   });

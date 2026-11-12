@@ -39,6 +39,7 @@ const getMockLead = (overrides: Partial<DashboardLead> = {}): DashboardLead => (
 const getMockData = (overrides: Partial<DashboardData> = {}): DashboardData => ({
   responses: [getMockResponse()],
   leads: [getMockLead()],
+  surveyResponses: [],
   ...overrides,
 });
 
@@ -92,6 +93,7 @@ const getMockTrialRequest = (
   id: "11111111-1111-1111-1111-111111111111",
   source: "user-survey-trial",
   email: "trial@example.com",
+  organization: null,
   createdAt: "2026-05-01T00:00:00.000Z",
   fulfilledAt: null,
   ...overrides,
@@ -211,6 +213,7 @@ describe("Admin assessment dashboard", () => {
         getMockLead({ source: "readiness-assessment", email: "keep@example.com" }),
         getMockLead({ source: "other-survey" as never, email: "drop@example.com" }),
       ],
+      surveyResponses: [],
     };
     const authGateway = getFakeAuthGateway({
       initialSession: { email: "benjamin@letpeople.work" },

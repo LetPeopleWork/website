@@ -30,6 +30,7 @@ const getMockSurveyResponse = (
 
 const inMemoryRepository = (data: DashboardData): DashboardRepository => ({
   load: () => Promise.resolve(data),
+  markTrialFulfilled: () => Promise.resolve(),
 });
 
 const renderSurveyView = async (repository: DashboardRepository) => {
