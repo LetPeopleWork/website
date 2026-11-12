@@ -99,7 +99,12 @@ const Navigation = () => {
   }, [lighthouseMenuTimeout]);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-xs border-b border-border safe-top">
+    // --nav-top is the height of the year-end budget bar while it is on
+    // screen (components/BudgetBar.tsx), and unset the rest of the time.
+    <nav
+      className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-xs border-b border-border safe-top"
+      style={{ top: "var(--nav-top, 0px)" }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="shrink-0">

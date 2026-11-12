@@ -194,6 +194,29 @@ const withSchema = (html, route) => {
 
 const faqs = loadFaq();
 const prices = loadPrices();
+
+// The year-end budget page (src/pages/Budget.tsx). Unlisted, and only while
+// the season lasts: a build after the last day writes a bare shell instead,
+// and the app sends visitors on to /lighthouse.
+const budgetSeason = JSON.parse(readFileSync("src/content/budget-season.json", "utf8"));
+const budgetSeasonOpenAt = (now, season = budgetSeason) =>
+  now.toISOString().slice(0, 10) <= season.lastDay;
+if (budgetSeasonOpenAt(new Date())) {
+  seoRoutes.push({
+    path: "budget",
+    noindex: true,
+    title: `Budget left this year? A year of Lighthouse for ${prices.selfService} | LetPeopleWork`,
+    description: `Year-end budget left and nobody wants another escape room? ${prices.selfService} gets all your teams a year of Lighthouse, the self-hosted flow metrics and forecasting tool. The price is the same in January.`,
+    noscript: `
+      <h1>Budget left, and nobody wants another escape room?</h1>
+      <p>${prices.selfService} gets all your teams a year of Lighthouse. The price is the same in January, but the budget often isn't.</p>
+      <p>Lighthouse looks at what your teams have finished in Jira, Azure DevOps, Linear or ServiceNow and shows how likely each delivery date is. One Self-Service license runs for 365 days from the purchase date and covers as many teams, portfolios and deliveries as your organization has. It runs on your own systems.</p>
+      <p>You buy it by card on <a href="https://letpeople.work/lighthouse/">https://letpeople.work/lighthouse/</a>. For an invoice or a PO number before the year ends, write to licensing@letpeople.work. A 30-day trial is free, and the Community edition is free for up to 3 teams and 1 portfolio.</p>
+    `,
+  });
+} else {
+  fallbackRoutes.push({ path: "budget", title: "Lighthouse | LetPeopleWork" });
+}
 const bodies = {
   lighthouse: lighthouseBody(faqs, prices),
 };

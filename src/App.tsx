@@ -8,6 +8,7 @@ import { HelmetProvider } from "react-helmet-async";
 // Landing page and the tiny 404 stay eager for fast first paint.
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import BudgetBar from "./components/BudgetBar";
 
 // Heavier routes are code-split so they do not weigh down the homepage bundle.
 const Lighthouse = lazy(() => import("./pages/Lighthouse"));
@@ -16,6 +17,7 @@ const Assessment = lazy(() => import("./pages/Assessment"));
 const AdminAssessment = lazy(() => import("./pages/AdminAssessment"));
 const SurveyRoute = lazy(() => import("./pages/SurveyRoute"));
 const SizingPoker = lazy(() => import("./pages/SizingPoker"));
+const Budget = lazy(() => import("./pages/Budget"));
 
 const queryClient = new QueryClient();
 
@@ -30,6 +32,8 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          {/* Year-end budget note; hides itself after 31 December 2026. */}
+          <BudgetBar />
           <Suspense fallback={<RouteFallback />}>
             <Routes>
               <Route path="/" element={<Index />} />
@@ -47,6 +51,7 @@ const App = () => (
               />
               <Route path="/survey" element={<SurveyRoute />} />
               <Route path="/sizing-poker" element={<SizingPoker />} />
+              <Route path="/budget" element={<Budget />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
