@@ -5,12 +5,17 @@ import { MemoryRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import Assessment from "@/pages/Assessment";
 import { createSessionStoragePersistence } from "@/features/assessment/adapters/sessionStoragePersistence";
+import type { LeadCapture, ResponseRepository } from "@/features/assessment/ports";
+
+// In-memory fakes: the default adapters write to the PRODUCTION Supabase.
+const noopRepository: ResponseRepository = { save: () => Promise.resolve() };
+const noopLeadCapture: LeadCapture = { capture: () => Promise.resolve() };
 
 const renderAssessment = () =>
   render(
     <HelmetProvider>
       <MemoryRouter initialEntries={["/assessment"]}>
-        <Assessment />
+        <Assessment responseRepository={noopRepository} leadCapture={noopLeadCapture} />
       </MemoryRouter>
     </HelmetProvider>,
   );
