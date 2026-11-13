@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { BUDGET_LAST_DAY_LABEL, budgetPhase, budgetSeasonOpen } from "./season";
+import { budgetPhase, budgetSeasonOpen } from "./season";
 
 // The year-end budget campaign runs to 31 December 2026 and then removes
 // itself. Until 5 December the trial comes first, after that the purchase.
@@ -18,9 +18,5 @@ describe("the budget season", () => {
     expect(budgetPhase(new Date(2027, 0, 1, 0, 0))).toBe("over");
     expect(budgetSeasonOpen(new Date(2027, 0, 1, 0, 0))).toBe(false);
     expect(budgetSeasonOpen(new Date(2026, 11, 31, 23, 59))).toBe(true);
-  });
-
-  it("names its last day for the page", () => {
-    expect(BUDGET_LAST_DAY_LABEL).toBe("31 December");
   });
 });

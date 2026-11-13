@@ -30,11 +30,5 @@ export const budgetPhase = (now: Date = new Date()): BudgetPhase => {
 
 export const budgetSeasonOpen = (now: Date = new Date()): boolean => budgetPhase(now) !== "over";
 
-/** "31 December", for the line that says when the page comes down. */
-export const BUDGET_LAST_DAY_LABEL = lastDay.toLocaleDateString("en-GB", {
-  day: "numeric",
-  month: "long",
-});
-
 export const BUDGET_PATH = "/budget";
 export const BUDGET_URL = "https://letpeople.work/budget/";

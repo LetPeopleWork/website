@@ -5,7 +5,7 @@ import Navigation from "@/components/Navigation";
 import SimpleFooter from "@/components/SimpleFooter";
 import SEO from "@/components/SEO";
 import TrialRequestDialog from "@/features/trial/components/TrialRequestDialog";
-import { BUDGET_LAST_DAY_LABEL, BUDGET_URL, budgetPhase } from "@/features/budget/season";
+import { BUDGET_URL, budgetPhase } from "@/features/budget/season";
 import { prices } from "@/lib/pricing";
 import { trackEvent } from "@/lib/plausible";
 
@@ -47,7 +47,7 @@ const ROWS = [
   {
     label: "What you keep",
     room: "A group photo",
-    lighthouse: "Delivery dates with a percentage next to them",
+    lighthouse: "An answer you can stand behind when someone asks \u201cwhen will it be done?\u201d",
   },
 ];
 
@@ -220,9 +220,19 @@ const Budget = () => {
                 </dl>
               </div>
             </div>
-            <p className="mx-auto mt-8 max-w-2xl text-center text-base leading-relaxed text-muted-foreground">
-              To be fair, the escape room is more fun. And if three teams and one portfolio are
-              enough for you, the{" "}
+            {/* Peter's line from the blog: "Use the 85% date and sleep well." */}
+            <p
+              className="mx-auto mt-12 max-w-2xl text-center text-xl leading-relaxed text-pretty text-foreground md:text-2xl/9"
+              data-testid="budget-picture"
+            >
+              To be fair, the escape room is more fun. For about an hour.{" "}
+              <span className="font-semibold">
+                Now picture next year: your stakeholders ask when it will be done, you give them the
+                85% date, and you sleep well that night.
+              </span>
+            </p>
+            <p className="mx-auto mt-6 max-w-2xl text-center text-base leading-relaxed text-muted-foreground">
+              If three teams and one portfolio are enough for you, the{" "}
               <Link to={COMMUNITY_URL} className="font-medium text-primary underline underline-offset-4">
                 Community edition
               </Link>{" "}
@@ -266,10 +276,6 @@ const Budget = () => {
                 Opens an email draft in your own mail program. You choose who gets it.
               </p>
             </div>
-            <p className="mt-12 text-center text-sm text-muted-foreground">
-              This page comes down after {BUDGET_LAST_DAY_LABEL}. Lighthouse will cost the same after
-              that.
-            </p>
           </div>
         </section>
       </main>

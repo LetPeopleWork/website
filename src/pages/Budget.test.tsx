@@ -48,7 +48,7 @@ describe("the year-end budget page", () => {
     renderPage();
     const text = document.body.textContent!;
     expect(text).toContain("The price is the same in January");
-    expect(text).toContain("Lighthouse will cost the same after that");
+    expect(text).not.toMatch(/comes down/);
     expect(within(screen.getByTestId("budget-lighthouse")).getByText("365 days from the day you buy")).toBeInTheDocument();
     expect(text).not.toMatch(/starts? (on )?1 January|discount|% off|offer ends|only until/i);
     expect(screen.getByTestId("budget-room")).not.toHaveTextContent(/CHF|\d{3}/);
@@ -57,7 +57,15 @@ describe("the year-end budget page", () => {
   it("says the Community edition is free, so the budget is not needed for a small setup", () => {
     renderPage();
     expect(document.body).toHaveTextContent(
-      "if three teams and one portfolio are enough for you, the Community edition is free",
+      "If three teams and one portfolio are enough for you, the Community edition is free",
+    );
+  });
+
+  it("makes the comparison about the buyer's year, not the product", () => {
+    renderPage();
+    expect(within(screen.getByTestId("budget-lighthouse")).getByText(/An answer you can stand behind/)).toBeInTheDocument();
+    expect(screen.getByTestId("budget-picture")).toHaveTextContent(
+      "To be fair, the escape room is more fun. For about an hour. Now picture next year: your stakeholders ask when it will be done, you give them the 85% date, and you sleep well that night.",
     );
   });
 
