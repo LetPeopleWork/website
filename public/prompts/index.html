@@ -47,17 +47,19 @@
 
   <details class="setup">
     <summary>Setup: connect your AI assistant to Lighthouse</summary>
-    <p><strong>You need:</strong> Lighthouse running on your machine (<a href="https://letpeople.work/lighthouse">download</a>)
-      with the demo data <strong>Product Launch</strong> loaded (in Lighthouse: Settings &rarr; Demo Data). Loading demo
+    <p><strong>You need:</strong> the <strong>server</strong> version of Lighthouse running, with Docker or the server
+      package (<a href="https://letpeople.work/lighthouse">download</a>). The standalone app does not work well with AI
+      assistants. Load the demo data <strong>Product Launch</strong> (in Lighthouse: Settings &rarr; Demo Data). Loading demo
       data removes your existing Teams and Portfolios.</p>
     <p>Then open your AI assistant in an empty folder and paste this:</p>
-    <div class="block"><pre>Set up this folder so you can use Lighthouse, a flow metrics and forecasting tool that runs on my machine at http://localhost:8080.
+    <div class="block"><pre>Set up this folder so you can use Lighthouse, a flow metrics and forecasting tool.
 
-1. Add the Lighthouse MCP server to your MCP configuration for this folder. It is a local (stdio) server: the command is "npx -y @letpeoplework/lighthouse-mcp-stdio" with the environment variable LIGHTHOUSE_URL=http://localhost:8080. On Windows, run npx through "cmd /c" if your client needs it. If Node.js is missing, tell me how to install it.
-2. Download these two skills and unpack each zip into its own folder in the skills folder you read for this project (for Claude Code, OpenCode and VS Code: .claude/skills/), so that each folder has SKILL.md at its top level:
+1. Before you do anything else, ask me for the URL of my Lighthouse and wait for my answer. I copy it from the address bar of my browser (for example http://localhost:8080). Use only the base URL: the scheme, host and port, with no path and no trailing slash. Lighthouse must be the server version (Docker or the server package). If I tell you I use the standalone app, tell me to install the server version first and stop.
+2. Add the Lighthouse MCP server to your MCP configuration for this folder. It is a local (stdio) server: the command is "npx -y @letpeoplework/lighthouse-mcp-stdio" with the environment variable LIGHTHOUSE_URL set to the URL I gave you. On Windows, run npx through "cmd /c" if your client needs it. If Node.js is missing, tell me how to install it.
+3. Download these two skills and unpack each zip into its own folder in the skills folder you read for this project (for Claude Code, OpenCode and VS Code: .claude/skills/), so that each folder has SKILL.md at its top level:
    https://github.com/LetPeopleWork/lighthouse-clients/releases/latest/download/lighthouse-skill.zip into lighthouse/
    https://github.com/LetPeopleWork/lighthouse-clients/releases/latest/download/lighthouse-daily-flow-review-skill.zip into lighthouse-daily-flow-review/
-3. Tell me if I need to restart you to load the MCP server and the skills. After that, check the setup by listing the Teams in Lighthouse.
+4. Tell me if I need to restart you to load the MCP server and the skills. After that, check the setup by listing the Teams in Lighthouse.
 
 Instructions for other clients: https://docs.lighthouse.letpeople.work/aiintegration.html</pre><button type="button">Copy</button></div>
   </details>
