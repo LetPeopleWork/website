@@ -1,0 +1,194 @@
+<!doctype html>
+<!-- AI and Flow workshop prompts (Thrivve Loft, London, 23 Nov 2026, and later sessions).
+     Source of truth for the prompts; the internal notes with reference answers live in the organization repo:
+     workshops/thrivve-london-ai-and-flow/demo-prompts.md. The prompts are date-free on purpose, so this page
+     works on any day the demo data is loaded (the demo data is placed relative to the load day). -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>AI and Flow Prompts | LetPeopleWork</title>
+<meta name="description" content="Copy-paste prompts and setup for trying AI assistants with Lighthouse flow metrics and forecasts.">
+<style>
+  :root { --bg:#fafaf9; --fg:#1c1917; --muted:#57534e; --card:#fff; --border:#e7e5e4; --primary:hsl(158 29% 26%); --primary-hover:hsl(158 29% 22%); --on-primary:#fafafa; --tint:hsl(158 29% 95%); }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0c0f0e; --fg:#f5f5f4; --muted:#a8a29e; --card:#161a19; --border:#2a302e; --primary:hsl(158 35% 45%); --primary-hover:hsl(158 35% 52%); --on-primary:#0c0f0e; --tint:hsl(158 20% 13%); } }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  main { max-width:820px; margin:0 auto; padding:32px 16px 64px; }
+  .eyebrow { color:var(--primary); font-weight:600; font-size:14px; letter-spacing:.04em; text-transform:uppercase; margin:0 0 8px; }
+  h1 { font-size:clamp(26px,5vw,36px); line-height:1.2; margin:0 0 12px; }
+  h2 { font-size:24px; margin:48px 0 8px; padding-top:16px; border-top:1px solid var(--border); }
+  h3 { font-size:18px; margin:28px 0 6px; }
+  p, li { color:var(--fg); }
+  .lead, .muted { color:var(--muted); }
+  nav { display:flex; flex-wrap:wrap; gap:8px; margin:20px 0 0; }
+  nav a { border:1px solid var(--border); border-radius:999px; padding:4px 12px; text-decoration:none; font-size:14px; }
+  a { color:var(--primary); }
+  code { font:14px ui-monospace,Consolas,monospace; background:var(--tint); padding:1px 5px; border-radius:4px; }
+  .block { position:relative; margin:10px 0 16px; }
+  .block pre { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px; padding-right:96px; white-space:pre-wrap; word-break:break-word; font:13px/1.5 ui-monospace,Consolas,monospace; max-height:420px; overflow:auto; margin:0; }
+  .block button { position:absolute; top:8px; right:8px; background:var(--primary); color:var(--on-primary); border:0; border-radius:6px; padding:6px 12px; font:600 13px system-ui,sans-serif; cursor:pointer; }
+  .block button:hover { background:var(--primary-hover); }
+  .verified { display:inline-block; font-size:14px; font-weight:600; color:var(--primary); background:var(--tint); border-radius:999px; padding:4px 12px; margin:4px 0 0; }
+  details.setup { margin:24px 0 0; border:1px solid var(--border); border-radius:10px; background:var(--card); padding:4px 16px; }
+  details.setup summary { cursor:pointer; font-weight:600; padding:10px 0; }
+  details.setup[open] { padding-bottom:12px; }
+  footer { margin-top:48px; color:var(--muted); font-size:14px; }
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">AI and Flow &middot; LetPeopleWork</p>
+  <h1>Prompts for AI and Flow</h1>
+  <p class="lead">Try what an AI assistant does with flow data: once with copy-paste, once connected to real data in
+    <a href="https://letpeople.work/lighthouse">Lighthouse</a>. Use demo data only, never data from your employer.</p>
+  <p class="verified">&#10003; Prompts verified with Claude Code and OpenCode</p>
+
+  <details class="setup">
+    <summary>Setup: connect your AI assistant to Lighthouse</summary>
+    <p><strong>You need:</strong> Lighthouse running on your machine (<a href="https://letpeople.work/lighthouse">download</a>)
+      with the demo data <strong>Product Launch</strong> loaded (in Lighthouse: Settings &rarr; Demo Data). Loading demo
+      data removes your existing Teams and Portfolios.</p>
+    <p>Then open your AI assistant in an empty folder and paste this:</p>
+    <div class="block"><pre>Set up this folder so you can use Lighthouse, a flow metrics and forecasting tool that runs on my machine at http://localhost:8080.
+
+1. Add the Lighthouse MCP server to your MCP configuration for this folder. It is a local (stdio) server: the command is "npx -y @letpeoplework/lighthouse-mcp-stdio" with the environment variable LIGHTHOUSE_URL=http://localhost:8080. On Windows, run npx through "cmd /c" if your client needs it. If Node.js is missing, tell me how to install it.
+2. Download these two skills and unpack each zip into its own folder in the skills folder you read for this project (for Claude Code, OpenCode and VS Code: .claude/skills/), so that each folder has SKILL.md at its top level:
+   https://github.com/LetPeopleWork/lighthouse-clients/releases/latest/download/lighthouse-skill.zip into lighthouse/
+   https://github.com/LetPeopleWork/lighthouse-clients/releases/latest/download/lighthouse-daily-flow-review-skill.zip into lighthouse-daily-flow-review/
+3. Tell me if I need to restart you to load the MCP server and the skills. After that, check the setup by listing the Teams in Lighthouse.
+
+Instructions for other clients: https://docs.lighthouse.letpeople.work/aiintegration.html</pre><button type="button">Copy</button></div>
+  </details>
+
+  <h2 id="forecast">1 &middot; How much will the team get done?</h2>
+  <p>Same question, same kind of data, two ways. Compare the answers.</p>
+
+  <h3>1a. Ask any AI chat</h3>
+  <p class="muted">Copy-paste this into the AI assistant of your choice.</p>
+  <div class="block"><pre>My team wants to know how many work items we will finish in the next 14 days. Here is our daily
+throughput for the last 90 days, oldest first (days_ago 0 is today; weekends are included):
+
+days_ago,items
+89,2
+88,1
+87,2
+86,1
+85,1
+84,0
+83,0
+82,2
+81,1
+80,1
+79,1
+78,3
+77,0
+76,0
+75,2
+74,1
+73,3
+72,4
+71,1
+70,0
+69,0
+68,1
+67,2
+66,0
+65,1
+64,1
+63,0
+62,0
+61,0
+60,1
+59,1
+58,1
+57,2
+56,0
+55,0
+54,3
+53,2
+52,0
+51,3
+50,3
+49,0
+48,0
+47,1
+46,2
+45,0
+44,1
+43,1
+42,0
+41,0
+40,1
+39,0
+38,2
+37,1
+36,2
+35,0
+34,0
+33,4
+32,2
+31,1
+30,2
+29,0
+28,0
+27,0
+26,0
+25,1
+24,2
+23,1
+22,3
+21,0
+20,0
+19,2
+18,1
+17,1
+16,0
+15,1
+14,0
+13,0
+12,1
+11,1
+10,4
+9,3
+8,0
+7,0
+6,0
+5,0
+4,2
+3,3
+2,2
+1,0
+0,0
+
+How many items will we get done in the next 14 days? How sure can we be?</pre><button type="button">Copy</button></div>
+
+  <h3>1b. Ask the same, with the Lighthouse skill</h3>
+  <div class="block"><pre>How many work items will Team Zenith finish in the next 14 days?</pre><button type="button">Copy</button></div>
+
+  <h2 id="daily">2 &middot; Prepare the daily</h2>
+  <p>Uses the Daily Flow Review skill: what is blocked, stale, past the SLE or about to be, as questions for the team.</p>
+  <div class="block"><pre>What should Team Voyager discuss in the daily today?</pre><button type="button">Copy</button></div>
+
+  <h2 id="portfolio">3 &middot; When can we launch?</h2>
+  <p>Two teams, one product. When are all remaining Features done, and which ones set the date?</p>
+  <div class="block"><pre>Project Orion is our next product launch. When can we launch, meaning all remaining Features are done? And which Features put the date at risk?</pre><button type="button">Copy</button></div>
+  <p class="muted">Follow-up:</p>
+  <div class="block"><pre>When will Next-Gen EVA Suits be done, and how sure are we?</pre><button type="button">Copy</button></div>
+
+  <footer>By <a href="https://letpeople.work">LetPeopleWork</a> &middot; <a href="https://docs.lighthouse.letpeople.work">Lighthouse docs</a></footer>
+</main>
+<script>
+  document.querySelectorAll(".block button").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const pre = btn.parentElement.querySelector("pre");
+      try { await navigator.clipboard.writeText(pre.innerText); }
+      catch { const r = document.createRange(); r.selectNodeContents(pre);
+              const s = getSelection(); s.removeAllRanges(); s.addRange(r); document.execCommand("copy"); }
+      btn.textContent = "Copied ✓"; setTimeout(() => (btn.textContent = "Copy"), 2000);
+    });
+  });
+</script>
+</body>
+</html>
