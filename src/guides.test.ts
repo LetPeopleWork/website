@@ -3,15 +3,10 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import faqs from "@/content/lighthouse-faq.json";
 import prices from "@/lib/pricing.json";
-// @ts-expect-error - plain .mjs build scripts without type declarations
 import { guideMarkdown, htmlToMarkdown, renderGuidePage } from "../scripts/guide-page.mjs";
-// @ts-expect-error - plain .mjs build script without type declarations
 import { loadGuides } from "../scripts/guides/index.mjs";
-// @ts-expect-error - plain .mjs build script without type declarations
 import { guideSchema, jsonLdTag } from "../scripts/seo-schema.mjs";
-// @ts-expect-error - plain .mjs build script without type declarations
 import { buildLlmsFull } from "../scripts/llms-full.mjs";
-// @ts-expect-error - plain .mjs build script without type declarations
 import { lighthouseBody } from "../scripts/seo-content.mjs";
 
 // The static guide pages (/compare/, /azure-devops-forecasting/,

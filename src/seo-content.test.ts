@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import faqs from "@/content/lighthouse-faq.json";
 import prices from "@/lib/pricing.json";
-// @ts-expect-error - plain .mjs build script without type declarations
 import { homeBody, lighthouseBody, renderFaq } from "../scripts/seo-content.mjs";
 
 // The static text that crawlers without JavaScript read (GPTBot, ClaudeBot,

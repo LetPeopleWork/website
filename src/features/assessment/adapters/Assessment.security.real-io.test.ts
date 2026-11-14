@@ -39,7 +39,6 @@ describe.skip(`Assessment security boundaries against live Supabase — ${SKIP_R
         email: "forged@example.com",
         score: 4,
         band: "Predictable",
-        wantsTrial: false,
       }),
     ).rejects.toThrow();
   });
@@ -52,7 +51,6 @@ describe.skip(`Assessment security boundaries against live Supabase — ${SKIP_R
         email: "outofrange@example.com",
         score: 250,
         band: "Predictable",
-        wantsTrial: false,
       }),
     ).rejects.toThrow();
   });
@@ -65,7 +63,6 @@ describe.skip(`Assessment security boundaries against live Supabase — ${SKIP_R
         email: "honest@example.com",
         score: 58,
         band: "Flow-aware",
-        wantsTrial: false,
       }),
     ).resolves.toBeUndefined();
   });

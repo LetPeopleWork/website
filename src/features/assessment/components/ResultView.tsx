@@ -54,7 +54,7 @@ export const ResultView = ({
               <Button
                 key={cta.label}
                 asChild
-                variant={index === 0 ? "default" : "outline-solid"}
+                variant={index === 0 ? "default" : "outline"}
               >
                 <a href={cta.href} target="_blank" rel="noreferrer">
                   {cta.label}

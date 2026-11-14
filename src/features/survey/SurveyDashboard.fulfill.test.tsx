@@ -14,6 +14,7 @@ const getMockTrialRequest = (
   id: "11111111-1111-1111-1111-111111111111",
   source: "user-survey-trial",
   email: "volunteer@example.com",
+  organization: null,
   createdAt: "2026-05-02T00:00:00.000Z",
   fulfilledAt: null,
   ...overrides,

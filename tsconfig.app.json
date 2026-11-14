@@ -2,7 +2,8 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    /* ES2021.String: supabase/_shared (checked here through the tests) uses replaceAll */
+    "lib": ["ES2020", "ES2021.String", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
 
@@ -21,9 +22,12 @@
     "noImplicitAny": false,
     "noFallthroughCasesInSwitch": false,
 
-    "baseUrl": ".",
+    /* TypeScript 6 no longer loads every @types package: name what src uses */
+    "types": ["node", "vitest/globals", "@testing-library/jest-dom/vitest"],
+
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@shared/*": ["./supabase/_shared/*"]
     }
   },
   "include": ["src"]
