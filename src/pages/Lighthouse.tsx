@@ -859,7 +859,7 @@ const Lighthouse = () => {
 												title: "Paid-tier Features",
 												rows: [
 													{
-														feature: { label: "Authentication & RBAC", tooltip: "Secure your Lighthouse instance with any OIDC-compatible identity provider (Microsoft Entra, Google, Keycloak, Auth0, etc.) and control access with Role Based Access Control across four roles and SSO group mappings. For server installs (Docker, Kubernetes); not available in the standalone desktop apps." },
+														feature: { label: "Authentication & RBAC", tooltip: "Secure your Lighthouse instance with any OIDC-compatible identity provider (Microsoft Entra, Google, Keycloak, Auth0, etc.) and control access with Role Based Access Control across four roles and SSO group mappings, including rules that reach all Teams and Portfolios at once. For server installs (Docker, Kubernetes); not available in the standalone desktop apps." },
 														community: false, self: true, enterprise: true,
 													},
 													{
