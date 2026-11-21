@@ -6,7 +6,8 @@ const RESPONSES_TABLE = "responses";
 const toRow = (response: CapturedResponse) => ({
   source: response.source,
   kind: response.kind,
-  answers: response.answers,
+  // The port's tuple is readonly; the generated Json type wants a plain array.
+  answers: [...response.answers],
   raw_sum: response.rawSum,
   score: response.score,
   band: response.band,

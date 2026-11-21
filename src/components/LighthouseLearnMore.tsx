@@ -41,7 +41,7 @@ const ACTIONS: Action[] = [
 ];
 
 function ActionCard({ action, index }: { action: Action; index: number }) {
-  const { ref, revealed } = useScrollReveal<HTMLDivElement>();
+  const { ref, revealed } = useScrollReveal<HTMLAnchorElement>();
   const Icon = action.icon;
 
   return (

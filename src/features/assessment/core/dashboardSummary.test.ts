@@ -28,6 +28,7 @@ const getMockLead = (
 const getMockData = (overrides: Partial<DashboardData> = {}): DashboardData => ({
   responses: [getMockResponse()],
   leads: [getMockLead()],
+  surveyResponses: [],
   ...overrides,
 });
 
@@ -86,6 +87,7 @@ describe("summarizeDashboard", () => {
         getMockLead({ source: "readiness-assessment", email: "keep@example.com" }),
         getMockLead({ source: "other-survey" as never, email: "drop@example.com" }),
       ],
+      surveyResponses: [],
     };
 
     const summary = summarizeDashboard(data, "readiness-assessment");
