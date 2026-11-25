@@ -81,9 +81,14 @@ const BudgetBar = () => {
         >
           <span className="font-semibold">Budget left this year?</span>{" "}
           <span className="underline decoration-white/40 underline-offset-4 group-hover:decoration-white">
-            {prices.selfService} gets every team a year of Lighthouse
+            {prices.selfService} gets every team a year of
+          </span>{" "}
+          <span className="whitespace-nowrap">
+            <span className="underline decoration-white/40 underline-offset-4 group-hover:decoration-white">
+              Lighthouse
+            </span>
+            <ArrowRight className="ml-1.5 inline h-3.5 w-3.5 align-[-2px] transition-transform group-hover:translate-x-0.5" />
           </span>
-          <ArrowRight className="ml-1.5 inline h-3.5 w-3.5 align-[-2px] transition-transform group-hover:translate-x-0.5" />
         </Link>
         <button
           type="button"

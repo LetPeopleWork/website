@@ -134,7 +134,7 @@ const Budget = () => {
 
       <main>
         {/* ── The joke and the offer ── */}
-        <section className="relative isolate overflow-hidden bg-gradient-hero pt-32 pb-20 md:pt-40 md:pb-24">
+        <section className="relative isolate overflow-hidden bg-gradient-hero pt-28 pb-14 md:pt-40 md:pb-24">
           <div className="absolute inset-0 hero-mesh" aria-hidden="true" />
           <div className="absolute inset-0 bg-grid-faint" aria-hidden="true" />
           <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
@@ -151,7 +151,7 @@ const Budget = () => {
             <div className="flex flex-col justify-center gap-4 sm:flex-row">
               {buyFirst ? [buy, trial] : [trial, buy]}
             </div>
-            <p className="mx-auto mt-8 max-w-xl text-sm leading-relaxed text-primary-foreground/70" data-testid="budget-hint">
+            <p className="mx-auto mt-8 max-w-xl text-sm leading-relaxed text-primary-foreground/85" data-testid="budget-hint">
               {buyFirst ? (
                 <>
                   The budget closes soon. A Scrum Master got from the download to his first forecast
@@ -172,7 +172,7 @@ const Budget = () => {
         </section>
 
         {/* ── Escape room against Lighthouse ── */}
-        <section className="bg-background py-20 md:py-24">
+        <section className="bg-background py-14 md:py-24">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <h2 className="mb-10 text-center text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
               Two ways to spend what&apos;s left
@@ -222,7 +222,7 @@ const Budget = () => {
             </div>
             {/* Peter's line from the blog: "Use the 85% date and sleep well." */}
             <p
-              className="mx-auto mt-12 max-w-2xl text-center text-xl leading-relaxed text-pretty text-foreground md:text-2xl/9"
+              className="mx-auto mt-10 max-w-2xl text-center text-xl leading-relaxed text-pretty text-foreground md:text-2xl/9"
               data-testid="budget-picture"
             >
               To be fair, the escape room is more fun. For about an hour.{" "}
@@ -242,7 +242,7 @@ const Budget = () => {
         </section>
 
         {/* ── For the person who holds the budget ── */}
-        <section className="border-y border-border/60 bg-gradient-subtle py-20 md:py-24">
+        <section className="border-y border-border/60 bg-gradient-subtle py-14 md:py-24">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <div className="mb-10 text-center">
               <h2 className="mb-4 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
@@ -267,9 +267,9 @@ const Budget = () => {
                 href={FORWARD_URL}
                 data-skip-autotrack
                 onClick={() => trackEvent("Budget campaign", { action: "forward" })}
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-primary/30 bg-background px-7 py-3.5 text-base font-semibold text-primary no-underline transition-colors hover:bg-accent"
+                className="block w-full rounded-2xl border border-primary/30 bg-background px-6 py-4 text-center text-base font-semibold text-balance text-primary no-underline transition-colors hover:bg-accent sm:inline-flex sm:w-auto sm:items-center sm:justify-center sm:gap-2 sm:rounded-full sm:px-7 sm:py-3.5"
               >
-                <Mail className="h-4 w-4" />
+                <Mail className="mr-2 inline h-4 w-4 shrink-0 align-[-2px] sm:mr-0" />
                 Send this page to whoever holds the budget
               </a>
               <p className="mt-3 text-sm text-muted-foreground">
