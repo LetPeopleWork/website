@@ -23,6 +23,14 @@ type Item = {
 // https://github.com/LetPeopleWork/Lighthouse/releases
 const ITEMS: Item[] = [
   {
+    tag: "Predictability",
+    title: "Did we keep our promise?",
+    description:
+      "An SLE said what you promised, but not whether you kept it, so the honest answer took a spreadsheet. The new Within SLE widget shows the share of Work Items that finished within your SLE, against its target and the period before, and lists the late ones first.",
+    version: "v26.11.28.7",
+    released: "2026-11-28",
+  },
+  {
     tag: "Trust",
     title: "One rule for every Team and Portfolio",
     description:
@@ -184,7 +192,7 @@ const ITEMS: Item[] = [
 // Every published Lighthouse release since May 2026, newest first. Add the
 // date of each new release here, together with its card above.
 const RELEASE_DATES: string[] = [
-  "2026-11-15", "2026-11-08", "2026-11-01", "2026-10-25", "2026-10-19", "2026-10-16", "2026-10-10", "2026-10-03", "2026-09-24", "2026-09-20", "2026-09-09", "2026-09-01",
+  "2026-11-28", "2026-11-15", "2026-11-08", "2026-11-01", "2026-10-25", "2026-10-19", "2026-10-16", "2026-10-10", "2026-10-03", "2026-09-24", "2026-09-20", "2026-09-09", "2026-09-01",
   "2026-08-31", "2026-08-14", "2026-08-08", "2026-08-03", "2026-08-01",
   "2026-07-26", "2026-07-12", "2026-07-03", "2026-06-16", "2026-06-12",
   "2026-06-07", "2026-05-29", "2026-05-24", "2026-05-19", "2026-05-14",

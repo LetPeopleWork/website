@@ -10,16 +10,16 @@ const cardTitles = () =>
 
 describe("Lighthouse What's New", () => {
   it("opens on the last 90 days, newest first with each card's release date", () => {
-    render(<LighthouseWhatsNew now={at("2026-11-15")} />);
+    render(<LighthouseWhatsNew now={at("2026-11-28")} />);
 
     expect(screen.getByRole("button", { name: "Last 90 days" })).toHaveAttribute("aria-pressed", "true");
-    expect(cardTitles()[0]).toBe("One rule for every Team and Portfolio");
-    expect(cardTitles()[1]).toBe("Parents from more than one place");
+    expect(cardTitles()[0]).toBe("Did we keep our promise?");
+    expect(cardTitles()[1]).toBe("One rule for every Team and Portfolio");
     expect(screen.queryByText("Next release")).toBeNull();
-    expect(screen.getByText("15 Nov 2026")).toBeTruthy();
-    expect(screen.getByRole("link", { name: /v26\.11\.15\.4/ })).toHaveAttribute(
+    expect(screen.getByText("28 Nov 2026")).toBeTruthy();
+    expect(screen.getByRole("link", { name: /v26\.11\.28\.7/ })).toHaveAttribute(
       "href",
-      "https://github.com/LetPeopleWork/Lighthouse/releases/tag/v26.11.15.4",
+      "https://github.com/LetPeopleWork/Lighthouse/releases/tag/v26.11.28.7",
     );
   });
 
@@ -58,23 +58,25 @@ describe("Lighthouse What's New", () => {
   });
 
   it("counts the releases inside the chosen range", async () => {
-    render(<LighthouseWhatsNew now={at("2026-11-15")} />);
+    render(<LighthouseWhatsNew now={at("2026-11-28")} />);
     const count = screen.getByTestId("whats-new-release-count");
-    expect(count).toHaveTextContent("13 releases in the last 90 days.");
+    expect(count).toHaveTextContent("14 releases in the last 90 days.");
 
     await userEvent.click(screen.getByRole("button", { name: "Last 30 days" }));
-    expect(count).toHaveTextContent("6 releases in the last 30 days.");
+    expect(count).toHaveTextContent("4 releases in the last 30 days.");
 
     await userEvent.click(screen.getByRole("button", { name: "All" }));
-    expect(count).toHaveTextContent("28 releases since May 2026.");
+    expect(count).toHaveTextContent("29 releases since May 2026.");
   });
 
   it("narrows the cards to the last 30 days", async () => {
-    render(<LighthouseWhatsNew now={at("2026-11-15")} />);
+    render(<LighthouseWhatsNew now={at("2026-11-28")} />);
     await userEvent.click(screen.getByRole("button", { name: "Last 30 days" }));
 
+    expect(cardTitles()).toContain("Did we keep our promise?");
     expect(cardTitles()).toContain("One rule for every Team and Portfolio");
     expect(cardTitles()).toContain("Parents from more than one place");
+    await userEvent.click(screen.getByRole("button", { name: /^Show \d+ more$/ }));
     expect(cardTitles()).toContain("Every report in one place");
     expect(cardTitles()).not.toContain("Dependencies, from your tracker");
   });
