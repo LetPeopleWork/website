@@ -56,6 +56,8 @@ export type Database = {
           band: string | null
           wants_trial: boolean
           created_at: string
+          fulfilled_at: string | null
+          organization: string | null
         }
         Insert: {
           id?: string
@@ -65,6 +67,8 @@ export type Database = {
           band?: string | null
           wants_trial?: boolean
           created_at?: string
+          fulfilled_at?: string | null
+          organization?: string | null
         }
         Update: {
           id?: string
@@ -74,6 +78,8 @@ export type Database = {
           band?: string | null
           wants_trial?: boolean
           created_at?: string
+          fulfilled_at?: string | null
+          organization?: string | null
         }
         Relationships: []
       }

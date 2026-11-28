@@ -6,7 +6,6 @@ import film from "@/content/lighthouse-film.json";
 import journey from "@/content/ai-journey.json";
 import videos from "@/content/videos.json";
 import prices from "@/lib/pricing.json";
-// @ts-expect-error - plain .mjs build script without type declarations
 import { jsonLdTag, schemaFor } from "../scripts/seo-schema.mjs";
 
 // The structured data that prerender-meta.mjs writes into each route's static

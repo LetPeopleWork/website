@@ -1,8 +1,9 @@
 name: CI
 
 # The check Renovate waits for before it merges a dependency update
-# (renovate.json): lint with zero warnings, tests, and a production build
-# that prints no warnings. Runs on every pull request and on main.
+# (renovate.json): lint with zero warnings, a type check, tests, and a
+# production build that prints no warnings. Runs on every pull request and
+# on main.
 on:
   pull_request:
   push:
@@ -29,6 +30,12 @@ jobs:
 
       - name: Lint
         run: bun run lint
+
+      # Vite and vitest do not check types, and plain "tsc --noEmit" checks
+      # nothing here (the root tsconfig.json has "files": []). This step is the
+      # only one that fails when a dependency update breaks the types.
+      - name: Type check
+        run: bun run typecheck
 
       - name: Test
         run: bun run test

@@ -8,7 +8,11 @@ import {
   SURVEY_CHOICE_QUESTIONS,
   type SurveyQuestion,
 } from "./content/surveyContent";
-import type { SurveyAnswers, SurveySubmission } from "../assessment/ports";
+import type {
+  CapturedResponse,
+  SurveyAnswers,
+  SurveySubmission,
+} from "../assessment/ports";
 
 const firstOptionSelections = (): SurveyAnswers =>
   Object.fromEntries(
@@ -193,9 +197,8 @@ describe.skip("@real-io submit-survey edge function against live Supabase (US-02
 });
 
 describe("Assessment CapturedResponse keeps its non-null scored shape (5123 regression)", () => {
-  it("requires score and band on the assessment response port", async () => {
-    const ports = await import("../assessment/ports");
-    const captured: ports.CapturedResponse = {
+  it("requires score and band on the assessment response port", () => {
+    const captured: CapturedResponse = {
       source: "readiness-assessment",
       kind: null,
       answers: [1, 1, 1, 1, 1, 1],

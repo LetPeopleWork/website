@@ -1092,7 +1092,7 @@ const Lighthouse = () => {
 
 									<div className="space-y-4 mb-8">
 										<div className="space-y-2">
-											<Label className="leading-6"
+											<Label
 												htmlFor="name"
 												className="flex items-center space-x-2"
 											>
@@ -1113,7 +1113,7 @@ const Lighthouse = () => {
 										</div>
 
 										<div className="space-y-2">
-											<Label className="leading-6"
+											<Label
 												htmlFor="email"
 												className="flex items-center space-x-2"
 											>
@@ -1135,7 +1135,7 @@ const Lighthouse = () => {
 										</div>
 
 										<div className="space-y-2">
-											<Label className="leading-6"
+											<Label
 												htmlFor="organization"
 												className="flex items-center space-x-2"
 											>
@@ -1156,7 +1156,7 @@ const Lighthouse = () => {
 										</div>
 
 										<div className="space-y-2">
-											<Label className="leading-6"
+											<Label
 												htmlFor="validFrom"
 												className="flex items-center space-x-2"
 											>
@@ -1192,7 +1192,7 @@ const Lighthouse = () => {
 														disabled={(date) =>
 															date < new Date(new Date().setHours(0, 0, 0, 0))
 														}
-														initialFocus
+														autoFocus
 													/>
 												</PopoverContent>
 											</Popover>
